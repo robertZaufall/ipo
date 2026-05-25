@@ -6,7 +6,6 @@
     <title>IPO • glaubi.net</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
         
@@ -442,7 +441,6 @@
             return data
         }
 
-        let chart = null
         let currentTicker = null
 
         function renderTable(filteredIpos = ipos) {
@@ -521,78 +519,73 @@
 
         function renderCandlestickChart(ipo) {
             const container = document.getElementById('chart-container')
-            
-            // Clear previous chart completely
+
             container.innerHTML = ''
             container.classList.remove('flex', 'items-center', 'justify-center')
-            if (chart) {
-                try { chart.remove() } catch(e) {}
-                chart = null
+            container.innerHTML = renderInlineCandlestickSvg(ipo)
+        }
+
+        function renderInlineCandlestickSvg(ipo) {
+            const data = ipo.chartData
+            const W = 920
+            const H = 380
+            const ml = 58
+            const mr = 26
+            const mt = 26
+            const mb = 44
+            const plotW = W - ml - mr
+            const plotH = H - mt - mb
+            const prices = data.flatMap(d => [d.open, d.high, d.low, d.close])
+            let min = Math.min(...prices)
+            let max = Math.max(...prices)
+            const pad = Math.max((max - min) * 0.08, max * 0.01)
+            min -= pad
+            max += pad
+
+            const x = i => ml + (i / Math.max(data.length - 1, 1)) * plotW
+            const y = p => mt + ((max - p) / Math.max(max - min, 0.01)) * plotH
+            const candleW = Math.max(4, Math.min(11, plotW / data.length * 0.62))
+            const fmt = v => '$' + Number(v).toFixed(v >= 100 ? 0 : 2)
+            const timeFor = d => {
+                const date = new Date(d.time * 1000)
+                return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' })
             }
 
-            // Create fresh container to avoid stale DOM issues
-            const chartDiv = document.createElement('div')
-            chartDiv.style.width = '100%'
-            chartDiv.style.height = '380px'
-            chartDiv.style.minWidth = '0'
-            container.appendChild(chartDiv)
+            const grid = []
+            for (let i = 0; i <= 4; i++) {
+                const price = min + ((max - min) * i / 4)
+                const yy = y(price)
+                grid.push(`<line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#27272a" />`)
+                grid.push(`<text x="${ml - 8}" y="${(yy + 4).toFixed(1)}" text-anchor="end" font-size="11" fill="#71717a">${fmt(price)}</text>`)
+            }
 
-            // Ensure container has dimensions before creating chart
-            requestAnimationFrame(() => {
-                if (!window.LightweightCharts) {
-                    chartDiv.innerHTML = '<div class="h-full flex items-center justify-center text-red-400 text-sm">Chart library failed to load.</div>'
-                    return
-                }
+            const labels = [0, Math.floor((data.length - 1) / 2), data.length - 1].map(i => {
+                const xx = x(i)
+                return `<text x="${xx.toFixed(1)}" y="${H - 15}" text-anchor="middle" font-size="11" fill="#71717a">${timeFor(data[i])}</text>`
+            }).join('')
 
-                const w = Math.max(chartDiv.clientWidth || container.clientWidth || 800, 320)
-                
-                chart = LightweightCharts.createChart(chartDiv, {
-                    width: w,
-                    height: 380,
-                    layout: {
-                        background: { color: '#09090b' },
-                        textColor: '#71717a',
-                    },
-                    grid: {
-                        vertLines: { color: '#27251f' },
-                        horzLines: { color: '#27251f' },
-                    },
-                    crosshair: {
-                        mode: LightweightCharts.CrosshairMode.Normal,
-                        vertLine: { color: '#3b82f6', width: 1, style: 2 },
-                        horzLine: { color: '#3b82f6', width: 1, style: 2 },
-                    },
-                    timeScale: {
-                        timeVisible: true,
-                        secondsVisible: false,
-                        borderColor: '#27251f',
-                    },
-                    rightPriceScale: {
-                        borderColor: '#27251f',
-                    },
-                    handleScroll: { vertTouchDrag: false },
-                })
+            const candles = data.map((d, i) => {
+                const up = d.close >= d.open
+                const color = up ? '#22c55e' : '#ef4444'
+                const xx = x(i)
+                const bodyTop = y(Math.max(d.open, d.close))
+                const bodyBottom = y(Math.min(d.open, d.close))
+                const bodyH = Math.max(1.5, bodyBottom - bodyTop)
+                return `<g>
+                    <title>${ipo.ticker} ${timeFor(d)} O ${fmt(d.open)} H ${fmt(d.high)} L ${fmt(d.low)} C ${fmt(d.close)}</title>
+                    <line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${y(d.high).toFixed(1)}" y2="${y(d.low).toFixed(1)}" stroke="${color}" stroke-width="1.4" />
+                    <rect x="${(xx - candleW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${candleW.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${color}" rx="1" />
+                </g>`
+            }).join('')
 
-                const candleOptions = {
-                    upColor: '#22c55e',
-                    downColor: '#ef4444',
-                    borderUpColor: '#22c55e',
-                    borderDownColor: '#ef4444',
-                    wickUpColor: '#22c55e',
-                    wickDownColor: '#ef4444',
-                }
-
-                const candleSeries = typeof chart.addCandlestickSeries === 'function'
-                    ? chart.addCandlestickSeries(candleOptions)
-                    : chart.addSeries(LightweightCharts.CandlestickSeries, candleOptions)
-
-                candleSeries.setData(ipo.chartData)
-                chart.timeScale().fitContent()
-                chart.applyOptions({ width: Math.max(chartDiv.clientWidth || w, 320) })
-
-                // Store for potential cleanup
-                chartDiv._chart = chart
-            })
+            return `<svg class="w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} first trading day candlestick chart">
+                <rect width="${W}" height="${H}" fill="#09090b" />
+                <text x="${ml}" y="17" font-size="13" font-weight="700" fill="#d4d4d8">${ipo.ticker} first-day intraday candles</text>
+                ${grid.join('')}
+                <rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a" />
+                ${candles}
+                ${labels}
+            </svg>`
         }
 
         function setupSearch() {
