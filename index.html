@@ -416,10 +416,11 @@
                     const candleHigh = Math.max(next, current) + Math.random() * volatility * 0.6
                     const candleLow = Math.min(next, current) - Math.random() * volatility * 0.6
                     
-                    const timeStr = `${date} ${String(hour).padStart(2, '0')}:${String(min).padStart(2, '0')}`
+                    const [year, month, day] = date.split('-').map(Number)
+                    const time = Math.floor(Date.UTC(year, month - 1, day, hour, min) / 1000)
                     
                     data.push({
-                        time: timeStr,
+                        time,
                         open: parseFloat(current.toFixed(2)),
                         high: parseFloat(Math.max(candleHigh, current, next).toFixed(2)),
                         low: parseFloat(Math.min(candleLow, current, next).toFixed(2)),
@@ -505,7 +506,7 @@
             
             // Stats
             document.getElementById('chart-stats').classList.remove('hidden')
-            document.getElementById('chart-placeholder').classList.add('hidden')
+            document.getElementById('chart-placeholder')?.classList.add('hidden')
             
             const first = ipo.chartData[0]
             const last = ipo.chartData[ipo.chartData.length - 1]
@@ -523,6 +524,7 @@
             
             // Clear previous chart completely
             container.innerHTML = ''
+            container.classList.remove('flex', 'items-center', 'justify-center')
             if (chart) {
                 try { chart.remove() } catch(e) {}
                 chart = null
@@ -532,11 +534,17 @@
             const chartDiv = document.createElement('div')
             chartDiv.style.width = '100%'
             chartDiv.style.height = '380px'
+            chartDiv.style.minWidth = '0'
             container.appendChild(chartDiv)
 
             // Ensure container has dimensions before creating chart
             requestAnimationFrame(() => {
-                const w = chartDiv.clientWidth || 800
+                if (!window.LightweightCharts) {
+                    chartDiv.innerHTML = '<div class="h-full flex items-center justify-center text-red-400 text-sm">Chart library failed to load.</div>'
+                    return
+                }
+
+                const w = Math.max(chartDiv.clientWidth || container.clientWidth || 800, 320)
                 
                 chart = LightweightCharts.createChart(chartDiv, {
                     width: w,
@@ -565,17 +573,22 @@
                     handleScroll: { vertTouchDrag: false },
                 })
 
-                const candleSeries = chart.addCandlestickSeries({
+                const candleOptions = {
                     upColor: '#22c55e',
                     downColor: '#ef4444',
                     borderUpColor: '#22c55e',
                     borderDownColor: '#ef4444',
                     wickUpColor: '#22c55e',
                     wickDownColor: '#ef4444',
-                })
+                }
+
+                const candleSeries = typeof chart.addCandlestickSeries === 'function'
+                    ? chart.addCandlestickSeries(candleOptions)
+                    : chart.addSeries(LightweightCharts.CandlestickSeries, candleOptions)
 
                 candleSeries.setData(ipo.chartData)
                 chart.timeScale().fitContent()
+                chart.applyOptions({ width: Math.max(chartDiv.clientWidth || w, 320) })
 
                 // Store for potential cleanup
                 chartDiv._chart = chart
