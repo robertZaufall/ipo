@@ -48,25 +48,7 @@
                     <span>TOP 25 + RECENT $25B IPOS</span>
                 </div>
                 <h1 class="font-display text-5xl sm:text-6xl tracking-tighter font-semibold mt-3">First-day moves for market giants</h1>
-                <p class="text-lg sm:text-xl text-zinc-400 mt-2 max-w-3xl">A day-one view of the top 25 IPO companies by current market cap, plus every post-2020 IPO now valued above $25B, including Cerebras.</p>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
-                    <div class="text-zinc-500 text-xs">Cards</div>
-                    <div id="count-total" class="font-mono text-xl sm:text-2xl font-semibold">0</div>
-                </div>
-                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
-                    <div class="text-zinc-500 text-xs">Shown</div>
-                    <div id="count-visible" class="font-mono text-xl sm:text-2xl font-semibold text-blue-400">0</div>
-                </div>
-                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
-                    <div class="text-zinc-500 text-xs">Newest</div>
-                    <div id="newest-date" class="font-mono text-xl sm:text-2xl font-semibold">2026</div>
-                </div>
-                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
-                    <div class="text-zinc-500 text-xs">Largest cap</div>
-                    <div id="largest-cap" class="font-mono text-xl sm:text-2xl font-semibold text-emerald-400">—</div>
-                </div>
+                <p class="text-lg sm:text-xl text-zinc-400 mt-2 max-w-3xl">A day-one view of top IPO companies.</p>
             </div>
         </div>
     </header>
@@ -97,8 +79,9 @@
         <section id="cards" class="mt-6 space-y-6"></section>
         <div id="empty-state" class="hidden mt-8 bg-zinc-900 border border-zinc-800 rounded-2xl p-8 text-center text-zinc-400">No IPO cards match that search.</div>
 
-        <footer class="mt-10 text-xs text-zinc-500 leading-6">
-            IPO dates, prices, current prices, and market caps are refreshed from the StockAnalysis screener, IPO archive, and ticker pages. The list combines the top 25 IPO companies by current market cap with every post-2020 IPO above $25B, excluding known first-day starts below $1. First-day charts use local Yahoo Finance 5-minute bars where available; older listings use Yahoo daily open/high/low/close as anchors for a clearly marked local SVG estimate.
+        <footer class="mt-10 border-t border-zinc-900 pt-5 text-xs text-zinc-500 leading-6">
+            <p>IPO dates, prices, current prices, and market caps are refreshed from public market data sources. Data can be delayed, incomplete, wrong, or estimated and is provided without guarantee. Use your own judgment; investment decisions and consequences remain your responsibility.</p>
+            <p class="mt-2">&copy; <span id="copyright-year"></span> Robert Zaufall. Published via <a class="text-zinc-300 hover:text-blue-400 transition-colors" href="https://glaubi.net/">glaubi.net</a>.</p>
         </footer>
     </main>
 
@@ -419,14 +402,16 @@
 
         function bucketChartSvg(buckets, topBucket, config) {
             const compact = window.matchMedia('(max-width: 640px)').matches;
-            if (compact) {
-                const W = 420;
-                const H = 312;
-                const ml = 70;
-                const mr = 48;
+            const horizontal = compact || config.forceHorizontal;
+            if (horizontal) {
+                const W = compact ? 420 : 760;
+                const hasSecondary = Boolean(config.secondaryLabel);
+                const ml = hasSecondary ? (compact ? 252 : 280) : 70;
+                const mr = compact ? 48 : 54;
                 const mt = 34;
-                const rowGap = 10;
-                const rowH = 30;
+                const rowGap = hasSecondary ? 12 : 10;
+                const rowH = hasSecondary ? 36 : 30;
+                const H = mt + buckets.length * (rowH + rowGap) + 42;
                 const plotW = W - ml - mr;
                 const maxCount = Math.max(...buckets.map(bucket => bucket.count || 0), 1);
                 const rows = buckets.map((bucket, index) => {
@@ -435,16 +420,26 @@
                     const barW = count ? Math.max(4, count / maxCount * plotW) : 2;
                     const selected = topBucket && bucket.label === topBucket.label;
                     const fill = selected ? '#3b82f6' : '#52525b';
-                    return `<g><title>${escapeHtml(bucket.label)}: ${count} IPOs (${fmtWholePct(bucket.pct)})</title><text x="${ml - 10}" y="${(y + 19).toFixed(1)}" text-anchor="end" font-size="12" fill="#d4d4d8">${escapeHtml(bucket.label)}</text><rect x="${ml}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${rowH}" fill="${fill}" rx="5"/><text x="${(ml + barW + 8).toFixed(1)}" y="${(y + 19).toFixed(1)}" font-size="12" font-weight="700" fill="${selected ? '#bfdbfe' : '#d4d4d8'}">${count}</text><text x="${W - mr + 5}" y="${(y + 19).toFixed(1)}" font-size="11" fill="#71717a">${fmtWholePct(bucket.pct)}</text></g>`;
+                    const primaryLabel = config.primaryLabel ? config.primaryLabel(bucket) : bucket.label;
+                    const secondaryLabel = config.secondaryLabel ? config.secondaryLabel(bucket) : '';
+                    const label = hasSecondary
+                        ? `<text x="14" y="${(y + 13).toFixed(1)}" font-size="${compact ? 9 : 10}" font-weight="700" fill="#d4d4d8">${escapeHtml(primaryLabel)}</text><text x="14" y="${(y + 29).toFixed(1)}" font-size="${compact ? 8 : 9}" fill="#a1a1aa">${escapeHtml(secondaryLabel)}</text>`
+                        : `<text x="${ml - 10}" y="${(y + 19).toFixed(1)}" text-anchor="end" font-size="12" fill="#d4d4d8">${escapeHtml(primaryLabel)}</text>`;
+                    const countY = y + (hasSecondary ? 23 : 19);
+                    return `<g><title>${escapeHtml(primaryLabel)} · ${escapeHtml(secondaryLabel || fmtWholePct(bucket.pct))}: ${count} IPOs (${fmtWholePct(bucket.pct)})</title>${label}<rect x="${ml}" y="${(y + (hasSecondary ? 3 : 0)).toFixed(1)}" width="${barW.toFixed(1)}" height="${hasSecondary ? rowH - 6 : rowH}" fill="${fill}" rx="5"/><text x="${(ml + barW + 8).toFixed(1)}" y="${countY.toFixed(1)}" font-size="12" font-weight="700" fill="${selected ? '#bfdbfe' : '#d4d4d8'}">${count}</text><text x="${W - mr + 5}" y="${countY.toFixed(1)}" font-size="11" fill="#71717a">${fmtWholePct(bucket.pct)}</text></g>`;
                 }).join('');
-                return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(config.ariaLabel)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="18" font-size="12" font-weight="700" fill="#d4d4d8">${escapeHtml(config.compactTitle)}</text>${rows}<text x="${ml}" y="${H - 18}" font-size="11" fill="#71717a">${escapeHtml(config.footer)}</text></svg>`;
+                const title = compact ? config.compactTitle : config.title;
+                return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(config.ariaLabel)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="18" font-size="12" font-weight="700" fill="#d4d4d8">${escapeHtml(title)}</text>${rows}<text x="${ml}" y="${H - 18}" font-size="11" fill="#71717a">${escapeHtml(config.footer)}</text></svg>`;
             }
             const W = 760;
-            const H = 236;
+            const H = config.height || 236;
             const ml = 42;
             const mr = 24;
             const mt = 28;
-            const mb = 58;
+            const mb = config.bottomMargin || 58;
+            const axisLabelSize = config.axisLabelSize || 11;
+            const secondaryAxisLabelSize = config.secondaryAxisLabelSize || 10;
+            const pctLabelSize = config.pctLabelSize || 11;
             const plotW = W - ml - mr;
             const plotH = H - mt - mb;
             const maxCount = Math.max(...buckets.map(bucket => bucket.count || 0), 1);
@@ -462,8 +457,17 @@
                 const y = mt + plotH - barH;
                 const selected = topBucket && bucket.label === topBucket.label;
                 const fill = selected ? '#3b82f6' : '#52525b';
-                const label = escapeHtml(bucket.label);
-                return `<g><title>${label}: ${count} IPOs (${fmtWholePct(bucket.pct)})</title><rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${fill}" rx="5"/><text x="${(x + barW / 2).toFixed(1)}" y="${(y - 8).toFixed(1)}" text-anchor="middle" font-size="12" fill="${selected ? '#bfdbfe' : '#d4d4d8'}">${count}</text><text x="${(x + barW / 2).toFixed(1)}" y="${(H - 31).toFixed(1)}" text-anchor="middle" font-size="11" fill="#a1a1aa">${label}</text><text x="${(x + barW / 2).toFixed(1)}" y="${(H - 14).toFixed(1)}" text-anchor="middle" font-size="10" fill="#71717a">${fmtWholePct(bucket.pct)}</text></g>`;
+                const primaryText = config.primaryLabel ? config.primaryLabel(bucket) : bucket.label;
+                const secondaryText = config.secondaryLabel ? (config.secondaryLabel(bucket) || '') : '';
+                const label = escapeHtml(primaryText);
+                const secondaryLabel = escapeHtml(secondaryText);
+                const titleLabel = secondaryText ? `${label} · ${secondaryLabel}` : label;
+                const labelY = secondaryText ? H - 45 : H - 31;
+                const pctY = secondaryText ? H - 10 : H - 14;
+                const secondaryAxisLabel = secondaryText
+                    ? `<text x="${(x + barW / 2).toFixed(1)}" y="${(H - 27).toFixed(1)}" text-anchor="middle" font-size="${secondaryAxisLabelSize}" fill="#71717a">${secondaryLabel}</text>`
+                    : '';
+                return `<g><title>${titleLabel}: ${count} IPOs (${fmtWholePct(bucket.pct)})</title><rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${fill}" rx="5"/><text x="${(x + barW / 2).toFixed(1)}" y="${(y - 8).toFixed(1)}" text-anchor="middle" font-size="12" fill="${selected ? '#bfdbfe' : '#d4d4d8'}">${count}</text><text x="${(x + barW / 2).toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-size="${axisLabelSize}" fill="#a1a1aa">${label}</text>${secondaryAxisLabel}<text x="${(x + barW / 2).toFixed(1)}" y="${pctY.toFixed(1)}" text-anchor="middle" font-size="${pctLabelSize}" fill="#71717a">${fmtWholePct(bucket.pct)}</text></g>`;
             }).join('');
             return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(config.ariaLabel)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="18" font-size="12" font-weight="700" fill="#d4d4d8">${escapeHtml(config.title)}</text>${grid}<line x1="${ml}" x2="${W - mr}" y1="${(mt + plotH).toFixed(1)}" y2="${(mt + plotH).toFixed(1)}" stroke="#3f3f46"/>${bars}<text x="${W - mr}" y="18" text-anchor="end" font-size="11" fill="#71717a">Count of IPOs</text></svg>`;
         }
@@ -481,8 +485,15 @@
             return bucketChartSvg(analysis.clockBuckets || [], analysis.topClockBucket, {
                 title: 'Market clock time of first-day low',
                 compactTitle: 'Clock time of low',
-                footer: 'Count of IPOs by ET clock time',
-                ariaLabel: 'Distribution of first-day low by US Eastern market clock time'
+                footer: 'NYC time and German local time (D), DST-aware',
+                ariaLabel: 'Distribution of first-day low by US Eastern and Central European market clock time',
+                height: 264,
+                bottomMargin: 82,
+                axisLabelSize: 10,
+                secondaryAxisLabelSize: 10,
+                pctLabelSize: 11,
+                primaryLabel: bucket => bucket.nycLabel || bucket.label,
+                secondaryLabel: bucket => bucket.germanChartLabel || (bucket.berlinLabel ? `${bucket.berlinLabel} (D)` : '')
             });
         }
 
@@ -506,6 +517,9 @@
             const latest = analysis.latestLow ? `${analysis.latestLow.ticker} ${formatElapsedPlain(analysis.latestLow.deltaMinutes)}` : '—';
             const topWindow = analysis.topBucket ? analysis.topBucket.label : '—';
             const topClockWindow = analysis.topClockBucket ? analysis.topClockBucket.label : '—';
+            const topClockBerlin = analysis.topClockBucket ? analysis.topClockBucket.germanChartLabel || '' : '';
+            const medianClockLabel = `${analysis.medianLowTime || '—'}${analysis.medianLowGermanLabel ? `, ${analysis.medianLowGermanLabel}` : ''}`;
+            const medianClockMetric = `${analysis.medianLowTime || '—'}${analysis.medianLowGermanLabel ? `<br>${analysis.medianLowGermanLabel}` : ''}`;
             const expertNotes = (analysis.expertNotes || []).map(expertNoteHtml).join('');
             const sourceNote = `${counts.exact5m || 0} exact 5-minute ${(counts.exact5m || 0) === 1 ? 'chart' : 'charts'}, ${counts.dailyEstimate || 0} daily-OHLC ${(counts.dailyEstimate || 0) === 1 ? 'estimate' : 'estimates'}${counts.syntheticOmitted ? `, ${counts.syntheticOmitted} synthetic ${(counts.syntheticOmitted || 0) === 1 ? 'fallback was' : 'fallbacks were'} omitted` : ''}`;
             mount.innerHTML = `
@@ -513,12 +527,12 @@
                     <div class="max-w-3xl">
                         <div class="section-header text-blue-400">First-day buyer window</div>
                         <h2 class="font-display text-3xl sm:text-4xl tracking-tight mt-1">When the day-one low tends to appear</h2>
-                        <p class="text-zinc-400 mt-2 leading-7">Across this $25B+ set since ${analysis.cutoffDate}, the median first-day low appears ${formatElapsedPlain(analysis.medianDeltaMinutes)} after the first public trade, at a median clock time of ${analysis.medianLowTime || '—'} ET. The busiest elapsed window is ${topWindow}; the busiest clock window is ${topClockWindow} ET.</p>
+                        <p class="text-zinc-400 mt-2 leading-7">Across this $25B+ set since ${analysis.cutoffDate}, the median first-day low appears ${formatElapsedPlain(analysis.medianDeltaMinutes)} after the first public trade, at a median clock time of ${medianClockLabel}. The busiest elapsed window is ${topWindow}; the busiest clock window is ${topClockWindow} NYC${topClockBerlin ? ` (${topClockBerlin})` : ''}.</p>
                     </div>
                     <div class="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-2 gap-3 text-sm xl:w-[360px]">
                         ${metric('Sample', `${analysis.sampleSize} IPOs`)}
                         ${metric('Median low', formatElapsedPlain(analysis.medianDeltaMinutes), 'text-blue-400')}
-                        ${metric('Median clock', `${analysis.medianLowTime || '—'} ET`, 'text-blue-400')}
+                        ${metric('Median clock', medianClockMetric, 'text-blue-400')}
                         ${metric('After 2h', fmtWholePct(analysis.afterTwoHoursPct), 'text-amber-400')}
                     </div>
                 </div>
@@ -534,7 +548,7 @@
                     <div class="space-y-4">
                         <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
                             <div class="section-header text-zinc-500">Opportunity read</div>
-                            <p class="text-zinc-300 mt-2 leading-7">This is a timing map, not a buy signal. In this selection, ${fmtWholePct(analysis.afterTwoHoursPct)} of lows appear at least two hours after trading starts and ${fmtWholePct(analysis.noonOrLaterPct)} land at noon or later ET. Extremes: ${fastest} was quickest; ${latest} was latest.</p>
+                            <p class="text-zinc-300 mt-2 leading-7">This is a timing map, not a buy signal. In this selection, ${fmtWholePct(analysis.afterTwoHoursPct)} of lows appear at least two hours after trading starts and ${fmtWholePct(analysis.noonOrLaterPct)} land at noon or later NYC time. Extremes: ${fastest} was quickest; ${latest} was latest.</p>
                         </div>
                         <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
                             <div class="section-header text-zinc-500">Expert check</div>
@@ -595,10 +609,6 @@
         function renderCards() {
             const list = visibleIpos();
             document.getElementById('cards').innerHTML = list.map(cardHtml).join('');
-            document.getElementById('count-total').textContent = ipos.length;
-            document.getElementById('count-visible').textContent = list.length;
-            document.getElementById('newest-date').textContent = ipos.length ? ipos.reduce((m, ipo) => ipo.date > m ? ipo.date : m, ipos[0].date) : '—';
-            document.getElementById('largest-cap').textContent = ipos.length ? fmtCap(Math.max(...ipos.map(ipo => ipo.marketCap || 0))) : '—';
             document.getElementById('nav-count').textContent = `${ipos.length} ${ipos.length === 1 ? 'listing' : 'listings'} above $25B`;
             document.getElementById('empty-state').classList.toggle('hidden', list.length !== 0);
         }
@@ -631,6 +641,7 @@
         });
 
         setSortToggleState();
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
         renderAnalysis();
         renderCards();
     </script>

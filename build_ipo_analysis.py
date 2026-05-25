@@ -23,11 +23,14 @@ import pathlib
 import re
 import sys
 from typing import Any
+from zoneinfo import ZoneInfo
 
 
 MARKET_OPEN_MINUTES = 9 * 60 + 30
 ANALYSIS_YEARS = 15
 REFRESH_DATE = dt.date.today().isoformat()
+NYC = ZoneInfo("America/New_York")
+BERLIN = ZoneInfo("Europe/Berlin")
 
 ANALYSIS_BUCKETS = [
     {"label": "0-30m", "minMinutes": 0, "maxMinutes": 30},
@@ -107,6 +110,56 @@ def time_to_minutes(time_s: str | None) -> int | None:
 
 def minutes_to_time(minutes: int) -> str:
     return f"{minutes // 60:02d}:{minutes % 60:02d}"
+
+
+def market_datetime(date_s: str, minute: int, zone: ZoneInfo = NYC) -> dt.datetime:
+    date = dt.date.fromisoformat(date_s)
+    return dt.datetime(date.year, date.month, date.day, minute // 60, minute % 60, tzinfo=zone)
+
+
+def german_zone_label(value: dt.datetime) -> str:
+    return {"CET": "MEZ", "CEST": "MESZ"}.get(value.tzname() or "", value.tzname() or "MEZ")
+
+
+def berlin_datetime(date_s: str, minute: int) -> dt.datetime:
+    return market_datetime(date_s, minute, NYC).astimezone(BERLIN)
+
+
+def berlin_time_label(date_s: str, minute: int) -> str:
+    return berlin_datetime(date_s, minute).strftime("%H:%M")
+
+
+def berlin_range_parts(date_s: str, start_minute: int, end_minute: int) -> tuple[str, str]:
+    start = berlin_datetime(date_s, start_minute)
+    end = berlin_datetime(date_s, end_minute)
+    time_range = f"{start:%H:%M}-{end:%H:%M}"
+    zone_labels = []
+    for value in [start, end]:
+        label = german_zone_label(value)
+        if label not in zone_labels:
+            zone_labels.append(label)
+    return time_range, "/".join(zone_labels)
+
+
+def time_range_minutes(time_range: str) -> tuple[int, int] | None:
+    try:
+        start_s, end_s = time_range.split("-", 1)
+    except ValueError:
+        return None
+    start = time_to_minutes(start_s)
+    end = time_to_minutes(end_s)
+    if start is None or end is None:
+        return None
+    return start, end
+
+
+def german_chart_label(time_ranges: list[str]) -> str:
+    parsed = [parts for value in time_ranges if (parts := time_range_minutes(value))]
+    if not parsed:
+        return ""
+    start = min(parts[0] for parts in parsed)
+    end = max(parts[1] for parts in parsed)
+    return f"{minutes_to_time(start)}-{minutes_to_time(end)} (D)"
 
 
 def js_hash_ticker(ticker: str) -> int:
@@ -296,16 +349,24 @@ def low_timing_record(ipo: dict[str, Any], first_day_bars: dict[str, list[list[A
     delta = low["minute"] - first["minute"]
     bucket = bucket_for_delta(delta)
     clock_bucket = bucket_for_clock_time(low["minute"])
+    low_berlin = berlin_datetime(ipo["date"], int(low["minute"]))
+    first_minute = int(first["minute"])
+    low_minute = int(low["minute"])
+    low_berlin_minute = low_berlin.hour * 60 + low_berlin.minute
     return {
         "ticker": ipo["ticker"],
         "name": ipo["name"],
         "date": ipo["date"],
         "marketCap": round_or_none(ipo.get("marketCap")),
         "source": low.get("source") or first.get("source") or "fallback",
-        "firstTime": first.get("time") or minutes_to_time(first["minute"]),
-        "lowTime": low.get("time") or minutes_to_time(low["minute"]),
-        "firstMinute": int(first["minute"]),
-        "lowMinute": int(low["minute"]),
+        "firstTime": minutes_to_time(first_minute),
+        "lowTime": minutes_to_time(low_minute),
+        "firstBerlinTime": berlin_time_label(ipo["date"], first_minute),
+        "lowBerlinTime": f"{low_berlin:%H:%M}",
+        "lowBerlinZone": german_zone_label(low_berlin),
+        "lowBerlinMinute": low_berlin_minute,
+        "firstMinute": first_minute,
+        "lowMinute": low_minute,
         "deltaMinutes": int(round(delta)),
         "lowPrice": round_or_none(float(low["low"])),
         "bucket": bucket["label"],
@@ -340,12 +401,35 @@ def build_analysis(ipos: list[dict[str, Any]], first_day_bars: dict[str, list[li
         )
     clock_buckets = []
     for bucket in CLOCK_TIME_BUCKETS:
-        count = sum(1 for record in records if record["clockBucket"] == bucket["label"])
+        bucket_records = [record for record in records if record["clockBucket"] == bucket["label"]]
+        count = len(bucket_records)
+        berlin_ranges: list[str] = []
+        berlin_zones: list[str] = []
+        for record in bucket_records:
+            time_range, zone_label = berlin_range_parts(record["date"], bucket["startMinute"], bucket["endMinute"])
+            if time_range not in berlin_ranges:
+                berlin_ranges.append(time_range)
+            for zone_part in zone_label.split("/"):
+                if zone_part not in berlin_zones:
+                    berlin_zones.append(zone_part)
+        if not berlin_ranges:
+            time_range, zone_label = berlin_range_parts(as_of, bucket["startMinute"], bucket["endMinute"])
+            berlin_ranges.append(time_range)
+            berlin_zones.extend(zone_part for zone_part in zone_label.split("/") if zone_part not in berlin_zones)
+        berlin_ranges.sort()
+        berlin_zones.sort(key=lambda label: {"MEZ": 0, "MESZ": 1}.get(label, 2))
+        berlin_label = " / ".join(berlin_ranges)
+        berlin_zone_label = "/".join(berlin_zones)
         clock_buckets.append(
             {
                 **bucket,
                 "count": count,
                 "pct": round_or_none(count / len(records) * 100 if records else None, 1),
+                "nycLabel": bucket["label"],
+                "berlinLabel": berlin_label,
+                "berlinZoneLabel": berlin_zone_label,
+                "germanChartLabel": german_chart_label(berlin_ranges),
+                "germanFullLabel": f"{berlin_zone_label} {berlin_label}".strip(),
             }
         )
     top_bucket = max(buckets, key=lambda bucket: (bucket["count"], -bucket["minMinutes"])) if buckets else None
@@ -356,6 +440,10 @@ def build_analysis(ipos: list[dict[str, Any]], first_day_bars: dict[str, list[li
     after_two_hours = sum(1 for record in records if record["deltaMinutes"] >= 120)
     noon_or_later = sum(1 for record in records if record["lowMinute"] >= 12 * 60)
     median_low_minute = median([float(record["lowMinute"]) for record in records])
+    median_low_berlin_minute = median([float(record["lowBerlinMinute"]) for record in records])
+    median_low_german_time = (
+        minutes_to_time(round(median_low_berlin_minute)) if median_low_berlin_minute is not None else None
+    )
     return {
         "generatedAt": dt.date.today().isoformat(),
         "asOf": as_of,
@@ -366,6 +454,9 @@ def build_analysis(ipos: list[dict[str, Any]], first_day_bars: dict[str, list[li
         "medianDeltaMinutes": round_or_none(median(deltas), 1),
         "medianLowMinute": round_or_none(median_low_minute, 1),
         "medianLowTime": minutes_to_time(round(median_low_minute)) if median_low_minute is not None else None,
+        "medianLowGermanMinute": round_or_none(median_low_berlin_minute, 1),
+        "medianLowGermanTime": median_low_german_time,
+        "medianLowGermanLabel": f"{median_low_german_time} (D)" if median_low_german_time else None,
         "firstHourPct": round_or_none(first_hour / len(records) * 100 if records else None, 1),
         "afterTwoHoursPct": round_or_none(after_two_hours / len(records) * 100 if records else None, 1),
         "noonOrLaterPct": round_or_none(noon_or_later / len(records) * 100 if records else None, 1),

@@ -55,8 +55,8 @@ IPO object fields:
 - `sourceCounts` - exact 5-minute vs daily-OHLC estimate counts.
 - `medianDeltaMinutes`, `firstHourPct`, `afterTwoHoursPct`.
 - `buckets` - elapsed-time buckets from first trade to first-day low.
-- `medianLowTime`, `noonOrLaterPct`, `clockBuckets` - US/Eastern clock-time analysis for when the first-day low occurred.
-- Clock-time labels use 24-hour format, for example `09:30`, `13:00`, and `13:00-14:00`.
+- `medianLowTime`, `medianLowGermanLabel`, `noonOrLaterPct`, `clockBuckets` - US/Eastern and German local clock-time analysis for when the first-day low occurred.
+- Clock-time labels use 24-hour format for NYC plus German ` (D)` labels, for example `09:30`, `13:00`, and `13:00-14:00 (D)`.
 - `fastestLow`, `latestLow`, and per-symbol `records`.
 - `expertNotes` - short researched guidance with source URLs.
 
@@ -98,7 +98,7 @@ Analysis source:
 - It mirrors the browser chart-estimation logic so the low-timing analysis and visible estimated charts stay aligned.
 - It analyzes IPOs in the rolling 15-year window as of the data refresh date.
 - Exact timing uses Yahoo 5-minute bars when available; daily-OHLC charts are included as estimates; synthetic fallback charts are omitted from summary statistics.
-- Clock-time buckets are US/Eastern market time and should remain in 24-hour format.
+- Clock-time buckets are based on US/Eastern market time and should show dual NYC plus German ` (D)` labels in 24-hour format. Generate German labels in Python with `Europe/Berlin` timezone conversion rather than a hard-coded offset because US/EU daylight-saving changes do not always align.
 - Current expert-note research sources:
   - SEC Investor.gov IPO bulletin: `https://www.sec.gov/files/ipo-investorbulletin.pdf`
   - Schwab IPO basics: `https://www.schwab.com/learn/story/ipo-basics-what-to-know-before-investing`
@@ -242,7 +242,7 @@ Before calling an IPO change done:
 - `ipo-data.js` includes the top 25 cap leaders plus all post-2020 `$25B+` IPOs.
 - `ipo-analysis.js` is generated from `build_ipo_analysis.py` and the top analysis panel renders above the filters.
 - The top analysis panel shows both elapsed-time delta and US/Eastern clock-time distributions for first-day lows.
-- Clock-time chart labels use 24-hour ET format, not AM/PM labels.
+- Clock-time chart labels use 24-hour NYC and German ` (D)` format, not AM/PM labels.
 - No included IPO has a known `firstDay.open` below `$1`.
 - `CBRS` is present and its chart uses real Yahoo 5-minute bars and does not begin at `$185`.
 - Search filters cards by ticker/company/exchange/sector.

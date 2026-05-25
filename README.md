@@ -29,7 +29,7 @@ python3 refresh_ipo_data.py --threshold-b 25 --limit 25
 
 The refresh uses StockAnalysis for IPO metadata and Yahoo Finance chart endpoints for first-day OHLCV data. It writes all generated JavaScript data files.
 
-Clock-time analysis is shown in US/Eastern 24-hour format, for example `09:30`, `13:00`, and `13:00-14:00`.
+Clock-time analysis is shown with dual 24-hour labels: NYC time plus German local time with a ` (D)` suffix, converted in Python with daylight-saving rules.
 
 To rebuild only the derived analysis:
 
