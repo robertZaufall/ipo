@@ -10,19 +10,23 @@ This repo builds the static `ipo` page published at:
 
 ## Current Shape
 
-- The app is a single static file: `index.html`.
+- The app is a static page: `index.html` plus generated `ipo-data.js`, `chart-data.js`, and `ipo-analysis.js`.
 - There is no build step.
 - Styling uses Tailwind from CDN plus local CSS in `index.html`.
 - Candlestick charts are inline SVG generated in browser JavaScript.
+- The top analysis panel is an inline SVG/HTML view generated in browser JavaScript from precomputed `ipo-analysis.js`.
 - Do not reintroduce charting CDNs unless Rob explicitly asks. Earlier chart-library attempts rendered blank in production.
-- The current chart path embeds real Yahoo Finance 5-minute bars where available and falls back to a visibly estimated SVG only when intraday history is unavailable.
+- The current chart path loads real Yahoo Finance 5-minute bars from `chart-data.js` where available and falls back to a visibly estimated SVG anchored by Yahoo daily OHLC when intraday history is unavailable.
+- Use `refresh_ipo_data.py` to refresh the IPO list, first-day intraday bars, and derived timing analysis.
+- Use `build_ipo_analysis.py` only when rebuilding the analysis from existing generated data without re-fetching market data.
 
 ## Data Model
 
-`index.html` contains two main JavaScript data blocks:
+The page has three generated JavaScript data files:
 
-- `ipos`: one object per IPO card.
-- `firstDayBars`: optional real first-trading-day 5-minute OHLCV bars keyed by ticker.
+- `ipos` in `ipo-data.js`: one object per IPO card.
+- `firstDayBars` in `chart-data.js`: optional real first-trading-day 5-minute OHLCV bars keyed by ticker.
+- `ipoAnalysis` in `ipo-analysis.js`: derived 15-year first-day low timing analysis and expert-note links.
 
 IPO object fields:
 
@@ -36,6 +40,7 @@ IPO object fields:
 - `marketCap` - billions USD
 - `dealSize` - millions USD raised
 - `dayChange` - percent from IPO price to current price
+- `firstDay` - optional Yahoo daily OHLC anchor for older listings without 5-minute bars
 
 `firstDayBars` row format:
 
@@ -43,27 +48,61 @@ IPO object fields:
 ["12:55", open, high, low, close, volume]
 ```
 
+`ipoAnalysis` includes:
+
+- `cutoffDate` - rolling 15-year analysis start date.
+- `sampleSize` - number of IPOs included after omitting synthetic fallback charts.
+- `sourceCounts` - exact 5-minute vs daily-OHLC estimate counts.
+- `medianDeltaMinutes`, `firstHourPct`, `afterTwoHoursPct`.
+- `buckets` - elapsed-time buckets from first trade to first-day low.
+- `medianLowTime`, `noonOrLaterPct`, `clockBuckets` - US/Eastern clock-time analysis for when the first-day low occurred.
+- Clock-time labels use 24-hour format, for example `09:30`, `13:00`, and `13:00-14:00`.
+- `fastestLow`, `latestLow`, and per-symbol `records`.
+- `expertNotes` - short researched guidance with source URLs.
+
 ## Data Gathering Method
 
 The last refresh was done on 2026-05-25.
 
-Primary IPO list source:
+Primary candidate source:
 
-- `https://stockanalysis.com/ipos/2026/`
-- Use the most recent IPOs with capital raised / deal size above `$50M`.
-- Rob originally said "cap > $50B", but that only yields almost nothing in the recent IPO set. The implemented selection uses deal size above `$50M`; market cap is still displayed and used for the "capitalization biggest first" sort.
+- `https://stockanalysis.com/stocks/screener/`
+- Use the top 25 symbols whose current market cap is above `$25B` and whose StockAnalysis company profile has an IPO date.
+- Also include every IPO after 2020 with current market cap above `$25B`, using StockAnalysis yearly IPO archive pages.
+- Exclude IPOs whose known first-day start/open price is below `$1`; the default script threshold is `--min-start-price 1`.
+- Exclude `VG` / Venture Global by default because Yahoo currently returns missing or wrong first-day prices.
+- `CBRS` is force-added to the candidate set by default and must remain included when it qualifies; Rob may typo it as `CRBS`, but the correct ticker is `CBRS`.
+- `refresh_ipo_data.py` can still scan only yearly IPO archive pages with `--source yearly` or `--year`, but the default source is the combined screener + post-2020 archive set.
 
 Per-ticker detail source:
 
 - `https://stockanalysis.com/stocks/<ticker>/`
-- Pull or verify current price, market cap, IPO price/date, and related company fields from the StockAnalysis ticker page when available.
+- `https://stockanalysis.com/stocks/<ticker>/company/`
+- Pull or verify current price, market cap, IPO price/date, exchange, sector/industry, and related company fields from the StockAnalysis ticker pages when available.
 - For `CBRS`, also checked Cerebras' own IPO pricing release:
   `https://www.cerebras.ai/press-release/cerebras-systems-announces-pricing-of-initial-public-offering`
 
 Intraday candle source:
 
 - Yahoo Finance chart endpoint, example:
-  `https://query2.finance.yahoo.com/v8/finance/chart/CBRS?range=1mo&interval=5m&includePrePost=false&events=history`
+  `https://query1.finance.yahoo.com/v8/finance/chart/CBRS?period1=<epoch>&period2=<epoch>&interval=5m&includePrePost=false&events=history`
+
+Daily first-day price source:
+
+- Yahoo Finance chart endpoint with `interval=1d`.
+- Stored in `ipo-data.js` as `firstDay` and used to anchor estimated charts when 5-minute bars are unavailable.
+
+Analysis source:
+
+- `build_ipo_analysis.py` reads `ipo-data.js` and `chart-data.js`.
+- It mirrors the browser chart-estimation logic so the low-timing analysis and visible estimated charts stay aligned.
+- It analyzes IPOs in the rolling 15-year window as of the data refresh date.
+- Exact timing uses Yahoo 5-minute bars when available; daily-OHLC charts are included as estimates; synthetic fallback charts are omitted from summary statistics.
+- Clock-time buckets are US/Eastern market time and should remain in 24-hour format.
+- Current expert-note research sources:
+  - SEC Investor.gov IPO bulletin: `https://www.sec.gov/files/ipo-investorbulletin.pdf`
+  - Schwab IPO basics: `https://www.schwab.com/learn/story/ipo-basics-what-to-know-before-investing`
+  - Fidelity IPO FAQ: `https://www.fidelity.com/stock-trading/faqs-ipos`
 
 Process for real first-day bars:
 
@@ -73,7 +112,8 @@ Process for real first-day bars:
 4. Read `quote.open/high/low/close/volume`.
 5. Drop rows with missing OHLC values.
 6. Drop zero-volume offer-price placeholder rows. For `CBRS`, Yahoo included `$185` zero-volume rows before real trading; those are wrong for the visible first-day chart.
-7. Store rows as compact arrays in `firstDayBars`.
+7. Store rows as compact arrays in `chart-data.js` as `firstDayBars`.
+8. Store card metadata in `ipo-data.js` as `ipos`.
 
 Important sanity check:
 
@@ -96,7 +136,21 @@ Then open:
 http://localhost:8080
 ```
 
-Because this is a one-file static page, most edits are made directly in `index.html`.
+Most layout and behavior edits are made directly in `index.html`; generated IPO metadata lives in `ipo-data.js`, real candle rows live in `chart-data.js`, and derived low-timing analysis lives in `ipo-analysis.js`.
+
+Refresh the default combined `$25B+` data set with:
+
+```sh
+cd /Users/master/clawd/projects/ipo-site
+python3 refresh_ipo_data.py --threshold-b 25 --limit 25
+```
+
+Rebuild only the derived analysis from existing generated data with:
+
+```sh
+cd /Users/master/clawd/projects/ipo-site
+python3 build_ipo_analysis.py --input-dir . --output-dir .
+```
 
 ## Deploy Site
 
@@ -105,7 +159,7 @@ The site repo is Git-backed and pushes to GitHub Pages:
 ```sh
 cd /Users/master/clawd/projects/ipo-site
 git status --short
-git add index.html AGENTS.md
+git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py AGENTS.md README.md LICENSE
 git commit -m "Update IPO site"
 git push
 ```
@@ -185,9 +239,17 @@ Major IPOs - First-Day Charts
 Before calling an IPO change done:
 
 - `index.html` still renders without a build step.
-- `CBRS` chart uses real Yahoo 5-minute bars and does not begin at `$185`.
+- `ipo-data.js` includes the top 25 cap leaders plus all post-2020 `$25B+` IPOs.
+- `ipo-analysis.js` is generated from `build_ipo_analysis.py` and the top analysis panel renders above the filters.
+- The top analysis panel shows both elapsed-time delta and US/Eastern clock-time distributions for first-day lows.
+- Clock-time chart labels use 24-hour ET format, not AM/PM labels.
+- No included IPO has a known `firstDay.open` below `$1`.
+- `CBRS` is present and its chart uses real Yahoo 5-minute bars and does not begin at `$185`.
 - Search filters cards by ticker/company/exchange/sector.
 - Sort button toggles between IPO date recent-first and market cap biggest-first.
+- Inline JavaScript syntax still passes, for example:
+  `perl -0ne 'while(/<script>(.*?)<\/script>/sg){print $1}' index.html > /tmp/ipo-inline.js && node --check /tmp/ipo-inline.js`
+- Python scripts compile:
+  `python3 -m py_compile refresh_ipo_data.py build_ipo_analysis.py`
 - `https://glaubi.net/ipo` returns the page, not a 404.
 - `https://glaubi.net/ipo?v=<commit>` visually shows candles.
-
