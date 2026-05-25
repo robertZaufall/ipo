@@ -15,8 +15,9 @@ This repo builds the static `ipo` page published at:
 - Styling uses Tailwind from CDN plus local CSS in `index.html`.
 - Candlestick charts are inline SVG generated in browser JavaScript.
 - The top analysis panel is an inline SVG/HTML view generated in browser JavaScript from precomputed `ipo-analysis.js`.
+- The visible analysis UI contains two distribution charts followed by balanced side-by-side `Decision odds` and `Timing tells` panels. Do not re-add the removed checkpoint pill or trailing "not a buy signal" note unless Rob asks.
 - Do not reintroduce charting CDNs unless Rob explicitly asks. Earlier chart-library attempts rendered blank in production.
-- The current chart path loads real Yahoo Finance 5-minute bars from `chart-data.js` where available and falls back to a visibly estimated SVG anchored by Yahoo daily OHLC when intraday history is unavailable.
+- The chart path only draws real first-trading-day 5-minute OHLCV bars from `chart-data.js`. Suppress cards without exact bars; do not reintroduce daily-OHLC estimates or synthetic fallback charts unless Rob explicitly asks.
 - Use `refresh_ipo_data.py` to refresh the IPO list, first-day intraday bars, and derived timing analysis.
 - Use `build_ipo_analysis.py` only when rebuilding the analysis from existing generated data without re-fetching market data.
 
@@ -24,9 +25,10 @@ This repo builds the static `ipo` page published at:
 
 The page has three generated JavaScript data files:
 
-- `ipos` in `ipo-data.js`: one object per IPO card.
+- `ipos` in `ipo-data.js`: one object per IPO candidate/card; the page renders only entries with exact `firstDayBars`.
 - `firstDayBars` in `chart-data.js`: optional real first-trading-day 5-minute OHLCV bars keyed by ticker.
-- `ipoAnalysis` in `ipo-analysis.js`: derived 15-year first-day low timing analysis and expert-note links.
+- `firstDayBarSources` in `chart-data.js`: per-ticker provider labels such as `Yahoo 5m bars`, `Alpaca SIP 5m bars`, or `Alpha Vantage 5m bars`.
+- `ipoAnalysis` in `ipo-analysis.js`: derived 15-year first-day low timing analysis, probability checkpoints, and timing insights.
 
 IPO object fields:
 
@@ -40,7 +42,7 @@ IPO object fields:
 - `marketCap` - billions USD
 - `dealSize` - millions USD raised
 - `dayChange` - percent from IPO price to current price
-- `firstDay` - optional Yahoo daily OHLC anchor for older listings without 5-minute bars
+- `firstDay` - optional Yahoo daily OHLC reference, not used for chart rendering
 
 `firstDayBars` row format:
 
@@ -51,18 +53,19 @@ IPO object fields:
 `ipoAnalysis` includes:
 
 - `cutoffDate` - rolling 15-year analysis start date.
-- `sampleSize` - number of IPOs included after omitting synthetic fallback charts.
-- `sourceCounts` - exact 5-minute vs daily-OHLC estimate counts.
+- `sampleSize` - number of IPOs with exact first-day 5-minute bars in the analysis window.
+- `sourceCounts` - exact 5-minute count plus missing exact-bar count.
 - `medianDeltaMinutes`, `firstHourPct`, `afterTwoHoursPct`.
 - `buckets` - elapsed-time buckets from first trade to first-day low.
 - `medianLowTime`, `medianLowGermanLabel`, `noonOrLaterPct`, `clockBuckets` - US/Eastern and German local clock-time analysis for when the first-day low occurred.
-- Clock-time labels use 24-hour format for NYC plus German ` (D)` labels, for example `09:30`, `13:00`, and `13:00-14:00 (D)`.
+- Clock-time labels use 24-hour format for NYC plus German ` (DE)` labels, for example `09:30`, `13:00`, and `13:00-14:00 (DE)`.
+- `decisionCheckpoints` and `decisionInsights` - visible probability readouts for wait timing, opening-rush risk, lunch-or-later lows, and final-hour dips.
 - `fastestLow`, `latestLow`, and per-symbol `records`.
-- `expertNotes` - short researched guidance with source URLs.
+- `expertNotes` - researched source URLs retained in generated data for provenance; not currently rendered in the page UI.
 
 ## Data Gathering Method
 
-The last refresh was done on 2026-05-25.
+The last refresh was done on 2026-05-26.
 
 Primary candidate source:
 
@@ -86,19 +89,25 @@ Intraday candle source:
 
 - Yahoo Finance chart endpoint, example:
   `https://query1.finance.yahoo.com/v8/finance/chart/CBRS?period1=<epoch>&period2=<epoch>&interval=5m&includePrePost=false&events=history`
+- Alpaca market data historical stock bars are used as the primary fallback when paper/data credentials are available from `APCA_API_KEY_ID` plus `APCA_API_SECRET_KEY`, or compatible `ALPACA_*` names.
+- Alpaca bars endpoint example:
+  `https://data.alpaca.markets/v2/stocks/bars?symbols=ARM&timeframe=5Min&start=<rfc3339>&end=<rfc3339>&adjustment=raw&feed=sip`
+- Never commit Alpaca or Alpha Vantage keys. Alpaca keys are sent only as request headers; generated source comments must not include credentials. Alpha Vantage generated source comments must keep the `apikey` redacted.
+- Alpha Vantage `TIME_SERIES_INTRADAY` remains an optional fallback when a key is available from `ALPHAVANTAGE_KEY`, `ALPHAVANTAGE_API_KEY`, `ALPHA_VANTAGE_API_KEY`, or `AV_API_KEY`.
+- Historical Alpha Vantage intraday month data requires a premium-enabled key; if the current key returns a premium-endpoint message, the script disables the fallback for the rest of that refresh.
 
-Daily first-day price source:
+Daily first-day price reference:
 
 - Yahoo Finance chart endpoint with `interval=1d`.
-- Stored in `ipo-data.js` as `firstDay` and used to anchor estimated charts when 5-minute bars are unavailable.
+- Stored in `ipo-data.js` as `firstDay` for metadata/reference only; it must not be used to draw candle charts.
 
 Analysis source:
 
 - `build_ipo_analysis.py` reads `ipo-data.js` and `chart-data.js`.
-- It mirrors the browser chart-estimation logic so the low-timing analysis and visible estimated charts stay aligned.
+- It analyzes only exact 5-minute bars from `chart-data.js`.
 - It analyzes IPOs in the rolling 15-year window as of the data refresh date.
-- Exact timing uses Yahoo 5-minute bars when available; daily-OHLC charts are included as estimates; synthetic fallback charts are omitted from summary statistics.
-- Clock-time buckets are based on US/Eastern market time and should show dual NYC plus German ` (D)` labels in 24-hour format. Generate German labels in Python with `Europe/Berlin` timezone conversion rather than a hard-coded offset because US/EU daylight-saving changes do not always align.
+- Missing exact bars are counted in `sourceCounts.missingExact5m`; daily-OHLC estimates and synthetic fallback charts are not included.
+- Clock-time buckets are based on US/Eastern market time and should show dual NYC plus German ` (DE)` labels in 24-hour format. Generate German labels in Python with `Europe/Berlin` timezone conversion rather than a hard-coded offset because US/EU daylight-saving changes do not always align.
 - Current expert-note research sources:
   - SEC Investor.gov IPO bulletin: `https://www.sec.gov/files/ipo-investorbulletin.pdf`
   - Schwab IPO basics: `https://www.schwab.com/learn/story/ipo-basics-what-to-know-before-investing`
@@ -241,10 +250,12 @@ Before calling an IPO change done:
 - `index.html` still renders without a build step.
 - `ipo-data.js` includes the top 25 cap leaders plus all post-2020 `$25B+` IPOs.
 - `ipo-analysis.js` is generated from `build_ipo_analysis.py` and the top analysis panel renders above the filters.
-- The top analysis panel shows both elapsed-time delta and US/Eastern clock-time distributions for first-day lows.
-- Clock-time chart labels use 24-hour NYC and German ` (D)` format, not AM/PM labels.
+- The top analysis panel shows both elapsed-time delta and US/Eastern clock-time distributions for exact first-day 5-minute lows.
+- The analysis panel shows `Decision odds` and `Timing tells` as even side-by-side panels below the bar charts, without a checkpoint highlight pill or generic disclaimer row.
+- Clock-time chart labels use 24-hour NYC and German ` (DE)` format, not AM/PM labels.
 - No included IPO has a known `firstDay.open` below `$1`.
 - `CBRS` is present and its chart uses real Yahoo 5-minute bars and does not begin at `$185`.
+- Missing exact 5-minute bars are suppressed from the card list, not rendered as estimated charts.
 - Search filters cards by ticker/company/exchange/sector.
 - Sort button toggles between IPO date recent-first and market cap biggest-first.
 - Inline JavaScript syntax still passes, for example:

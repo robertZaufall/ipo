@@ -7,7 +7,7 @@ metadata, keeps the top symbols with market cap at or above the configured
 threshold, and writes:
 
 - ipo-data.js: card metadata
-- chart-data.js: first-trading-day Yahoo Finance 5-minute OHLCV bars
+- chart-data.js: first-trading-day exact 5-minute OHLCV bars
 - ipo-analysis.js: derived first-day low timing analysis
 
 Dependencies: Python 3.11+ standard library only.
@@ -19,6 +19,7 @@ import datetime as dt
 import html
 import json
 import math
+import os
 import pathlib
 import re
 import sys
@@ -34,6 +35,8 @@ from zoneinfo import ZoneInfo
 BASE_URL = "https://stockanalysis.com"
 SCREENER_URL = f"{BASE_URL}/stocks/screener/"
 YAHOO_CHART_BASE = "https://query1.finance.yahoo.com/v8/finance/chart"
+ALPACA_DATA_BASE = "https://data.alpaca.markets/v2/stocks/bars"
+ALPHA_VANTAGE_BASE = "https://www.alphavantage.co/query"
 ET = ZoneInfo("America/New_York")
 UTC = dt.timezone.utc
 DEFAULT_INTERVAL = "5m"
@@ -47,6 +50,55 @@ DEFAULT_RECENT_AFTER_YEAR = 2020
 DEFAULT_INCLUDE_TICKERS = ["CBRS"]
 DEFAULT_EXCLUDE_TICKERS = ["VG"]
 DEFAULT_MIN_START_PRICE = 1.0
+ALPACA_KEY_ID_ENV_NAMES = (
+    "APCA_API_KEY_ID",
+    "ALPACA_KEY_ID",
+    "ALPACA_API_KEY_ID",
+    "ALPACA_API_KEY",
+    "ALPACA_PAPER_API_KEY",
+)
+ALPACA_SECRET_ENV_NAMES = (
+    "APCA_API_SECRET_KEY",
+    "ALPACA_SECRET_KEY",
+    "ALPACA_API_SECRET",
+    "ALPACA_PAPER_API_SECRET",
+)
+ALPACA_DATA_URL_ENV_NAMES = (
+    "APCA_API_DATA_URL",
+    "ALPACA_DATA_URL",
+    "ALPACA_MARKET_DATA_URL",
+)
+ALPACA_INTERVALS = {
+    "1m": "1Min",
+    "5m": "5Min",
+    "15m": "15Min",
+    "30m": "30Min",
+    "60m": "1Hour",
+    "1min": "1Min",
+    "5min": "5Min",
+    "15min": "15Min",
+    "30min": "30Min",
+    "1h": "1Hour",
+    "1hour": "1Hour",
+}
+ALPHA_VANTAGE_KEY_ENV_NAMES = (
+    "ALPHAVANTAGE_KEY",
+    "ALPHAVANTAGE_API_KEY",
+    "ALPHA_VANTAGE_API_KEY",
+    "AV_API_KEY",
+)
+ALPHA_VANTAGE_INTERVALS = {
+    "1m": "1min",
+    "5m": "5min",
+    "15m": "15min",
+    "30m": "30min",
+    "60m": "60min",
+    "1min": "1min",
+    "5min": "5min",
+    "15min": "15min",
+    "30min": "30min",
+    "60min": "60min",
+}
 
 PRICING_RELEASES = {
     "CBRS": "https://www.cerebras.ai/press-release/cerebras-systems-announces-pricing-of-initial-public-offering",
@@ -108,20 +160,64 @@ def strip_tags(fragment: str) -> str:
     return squish(fragment)
 
 
-def fetch_text(url: str, *, accept: str = "text/html") -> str:
+def fetch_text(url: str, *, accept: str = "text/html", headers: dict[str, str] | None = None) -> str:
     req = urllib.request.Request(
         url,
         headers={
             "User-Agent": "Mozilla/5.0 (compatible; IPODataBuilder/1.0)",
             "Accept": accept,
+            **(headers or {}),
         },
     )
     with urllib.request.urlopen(req, timeout=30) as resp:
         return resp.read().decode("utf-8", "replace")
 
 
-def fetch_json(url: str) -> dict:
-    return json.loads(fetch_text(url, accept="application/json,text/plain,*/*"))
+def fetch_json(url: str, *, headers: dict[str, str] | None = None) -> dict:
+    return json.loads(fetch_text(url, accept="application/json,text/plain,*/*", headers=headers))
+
+
+def env_first(names: tuple[str, ...]) -> tuple[str | None, str | None]:
+    for name in names:
+        value = os.environ.get(name, "").strip()
+        if value:
+            return value, name
+    return None, None
+
+
+def alpaca_credentials() -> tuple[str | None, str | None, str | None, str | None]:
+    key_id, key_name = env_first(ALPACA_KEY_ID_ENV_NAMES)
+    secret, secret_name = env_first(ALPACA_SECRET_ENV_NAMES)
+    return key_id, secret, key_name, secret_name
+
+
+def alpaca_data_base_url() -> str:
+    value, _name = env_first(ALPACA_DATA_URL_ENV_NAMES)
+    if not value:
+        return ALPACA_DATA_BASE
+    base = value.rstrip("/")
+    if base.endswith("/v2/stocks/bars"):
+        return base
+    if base.endswith("/v2/stocks"):
+        return f"{base}/bars"
+    if base.endswith("/v2"):
+        return f"{base}/stocks/bars"
+    return f"{base}/v2/stocks/bars"
+
+
+def alpha_vantage_api_key() -> tuple[str | None, str | None]:
+    return env_first(ALPHA_VANTAGE_KEY_ENV_NAMES)
+
+
+def is_alpha_vantage_premium_error(message: str) -> bool:
+    lower = message.lower()
+    return "premium endpoint" in lower or "unlock all premium endpoints" in lower
+
+
+def alpaca_feeds(value: str | None) -> list[str]:
+    raw = value or os.environ.get("ALPACA_DATA_FEED") or os.environ.get("APCA_DATA_FEED") or "sip,iex"
+    feeds = [feed.strip().lower() for feed in raw.split(",") if feed.strip()]
+    return feeds or ["sip", "iex"]
 
 
 def parse_js_string(value: str) -> str:
@@ -393,11 +489,89 @@ def yahoo_url(ticker: str, date_s: str, interval: str, *, days: int = 1) -> str:
     return f"{YAHOO_CHART_BASE}/{urllib.parse.quote(yahoo_symbol(ticker))}?{params}"
 
 
+def alpaca_interval(interval: str) -> str:
+    try:
+        return ALPACA_INTERVALS[interval.lower()]
+    except KeyError as exc:
+        raise ValueError(f"Alpaca does not support interval {interval!r}") from exc
+
+
+def alpaca_symbol(ticker: str) -> str:
+    return ticker.replace("-", ".")
+
+
+def alpaca_session_bounds(date_s: str) -> tuple[str, str]:
+    d = dt.date.fromisoformat(date_s)
+    start = dt.datetime(d.year, d.month, d.day, 9, 30, tzinfo=ET).astimezone(UTC)
+    end = dt.datetime(d.year, d.month, d.day, 16, 0, tzinfo=ET).astimezone(UTC)
+    return start.isoformat().replace("+00:00", "Z"), end.isoformat().replace("+00:00", "Z")
+
+
+def alpaca_url(ticker: str, date_s: str, interval: str, feed: str, *, page_token: str | None = None) -> str:
+    start, end = alpaca_session_bounds(date_s)
+    params = {
+        "symbols": alpaca_symbol(ticker),
+        "timeframe": alpaca_interval(interval),
+        "start": start,
+        "end": end,
+        "limit": "10000",
+        "adjustment": "raw",
+        "feed": feed,
+        "sort": "asc",
+    }
+    if page_token:
+        params["page_token"] = page_token
+    return f"{alpaca_data_base_url()}?{urllib.parse.urlencode(params)}"
+
+
+def alpha_vantage_interval(interval: str) -> str:
+    try:
+        return ALPHA_VANTAGE_INTERVALS[interval]
+    except KeyError as exc:
+        raise ValueError(f"Alpha Vantage does not support interval {interval!r}") from exc
+
+
+def alpha_vantage_symbol(ticker: str) -> str:
+    return ticker.replace("-", ".")
+
+
+def alpha_vantage_url(ticker: str, date_s: str, interval: str, api_key: str = "<redacted>") -> str:
+    params = urllib.parse.urlencode(
+        {
+            "function": "TIME_SERIES_INTRADAY",
+            "symbol": alpha_vantage_symbol(ticker),
+            "interval": alpha_vantage_interval(interval),
+            "adjusted": "false",
+            "extended_hours": "false",
+            "month": date_s[:7],
+            "outputsize": "full",
+            "apikey": api_key,
+        }
+    )
+    return f"{ALPHA_VANTAGE_BASE}?{params}"
+
+
 def num_at(values: list | None, index: int) -> float | None:
     if not values or index >= len(values):
         return None
     value = values[index]
     if value is None:
+        return None
+    out = float(value)
+    return out if math.isfinite(out) else None
+
+
+def alpha_num(values: dict, key: str) -> float | None:
+    value = values.get(key)
+    if value in {None, ""}:
+        return None
+    out = float(value)
+    return out if math.isfinite(out) else None
+
+
+def alpaca_num(values: dict, key: str) -> float | None:
+    value = values.get(key)
+    if value in {None, ""}:
         return None
     out = float(value)
     return out if math.isfinite(out) else None
@@ -429,6 +603,103 @@ def fetch_first_day_bars(ipo: dict, interval: str) -> list[list]:
         if is_zero_volume_offer_placeholder(values, volume, ipo.get("ipoPrice")):
             continue
         rows.append([local.strftime("%H:%M"), rounded(open_, 4), rounded(high, 4), rounded(low, 4), rounded(close, 4), int(volume)])
+    return rows
+
+
+def fetch_first_day_bars_alpaca(ipo: dict, interval: str, key_id: str, secret: str, feeds: list[str]) -> tuple[list[list], str]:
+    headers = {
+        "APCA-API-KEY-ID": key_id,
+        "APCA-API-SECRET-KEY": secret,
+    }
+    target_date = dt.date.fromisoformat(ipo["date"])
+    symbol = alpaca_symbol(ipo["ticker"])
+    last_error = ""
+    for feed in feeds:
+        rows: list[list] = []
+        page_token = None
+        try:
+            while True:
+                data = fetch_json(alpaca_url(ipo["ticker"], ipo["date"], interval, feed, page_token=page_token), headers=headers)
+                bars = ((data.get("bars") or {}).get(symbol) or [])
+                for bar in bars:
+                    timestamp = bar.get("t")
+                    if not timestamp:
+                        continue
+                    local = dt.datetime.fromisoformat(timestamp.replace("Z", "+00:00")).astimezone(ET)
+                    if local.date() != target_date:
+                        continue
+                    minute = local.hour * 60 + local.minute
+                    if minute < 9 * 60 + 30 or minute > 16 * 60:
+                        continue
+                    open_ = alpaca_num(bar, "o")
+                    high = alpaca_num(bar, "h")
+                    low = alpaca_num(bar, "l")
+                    close = alpaca_num(bar, "c")
+                    volume = alpaca_num(bar, "v") or 0
+                    price_values = [open_, high, low, close]
+                    if any(value is None for value in price_values):
+                        continue
+                    if is_zero_volume_offer_placeholder(price_values, volume, ipo.get("ipoPrice")):
+                        continue
+                    rows.append([local.strftime("%H:%M"), rounded(open_, 4), rounded(high, 4), rounded(low, 4), rounded(close, 4), int(volume)])
+                page_token = data.get("next_page_token")
+                if not page_token:
+                    break
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", "replace")
+            last_error = f"{feed} HTTP {exc.code}: {body[:240]}"
+            continue
+        except Exception as exc:
+            last_error = f"{feed}: {exc}"
+            continue
+        rows.sort(key=lambda row: row[0])
+        if rows:
+            return rows, f"Alpaca {feed.upper()} 5m bars"
+    if last_error:
+        raise RuntimeError(last_error)
+    return [], ""
+
+
+def fetch_first_day_bars_alpha_vantage(ipo: dict, interval: str, api_key: str) -> list[list]:
+    target_date = dt.date.fromisoformat(ipo["date"])
+    if target_date < dt.date(2000, 1, 1):
+        return []
+    av_interval = alpha_vantage_interval(interval)
+    data = fetch_json(alpha_vantage_url(ipo["ticker"], ipo["date"], interval, api_key))
+    if "Error Message" in data:
+        raise RuntimeError(data["Error Message"])
+    if "Note" in data:
+        raise RuntimeError(data["Note"])
+    if "Information" in data:
+        raise RuntimeError(data["Information"])
+    series_key = f"Time Series ({av_interval})"
+    series = data.get(series_key)
+    if not isinstance(series, dict):
+        raise RuntimeError(f"No Alpha Vantage {av_interval} time series returned")
+
+    rows: list[list] = []
+    for timestamp, values in series.items():
+        try:
+            local = dt.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S").replace(tzinfo=ET)
+        except ValueError:
+            continue
+        if local.date() != target_date:
+            continue
+        minute = local.hour * 60 + local.minute
+        if minute < 9 * 60 + 30 or minute > 16 * 60:
+            continue
+        open_ = alpha_num(values, "1. open")
+        high = alpha_num(values, "2. high")
+        low = alpha_num(values, "3. low")
+        close = alpha_num(values, "4. close")
+        volume = alpha_num(values, "5. volume") or 0
+        price_values = [open_, high, low, close]
+        if any(value is None for value in price_values):
+            continue
+        if is_zero_volume_offer_placeholder(price_values, volume, ipo.get("ipoPrice")):
+            continue
+        rows.append([local.strftime("%H:%M"), rounded(open_, 4), rounded(high, 4), rounded(low, 4), rounded(close, 4), int(volume)])
+    rows.sort(key=lambda row: row[0])
     return rows
 
 
@@ -522,6 +793,18 @@ def write_js(path: pathlib.Path, variable: str, data, sources: list[str]) -> Non
     path.write_text("\n".join(header) + json.dumps(data, indent=2) + ";\n", encoding="utf-8")
 
 
+def write_chart_js(path: pathlib.Path, first_day_bars: dict[str, list[list]], bar_sources: dict[str, str], sources: list[str]) -> None:
+    today = dt.date.today().isoformat()
+    header = [
+        f"// Generated by refresh_ipo_data.py on {today}.",
+        *[f"// Source: {source}" for source in sources],
+        "window.firstDayBars = ",
+    ]
+    body = "\n".join(header) + json.dumps(first_day_bars, indent=2) + ";\n"
+    body += "window.firstDayBarSources = " + json.dumps(bar_sources, indent=2) + ";\n"
+    path.write_text(body, encoding="utf-8")
+
+
 def build(args: argparse.Namespace) -> int:
     output_dir = pathlib.Path(args.output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -612,29 +895,88 @@ def build(args: argparse.Namespace) -> int:
         selected_by_ticker.setdefault(item["ticker"], item)
     selected = sorted(selected_by_ticker.values(), key=lambda item: (item.get("marketCap") or 0, item.get("date") or ""), reverse=True)
     print(f"Selected {len(top_selected)} top-cap IPOs plus {len(recent_selected)} recent IPOs after {args.recent_after_year}.")
-    print(f"Writing {len(selected)} unique IPO cards.")
+    print(f"Tracking {len(selected)} unique IPO candidates. Cards render only when exact intraday bars exist.")
     for item in selected:
         current = f"${item['current']:.2f}" if item.get("current") is not None else "current n/a"
         print(f"- {item['ticker']}: ${item['marketCap']:.2f}B market cap, {current}")
 
+    alpha_key = None
+    alpha_key_name = None
+    alpaca_key_id = None
+    alpaca_secret = None
+    alpaca_feed_order = alpaca_feeds(args.alpaca_feed)
+    if not args.no_alpaca:
+        alpaca_key_id, alpaca_secret, alpaca_key_name, alpaca_secret_name = alpaca_credentials()
+        if alpaca_key_id and alpaca_secret:
+            print(f"Alpaca intraday fallback enabled from ${alpaca_key_name} / ${alpaca_secret_name} using feeds {', '.join(alpaca_feed_order)}.")
+        else:
+            print("Alpaca intraday fallback disabled because key/secret env vars are incomplete.")
+    if not args.no_alpha_vantage:
+        alpha_key, alpha_key_name = alpha_vantage_api_key()
+        if alpha_key_name:
+            print(f"Alpha Vantage intraday fallback enabled from ${alpha_key_name}.")
+        else:
+            print("Alpha Vantage intraday fallback disabled because no API key env var is set.")
+
     first_day_bars = {}
-    final_selected = []
+    bar_sources = {}
+    bar_start_excluded: set[str] = set()
     for item in selected:
         if item.get("firstDay"):
             daily = item["firstDay"]
             print(f"  {item['ticker']}: Yahoo 1d O {daily['open']} H {daily['high']} L {daily['low']} C {daily['close']}")
+        bars = []
+        source_label = ""
+        yahoo_error = ""
         try:
             bars = fetch_first_day_bars(item, args.interval)
-            if start_price_too_low(item, args.min_start_price, bars):
-                print(f"warning: {item['ticker']} removed after Yahoo {args.interval} start ${known_start_price(item, bars):.4g} below ${args.min_start_price:g}", file=sys.stderr)
-                continue
-            first_day_bars[item["ticker"]] = bars
-            print(f"  {item['ticker']}: {len(bars)} Yahoo {args.interval} bars")
-            time.sleep(args.request_delay)
+            if bars:
+                source_label = "Yahoo 5m bars"
         except Exception as exc:
-            print(f"warning: {item['ticker']} Yahoo bars failed: {exc}", file=sys.stderr)
-        final_selected.append(item)
-    selected = final_selected
+            yahoo_error = str(exc)
+        if not bars and alpaca_key_id and alpaca_secret:
+            if yahoo_error:
+                print(f"  {item['ticker']}: Yahoo {args.interval} unavailable ({yahoo_error}); trying Alpaca")
+            else:
+                print(f"  {item['ticker']}: Yahoo {args.interval} returned no rows; trying Alpaca")
+            try:
+                bars, source_label = fetch_first_day_bars_alpaca(item, args.interval, alpaca_key_id, alpaca_secret, alpaca_feed_order)
+            except Exception as exc:
+                print(f"warning: {item['ticker']} Alpaca bars failed: {exc}", file=sys.stderr)
+            time.sleep(args.alpaca_delay)
+        if not bars and alpha_key:
+            if yahoo_error:
+                print(f"  {item['ticker']}: Yahoo {args.interval} unavailable ({yahoo_error}); trying Alpha Vantage")
+            else:
+                print(f"  {item['ticker']}: Yahoo {args.interval} returned no rows; trying Alpha Vantage")
+            try:
+                bars = fetch_first_day_bars_alpha_vantage(item, args.interval, alpha_key)
+                if bars:
+                    source_label = "Alpha Vantage 5m bars"
+            except Exception as exc:
+                message = str(exc)
+                print(f"warning: {item['ticker']} Alpha Vantage bars failed: {message}", file=sys.stderr)
+                if is_alpha_vantage_premium_error(message):
+                    print("warning: Alpha Vantage fallback disabled; this key does not unlock historical intraday month data", file=sys.stderr)
+                    alpha_key = None
+            if alpha_key:
+                time.sleep(args.alpha_vantage_delay)
+        if not bars:
+            reason = f"Yahoo {args.interval} returned no rows" if not yahoo_error else f"Yahoo {args.interval} failed: {yahoo_error}"
+            print(f"warning: {item['ticker']} has no exact intraday bars ({reason}); card will be suppressed", file=sys.stderr)
+            continue
+        if start_price_too_low(item, args.min_start_price, bars):
+            bar_start_excluded.add(item["ticker"])
+            print(f"warning: {item['ticker']} removed after exact intraday start ${known_start_price(item, bars):.4g} below ${args.min_start_price:g}", file=sys.stderr)
+            continue
+        first_day_bars[item["ticker"]] = bars
+        bar_sources[item["ticker"]] = source_label
+        print(f"  {item['ticker']}: {len(bars)} {source_label}")
+        if not source_label.startswith("Alpha Vantage"):
+            time.sleep(args.request_delay)
+    if bar_start_excluded:
+        selected = [item for item in selected if item["ticker"] not in bar_start_excluded]
+    print(f"Exact intraday bars available for {len(first_day_bars)} of {len(selected)} tracked IPO candidates.")
 
     ipo_sources = [
         *source_urls,
@@ -645,10 +987,14 @@ def build(args: argparse.Namespace) -> int:
     chart_sources = [
         source
         for item in selected
-        for source in [yahoo_url(item["ticker"], item["date"], "1d", days=7), yahoo_url(item["ticker"], item["date"], args.interval)]
+        for source in [
+            yahoo_url(item["ticker"], item["date"], args.interval),
+            *( [alpaca_url(item["ticker"], item["date"], args.interval, feed) for feed in alpaca_feed_order] if alpaca_key_id and alpaca_secret else [] ),
+            *( [alpha_vantage_url(item["ticker"], item["date"], args.interval)] if alpha_key else [] ),
+        ]
     ]
     write_js(output_dir / "ipo-data.js", "ipos", [card_record(item) for item in selected], ipo_sources)
-    write_js(output_dir / "chart-data.js", "firstDayBars", first_day_bars, chart_sources)
+    write_chart_js(output_dir / "chart-data.js", first_day_bars, bar_sources, chart_sources)
     from build_ipo_analysis import build_analysis_file
 
     analysis_path = build_analysis_file(output_dir, output_dir, as_of=dt.date.today().isoformat())
@@ -671,7 +1017,12 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--exclude-ticker", action="append", default=DEFAULT_EXCLUDE_TICKERS.copy(), help="ticker to exclude from the candidate set; can be repeated")
     parser.add_argument("--min-start-price", type=float, default=DEFAULT_MIN_START_PRICE, help="drop IPOs whose known first-day start/open price is below this amount; use a negative value to disable")
     parser.add_argument("--threshold-b", type=float, default=DEFAULT_THRESHOLD_B, help="minimum market cap in billions USD")
-    parser.add_argument("--interval", default=DEFAULT_INTERVAL, help="Yahoo Finance intraday interval")
+    parser.add_argument("--interval", default=DEFAULT_INTERVAL, help="intraday interval")
+    parser.add_argument("--no-alpaca", action="store_true", help="disable Alpaca fallback even when API key and secret env vars are set")
+    parser.add_argument("--alpaca-feed", default=None, help="comma-separated Alpaca data feed preference, default from ALPACA_DATA_FEED/APCA_DATA_FEED or sip,iex")
+    parser.add_argument("--alpaca-delay", type=float, default=0.25, help="seconds to wait after each Alpaca request")
+    parser.add_argument("--no-alpha-vantage", action="store_true", help="disable Alpha Vantage fallback even when an API key env var is set")
+    parser.add_argument("--alpha-vantage-delay", type=float, default=12.1, help="seconds to wait after each Alpha Vantage request; lower this for premium keys")
     parser.add_argument("--max-workers", type=int, default=8)
     parser.add_argument("--request-delay", type=float, default=0.15)
     parser.add_argument("--output-dir", default=".")

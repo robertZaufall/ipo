@@ -80,7 +80,7 @@
         <div id="empty-state" class="hidden mt-8 bg-zinc-900 border border-zinc-800 rounded-2xl p-8 text-center text-zinc-400">No IPO cards match that search.</div>
 
         <footer class="mt-10 border-t border-zinc-900 pt-5 text-xs text-zinc-500 leading-6">
-            <p>IPO dates, prices, current prices, and market caps are refreshed from public market data sources. Data can be delayed, incomplete, wrong, or estimated and is provided without guarantee. Use your own judgment; investment decisions and consequences remain your responsibility.</p>
+            <p>IPO dates, prices, current prices, and market caps are refreshed from public market data sources. Data can be delayed, incomplete, wrong, or unavailable and is provided without guarantee. Use your own judgment; investment decisions and consequences remain your responsibility.</p>
             <p class="mt-2 text-center">&copy; <span id="copyright-year"></span> Robert Zaufall &middot; <a class="text-zinc-300 hover:text-blue-400 transition-colors" href="https://glaubi.net/">glaubi.net</a></p>
         </footer>
     </main>
@@ -92,6 +92,7 @@
         const ipos = window.ipos || [];
 
         const firstDayBars = window.firstDayBars || {};
+        const firstDayBarSources = window.firstDayBarSources || {};
         const ipoAnalysis = window.ipoAnalysis || null;
 
         let sortMode = 'date';
@@ -158,60 +159,6 @@
             return ticks;
         }
 
-        function hashTicker(ticker) {
-            return ticker.split('').reduce((acc, ch) => ((acc * 31) + ch.charCodeAt(0)) >>> 0, 17);
-        }
-
-        function seeded(seed) {
-            let s = seed >>> 0;
-            return () => {
-                s = (1664525 * s + 1013904223) >>> 0;
-                return s / 4294967296;
-            };
-        }
-
-        function clamp(value, min, max) {
-            return Math.max(min, Math.min(max, value));
-        }
-
-        function estimatedVolumeAt(index, totalBars, dailyVolume, rng) {
-            const openCloseBias = 0.75 + Math.abs((index / Math.max(totalBars - 1, 1)) - 0.5) * 1.6;
-            const pulse = index < 8 || index > totalBars - 9 ? 1.7 : 1;
-            const noise = 0.75 + rng() * 0.7;
-            const base = dailyVolume ? dailyVolume / totalBars : 100000;
-            return Math.max(1, Math.round(base * openCloseBias * pulse * noise));
-        }
-
-        function estimatedBarsFromDaily(ipo, daily) {
-            const rng = seeded(hashTicker(`${ipo.ticker}-daily`));
-            const open = Number(daily.open);
-            const highTarget = Math.max(Number(daily.high), open, Number(daily.close));
-            const lowTarget = Math.min(Number(daily.low), open, Number(daily.close));
-            const close = Number(daily.close);
-            const dailyVolume = Number(daily.volume) || null;
-            const range = Math.max(highTarget - lowTarget, Math.max(Math.abs(open), Math.abs(close), 1) * 0.01);
-            const highSlot = 10 + Math.floor(rng() * 22);
-            const lowSlot = 34 + Math.floor(rng() * 28);
-            const bars = [];
-            let last = open;
-            for (let i = 0; i < 78; i++) {
-                const progress = i / 77;
-                const base = open + (close - open) * progress;
-                const wave = Math.sin(progress * Math.PI * 2.4 + rng() * 2) * range * 0.12;
-                const noise = (rng() - 0.5) * range * 0.08;
-                const highPulse = Math.exp(-Math.pow((i - highSlot) / 7, 2)) * range * 0.28;
-                const lowPulse = Math.exp(-Math.pow((i - lowSlot) / 7, 2)) * range * 0.28;
-                const next = i === 77 ? close : clamp(base + wave + noise + highPulse - lowPulse, lowTarget, highTarget);
-                const wick = range * (0.04 + rng() * 0.08);
-                const high = i === highSlot ? highTarget : Math.min(highTarget, Math.max(last, next) + wick);
-                const low = i === lowSlot ? lowTarget : Math.max(lowTarget, Math.min(last, next) - wick);
-                const minute = MARKET_OPEN_MINUTES + i * 5;
-                bars.push({ index: i, time: minutesToTime(minute), minute, open: last, high, low, close: next, volume: estimatedVolumeAt(i, 78, dailyVolume, rng), source: 'Yahoo 1d estimate' });
-                last = next;
-            }
-            return bars;
-        }
-
         function chartData(ipo) {
             const realBars = firstDayBars[ipo.ticker];
             if (realBars && realBars.length) {
@@ -224,37 +171,10 @@
                     low: row[3],
                     close: row[4],
                     volume: row[5],
-                    source: 'Yahoo 5m'
+                    source: firstDayBarSources[ipo.ticker] || '5m bars'
                 }));
             }
-
-            if (ipo.firstDay && [ipo.firstDay.open, ipo.firstDay.high, ipo.firstDay.low, ipo.firstDay.close].every(Number.isFinite)) {
-                return estimatedBarsFromDaily(ipo, ipo.firstDay);
-            }
-
-            const rng = seeded(hashTicker(ipo.ticker));
-            const close = ipo.current || ipo.ipoPrice || 10;
-            const ipoPop = 1 + Math.max(-0.35, Math.min(1.25, (ipo.dayChange || 0) / 100));
-            const open = Math.max(0.5, close / Math.max(0.35, ipoPop));
-            const rangeBase = Math.max(open, close) * (0.08 + rng() * 0.08);
-            const highTarget = Math.max(open, close) + rangeBase * (0.45 + rng());
-            const lowTarget = Math.max(0.5, Math.min(open, close) - rangeBase * (0.45 + rng()));
-            const bars = [];
-            let last = open;
-            for (let i = 0; i < 78; i++) {
-                const progress = i / 77;
-                const drift = open + (close - open) * progress;
-                const wave = Math.sin(progress * Math.PI * 2.6 + rng() * 1.8) * rangeBase * 0.24;
-                const noise = (rng() - 0.5) * rangeBase * 0.18;
-                const next = i === 77 ? close : Math.max(lowTarget, Math.min(highTarget, drift + wave + noise));
-                const wick = rangeBase * (0.05 + rng() * 0.12);
-                const high = Math.min(highTarget, Math.max(last, next) + wick);
-                const low = Math.max(lowTarget, Math.min(last, next) - wick);
-                const minute = MARKET_OPEN_MINUTES + i * 5;
-                bars.push({ index: i, time: minutesToTime(minute), minute, open: last, high, low, close: next, volume: estimatedVolumeAt(i, 78, null, rng), source: 'fallback' });
-                last = next;
-            }
-            return bars;
+            return [];
         }
 
         function chartSummary(data) {
@@ -294,6 +214,11 @@
             const compact = window.matchMedia('(max-width: 640px)').matches;
             const W = compact ? 420 : 1040;
             const H = compact ? 820 : 655;
+            if (!data.length) {
+                const titleSize = compact ? 10 : 13;
+                const bodySize = compact ? 12 : 15;
+                return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} first-day intraday candle chart unavailable"><rect width="${W}" height="${H}" fill="#09090b"/><text x="32" y="34" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${ipo.ticker} first-day intraday candles</text><g transform="translate(${W / 2} ${H / 2 - 28})"><circle r="28" fill="#18181b" stroke="#3f3f46"/><path d="M-10 -8 L10 8 M10 -8 L-10 8" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/><text x="0" y="62" text-anchor="middle" font-size="${bodySize}" font-weight="700" fill="#e4e4e7">Real 5-minute IPO-day bars unavailable</text><text x="0" y="88" text-anchor="middle" font-size="${compact ? 10 : 12}" fill="#a1a1aa">No estimated or synthetic chart is shown.</text></g></svg>`;
+            }
             const ml = compact ? 50 : 64;
             const mr = compact ? 16 : 24;
             const mt = compact ? 34 : 32;
@@ -391,8 +316,7 @@
                 return `<g><title>${ipo.ticker} ${point.time || minutesToTime(point.minute)} low ${fmtUsd(point.low)}</title><circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${isExactLow ? (compact ? 3.5 : 4.5) : (compact ? 2.8 : 3.5)}" fill="#f59e0b" stroke="#09090b" stroke-width="1.5" opacity="${isExactLow ? 1 : 0.78}"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(axisBottomY - 5).toFixed(1)}" y2="${(axisBottomY + 6).toFixed(1)}" stroke="#fbbf24" stroke-width="${isExactLow ? 1.8 : 1.3}" opacity="${isExactLow ? 1 : 0.75}"/><text x="${labelX.toFixed(1)}" y="${(lowLabelBaseY + row * lowLabelRowGap).toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" fill="#fbbf24">${deltaLabel}</text></g>`;
             }).join('');
             const lowPriceMarker = `<text x="${W - mr - 4}" y="${Math.max(mt + 14, lowY - 7).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#fbbf24">${lowPriceLabel}</text>`;
-            const source = data[0]?.source;
-            const sourceLabel = source === 'Yahoo 5m' ? 'Yahoo 5m bars' : source === 'Yahoo 1d estimate' ? 'estimated from Yahoo 1d' : 'estimated';
+            const sourceLabel = data[0]?.source || '5m bars';
             return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} first-day intraday candle chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${ipo.ticker} first-day intraday candles · ${sourceLabel}</text>${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${volumePanel}${ipoLine}${lowGuideLines}${candles}${closeLine}${lowPriceMarker}${lowMarkers}</svg>`;
         }
 
@@ -435,7 +359,7 @@
             const H = config.height || 236;
             const ml = 42;
             const mr = 24;
-            const mt = 28;
+            const mt = config.topMargin || 46;
             const mb = config.bottomMargin || 58;
             const axisLabelSize = config.axisLabelSize || 11;
             const secondaryAxisLabelSize = config.secondaryAxisLabelSize || 10;
@@ -467,7 +391,8 @@
                 const secondaryAxisLabel = secondaryText
                     ? `<text x="${(x + barW / 2).toFixed(1)}" y="${(H - 27).toFixed(1)}" text-anchor="middle" font-size="${secondaryAxisLabelSize}" fill="#71717a">${secondaryLabel}</text>`
                     : '';
-                return `<g><title>${titleLabel}: ${count} IPOs (${fmtWholePct(bucket.pct)})</title><rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${fill}" rx="5"/><text x="${(x + barW / 2).toFixed(1)}" y="${(y - 8).toFixed(1)}" text-anchor="middle" font-size="12" fill="${selected ? '#bfdbfe' : '#d4d4d8'}">${count}</text><text x="${(x + barW / 2).toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-size="${axisLabelSize}" fill="#a1a1aa">${label}</text>${secondaryAxisLabel}<text x="${(x + barW / 2).toFixed(1)}" y="${pctY.toFixed(1)}" text-anchor="middle" font-size="${pctLabelSize}" fill="#71717a">${fmtWholePct(bucket.pct)}</text></g>`;
+                const countLabelY = Math.max(y - 8, 34);
+                return `<g><title>${titleLabel}: ${count} IPOs (${fmtWholePct(bucket.pct)})</title><rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${fill}" rx="5"/><text x="${(x + barW / 2).toFixed(1)}" y="${countLabelY.toFixed(1)}" text-anchor="middle" font-size="12" fill="${selected ? '#bfdbfe' : '#d4d4d8'}">${count}</text><text x="${(x + barW / 2).toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-size="${axisLabelSize}" fill="#a1a1aa">${label}</text>${secondaryAxisLabel}<text x="${(x + barW / 2).toFixed(1)}" y="${pctY.toFixed(1)}" text-anchor="middle" font-size="${pctLabelSize}" fill="#71717a">${fmtWholePct(bucket.pct)}</text></g>`;
             }).join('');
             return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(config.ariaLabel)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="18" font-size="12" font-weight="700" fill="#d4d4d8">${escapeHtml(config.title)}</text>${grid}<line x1="${ml}" x2="${W - mr}" y1="${(mt + plotH).toFixed(1)}" y2="${(mt + plotH).toFixed(1)}" stroke="#3f3f46"/>${bars}<text x="${W - mr}" y="18" text-anchor="end" font-size="11" fill="#71717a">Count of IPOs</text></svg>`;
         }
@@ -485,7 +410,7 @@
             return bucketChartSvg(analysis.clockBuckets || [], analysis.topClockBucket, {
                 title: 'Market clock time of first-day low',
                 compactTitle: 'Clock time of low',
-                footer: 'NYC time and German local time (D), DST-aware',
+                footer: 'NYC time and German local time (DE), DST-aware',
                 ariaLabel: 'Distribution of first-day low by US Eastern and Central European market clock time',
                 height: 264,
                 bottomMargin: 82,
@@ -493,14 +418,34 @@
                 secondaryAxisLabelSize: 10,
                 pctLabelSize: 11,
                 primaryLabel: bucket => bucket.nycLabel || bucket.label,
-                secondaryLabel: bucket => bucket.germanChartLabel || (bucket.berlinLabel ? `${bucket.berlinLabel} (D)` : '')
+                secondaryLabel: bucket => bucket.germanChartLabel || (bucket.berlinLabel ? `${bucket.berlinLabel} (DE)` : '')
             });
         }
 
-        function expertNoteHtml(note) {
-            return `<div class="border-t border-zinc-800 first:border-t-0 py-3 first:pt-0 last:pb-0">
-                <a class="text-blue-400 hover:text-blue-300 font-semibold" href="${escapeHtml(note.url)}">${escapeHtml(note.source)}</a>
-                <p class="text-zinc-400 mt-1 leading-6">${escapeHtml(note.text)}</p>
+        function decisionOddRow(checkpoint, colorClass, barClass) {
+            const pct = Number(checkpoint?.stillAheadPct) || 0;
+            const count = Number(checkpoint?.stillAheadCount) || 0;
+            const label = checkpoint?.label || 'Wait';
+            const missedPct = Number(checkpoint?.missedPct) || 0;
+            return `<div class="h-full min-h-[102px] rounded-xl border border-zinc-800 bg-zinc-900/50 p-3">
+                <div class="flex items-baseline justify-between gap-3">
+                    <span class="text-sm font-semibold text-zinc-200">${escapeHtml(label)}</span>
+                    <span class="font-mono text-base font-semibold ${colorClass}">${fmtWholePct(pct)}</span>
+                </div>
+                <div class="mt-2 h-1.5 rounded-full bg-zinc-800 overflow-hidden">
+                    <div class="h-full rounded-full ${barClass}" style="width:${Math.max(0, Math.min(100, pct)).toFixed(1)}%"></div>
+                </div>
+                <div class="mt-1.5 text-xs leading-5 text-zinc-500">${count}/${ipoAnalysis.sampleSize} lows still ahead · ${fmtWholePct(missedPct)} already gone</div>
+            </div>`;
+        }
+
+        function insightChip(value, label, helper, colorClass) {
+            return `<div class="h-full min-h-[102px] rounded-xl border border-zinc-800 bg-zinc-900/50 p-3">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="text-sm font-semibold leading-5 text-zinc-200">${label}</div>
+                    <div class="font-mono text-base font-semibold ${colorClass}">${fmtWholePct(value)}</div>
+                </div>
+                <div class="text-xs text-zinc-500 mt-1.5 leading-5">${helper}</div>
             </div>`;
         }
 
@@ -512,31 +457,38 @@
                 mount.innerHTML = `<div class="p-5 sm:p-6 text-zinc-400">Not enough first-day price data is available for the 15-year timing analysis.</div>`;
                 return;
             }
-            const counts = analysis.sourceCounts || {};
-            const fastest = analysis.fastestLow ? `${analysis.fastestLow.ticker} ${formatElapsedPlain(analysis.fastestLow.deltaMinutes)}` : '—';
-            const latest = analysis.latestLow ? `${analysis.latestLow.ticker} ${formatElapsedPlain(analysis.latestLow.deltaMinutes)}` : '—';
             const topWindow = analysis.topBucket ? analysis.topBucket.label : '—';
             const topClockWindow = analysis.topClockBucket ? analysis.topClockBucket.label : '—';
             const topClockBerlin = analysis.topClockBucket ? analysis.topClockBucket.germanChartLabel || '' : '';
-            const medianClockLabel = `${analysis.medianLowTime || '—'}${analysis.medianLowGermanLabel ? `, ${analysis.medianLowGermanLabel}` : ''}`;
-            const medianClockMetric = `${analysis.medianLowTime || '—'}${analysis.medianLowGermanLabel ? `<br>${analysis.medianLowGermanLabel}` : ''}`;
-            const expertNotes = (analysis.expertNotes || []).map(expertNoteHtml).join('');
-            const sourceNote = `${counts.exact5m || 0} exact 5-minute ${(counts.exact5m || 0) === 1 ? 'chart' : 'charts'}, ${counts.dailyEstimate || 0} daily-OHLC ${(counts.dailyEstimate || 0) === 1 ? 'estimate' : 'estimates'}${counts.syntheticOmitted ? `, ${counts.syntheticOmitted} synthetic ${(counts.syntheticOmitted || 0) === 1 ? 'fallback was' : 'fallbacks were'} omitted` : ''}`;
+            const medianClockLabel = `${analysis.medianLowTime || '—'}${analysis.medianLowGermanTime ? ` (${analysis.medianLowGermanTime})` : ''}`;
+            const medianClockMetric = medianClockLabel;
+            const insights = analysis.decisionInsights || {};
+            const decisionRows = (analysis.decisionCheckpoints || []).map((checkpoint, index) => {
+                const colors = [
+                    ['text-emerald-400', 'bg-emerald-500'],
+                    ['text-emerald-400', 'bg-emerald-500'],
+                    ['text-blue-400', 'bg-blue-500'],
+                    ['text-blue-400', 'bg-blue-500'],
+                    ['text-amber-400', 'bg-amber-500'],
+                    ['text-amber-400', 'bg-amber-500']
+                ][index] || ['text-blue-400', 'bg-blue-500'];
+                return decisionOddRow(checkpoint, colors[0], colors[1]);
+            }).join('');
             mount.innerHTML = `
                 <div class="p-5 sm:p-6 border-b border-zinc-800 flex flex-col xl:flex-row gap-5 xl:items-end xl:justify-between">
                     <div class="max-w-3xl">
                         <div class="section-header text-blue-400">First-day buyer window</div>
                         <h2 class="font-display text-3xl sm:text-4xl tracking-tight mt-1">When the day-one low tends to appear</h2>
-                        <p class="text-zinc-400 mt-2 leading-7">Across this $25B+ set since ${analysis.cutoffDate}, the median first-day low appears ${formatElapsedPlain(analysis.medianDeltaMinutes)} after the first public trade, at a median clock time of ${medianClockLabel}. The busiest elapsed window is ${topWindow}; the busiest clock window is ${topClockWindow} NYC${topClockBerlin ? ` (${topClockBerlin})` : ''}.</p>
+                        <p class="text-zinc-400 mt-2 leading-7">For $25B+ IPOs in this sample since ${analysis.cutoffDate}, the typical day-one low came ${formatElapsedPlain(analysis.medianDeltaMinutes)} after trading opened, around ${medianClockLabel}. The most common low window was ${topWindow} after the first print; by clock time, lows clustered most often between ${topClockWindow} New York time${topClockBerlin ? ` (${topClockBerlin})` : ''}.</p>
                     </div>
                     <div class="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-2 gap-3 text-sm xl:w-[360px]">
                         ${metric('Sample', `${analysis.sampleSize} IPOs`)}
                         ${metric('Median low', formatElapsedPlain(analysis.medianDeltaMinutes), 'text-blue-400')}
                         ${metric('Median clock', medianClockMetric, 'text-blue-400')}
-                        ${metric('After 2h', fmtWholePct(analysis.afterTwoHoursPct), 'text-amber-400')}
+                        ${metric('Low 2h+', fmtWholePct(analysis.afterTwoHoursPct), 'text-amber-400')}
                     </div>
                 </div>
-                <div class="p-5 sm:p-6 grid lg:grid-cols-[minmax(0,1.45fr)_minmax(300px,0.95fr)] gap-5 lg:items-start">
+                <div class="p-5 sm:p-6 space-y-5">
                     <div class="space-y-4">
                         <div class="bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden">
                             ${lowTimingChartSvg(analysis)}
@@ -545,18 +497,24 @@
                             ${clockTimingChartSvg(analysis)}
                         </div>
                     </div>
-                    <div class="space-y-4">
-                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
-                            <div class="section-header text-zinc-500">Opportunity read</div>
-                            <p class="text-zinc-300 mt-2 leading-7">This is a timing map, not a buy signal. In this selection, ${fmtWholePct(analysis.afterTwoHoursPct)} of lows appear at least two hours after trading starts and ${fmtWholePct(analysis.noonOrLaterPct)} land at noon or later NYC time. Extremes: ${fastest} was quickest; ${latest} was latest.</p>
+                    <div class="grid md:grid-cols-2 gap-5 items-stretch">
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 h-full">
+                            <div class="section-header text-blue-400">Decision odds</div>
+                            <p class="text-zinc-400 mt-2 leading-6 text-sm">If you wait instead of chasing the first print, these are the odds that the first-day low was still ahead.</p>
+                            <div class="mt-4 grid md:grid-cols-2 auto-rows-fr gap-3">${decisionRows}</div>
                         </div>
-                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
-                            <div class="section-header text-zinc-500">Expert check</div>
-                            <div class="mt-2 text-sm">${expertNotes}</div>
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 h-full">
+                            <div class="section-header text-blue-400">Timing tells</div>
+                            <p class="text-zinc-400 mt-2 leading-6 text-sm">Each number shows how often that timing pattern happened in the current exact-data sample.</p>
+                            <div class="grid md:grid-cols-2 auto-rows-fr gap-3 mt-3">
+                                ${insightChip(insights.openingPrintLow?.pct, 'The low was the very first traded price', 'If you waited even one candle, this low was already gone.', 'text-red-400')}
+                                ${insightChip(insights.openingRushLow?.pct, 'The low happened inside the first 30 minutes', 'A 30-minute wait missed these lows, but avoided chasing the first tick.', 'text-amber-400')}
+                                ${insightChip(insights.lowAfterNoon?.pct, 'The low was still ahead after noon in New York', 'These IPOs gave buyers time to watch the first wave settle.', 'text-blue-400')}
+                                ${insightChip(insights.finalHourLow?.pct, 'The low did not arrive until the final hour', 'These were late-day fades, where patience mattered most.', 'text-emerald-400')}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="px-5 sm:px-6 pb-5 sm:pb-6 text-xs text-zinc-500 leading-6">${sourceNote}. ${escapeHtml(analysis.methodology || '')}</div>`;
+                </div>`;
         }
 
         function cardHtml(ipo, index) {
@@ -597,9 +555,15 @@
             </article>`;
         }
 
+        function hasExactChartData(ipo) {
+            const rows = firstDayBars[ipo.ticker];
+            return Array.isArray(rows) && rows.length > 0;
+        }
+
         function visibleIpos() {
             const term = searchTerm.trim().toLowerCase();
-            const filtered = term ? ipos.filter(ipo => `${ipo.ticker} ${ipo.name} ${ipo.exchange} ${ipo.sector || ''}`.toLowerCase().includes(term)) : [...ipos];
+            const exactIpos = ipos.filter(hasExactChartData);
+            const filtered = term ? exactIpos.filter(ipo => `${ipo.ticker} ${ipo.name} ${ipo.exchange} ${ipo.sector || ''}`.toLowerCase().includes(term)) : [...exactIpos];
             filtered.sort((a, b) => sortMode === 'date'
                 ? b.date.localeCompare(a.date) || (b.marketCap || 0) - (a.marketCap || 0)
                 : (b.marketCap || 0) - (a.marketCap || 0) || b.date.localeCompare(a.date));
@@ -607,9 +571,10 @@
         }
 
         function renderCards() {
+            const exactCount = ipos.filter(hasExactChartData).length;
             const list = visibleIpos();
             document.getElementById('cards').innerHTML = list.map(cardHtml).join('');
-            document.getElementById('nav-count').textContent = `${ipos.length} ${ipos.length === 1 ? 'listing' : 'listings'} above $25B`;
+            document.getElementById('nav-count').textContent = `${exactCount} ${exactCount === 1 ? 'listing' : 'listings'} with exact 5m data`;
             document.getElementById('empty-state').classList.toggle('hidden', list.length !== 0);
         }
 

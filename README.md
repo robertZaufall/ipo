@@ -2,14 +2,14 @@
 
 Static first-day IPO chart page for `https://glaubi.net/ipo`.
 
-The site shows large IPO companies as full-width cards with first-day candle charts, IPO/low reference lines, volume bars, and top timing analyses for when the first-day low tends to appear by elapsed time and 24-hour market clock time.
+The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top timing analysis built from those exact bars.
 
 ## Files
 
 - `index.html` - static page, styles, chart renderer, search, and sort toggle.
 - `ipo-data.js` - generated IPO card metadata.
-- `chart-data.js` - generated Yahoo 5-minute first-day bars where available.
-- `ipo-analysis.js` - generated 15-year low-timing analyses and expert-note links.
+- `chart-data.js` - generated exact 5-minute first-day bars where available.
+- `ipo-analysis.js` - generated 15-year low-timing analysis, decision odds, and timing insights.
 - `refresh_ipo_data.py` - refreshes IPO metadata, chart data, and analysis.
 - `build_ipo_analysis.py` - rebuilds only `ipo-analysis.js` from existing generated data.
 
@@ -27,9 +27,11 @@ Open `http://localhost:8080`.
 python3 refresh_ipo_data.py --threshold-b 25 --limit 25
 ```
 
-The refresh uses StockAnalysis for IPO metadata and Yahoo Finance chart endpoints for first-day OHLCV data. It writes all generated JavaScript data files.
+The refresh uses StockAnalysis for IPO metadata, Yahoo Finance chart endpoints for first-day OHLCV data, and Alpaca market data as the main exact intraday fallback when paper/data credentials are available through `APCA_API_KEY_ID` plus `APCA_API_SECRET_KEY` or compatible `ALPACA_*` env vars. Candle charts use only exact 5-minute rows in `chart-data.js`; missing exact bars are suppressed rather than estimated.
 
-Clock-time analysis is shown with dual 24-hour labels: NYC time plus German local time with a ` (D)` suffix, converted in Python with daylight-saving rules.
+API keys are read only from the environment and must not be committed. Alpaca credentials are sent only in request headers. Alpha Vantage remains an optional fallback, but historical intraday month requests require a premium-enabled Alpha Vantage key.
+
+Clock-time analysis is shown with dual 24-hour labels: NYC time plus German local time with a ` (DE)` suffix, converted in Python with daylight-saving rules. The visible analysis UI has two distribution charts, then balanced side-by-side `Decision odds` and `Timing tells` panels.
 
 To rebuild only the derived analysis:
 
@@ -44,7 +46,7 @@ python3 -m py_compile refresh_ipo_data.py build_ipo_analysis.py
 perl -0ne 'while(/<script>(.*?)<\/script>/sg){print $1}' index.html > /tmp/ipo-inline.js && node --check /tmp/ipo-inline.js
 ```
 
-For visual QA, serve the page locally and check the header analysis, search, sort toggle, and at least the `CBRS` chart.
+For visual QA, serve the page locally and check the header analysis, the `Decision odds` / `Timing tells` panels, search, sort toggle, the `CBRS` Yahoo chart, and at least one Alpaca-sourced chart such as `ARM`.
 
 ## Deploy
 

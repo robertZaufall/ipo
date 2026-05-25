@@ -50,6 +50,15 @@ CLOCK_TIME_BUCKETS = [
     {"label": "15:00-16:00", "startMinute": 15 * 60, "endMinute": 16 * 60},
 ]
 
+DECISION_CHECKPOINTS = [
+    (15, "Wait 15m"),
+    (30, "Wait 30m"),
+    (45, "Wait 45m"),
+    (60, "Wait 1h"),
+    (90, "Wait 90m"),
+    (120, "Wait 2h"),
+]
+
 EXPERT_NOTES = [
     {
         "source": "SEC Investor.gov",
@@ -69,21 +78,19 @@ EXPERT_NOTES = [
 ]
 
 
-class Seeded:
-    def __init__(self, seed: int) -> None:
-        self.state = seed & 0xFFFFFFFF
-
-    def __call__(self) -> float:
-        self.state = (1664525 * self.state + 1013904223) & 0xFFFFFFFF
-        return self.state / 4294967296
-
-
 def read_window_assignment(path: pathlib.Path, variable: str) -> Any:
     text = path.read_text(encoding="utf-8")
-    match = re.search(rf"window\.{re.escape(variable)}\s*=\s*(.*?);\s*$", text, re.S)
+    match = re.search(rf"window\.{re.escape(variable)}\s*=\s*(.*?);\s*(?:\n|$)", text, re.S)
     if not match:
         raise ValueError(f"Could not find window.{variable} assignment in {path}")
     return json.loads(match.group(1))
+
+
+def read_optional_window_assignment(path: pathlib.Path, variable: str, default: Any) -> Any:
+    try:
+        return read_window_assignment(path, variable)
+    except ValueError:
+        return default
 
 
 def write_js(path: pathlib.Path, variable: str, data: Any) -> None:
@@ -159,110 +166,14 @@ def german_chart_label(time_ranges: list[str]) -> str:
         return ""
     start = min(parts[0] for parts in parsed)
     end = max(parts[1] for parts in parsed)
-    return f"{minutes_to_time(start)}-{minutes_to_time(end)} (D)"
+    return f"{minutes_to_time(start)}-{minutes_to_time(end)} (DE)"
 
 
-def js_hash_ticker(ticker: str) -> int:
-    acc = 17
-    for char in ticker:
-        acc = ((acc * 31) + ord(char)) & 0xFFFFFFFF
-    return acc
-
-
-def clamp(value: float, min_value: float, max_value: float) -> float:
-    return max(min_value, min(max_value, value))
-
-
-def estimated_volume_at(index: int, total_bars: int, daily_volume: float | None, rng: Seeded) -> int:
-    open_close_bias = 0.75 + abs((index / max(total_bars - 1, 1)) - 0.5) * 1.6
-    pulse = 1.7 if index < 8 or index > total_bars - 9 else 1
-    noise = 0.75 + rng() * 0.7
-    base = daily_volume / total_bars if daily_volume else 100000
-    return max(1, round(base * open_close_bias * pulse * noise))
-
-
-def estimated_bars_from_daily(ipo: dict[str, Any], daily: dict[str, Any]) -> list[dict[str, Any]]:
-    rng = Seeded(js_hash_ticker(f"{ipo['ticker']}-daily"))
-    open_ = float(daily["open"])
-    close = float(daily["close"])
-    high_target = max(float(daily["high"]), open_, close)
-    low_target = min(float(daily["low"]), open_, close)
-    daily_volume = float(daily["volume"]) if daily.get("volume") else None
-    range_ = max(high_target - low_target, max(abs(open_), abs(close), 1) * 0.01)
-    high_slot = 10 + math.floor(rng() * 22)
-    low_slot = 34 + math.floor(rng() * 28)
-    bars: list[dict[str, Any]] = []
-    last = open_
-    for index in range(78):
-        progress = index / 77
-        base = open_ + (close - open_) * progress
-        wave = math.sin(progress * math.pi * 2.4 + rng() * 2) * range_ * 0.12
-        noise = (rng() - 0.5) * range_ * 0.08
-        high_pulse = math.exp(-((index - high_slot) / 7) ** 2) * range_ * 0.28
-        low_pulse = math.exp(-((index - low_slot) / 7) ** 2) * range_ * 0.28
-        next_ = close if index == 77 else clamp(base + wave + noise + high_pulse - low_pulse, low_target, high_target)
-        wick = range_ * (0.04 + rng() * 0.08)
-        high = high_target if index == high_slot else min(high_target, max(last, next_) + wick)
-        low = low_target if index == low_slot else max(low_target, min(last, next_) - wick)
-        minute = MARKET_OPEN_MINUTES + index * 5
-        bars.append(
-            {
-                "index": index,
-                "time": minutes_to_time(minute),
-                "minute": minute,
-                "open": last,
-                "high": high,
-                "low": low,
-                "close": next_,
-                "volume": estimated_volume_at(index, 78, daily_volume, rng),
-                "source": "Yahoo 1d estimate",
-            }
-        )
-        last = next_
-    return bars
-
-
-def fallback_bars(ipo: dict[str, Any]) -> list[dict[str, Any]]:
-    rng = Seeded(js_hash_ticker(str(ipo["ticker"])))
-    close = float(ipo.get("current") or ipo.get("ipoPrice") or 10)
-    ipo_pop = 1 + max(-0.35, min(1.25, float(ipo.get("dayChange") or 0) / 100))
-    open_ = max(0.5, close / max(0.35, ipo_pop))
-    range_base = max(open_, close) * (0.08 + rng() * 0.08)
-    high_target = max(open_, close) + range_base * (0.45 + rng())
-    low_target = max(0.5, min(open_, close) - range_base * (0.45 + rng()))
-    bars: list[dict[str, Any]] = []
-    last = open_
-    for index in range(78):
-        progress = index / 77
-        drift = open_ + (close - open_) * progress
-        wave = math.sin(progress * math.pi * 2.6 + rng() * 1.8) * range_base * 0.24
-        noise = (rng() - 0.5) * range_base * 0.18
-        next_ = close if index == 77 else max(low_target, min(high_target, drift + wave + noise))
-        wick = range_base * (0.05 + rng() * 0.12)
-        high = min(high_target, max(last, next_) + wick)
-        low = max(low_target, min(last, next_) - wick)
-        minute = MARKET_OPEN_MINUTES + index * 5
-        bars.append(
-            {
-                "index": index,
-                "time": minutes_to_time(minute),
-                "minute": minute,
-                "open": last,
-                "high": high,
-                "low": low,
-                "close": next_,
-                "volume": estimated_volume_at(index, 78, None, rng),
-                "source": "fallback",
-            }
-        )
-        last = next_
-    return bars
-
-
-def chart_data(ipo: dict[str, Any], first_day_bars: dict[str, list[list[Any]]]) -> list[dict[str, Any]]:
+def chart_data(ipo: dict[str, Any], first_day_bars: dict[str, list[list[Any]]], first_day_bar_sources: dict[str, str] | None = None) -> list[dict[str, Any]]:
     rows = first_day_bars.get(ipo["ticker"])
     if rows:
         out = []
+        source = (first_day_bar_sources or {}).get(ipo["ticker"], "5m bars")
         for index, row in enumerate(rows):
             out.append(
                 {
@@ -274,14 +185,11 @@ def chart_data(ipo: dict[str, Any], first_day_bars: dict[str, list[list[Any]]]) 
                     "low": row[3],
                     "close": row[4],
                     "volume": row[5],
-                    "source": "Yahoo 5m",
+                    "source": source,
                 }
             )
         return out
-    first_day = ipo.get("firstDay")
-    if first_day and all(is_finite_number(first_day.get(key)) for key in ["open", "high", "low", "close"]):
-        return estimated_bars_from_daily(ipo, first_day)
-    return fallback_bars(ipo)
+    return []
 
 
 def is_finite_number(value: Any) -> bool:
@@ -332,16 +240,55 @@ def round_or_none(value: float | None, places: int = 2) -> float | None:
     return None if value is None else round(value, places)
 
 
-def source_key(source: str) -> str:
-    if source == "Yahoo 5m":
-        return "exact5m"
-    if source == "Yahoo 1d estimate":
-        return "dailyEstimate"
-    return "syntheticFallback"
+def decision_checkpoints(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    total = len(records)
+    out = []
+    for minutes, label in DECISION_CHECKPOINTS:
+        still_ahead = sum(1 for record in records if record["deltaMinutes"] >= minutes)
+        missed = total - still_ahead
+        out.append(
+            {
+                "label": label,
+                "minutes": minutes,
+                "stillAheadCount": still_ahead,
+                "stillAheadPct": round_or_none(still_ahead / total * 100 if total else None, 1),
+                "missedCount": missed,
+                "missedPct": round_or_none(missed / total * 100 if total else None, 1),
+            }
+        )
+    return out
 
 
-def low_timing_record(ipo: dict[str, Any], first_day_bars: dict[str, list[list[Any]]]) -> dict[str, Any] | None:
-    data = chart_data(ipo, first_day_bars)
+def pct_count(count: int, total: int) -> dict[str, Any]:
+    return {
+        "count": count,
+        "pct": round_or_none(count / total * 100 if total else None, 1),
+    }
+
+
+def decision_insights(records: list[dict[str, Any]], checkpoints: list[dict[str, Any]]) -> dict[str, Any]:
+    total = len(records)
+    first_print_low = sum(1 for record in records if record["deltaMinutes"] == 0)
+    first_30 = sum(1 for record in records if record["deltaMinutes"] < 30)
+    after_noon = sum(1 for record in records if record["lowMinute"] >= 12 * 60)
+    after_13 = sum(1 for record in records if record["lowMinute"] >= 13 * 60)
+    after_14 = sum(1 for record in records if record["lowMinute"] >= 14 * 60)
+    final_hour = sum(1 for record in records if record["lowMinute"] >= 15 * 60)
+    even_odds = [checkpoint for checkpoint in checkpoints if (checkpoint.get("stillAheadPct") or 0) >= 50]
+    last_even_odds = even_odds[-1] if even_odds else None
+    return {
+        "openingPrintLow": pct_count(first_print_low, total),
+        "openingRushLow": pct_count(first_30, total),
+        "lowAfterNoon": pct_count(after_noon, total),
+        "lowAfter13": pct_count(after_13, total),
+        "lowAfter14": pct_count(after_14, total),
+        "finalHourLow": pct_count(final_hour, total),
+        "lastEvenOddsWait": last_even_odds,
+    }
+
+
+def low_timing_record(ipo: dict[str, Any], first_day_bars: dict[str, list[list[Any]]], first_day_bar_sources: dict[str, str] | None = None) -> dict[str, Any] | None:
+    data = chart_data(ipo, first_day_bars, first_day_bar_sources)
     low = chart_low_point(data)
     first = data[0] if data else None
     if not low or not first or not is_finite_number(first.get("minute")):
@@ -358,7 +305,7 @@ def low_timing_record(ipo: dict[str, Any], first_day_bars: dict[str, list[list[A
         "name": ipo["name"],
         "date": ipo["date"],
         "marketCap": round_or_none(ipo.get("marketCap")),
-        "source": low.get("source") or first.get("source") or "fallback",
+        "source": first.get("source") or "5m bars",
         "firstTime": minutes_to_time(first_minute),
         "lowTime": minutes_to_time(low_minute),
         "firstBerlinTime": berlin_time_label(ipo["date"], first_minute),
@@ -374,20 +321,22 @@ def low_timing_record(ipo: dict[str, Any], first_day_bars: dict[str, list[list[A
     }
 
 
-def build_analysis(ipos: list[dict[str, Any]], first_day_bars: dict[str, list[list[Any]]], *, as_of: str = REFRESH_DATE) -> dict[str, Any]:
+def build_analysis(ipos: list[dict[str, Any]], first_day_bars: dict[str, list[list[Any]]], first_day_bar_sources: dict[str, str] | None = None, *, as_of: str = REFRESH_DATE) -> dict[str, Any]:
     cutoff = years_ago(as_of, ANALYSIS_YEARS)
-    all_records = [
-        low_timing_record(ipo, first_day_bars)
+    analysis_ipos = [
+        ipo
         for ipo in ipos
         if ipo.get("date") and ipo["date"] >= cutoff
     ]
-    all_records = [record for record in all_records if record]
-    records = [record for record in all_records if record["source"] != "fallback"]
+    records = [
+        low_timing_record(ipo, first_day_bars, first_day_bar_sources)
+        for ipo in analysis_ipos
+    ]
+    records = [record for record in records if record]
     deltas = [float(record["deltaMinutes"]) for record in records]
     source_counts = {
-        "exact5m": sum(1 for record in records if source_key(record["source"]) == "exact5m"),
-        "dailyEstimate": sum(1 for record in records if source_key(record["source"]) == "dailyEstimate"),
-        "syntheticOmitted": sum(1 for record in all_records if source_key(record["source"]) == "syntheticFallback"),
+        "exact5m": len(records),
+        "missingExact5m": max(0, len(analysis_ipos) - len(records)),
     }
     buckets = []
     for bucket in ANALYSIS_BUCKETS:
@@ -437,6 +386,7 @@ def build_analysis(ipos: list[dict[str, Any]], first_day_bars: dict[str, list[li
     fastest = min(records, key=lambda record: record["deltaMinutes"]) if records else None
     latest = max(records, key=lambda record: record["deltaMinutes"]) if records else None
     first_hour = sum(1 for record in records if record["deltaMinutes"] < 60)
+    first_30 = sum(1 for record in records if record["deltaMinutes"] < 30)
     after_two_hours = sum(1 for record in records if record["deltaMinutes"] >= 120)
     noon_or_later = sum(1 for record in records if record["lowMinute"] >= 12 * 60)
     median_low_minute = median([float(record["lowMinute"]) for record in records])
@@ -444,6 +394,7 @@ def build_analysis(ipos: list[dict[str, Any]], first_day_bars: dict[str, list[li
     median_low_german_time = (
         minutes_to_time(round(median_low_berlin_minute)) if median_low_berlin_minute is not None else None
     )
+    checkpoints = decision_checkpoints(records)
     return {
         "generatedAt": dt.date.today().isoformat(),
         "asOf": as_of,
@@ -456,10 +407,13 @@ def build_analysis(ipos: list[dict[str, Any]], first_day_bars: dict[str, list[li
         "medianLowTime": minutes_to_time(round(median_low_minute)) if median_low_minute is not None else None,
         "medianLowGermanMinute": round_or_none(median_low_berlin_minute, 1),
         "medianLowGermanTime": median_low_german_time,
-        "medianLowGermanLabel": f"{median_low_german_time} (D)" if median_low_german_time else None,
+        "medianLowGermanLabel": f"{median_low_german_time} (DE)" if median_low_german_time else None,
         "firstHourPct": round_or_none(first_hour / len(records) * 100 if records else None, 1),
+        "first30MinutesPct": round_or_none(first_30 / len(records) * 100 if records else None, 1),
         "afterTwoHoursPct": round_or_none(after_two_hours / len(records) * 100 if records else None, 1),
         "noonOrLaterPct": round_or_none(noon_or_later / len(records) * 100 if records else None, 1),
+        "decisionCheckpoints": checkpoints,
+        "decisionInsights": decision_insights(records, checkpoints),
         "topBucket": top_bucket,
         "topClockBucket": top_clock_bucket,
         "fastestLow": fastest,
@@ -468,7 +422,7 @@ def build_analysis(ipos: list[dict[str, Any]], first_day_bars: dict[str, list[li
         "clockBuckets": clock_buckets,
         "records": sorted(records, key=lambda record: (record["deltaMinutes"], record["ticker"])),
         "expertNotes": EXPERT_NOTES,
-        "methodology": "Uses exact Yahoo 5-minute bars where available; otherwise mirrors the site's Yahoo daily-OHLC intraday estimate. Clock times are US/Eastern market time. Synthetic fallback charts are omitted from the summary statistics.",
+        "methodology": "Uses only exact first-trading-day 5-minute OHLCV bars stored in chart-data.js. No daily-OHLC estimates or synthetic fallback charts are included in the chart display or timing analysis. Clock times are US/Eastern market time.",
     }
 
 
@@ -476,8 +430,10 @@ def build_analysis_file(input_dir: pathlib.Path, output_dir: pathlib.Path | None
     input_dir = input_dir.resolve()
     output_dir = (output_dir or input_dir).resolve()
     ipos = read_window_assignment(input_dir / "ipo-data.js", "ipos")
-    first_day_bars = read_window_assignment(input_dir / "chart-data.js", "firstDayBars")
-    analysis = build_analysis(ipos, first_day_bars, as_of=as_of)
+    chart_data_path = input_dir / "chart-data.js"
+    first_day_bars = read_window_assignment(chart_data_path, "firstDayBars")
+    first_day_bar_sources = read_optional_window_assignment(chart_data_path, "firstDayBarSources", {})
+    analysis = build_analysis(ipos, first_day_bars, first_day_bar_sources, as_of=as_of)
     output_path = output_dir / "ipo-analysis.js"
     write_js(output_path, "ipoAnalysis", analysis)
     return output_path
