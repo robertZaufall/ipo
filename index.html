@@ -94,9 +94,12 @@
         </footer>
     </main>
 
-    <script src="ipo-data.js"></script>
-    <script src="chart-data.js"></script>
-    <script src="ipo-analysis.js"></script>
+    <script>
+        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-26-2';
+        ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js'].forEach(src => {
+            document.write(`<script src="${src}?v=${encodeURIComponent(IPO_ASSET_VERSION)}"><\/script>`);
+        });
+    </script>
     <script>
         const ipos = window.ipos || [];
 
@@ -724,13 +727,15 @@
             renderCards();
         });
 
-        CAP_FILTERS.forEach(filter => {
-            document.getElementById(filter.buttonId)?.addEventListener('click', () => {
-                capFilterMode = filter.id;
-                setCapFilterState();
-                renderAnalysis();
-                renderCards();
-            });
+        document.getElementById('cap-filter')?.addEventListener('click', event => {
+            const button = event.target.closest('button[data-cap-filter]');
+            if (!button) return;
+            const nextMode = button.dataset.capFilter;
+            if (!CAP_FILTERS.some(filter => filter.id === nextMode)) return;
+            capFilterMode = nextMode;
+            setCapFilterState();
+            renderAnalysis();
+            renderCards();
         });
 
         setSortToggleState();
