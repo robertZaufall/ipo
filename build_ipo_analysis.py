@@ -59,6 +59,16 @@ DECISION_CHECKPOINTS = [
     (120, "Wait 2h"),
 ]
 
+CAP_ANALYSIS_FILTERS = [
+    {"id": "under10", "label": "<$10B", "analysisLabel": "<$10B IPOs"},
+    {"id": "all", "label": "*", "analysisLabel": "$5B+ IPOs"},
+    {"id": "gt10", "label": ">$10B", "analysisLabel": ">$10B IPOs"},
+    {"id": "gt25", "label": ">$25B", "analysisLabel": ">$25B IPOs"},
+    {"id": "gt50", "label": ">$50B", "analysisLabel": ">$50B IPOs"},
+]
+
+DEFAULT_CAP_ANALYSIS_FILTER = "gt10"
+
 EXPERT_NOTES = [
     {
         "source": "SEC Investor.gov",
@@ -426,6 +436,48 @@ def build_analysis(ipos: list[dict[str, Any]], first_day_bars: dict[str, list[li
     }
 
 
+def cap_filter_matches(ipo: dict[str, Any], filter_id: str) -> bool:
+    market_cap = ipo.get("marketCap")
+    if not is_finite_number(market_cap):
+        return filter_id == "all"
+    market_cap = float(market_cap)
+    if filter_id == "under10":
+        return market_cap < 10
+    if filter_id == "gt10":
+        return market_cap > 10
+    if filter_id == "gt25":
+        return market_cap > 25
+    if filter_id == "gt50":
+        return market_cap > 50
+    return True
+
+
+def build_cap_analysis_package(
+    ipos: list[dict[str, Any]],
+    first_day_bars: dict[str, list[list[Any]]],
+    first_day_bar_sources: dict[str, str] | None = None,
+    *,
+    as_of: str = REFRESH_DATE,
+) -> dict[str, Any]:
+    by_cap: dict[str, dict[str, Any]] = {}
+    for filter_config in CAP_ANALYSIS_FILTERS:
+        filter_id = filter_config["id"]
+        filtered_ipos = [ipo for ipo in ipos if cap_filter_matches(ipo, filter_id)]
+        analysis = build_analysis(filtered_ipos, first_day_bars, first_day_bar_sources, as_of=as_of)
+        analysis["capFilter"] = filter_config
+        by_cap[filter_id] = analysis
+    return {
+        "generatedAt": dt.date.today().isoformat(),
+        "asOf": as_of,
+        "windowYears": ANALYSIS_YEARS,
+        "defaultFilter": DEFAULT_CAP_ANALYSIS_FILTER,
+        "filters": CAP_ANALYSIS_FILTERS,
+        "byCap": by_cap,
+        "expertNotes": EXPERT_NOTES,
+        "methodology": "Uses precomputed cap-filtered analyses from exact first-trading-day 5-minute OHLCV bars stored in chart-data.js. No daily-OHLC estimates or synthetic fallback charts are included in the chart display or timing analysis.",
+    }
+
+
 def build_analysis_file(input_dir: pathlib.Path, output_dir: pathlib.Path | None = None, *, as_of: str = REFRESH_DATE) -> pathlib.Path:
     input_dir = input_dir.resolve()
     output_dir = (output_dir or input_dir).resolve()
@@ -433,7 +485,7 @@ def build_analysis_file(input_dir: pathlib.Path, output_dir: pathlib.Path | None
     chart_data_path = input_dir / "chart-data.js"
     first_day_bars = read_window_assignment(chart_data_path, "firstDayBars")
     first_day_bar_sources = read_optional_window_assignment(chart_data_path, "firstDayBarSources", {})
-    analysis = build_analysis(ipos, first_day_bars, first_day_bar_sources, as_of=as_of)
+    analysis = build_cap_analysis_package(ipos, first_day_bars, first_day_bar_sources, as_of=as_of)
     output_path = output_dir / "ipo-analysis.js"
     write_js(output_path, "ipoAnalysis", analysis)
     return output_path

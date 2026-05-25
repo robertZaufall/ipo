@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IPO • glaubi.net</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="theme-color" content="#09090b">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -29,7 +31,7 @@
                     </div>
                     <div class="hidden sm:flex px-3 py-1 rounded-full bg-zinc-900 text-xs font-medium items-center gap-x-1.5 border border-zinc-800">
                         <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
-                        <span id="nav-count" class="text-zinc-400">$25B+ listings</span>
+                        <span id="nav-count" class="text-zinc-400">$5B+ listings</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-x-2 text-zinc-400 text-xs font-mono shrink-0">
@@ -45,10 +47,17 @@
             <div>
                 <div class="inline-flex items-center gap-x-2 px-4 h-8 rounded-2xl bg-zinc-900 border border-zinc-800 text-xs font-medium tracking-[0.5px]">
                     <span class="text-emerald-400">●</span>
-                    <span>TOP 25 + RECENT $25B IPOS</span>
+                    <span>$5B+ IPO COMPANIES</span>
                 </div>
                 <h1 class="font-display text-5xl sm:text-6xl tracking-tighter font-semibold mt-3">First-day moves for market giants</h1>
                 <p class="text-lg sm:text-xl text-zinc-400 mt-2 max-w-3xl">A day-one view of top IPO companies.</p>
+                <div id="cap-filter" role="group" aria-label="Filter IPO analysis and cards by market cap" class="mt-5 h-12 w-full max-w-[34rem] rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs sm:text-sm font-semibold grid grid-cols-5 gap-1">
+                    <button id="cap-under10" type="button" data-cap-filter="under10" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&lt;$10B</button>
+                    <button id="cap-all" type="button" data-cap-filter="all" aria-pressed="false" aria-label="All market caps" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">*</button>
+                    <button id="cap-gt10" type="button" data-cap-filter="gt10" aria-pressed="true" class="rounded-xl flex items-center justify-center transition-colors bg-blue-600 text-white">&gt;$10B</button>
+                    <button id="cap-gt25" type="button" data-cap-filter="gt25" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$25B</button>
+                    <button id="cap-gt50" type="button" data-cap-filter="gt50" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$50B</button>
+                </div>
             </div>
         </div>
     </header>
@@ -97,6 +106,15 @@
 
         let sortMode = 'date';
         let searchTerm = '';
+        let capFilterMode = ipoAnalysis?.defaultFilter || 'gt10';
+
+        const CAP_FILTERS = [
+            { id: 'under10', label: '<$10B', buttonId: 'cap-under10' },
+            { id: 'all', label: '*', buttonId: 'cap-all' },
+            { id: 'gt10', label: '>$10B', buttonId: 'cap-gt10' },
+            { id: 'gt25', label: '>$25B', buttonId: 'cap-gt25' },
+            { id: 'gt50', label: '>$50B', buttonId: 'cap-gt50' }
+        ];
 
         const fmtUsd = v => v == null || !isFinite(v) ? '—' : '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         const fmtCap = b => b == null || !isFinite(b) ? '—' : b >= 1000 ? '$' + (b / 1000).toFixed(2) + 'T' : '$' + b.toFixed(b >= 10 ? 1 : 2) + 'B';
@@ -235,9 +253,6 @@
             const domain = chartTimeDomain(data);
             const tickMinutes = chartTimeTicks(domain);
             const prices = data.flatMap(d => [d.open, d.high, d.low, d.close]);
-            if (ipo.ipoPrice != null && isFinite(ipo.ipoPrice)) {
-                prices.push(ipo.ipoPrice);
-            }
             let min = Math.min(...prices), max = Math.max(...prices);
             const pad = Math.max((max - min) * 0.08, max * 0.01);
             min -= pad; max += pad;
@@ -297,7 +312,6 @@
                 return `<rect x="${(xx - candleW / 2).toFixed(1)}" y="${yy.toFixed(1)}" width="${candleW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${color}" opacity="0.28" rx="1"><title>${ipo.ticker} ${d.time || minutesToTime(d.minute)} volume ${volume.toLocaleString('en-US')}</title></rect>`;
             }).join('');
             const volumePanel = `<g><line x1="${ml}" x2="${W - mr}" y1="${volumeTopY.toFixed(1)}" y2="${volumeTopY.toFixed(1)}" stroke="#27272a"/><text x="${ml + 4}" y="${(volumeTopY + 14).toFixed(1)}" font-size="${axisSize}" fill="#71717a">Volume</text>${volumeBars}</g>`;
-            const ipoLine = ipo.ipoPrice ? `<line x1="${ml}" x2="${W - mr}" y1="${y(ipo.ipoPrice).toFixed(1)}" y2="${y(ipo.ipoPrice).toFixed(1)}" stroke="#3b82f6" stroke-dasharray="5 6"/><text x="${W - mr - 4}" y="${(y(ipo.ipoPrice) - 7).toFixed(1)}" text-anchor="end" font-size="11" fill="#60a5fa">IPO ${fmtUsd(ipo.ipoPrice)}</text>` : '';
             const lowGuideLines = `<line x1="${ml}" x2="${W - mr}" y1="${lowY.toFixed(1)}" y2="${lowY.toFixed(1)}" stroke="#f59e0b" stroke-dasharray="4 5"/>${lowPoints.map(point => {
                 const xx = x(point.minute);
                 const isExactLow = point.low === lowPoint.low;
@@ -317,11 +331,60 @@
             }).join('');
             const lowPriceMarker = `<text x="${W - mr - 4}" y="${Math.max(mt + 14, lowY - 7).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#fbbf24">${lowPriceLabel}</text>`;
             const sourceLabel = data[0]?.source || '5m bars';
-            return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} first-day intraday candle chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${ipo.ticker} first-day intraday candles · ${sourceLabel}</text>${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${volumePanel}${ipoLine}${lowGuideLines}${candles}${closeLine}${lowPriceMarker}${lowMarkers}</svg>`;
+            return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} first-day intraday candle chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${ipo.ticker} first-day intraday candles · ${sourceLabel}</text>${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${volumePanel}${lowGuideLines}${candles}${closeLine}${lowPriceMarker}${lowMarkers}</svg>`;
         }
 
         function metric(label, value, extra = '') {
             return `<div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3"><div class="text-zinc-500 text-xs">${label}</div><div class="font-mono text-base sm:text-lg font-semibold mt-0.5 ${extra}">${value}</div></div>`;
+        }
+
+        function progressMicroChart(title, startLabel, endLabel, start, end) {
+            const safeTitle = escapeHtml(title);
+            const safeStartLabel = escapeHtml(startLabel);
+            const safeEndLabel = escapeHtml(endLabel);
+            const valid = Number.isFinite(start) && Number.isFinite(end) && start > 0;
+            if (!valid) {
+                return `<div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3 min-h-[112px]">
+                    <div class="text-zinc-500 text-xs">${safeTitle}</div>
+                    <div class="mt-3 text-sm text-zinc-500">Not enough price data</div>
+                </div>`;
+            }
+            const change = (end - start) / start * 100;
+            const positive = change >= 0;
+            const color = positive ? '#22c55e' : '#ef4444';
+            const textColor = positive ? 'text-emerald-400' : 'text-red-400';
+            const W = 360;
+            const H = 54;
+            const left = 26;
+            const right = W - 26;
+            const top = 10;
+            const bottom = H - 12;
+            const min = Math.min(start, end);
+            const max = Math.max(start, end);
+            const pad = Math.max((max - min) * 0.18, Math.max(max, 1) * 0.02);
+            const y = value => top + ((max + pad - value) / Math.max((max + pad) - (min - pad), 0.01)) * (bottom - top);
+            const yStart = y(start);
+            const yEnd = y(end);
+            const area = `M ${left} ${bottom} L ${left} ${yStart.toFixed(1)} L ${right} ${yEnd.toFixed(1)} L ${right} ${bottom} Z`;
+            return `<div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3 min-h-[112px]">
+                <div class="flex items-baseline justify-between gap-3">
+                    <div class="text-zinc-500 text-xs">${safeTitle}</div>
+                    <div class="font-mono text-sm font-semibold ${textColor}">${fmtPct(change)}</div>
+                </div>
+                <svg class="mt-2 w-full h-[54px] block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${safeTitle}: ${safeStartLabel} ${fmtUsd(start)} to ${safeEndLabel} ${fmtUsd(end)}">
+                    <line x1="${left}" x2="${right}" y1="${bottom}" y2="${bottom}" stroke="#27272a"/>
+                    <path d="${area}" fill="${color}" opacity="0.08"/>
+                    <line x1="${left}" x2="${right}" y1="${yStart.toFixed(1)}" y2="${yEnd.toFixed(1)}" stroke="${color}" stroke-width="2.2" stroke-linecap="round"/>
+                    <circle cx="${left}" cy="${yStart.toFixed(1)}" r="4" fill="#09090b" stroke="#a1a1aa" stroke-width="1.5"/>
+                    <circle cx="${right}" cy="${yEnd.toFixed(1)}" r="4" fill="${color}" stroke="#09090b" stroke-width="1.5"/>
+                    <text x="${left}" y="${H - 1}" text-anchor="middle" font-size="9" fill="#71717a">${safeStartLabel}</text>
+                    <text x="${right}" y="${H - 1}" text-anchor="middle" font-size="9" fill="#71717a">${safeEndLabel}</text>
+                </svg>
+                <div class="mt-2 flex items-center justify-between gap-3 text-xs">
+                    <span class="font-mono text-zinc-500">${fmtUsd(start)}</span>
+                    <span class="font-mono ${textColor}">${fmtUsd(end)}</span>
+                </div>
+            </div>`;
         }
 
         function bucketChartSvg(buckets, topBucket, config) {
@@ -422,7 +485,26 @@
             });
         }
 
-        function decisionOddRow(checkpoint, colorClass, barClass) {
+        function currentAnalysis() {
+            if (ipoAnalysis?.byCap) {
+                return ipoAnalysis.byCap[capFilterMode]
+                    || ipoAnalysis.byCap[ipoAnalysis.defaultFilter]
+                    || ipoAnalysis.byCap.all
+                    || null;
+            }
+            return ipoAnalysis;
+        }
+
+        function currentAnalysisLabel(analysis) {
+            if (analysis?.capFilter?.analysisLabel) return analysis.capFilter.analysisLabel;
+            if (capFilterMode === 'under10') return '<$10B IPOs';
+            if (capFilterMode === 'gt10') return '>$10B IPOs';
+            if (capFilterMode === 'gt25') return '>$25B IPOs';
+            if (capFilterMode === 'gt50') return '>$50B IPOs';
+            return '$5B+ IPOs';
+        }
+
+        function decisionOddRow(checkpoint, colorClass, barClass, sampleSize) {
             const pct = Number(checkpoint?.stillAheadPct) || 0;
             const count = Number(checkpoint?.stillAheadCount) || 0;
             const label = checkpoint?.label || 'Wait';
@@ -435,7 +517,7 @@
                 <div class="mt-2 h-1.5 rounded-full bg-zinc-800 overflow-hidden">
                     <div class="h-full rounded-full ${barClass}" style="width:${Math.max(0, Math.min(100, pct)).toFixed(1)}%"></div>
                 </div>
-                <div class="mt-1.5 text-xs leading-5 text-zinc-500">${count}/${ipoAnalysis.sampleSize} lows still ahead · ${fmtWholePct(missedPct)} already gone</div>
+                <div class="mt-1.5 text-xs leading-5 text-zinc-500">${count}/${sampleSize} lows still ahead · ${fmtWholePct(missedPct)} already gone</div>
             </div>`;
         }
 
@@ -452,11 +534,12 @@
         function renderAnalysis() {
             const mount = document.getElementById('analysis-panel');
             if (!mount) return;
-            const analysis = ipoAnalysis;
+            const analysis = currentAnalysis();
             if (!analysis || !analysis.sampleSize) {
                 mount.innerHTML = `<div class="p-5 sm:p-6 text-zinc-400">Not enough first-day price data is available for the 15-year timing analysis.</div>`;
                 return;
             }
+            const analysisLabel = currentAnalysisLabel(analysis);
             const topWindow = analysis.topBucket ? analysis.topBucket.label : '—';
             const topClockWindow = analysis.topClockBucket ? analysis.topClockBucket.label : '—';
             const topClockBerlin = analysis.topClockBucket ? analysis.topClockBucket.germanChartLabel || '' : '';
@@ -472,14 +555,14 @@
                     ['text-amber-400', 'bg-amber-500'],
                     ['text-amber-400', 'bg-amber-500']
                 ][index] || ['text-blue-400', 'bg-blue-500'];
-                return decisionOddRow(checkpoint, colors[0], colors[1]);
+                return decisionOddRow(checkpoint, colors[0], colors[1], analysis.sampleSize);
             }).join('');
             mount.innerHTML = `
                 <div class="p-5 sm:p-6 border-b border-zinc-800 flex flex-col xl:flex-row gap-5 xl:items-end xl:justify-between">
                     <div class="max-w-3xl">
                         <div class="section-header text-blue-400">First-day buyer window</div>
                         <h2 class="font-display text-3xl sm:text-4xl tracking-tight mt-1">When the day-one low tends to appear</h2>
-                        <p class="text-zinc-400 mt-2 leading-7">For $25B+ IPOs in this sample since ${analysis.cutoffDate}, the typical day-one low came ${formatElapsedPlain(analysis.medianDeltaMinutes)} after trading opened, around ${medianClockLabel}. The most common low window was ${topWindow} after the first print; by clock time, lows clustered most often between ${topClockWindow} New York time${topClockBerlin ? ` (${topClockBerlin})` : ''}.</p>
+                        <p class="text-zinc-400 mt-2 leading-7">For ${escapeHtml(analysisLabel)} in this sample since ${analysis.cutoffDate}, the typical day-one low came ${formatElapsedPlain(analysis.medianDeltaMinutes)} after trading opened, around ${medianClockLabel}. The most common low window was ${topWindow} after the first print; by clock time, lows clustered most often between ${topClockWindow} New York time${topClockBerlin ? ` (${topClockBerlin})` : ''}.</p>
                     </div>
                     <div class="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-2 gap-3 text-sm xl:w-[360px]">
                         ${metric('Sample', `${analysis.sampleSize} IPOs`)}
@@ -551,6 +634,11 @@
                         ${metric('Deal size', fmtDeal(ipo.dealSize))}
                         ${metric('IPO return', fmtPct(ipo.dayChange), positive ? 'text-emerald-400' : 'text-red-400')}
                     </div>
+                    <div class="grid md:grid-cols-3 gap-3 mt-3">
+                        ${progressMicroChart('IPO to day-one close', 'IPO', 'Close', ipo.ipoPrice, summary.endPrice)}
+                        ${progressMicroChart('IPO to today', 'IPO', 'Today', ipo.ipoPrice, ipo.current)}
+                        ${progressMicroChart('Day-one close to today', 'Close', 'Today', summary.endPrice, ipo.current)}
+                    </div>
                 </div>
             </article>`;
         }
@@ -560,9 +648,23 @@
             return Array.isArray(rows) && rows.length > 0;
         }
 
+        function capFilterMatches(ipo) {
+            const marketCap = Number(ipo.marketCap);
+            if (!Number.isFinite(marketCap)) return capFilterMode === 'all';
+            if (capFilterMode === 'under10') return marketCap < 10;
+            if (capFilterMode === 'gt10') return marketCap > 10;
+            if (capFilterMode === 'gt25') return marketCap > 25;
+            if (capFilterMode === 'gt50') return marketCap > 50;
+            return true;
+        }
+
+        function exactChartIpos() {
+            return ipos.filter(hasExactChartData);
+        }
+
         function visibleIpos() {
             const term = searchTerm.trim().toLowerCase();
-            const exactIpos = ipos.filter(hasExactChartData);
+            const exactIpos = exactChartIpos().filter(capFilterMatches);
             const filtered = term ? exactIpos.filter(ipo => `${ipo.ticker} ${ipo.name} ${ipo.exchange} ${ipo.sector || ''}`.toLowerCase().includes(term)) : [...exactIpos];
             filtered.sort((a, b) => sortMode === 'date'
                 ? b.date.localeCompare(a.date) || (b.marketCap || 0) - (a.marketCap || 0)
@@ -571,10 +673,14 @@
         }
 
         function renderCards() {
-            const exactCount = ipos.filter(hasExactChartData).length;
+            const exactCount = exactChartIpos().length;
             const list = visibleIpos();
+            const capLabel = CAP_FILTERS.find(filter => filter.id === capFilterMode)?.label || '*';
+            const countLabel = capFilterMode === 'all'
+                ? `${list.length} ${list.length === 1 ? 'listing' : 'listings'} with exact 5m data`
+                : `${list.length} ${capLabel} ${list.length === 1 ? 'listing' : 'listings'} · ${exactCount} exact total`;
             document.getElementById('cards').innerHTML = list.map(cardHtml).join('');
-            document.getElementById('nav-count').textContent = `${exactCount} ${exactCount === 1 ? 'listing' : 'listings'} with exact 5m data`;
+            document.getElementById('nav-count').textContent = countLabel;
             document.getElementById('empty-state').classList.toggle('hidden', list.length !== 0);
         }
 
@@ -594,6 +700,19 @@
             cap.classList.toggle('hover:text-zinc-200', byDate);
         }
 
+        function setCapFilterState() {
+            CAP_FILTERS.forEach(filter => {
+                const button = document.getElementById(filter.buttonId);
+                if (!button) return;
+                const selected = filter.id === capFilterMode;
+                button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+                button.classList.toggle('bg-blue-600', selected);
+                button.classList.toggle('text-white', selected);
+                button.classList.toggle('text-zinc-400', !selected);
+                button.classList.toggle('hover:text-zinc-200', !selected);
+            });
+        }
+
         document.getElementById('search').addEventListener('input', event => {
             searchTerm = event.target.value;
             renderCards();
@@ -605,7 +724,17 @@
             renderCards();
         });
 
+        CAP_FILTERS.forEach(filter => {
+            document.getElementById(filter.buttonId)?.addEventListener('click', () => {
+                capFilterMode = filter.id;
+                setCapFilterState();
+                renderAnalysis();
+                renderCards();
+            });
+        });
+
         setSortToggleState();
+        setCapFilterState();
         document.getElementById('copyright-year').textContent = new Date().getFullYear();
         renderAnalysis();
         renderCards();

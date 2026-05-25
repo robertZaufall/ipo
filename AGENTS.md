@@ -14,8 +14,11 @@ This repo builds the static `ipo` page published at:
 - There is no build step.
 - Styling uses Tailwind from CDN plus local CSS in `index.html`.
 - Candlestick charts are inline SVG generated in browser JavaScript.
-- The top analysis panel is an inline SVG/HTML view generated in browser JavaScript from precomputed `ipo-analysis.js`.
+- The top analysis panel is an inline SVG/HTML view generated in browser JavaScript from precomputed cap-filtered data in `ipo-analysis.js`.
 - The visible analysis UI contains two distribution charts followed by balanced side-by-side `Decision odds` and `Timing tells` panels. Do not re-add the removed checkpoint pill or trailing "not a buy signal" note unless Rob asks.
+- IPO cards include three micro charts below the metadata: IPO price to first-day close, IPO price to current price, and first-day close to current price.
+- The market-cap segmented filter sits in the header above the analysis panel so it controls both the probability analysis and the card list. The default cap filter is `>$10B`; other options are `<$10B`, all (`*`), `>$25B`, and `>$50B`.
+- The card toolbar below the analysis keeps only search plus the Date/Cap sort toggle.
 - Do not reintroduce charting CDNs unless Rob explicitly asks. Earlier chart-library attempts rendered blank in production.
 - The chart path only draws real first-trading-day 5-minute OHLCV bars from `chart-data.js`. Suppress cards without exact bars; do not reintroduce daily-OHLC estimates or synthetic fallback charts unless Rob explicitly asks.
 - Use `refresh_ipo_data.py` to refresh the IPO list, first-day intraday bars, and derived timing analysis.
@@ -28,7 +31,7 @@ The page has three generated JavaScript data files:
 - `ipos` in `ipo-data.js`: one object per IPO candidate/card; the page renders only entries with exact `firstDayBars`.
 - `firstDayBars` in `chart-data.js`: optional real first-trading-day 5-minute OHLCV bars keyed by ticker.
 - `firstDayBarSources` in `chart-data.js`: per-ticker provider labels such as `Yahoo 5m bars`, `Alpaca SIP 5m bars`, or `Alpha Vantage 5m bars`.
-- `ipoAnalysis` in `ipo-analysis.js`: derived 15-year first-day low timing analysis, probability checkpoints, and timing insights.
+- `ipoAnalysis` in `ipo-analysis.js`: derived 15-year first-day low timing analysis, probability checkpoints, and timing insights precomputed for each cap filter.
 
 IPO object fields:
 
@@ -52,16 +55,11 @@ IPO object fields:
 
 `ipoAnalysis` includes:
 
-- `cutoffDate` - rolling 15-year analysis start date.
-- `sampleSize` - number of IPOs with exact first-day 5-minute bars in the analysis window.
-- `sourceCounts` - exact 5-minute count plus missing exact-bar count.
-- `medianDeltaMinutes`, `firstHourPct`, `afterTwoHoursPct`.
-- `buckets` - elapsed-time buckets from first trade to first-day low.
-- `medianLowTime`, `medianLowGermanLabel`, `noonOrLaterPct`, `clockBuckets` - US/Eastern and German local clock-time analysis for when the first-day low occurred.
+- Top-level `defaultFilter`, `filters`, and `byCap`.
+- `byCap.under10`, `byCap.all`, `byCap.gt10`, `byCap.gt25`, and `byCap.gt50`, each with its own precomputed probability sample.
+- Inside each cap analysis: `cutoffDate`, `sampleSize`, `sourceCounts`, `medianDeltaMinutes`, `firstHourPct`, `afterTwoHoursPct`, `buckets`, `clockBuckets`, `decisionCheckpoints`, `decisionInsights`, and per-symbol `records`.
 - Clock-time labels use 24-hour format for NYC plus German ` (DE)` labels, for example `09:30`, `13:00`, and `13:00-14:00 (DE)`.
-- `decisionCheckpoints` and `decisionInsights` - visible probability readouts for wait timing, opening-rush risk, lunch-or-later lows, and final-hour dips.
-- `fastestLow`, `latestLow`, and per-symbol `records`.
-- `expertNotes` - researched source URLs retained in generated data for provenance; not currently rendered in the page UI.
+- Top-level `expertNotes` retains researched source URLs for provenance; they are not currently rendered in the page UI.
 
 ## Data Gathering Method
 
@@ -70,8 +68,8 @@ The last refresh was done on 2026-05-26.
 Primary candidate source:
 
 - `https://stockanalysis.com/stocks/screener/`
-- Use the top 25 symbols whose current market cap is above `$25B` and whose StockAnalysis company profile has an IPO date.
-- Also include every IPO after 2020 with current market cap above `$25B`, using StockAnalysis yearly IPO archive pages.
+- Use symbols whose current market cap is above `$5B` and whose StockAnalysis company profile has an IPO date.
+- Also include every IPO after 2020 with current market cap above `$5B`, using StockAnalysis yearly IPO archive pages.
 - Exclude IPOs whose known first-day start/open price is below `$1`; the default script threshold is `--min-start-price 1`.
 - Exclude `VG` / Venture Global by default because Yahoo currently returns missing or wrong first-day prices.
 - `CBRS` is force-added to the candidate set by default and must remain included when it qualifies; Rob may typo it as `CRBS`, but the correct ticker is `CBRS`.
@@ -147,11 +145,11 @@ http://localhost:8080
 
 Most layout and behavior edits are made directly in `index.html`; generated IPO metadata lives in `ipo-data.js`, real candle rows live in `chart-data.js`, and derived low-timing analysis lives in `ipo-analysis.js`.
 
-Refresh the default combined `$25B+` data set with:
+Refresh the default combined `$5B+` data set with:
 
 ```sh
 cd /Users/master/clawd/projects/ipo-site
-python3 refresh_ipo_data.py --threshold-b 25 --limit 25
+python3 refresh_ipo_data.py --threshold-b 5 --limit 500 --candidate-limit 1000
 ```
 
 Rebuild only the derived analysis from existing generated data with:
@@ -248,16 +246,19 @@ Major IPOs - First-Day Charts
 Before calling an IPO change done:
 
 - `index.html` still renders without a build step.
-- `ipo-data.js` includes the top 25 cap leaders plus all post-2020 `$25B+` IPOs.
-- `ipo-analysis.js` is generated from `build_ipo_analysis.py` and the top analysis panel renders above the filters.
+- `ipo-data.js` includes `$5B+` IPO candidates from the cap screener plus all post-2020 `$5B+` IPO archive matches.
+- `ipo-analysis.js` is generated from `build_ipo_analysis.py` and contains precomputed `byCap` analyses for all cap filters.
+- The header cap filter sits above the analysis and changes both the rendered probabilities and the rendered card list.
 - The top analysis panel shows both elapsed-time delta and US/Eastern clock-time distributions for exact first-day 5-minute lows.
 - The analysis panel shows `Decision odds` and `Timing tells` as even side-by-side panels below the bar charts, without a checkpoint highlight pill or generic disclaimer row.
 - Clock-time chart labels use 24-hour NYC and German ` (DE)` format, not AM/PM labels.
 - No included IPO has a known `firstDay.open` below `$1`.
 - `CBRS` is present and its chart uses real Yahoo 5-minute bars and does not begin at `$185`.
+- Main candle charts do not show an IPO offer-price reference line; IPO-price progress is shown only in the three card micro charts.
 - Missing exact 5-minute bars are suppressed from the card list, not rendered as estimated charts.
 - Search filters cards by ticker/company/exchange/sector.
 - Sort button toggles between IPO date recent-first and market cap biggest-first.
+- Cap filter defaults to `>$10B` and can switch to `<$10B`, all (`*`), `>$25B`, and `>$50B`.
 - Inline JavaScript syntax still passes, for example:
   `perl -0ne 'while(/<script>(.*?)<\/script>/sg){print $1}' index.html > /tmp/ipo-inline.js && node --check /tmp/ipo-inline.js`
 - Python scripts compile:

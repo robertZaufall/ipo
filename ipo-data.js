@@ -31,21 +31,367 @@
 // Source: https://stockanalysis.com/stocks/spot/
 // Source: https://stockanalysis.com/stocks/now/
 // Source: https://stockanalysis.com/stocks/cdns/
+// Source: https://stockanalysis.com/stocks/snps/
+// Source: https://stockanalysis.com/stocks/ftnt/
+// Source: https://stockanalysis.com/stocks/intu/
+// Source: https://stockanalysis.com/stocks/asx/
+// Source: https://stockanalysis.com/stocks/be/
+// Source: https://stockanalysis.com/stocks/bsx/
+// Source: https://stockanalysis.com/stocks/ups/
+// Source: https://stockanalysis.com/stocks/nxpi/
+// Source: https://stockanalysis.com/stocks/ddog/
+// Source: https://stockanalysis.com/stocks/e/
+// Source: https://stockanalysis.com/stocks/abnb/
+// Source: https://stockanalysis.com/stocks/mpwr/
+// Source: https://stockanalysis.com/stocks/net/
+// Source: https://stockanalysis.com/stocks/cvna/
+// Source: https://stockanalysis.com/stocks/mpc/
+// Source: https://stockanalysis.com/stocks/apo/
+// Source: https://stockanalysis.com/stocks/psx/
+// Source: https://stockanalysis.com/stocks/dlr/
 // Source: https://stockanalysis.com/stocks/hood/
+// Source: https://stockanalysis.com/stocks/mfc/
 // Source: https://stockanalysis.com/stocks/nu/
+// Source: https://stockanalysis.com/stocks/stm/
+// Source: https://stockanalysis.com/stocks/snow/
+// Source: https://stockanalysis.com/stocks/trgp/
 // Source: https://stockanalysis.com/stocks/crwv/
+// Source: https://stockanalysis.com/stocks/mplx/
+// Source: https://stockanalysis.com/stocks/mstr/
+// Source: https://stockanalysis.com/stocks/all/
 // Source: https://stockanalysis.com/stocks/cbrs/
+// Source: https://stockanalysis.com/stocks/nbis/
+// Source: https://stockanalysis.com/stocks/se/
 // Source: https://stockanalysis.com/stocks/alab/
+// Source: https://stockanalysis.com/stocks/mt/
+// Source: https://stockanalysis.com/stocks/argx/
+// Source: https://stockanalysis.com/stocks/rok/
+// Source: https://stockanalysis.com/stocks/ew/
 // Source: https://stockanalysis.com/stocks/coin/
 // Source: https://stockanalysis.com/stocks/mdln/
+// Source: https://stockanalysis.com/stocks/flex/
 // Source: https://stockanalysis.com/stocks/gfs/
+// Source: https://stockanalysis.com/stocks/au/
+// Source: https://stockanalysis.com/stocks/on/
+// Source: https://stockanalysis.com/stocks/bidu/
+// Source: https://stockanalysis.com/stocks/ix/
+// Source: https://stockanalysis.com/stocks/msci/
+// Source: https://stockanalysis.com/stocks/cls/
+// Source: https://stockanalysis.com/stocks/ttwo/
+// Source: https://stockanalysis.com/stocks/jd/
 // Source: https://stockanalysis.com/stocks/crdo/
+// Source: https://stockanalysis.com/stocks/alny/
+// Source: https://stockanalysis.com/stocks/kdp/
+// Source: https://stockanalysis.com/stocks/puk/
 // Source: https://stockanalysis.com/stocks/vik/
+// Source: https://stockanalysis.com/stocks/cboe/
+// Source: https://stockanalysis.com/stocks/hig/
+// Source: https://stockanalysis.com/stocks/ui/
+// Source: https://stockanalysis.com/stocks/hum/
+// Source: https://stockanalysis.com/stocks/gfi/
+// Source: https://stockanalysis.com/stocks/ibkr/
+// Source: https://stockanalysis.com/stocks/sats/
+// Source: https://stockanalysis.com/stocks/ryaay/
+// Source: https://stockanalysis.com/stocks/stld/
 // Source: https://stockanalysis.com/stocks/rblx/
+// Source: https://stockanalysis.com/stocks/vod/
+// Source: https://stockanalysis.com/stocks/qsr/
+// Source: https://stockanalysis.com/stocks/zts/
 // Source: https://stockanalysis.com/stocks/kvue/
+// Source: https://stockanalysis.com/stocks/rvmd/
+// Source: https://stockanalysis.com/stocks/el/
+// Source: https://stockanalysis.com/stocks/tsem/
+// Source: https://stockanalysis.com/stocks/wday/
+// Source: https://stockanalysis.com/stocks/rprx/
+// Source: https://stockanalysis.com/stocks/zm/
+// Source: https://stockanalysis.com/stocks/cqp/
+// Source: https://stockanalysis.com/stocks/mtsi/
+// Source: https://stockanalysis.com/stocks/zs/
+// Source: https://stockanalysis.com/stocks/tcom/
+// Source: https://stockanalysis.com/stocks/cnc/
+// Source: https://stockanalysis.com/stocks/p/
 // Source: https://stockanalysis.com/stocks/cpng/
+// Source: https://stockanalysis.com/stocks/tdy/
+// Source: https://stockanalysis.com/stocks/biib/
+// Source: https://stockanalysis.com/stocks/twlo/
+// Source: https://stockanalysis.com/stocks/vrsn/
 // Source: https://stockanalysis.com/stocks/crcl/
+// Source: https://stockanalysis.com/stocks/fslr/
+// Source: https://stockanalysis.com/stocks/ntap/
 // Source: https://stockanalysis.com/stocks/rddt/
+// Source: https://stockanalysis.com/stocks/bap/
+// Source: https://stockanalysis.com/stocks/mdb/
+// Source: https://stockanalysis.com/stocks/veev/
+// Source: https://stockanalysis.com/stocks/ftai/
+// Source: https://stockanalysis.com/stocks/expe/
+// Source: https://stockanalysis.com/stocks/awk/
+// Source: https://stockanalysis.com/stocks/nmr/
+// Source: https://stockanalysis.com/stocks/dri/
+// Source: https://stockanalysis.com/stocks/bnox/
+// Source: https://stockanalysis.com/stocks/bntx/
+// Source: https://stockanalysis.com/stocks/insm/
+// Source: https://stockanalysis.com/stocks/sqm/
+// Source: https://stockanalysis.com/stocks/paas/
+// Source: https://stockanalysis.com/stocks/ulta/
+// Source: https://stockanalysis.com/stocks/mtd/
+// Source: https://stockanalysis.com/stocks/ffiv/
+// Source: https://stockanalysis.com/stocks/viv/
+// Source: https://stockanalysis.com/stocks/afrm/
+// Source: https://stockanalysis.com/stocks/team/
+// Source: https://stockanalysis.com/stocks/mksi/
+// Source: https://stockanalysis.com/stocks/ste/
+// Source: https://stockanalysis.com/stocks/uls/
+// Source: https://stockanalysis.com/stocks/entg/
+// Source: https://stockanalysis.com/stocks/chrw/
+// Source: https://stockanalysis.com/stocks/as/
+// Source: https://stockanalysis.com/stocks/burl/
+// Source: https://stockanalysis.com/stocks/iren/
+// Source: https://stockanalysis.com/stocks/bsbr/
+// Source: https://stockanalysis.com/stocks/chtr/
+// Source: https://stockanalysis.com/stocks/mair/
+// Source: https://stockanalysis.com/stocks/ttmi/
+// Source: https://stockanalysis.com/stocks/nxt/
+// Source: https://stockanalysis.com/stocks/rba/
+// Source: https://stockanalysis.com/stocks/sitm/
+// Source: https://stockanalysis.com/stocks/pkg/
+// Source: https://stockanalysis.com/stocks/snx/
+// Source: https://stockanalysis.com/stocks/beke/
+// Source: https://stockanalysis.com/stocks/aa/
+// Source: https://stockanalysis.com/stocks/rs/
+// Source: https://stockanalysis.com/stocks/ess/
+// Source: https://stockanalysis.com/stocks/rivn/
+// Source: https://stockanalysis.com/stocks/iot/
+// Source: https://stockanalysis.com/stocks/wes/
+// Source: https://stockanalysis.com/stocks/wcc/
+// Source: https://stockanalysis.com/stocks/rbc/
+// Source: https://stockanalysis.com/stocks/kspi/
+// Source: https://stockanalysis.com/stocks/ptc/
+// Source: https://stockanalysis.com/stocks/agi/
+// Source: https://stockanalysis.com/stocks/tlk/
+// Source: https://stockanalysis.com/stocks/li/
+// Source: https://stockanalysis.com/stocks/okta/
+// Source: https://stockanalysis.com/stocks/sui/
+// Source: https://stockanalysis.com/stocks/tpg/
+// Source: https://stockanalysis.com/stocks/nvmi/
+// Source: https://stockanalysis.com/stocks/logi/
+// Source: https://stockanalysis.com/stocks/gnrc/
+// Source: https://stockanalysis.com/stocks/ldos/
+// Source: https://stockanalysis.com/stocks/iex/
+// Source: https://stockanalysis.com/stocks/clh/
+// Source: https://stockanalysis.com/stocks/deck/
+// Source: https://stockanalysis.com/stocks/pfgc/
+// Source: https://stockanalysis.com/stocks/bsac/
+// Source: https://stockanalysis.com/stocks/fps/
+// Source: https://stockanalysis.com/stocks/aaoi/
+// Source: https://stockanalysis.com/stocks/skm/
+// Source: https://stockanalysis.com/stocks/tigo/
+// Source: https://stockanalysis.com/stocks/pac/
+// Source: https://stockanalysis.com/stocks/arxs/
+// Source: https://stockanalysis.com/stocks/ps/
+// Source: https://stockanalysis.com/stocks/cdw/
+// Source: https://stockanalysis.com/stocks/eg/
+// Source: https://stockanalysis.com/stocks/chkp/
+// Source: https://stockanalysis.com/stocks/tme/
+// Source: https://stockanalysis.com/stocks/htht/
+// Source: https://stockanalysis.com/stocks/rbrk/
+// Source: https://stockanalysis.com/stocks/tru/
+// Source: https://stockanalysis.com/stocks/bbio/
+// Source: https://stockanalysis.com/stocks/bwa/
+// Source: https://stockanalysis.com/stocks/tost/
+// Source: https://stockanalysis.com/stocks/rrx/
+// Source: https://stockanalysis.com/stocks/enlt/
+// Source: https://stockanalysis.com/stocks/sanm/
+// Source: https://stockanalysis.com/stocks/onon/
+// Source: https://stockanalysis.com/stocks/iesc/
+// Source: https://stockanalysis.com/stocks/nio/
+// Source: https://stockanalysis.com/stocks/payp/
+// Source: https://stockanalysis.com/stocks/ntnx/
+// Source: https://stockanalysis.com/stocks/crbg/
+// Source: https://stockanalysis.com/stocks/exel/
+// Source: https://stockanalysis.com/stocks/rnr/
+// Source: https://stockanalysis.com/stocks/futu/
+// Source: https://stockanalysis.com/stocks/swks/
+// Source: https://stockanalysis.com/stocks/zbra/
+// Source: https://stockanalysis.com/stocks/axsm/
+// Source: https://stockanalysis.com/stocks/aptv/
+// Source: https://stockanalysis.com/stocks/viav/
+// Source: https://stockanalysis.com/stocks/btsg/
+// Source: https://stockanalysis.com/stocks/dt/
+// Source: https://stockanalysis.com/stocks/fig/
+// Source: https://stockanalysis.com/stocks/gddy/
+// Source: https://stockanalysis.com/stocks/gwre/
+// Source: https://stockanalysis.com/stocks/fms/
+// Source: https://stockanalysis.com/stocks/cpt/
+// Source: https://stockanalysis.com/stocks/cflt/
+// Source: https://stockanalysis.com/stocks/xe/
+// Source: https://stockanalysis.com/stocks/caci/
+// Source: https://stockanalysis.com/stocks/bj/
+// Source: https://stockanalysis.com/stocks/frvo/
+// Source: https://stockanalysis.com/stocks/elan/
+// Source: https://stockanalysis.com/stocks/pag/
+// Source: https://stockanalysis.com/stocks/timb/
+// Source: https://stockanalysis.com/stocks/pins/
+// Source: https://stockanalysis.com/stocks/podd/
+// Source: https://stockanalysis.com/stocks/it/
+// Source: https://stockanalysis.com/stocks/am/
+// Source: https://stockanalysis.com/stocks/ktos/
+// Source: https://stockanalysis.com/stocks/ttd/
+// Source: https://stockanalysis.com/stocks/cytk/
+// Source: https://stockanalysis.com/stocks/sfd/
+// Source: https://stockanalysis.com/stocks/line/
+// Source: https://stockanalysis.com/stocks/hubs/
+// Source: https://stockanalysis.com/stocks/wms/
+// Source: https://stockanalysis.com/stocks/vsat/
+// Source: https://stockanalysis.com/stocks/iag/
+// Source: https://stockanalysis.com/stocks/wynn/
+// Source: https://stockanalysis.com/stocks/gme/
+// Source: https://stockanalysis.com/stocks/bros/
+// Source: https://stockanalysis.com/stocks/ahr/
+// Source: https://stockanalysis.com/stocks/cart/
+// Source: https://stockanalysis.com/stocks/docu/
+// Source: https://stockanalysis.com/stocks/moh/
+// Source: https://stockanalysis.com/stocks/prax/
+// Source: https://stockanalysis.com/stocks/bah/
+// Source: https://stockanalysis.com/stocks/cava/
+// Source: https://stockanalysis.com/stocks/qrvo/
+// Source: https://stockanalysis.com/stocks/simo/
+// Source: https://stockanalysis.com/stocks/dar/
+// Source: https://stockanalysis.com/stocks/acm/
+// Source: https://stockanalysis.com/stocks/tx/
+// Source: https://stockanalysis.com/stocks/cnm/
+// Source: https://stockanalysis.com/stocks/alv/
+// Source: https://stockanalysis.com/stocks/asr/
+// Source: https://stockanalysis.com/stocks/frog/
+// Source: https://stockanalysis.com/stocks/axti/
+// Source: https://stockanalysis.com/stocks/sail/
+// Source: https://stockanalysis.com/stocks/saro/
+// Source: https://stockanalysis.com/stocks/kt/
+// Source: https://stockanalysis.com/stocks/w/
+// Source: https://stockanalysis.com/stocks/krys/
+// Source: https://stockanalysis.com/stocks/lgn/
+// Source: https://stockanalysis.com/stocks/avav/
+// Source: https://stockanalysis.com/stocks/ymm/
+// Source: https://stockanalysis.com/stocks/fr/
+// Source: https://stockanalysis.com/stocks/crus/
+// Source: https://stockanalysis.com/stocks/xp/
+// Source: https://stockanalysis.com/stocks/chwy/
+// Source: https://stockanalysis.com/stocks/ryan/
+// Source: https://stockanalysis.com/stocks/mbly/
+// Source: https://stockanalysis.com/stocks/algm/
+// Source: https://stockanalysis.com/stocks/krmn/
+// Source: https://stockanalysis.com/stocks/levi/
+// Source: https://stockanalysis.com/stocks/emn/
+// Source: https://stockanalysis.com/stocks/fds/
+// Source: https://stockanalysis.com/stocks/enph/
+// Source: https://stockanalysis.com/stocks/are/
+// Source: https://stockanalysis.com/stocks/z/
+// Source: https://stockanalysis.com/stocks/tem/
+// Source: https://stockanalysis.com/stocks/manh/
+// Source: https://stockanalysis.com/stocks/sfm/
+// Source: https://stockanalysis.com/stocks/sm/
+// Source: https://stockanalysis.com/stocks/nuvl/
+// Source: https://stockanalysis.com/stocks/you/
+// Source: https://stockanalysis.com/stocks/cwen/
+// Source: https://stockanalysis.com/stocks/fly/
+// Source: https://stockanalysis.com/stocks/mwh/
+// Source: https://stockanalysis.com/stocks/camt/
+// Source: https://stockanalysis.com/stocks/infa/
+// Source: https://stockanalysis.com/stocks/birk/
+// Source: https://stockanalysis.com/stocks/figr/
+// Source: https://stockanalysis.com/stocks/nclh/
+// Source: https://stockanalysis.com/stocks/hqy/
+// Source: https://stockanalysis.com/stocks/mtsr/
+// Source: https://stockanalysis.com/stocks/edu/
+// Source: https://stockanalysis.com/stocks/kgs/
+// Source: https://stockanalysis.com/stocks/cwan/
+// Source: https://stockanalysis.com/stocks/bili/
+// Source: https://stockanalysis.com/stocks/mos/
+// Source: https://stockanalysis.com/stocks/lth/
+// Source: https://stockanalysis.com/stocks/hr/
+// Source: https://stockanalysis.com/stocks/hcp/
+// Source: https://stockanalysis.com/stocks/plxs/
+// Source: https://stockanalysis.com/stocks/pcor/
+// Source: https://stockanalysis.com/stocks/st/
+// Source: https://stockanalysis.com/stocks/gkos/
+// Source: https://stockanalysis.com/stocks/jan/
+// Source: https://stockanalysis.com/stocks/brkr/
+// Source: https://stockanalysis.com/stocks/lkq/
+// Source: https://stockanalysis.com/stocks/grfs/
+// Source: https://stockanalysis.com/stocks/zk/
+// Source: https://stockanalysis.com/stocks/qmmm/
+// Source: https://stockanalysis.com/stocks/morn/
+// Source: https://stockanalysis.com/stocks/oscr/
+// Source: https://stockanalysis.com/stocks/chym/
+// Source: https://stockanalysis.com/stocks/ppc/
+// Source: https://stockanalysis.com/stocks/aclx/
+// Source: https://stockanalysis.com/stocks/celc/
+// Source: https://stockanalysis.com/stocks/lnth/
+// Source: https://stockanalysis.com/stocks/lstr/
+// Source: https://stockanalysis.com/stocks/kymr/
+// Source: https://stockanalysis.com/stocks/step/
+// Source: https://stockanalysis.com/stocks/cenx/
+// Source: https://stockanalysis.com/stocks/payc/
+// Source: https://stockanalysis.com/stocks/ssrm/
+// Source: https://stockanalysis.com/stocks/road/
+// Source: https://stockanalysis.com/stocks/ptgx/
+// Source: https://stockanalysis.com/stocks/s/
+// Source: https://stockanalysis.com/stocks/klar/
+// Source: https://stockanalysis.com/stocks/urbn/
+// Source: https://stockanalysis.com/stocks/gtes/
+// Source: https://stockanalysis.com/stocks/ingm/
+// Source: https://stockanalysis.com/stocks/ugp/
+// Source: https://stockanalysis.com/stocks/apge/
+// Source: https://stockanalysis.com/stocks/lb/
+// Source: https://stockanalysis.com/stocks/pcty/
+// Source: https://stockanalysis.com/stocks/pagp/
+// Source: https://stockanalysis.com/stocks/ttan/
+// Source: https://stockanalysis.com/stocks/rytm/
+// Source: https://stockanalysis.com/stocks/mirm/
+// Source: https://stockanalysis.com/stocks/pacs/
+// Source: https://stockanalysis.com/stocks/act/
+// Source: https://stockanalysis.com/stocks/tal/
+// Source: https://stockanalysis.com/stocks/etsy/
+// Source: https://stockanalysis.com/stocks/mrcy/
+// Source: https://stockanalysis.com/stocks/os/
+// Source: https://stockanalysis.com/stocks/loar/
+// Source: https://stockanalysis.com/stocks/appf/
+// Source: https://stockanalysis.com/stocks/czr/
+// Source: https://stockanalysis.com/stocks/flg/
+// Source: https://stockanalysis.com/stocks/psn/
+// Source: https://stockanalysis.com/stocks/ibp/
+// Source: https://stockanalysis.com/stocks/path/
+// Source: https://stockanalysis.com/stocks/kmx/
+// Source: https://stockanalysis.com/stocks/ptct/
+// Source: https://stockanalysis.com/stocks/otex/
+// Source: https://stockanalysis.com/stocks/blco/
+// Source: https://stockanalysis.com/stocks/gva/
+// Source: https://stockanalysis.com/stocks/cgon/
+// Source: https://stockanalysis.com/stocks/estc/
+// Source: https://stockanalysis.com/stocks/esnt/
+// Source: https://stockanalysis.com/stocks/peco/
+// Source: https://stockanalysis.com/stocks/syna/
+// Source: https://stockanalysis.com/stocks/avtr/
+// Source: https://stockanalysis.com/stocks/rrr/
+// Source: https://stockanalysis.com/stocks/crox/
+// Source: https://stockanalysis.com/stocks/obdc/
+// Source: https://stockanalysis.com/stocks/legn/
+// Source: https://stockanalysis.com/stocks/sei/
+// Source: https://stockanalysis.com/stocks/lqda/
+// Source: https://stockanalysis.com/stocks/mgy/
+// Source: https://stockanalysis.com/stocks/blte/
+// Source: https://stockanalysis.com/stocks/blsh/
+// Source: https://stockanalysis.com/stocks/ifs/
+// Source: https://stockanalysis.com/stocks/lyft/
+// Source: https://stockanalysis.com/stocks/plug/
+// Source: https://stockanalysis.com/stocks/eqpt/
+// Source: https://stockanalysis.com/stocks/lbrt/
+// Source: https://stockanalysis.com/stocks/dlb/
+// Source: https://stockanalysis.com/stocks/bma/
+// Source: https://stockanalysis.com/stocks/chh/
+// Source: https://stockanalysis.com/stocks/hlne/
+// Source: https://stockanalysis.com/stocks/ipgp/
+// Source: https://stockanalysis.com/stocks/navn/
+// Source: https://stockanalysis.com/stocks/site/
 // Source: https://stockanalysis.com/stocks/googl/company/
 // Source: https://stockanalysis.com/stocks/goog/company/
 // Source: https://stockanalysis.com/stocks/tsla/company/
@@ -71,21 +417,367 @@
 // Source: https://stockanalysis.com/stocks/spot/company/
 // Source: https://stockanalysis.com/stocks/now/company/
 // Source: https://stockanalysis.com/stocks/cdns/company/
+// Source: https://stockanalysis.com/stocks/snps/company/
+// Source: https://stockanalysis.com/stocks/ftnt/company/
+// Source: https://stockanalysis.com/stocks/intu/company/
+// Source: https://stockanalysis.com/stocks/asx/company/
+// Source: https://stockanalysis.com/stocks/be/company/
+// Source: https://stockanalysis.com/stocks/bsx/company/
+// Source: https://stockanalysis.com/stocks/ups/company/
+// Source: https://stockanalysis.com/stocks/nxpi/company/
+// Source: https://stockanalysis.com/stocks/ddog/company/
+// Source: https://stockanalysis.com/stocks/e/company/
+// Source: https://stockanalysis.com/stocks/abnb/company/
+// Source: https://stockanalysis.com/stocks/mpwr/company/
+// Source: https://stockanalysis.com/stocks/net/company/
+// Source: https://stockanalysis.com/stocks/cvna/company/
+// Source: https://stockanalysis.com/stocks/mpc/company/
+// Source: https://stockanalysis.com/stocks/apo/company/
+// Source: https://stockanalysis.com/stocks/psx/company/
+// Source: https://stockanalysis.com/stocks/dlr/company/
 // Source: https://stockanalysis.com/stocks/hood/company/
+// Source: https://stockanalysis.com/stocks/mfc/company/
 // Source: https://stockanalysis.com/stocks/nu/company/
+// Source: https://stockanalysis.com/stocks/stm/company/
+// Source: https://stockanalysis.com/stocks/snow/company/
+// Source: https://stockanalysis.com/stocks/trgp/company/
 // Source: https://stockanalysis.com/stocks/crwv/company/
+// Source: https://stockanalysis.com/stocks/mplx/company/
+// Source: https://stockanalysis.com/stocks/mstr/company/
+// Source: https://stockanalysis.com/stocks/all/company/
 // Source: https://stockanalysis.com/stocks/cbrs/company/
+// Source: https://stockanalysis.com/stocks/nbis/company/
+// Source: https://stockanalysis.com/stocks/se/company/
 // Source: https://stockanalysis.com/stocks/alab/company/
+// Source: https://stockanalysis.com/stocks/mt/company/
+// Source: https://stockanalysis.com/stocks/argx/company/
+// Source: https://stockanalysis.com/stocks/rok/company/
+// Source: https://stockanalysis.com/stocks/ew/company/
 // Source: https://stockanalysis.com/stocks/coin/company/
 // Source: https://stockanalysis.com/stocks/mdln/company/
+// Source: https://stockanalysis.com/stocks/flex/company/
 // Source: https://stockanalysis.com/stocks/gfs/company/
+// Source: https://stockanalysis.com/stocks/au/company/
+// Source: https://stockanalysis.com/stocks/on/company/
+// Source: https://stockanalysis.com/stocks/bidu/company/
+// Source: https://stockanalysis.com/stocks/ix/company/
+// Source: https://stockanalysis.com/stocks/msci/company/
+// Source: https://stockanalysis.com/stocks/cls/company/
+// Source: https://stockanalysis.com/stocks/ttwo/company/
+// Source: https://stockanalysis.com/stocks/jd/company/
 // Source: https://stockanalysis.com/stocks/crdo/company/
+// Source: https://stockanalysis.com/stocks/alny/company/
+// Source: https://stockanalysis.com/stocks/kdp/company/
+// Source: https://stockanalysis.com/stocks/puk/company/
 // Source: https://stockanalysis.com/stocks/vik/company/
+// Source: https://stockanalysis.com/stocks/cboe/company/
+// Source: https://stockanalysis.com/stocks/hig/company/
+// Source: https://stockanalysis.com/stocks/ui/company/
+// Source: https://stockanalysis.com/stocks/hum/company/
+// Source: https://stockanalysis.com/stocks/gfi/company/
+// Source: https://stockanalysis.com/stocks/ibkr/company/
+// Source: https://stockanalysis.com/stocks/sats/company/
+// Source: https://stockanalysis.com/stocks/ryaay/company/
+// Source: https://stockanalysis.com/stocks/stld/company/
 // Source: https://stockanalysis.com/stocks/rblx/company/
+// Source: https://stockanalysis.com/stocks/vod/company/
+// Source: https://stockanalysis.com/stocks/qsr/company/
+// Source: https://stockanalysis.com/stocks/zts/company/
 // Source: https://stockanalysis.com/stocks/kvue/company/
+// Source: https://stockanalysis.com/stocks/rvmd/company/
+// Source: https://stockanalysis.com/stocks/el/company/
+// Source: https://stockanalysis.com/stocks/tsem/company/
+// Source: https://stockanalysis.com/stocks/wday/company/
+// Source: https://stockanalysis.com/stocks/rprx/company/
+// Source: https://stockanalysis.com/stocks/zm/company/
+// Source: https://stockanalysis.com/stocks/cqp/company/
+// Source: https://stockanalysis.com/stocks/mtsi/company/
+// Source: https://stockanalysis.com/stocks/zs/company/
+// Source: https://stockanalysis.com/stocks/tcom/company/
+// Source: https://stockanalysis.com/stocks/cnc/company/
+// Source: https://stockanalysis.com/stocks/p/company/
 // Source: https://stockanalysis.com/stocks/cpng/company/
+// Source: https://stockanalysis.com/stocks/tdy/company/
+// Source: https://stockanalysis.com/stocks/biib/company/
+// Source: https://stockanalysis.com/stocks/twlo/company/
+// Source: https://stockanalysis.com/stocks/vrsn/company/
 // Source: https://stockanalysis.com/stocks/crcl/company/
+// Source: https://stockanalysis.com/stocks/fslr/company/
+// Source: https://stockanalysis.com/stocks/ntap/company/
 // Source: https://stockanalysis.com/stocks/rddt/company/
+// Source: https://stockanalysis.com/stocks/bap/company/
+// Source: https://stockanalysis.com/stocks/mdb/company/
+// Source: https://stockanalysis.com/stocks/veev/company/
+// Source: https://stockanalysis.com/stocks/ftai/company/
+// Source: https://stockanalysis.com/stocks/expe/company/
+// Source: https://stockanalysis.com/stocks/awk/company/
+// Source: https://stockanalysis.com/stocks/nmr/company/
+// Source: https://stockanalysis.com/stocks/dri/company/
+// Source: https://stockanalysis.com/stocks/bnox/company/
+// Source: https://stockanalysis.com/stocks/bntx/company/
+// Source: https://stockanalysis.com/stocks/insm/company/
+// Source: https://stockanalysis.com/stocks/sqm/company/
+// Source: https://stockanalysis.com/stocks/paas/company/
+// Source: https://stockanalysis.com/stocks/ulta/company/
+// Source: https://stockanalysis.com/stocks/mtd/company/
+// Source: https://stockanalysis.com/stocks/ffiv/company/
+// Source: https://stockanalysis.com/stocks/viv/company/
+// Source: https://stockanalysis.com/stocks/afrm/company/
+// Source: https://stockanalysis.com/stocks/team/company/
+// Source: https://stockanalysis.com/stocks/mksi/company/
+// Source: https://stockanalysis.com/stocks/ste/company/
+// Source: https://stockanalysis.com/stocks/uls/company/
+// Source: https://stockanalysis.com/stocks/entg/company/
+// Source: https://stockanalysis.com/stocks/chrw/company/
+// Source: https://stockanalysis.com/stocks/as/company/
+// Source: https://stockanalysis.com/stocks/burl/company/
+// Source: https://stockanalysis.com/stocks/iren/company/
+// Source: https://stockanalysis.com/stocks/bsbr/company/
+// Source: https://stockanalysis.com/stocks/chtr/company/
+// Source: https://stockanalysis.com/stocks/mair/company/
+// Source: https://stockanalysis.com/stocks/ttmi/company/
+// Source: https://stockanalysis.com/stocks/nxt/company/
+// Source: https://stockanalysis.com/stocks/rba/company/
+// Source: https://stockanalysis.com/stocks/sitm/company/
+// Source: https://stockanalysis.com/stocks/pkg/company/
+// Source: https://stockanalysis.com/stocks/snx/company/
+// Source: https://stockanalysis.com/stocks/beke/company/
+// Source: https://stockanalysis.com/stocks/aa/company/
+// Source: https://stockanalysis.com/stocks/rs/company/
+// Source: https://stockanalysis.com/stocks/ess/company/
+// Source: https://stockanalysis.com/stocks/rivn/company/
+// Source: https://stockanalysis.com/stocks/iot/company/
+// Source: https://stockanalysis.com/stocks/wes/company/
+// Source: https://stockanalysis.com/stocks/wcc/company/
+// Source: https://stockanalysis.com/stocks/rbc/company/
+// Source: https://stockanalysis.com/stocks/kspi/company/
+// Source: https://stockanalysis.com/stocks/ptc/company/
+// Source: https://stockanalysis.com/stocks/agi/company/
+// Source: https://stockanalysis.com/stocks/tlk/company/
+// Source: https://stockanalysis.com/stocks/li/company/
+// Source: https://stockanalysis.com/stocks/okta/company/
+// Source: https://stockanalysis.com/stocks/sui/company/
+// Source: https://stockanalysis.com/stocks/tpg/company/
+// Source: https://stockanalysis.com/stocks/nvmi/company/
+// Source: https://stockanalysis.com/stocks/logi/company/
+// Source: https://stockanalysis.com/stocks/gnrc/company/
+// Source: https://stockanalysis.com/stocks/ldos/company/
+// Source: https://stockanalysis.com/stocks/iex/company/
+// Source: https://stockanalysis.com/stocks/clh/company/
+// Source: https://stockanalysis.com/stocks/deck/company/
+// Source: https://stockanalysis.com/stocks/pfgc/company/
+// Source: https://stockanalysis.com/stocks/bsac/company/
+// Source: https://stockanalysis.com/stocks/fps/company/
+// Source: https://stockanalysis.com/stocks/aaoi/company/
+// Source: https://stockanalysis.com/stocks/skm/company/
+// Source: https://stockanalysis.com/stocks/tigo/company/
+// Source: https://stockanalysis.com/stocks/pac/company/
+// Source: https://stockanalysis.com/stocks/arxs/company/
+// Source: https://stockanalysis.com/stocks/ps/company/
+// Source: https://stockanalysis.com/stocks/cdw/company/
+// Source: https://stockanalysis.com/stocks/eg/company/
+// Source: https://stockanalysis.com/stocks/chkp/company/
+// Source: https://stockanalysis.com/stocks/tme/company/
+// Source: https://stockanalysis.com/stocks/htht/company/
+// Source: https://stockanalysis.com/stocks/rbrk/company/
+// Source: https://stockanalysis.com/stocks/tru/company/
+// Source: https://stockanalysis.com/stocks/bbio/company/
+// Source: https://stockanalysis.com/stocks/bwa/company/
+// Source: https://stockanalysis.com/stocks/tost/company/
+// Source: https://stockanalysis.com/stocks/rrx/company/
+// Source: https://stockanalysis.com/stocks/enlt/company/
+// Source: https://stockanalysis.com/stocks/sanm/company/
+// Source: https://stockanalysis.com/stocks/onon/company/
+// Source: https://stockanalysis.com/stocks/iesc/company/
+// Source: https://stockanalysis.com/stocks/nio/company/
+// Source: https://stockanalysis.com/stocks/payp/company/
+// Source: https://stockanalysis.com/stocks/ntnx/company/
+// Source: https://stockanalysis.com/stocks/crbg/company/
+// Source: https://stockanalysis.com/stocks/exel/company/
+// Source: https://stockanalysis.com/stocks/rnr/company/
+// Source: https://stockanalysis.com/stocks/futu/company/
+// Source: https://stockanalysis.com/stocks/swks/company/
+// Source: https://stockanalysis.com/stocks/zbra/company/
+// Source: https://stockanalysis.com/stocks/axsm/company/
+// Source: https://stockanalysis.com/stocks/aptv/company/
+// Source: https://stockanalysis.com/stocks/viav/company/
+// Source: https://stockanalysis.com/stocks/btsg/company/
+// Source: https://stockanalysis.com/stocks/dt/company/
+// Source: https://stockanalysis.com/stocks/fig/company/
+// Source: https://stockanalysis.com/stocks/gddy/company/
+// Source: https://stockanalysis.com/stocks/gwre/company/
+// Source: https://stockanalysis.com/stocks/fms/company/
+// Source: https://stockanalysis.com/stocks/cpt/company/
+// Source: https://stockanalysis.com/stocks/cflt/company/
+// Source: https://stockanalysis.com/stocks/xe/company/
+// Source: https://stockanalysis.com/stocks/caci/company/
+// Source: https://stockanalysis.com/stocks/bj/company/
+// Source: https://stockanalysis.com/stocks/frvo/company/
+// Source: https://stockanalysis.com/stocks/elan/company/
+// Source: https://stockanalysis.com/stocks/pag/company/
+// Source: https://stockanalysis.com/stocks/timb/company/
+// Source: https://stockanalysis.com/stocks/pins/company/
+// Source: https://stockanalysis.com/stocks/podd/company/
+// Source: https://stockanalysis.com/stocks/it/company/
+// Source: https://stockanalysis.com/stocks/am/company/
+// Source: https://stockanalysis.com/stocks/ktos/company/
+// Source: https://stockanalysis.com/stocks/ttd/company/
+// Source: https://stockanalysis.com/stocks/cytk/company/
+// Source: https://stockanalysis.com/stocks/sfd/company/
+// Source: https://stockanalysis.com/stocks/line/company/
+// Source: https://stockanalysis.com/stocks/hubs/company/
+// Source: https://stockanalysis.com/stocks/wms/company/
+// Source: https://stockanalysis.com/stocks/vsat/company/
+// Source: https://stockanalysis.com/stocks/iag/company/
+// Source: https://stockanalysis.com/stocks/wynn/company/
+// Source: https://stockanalysis.com/stocks/gme/company/
+// Source: https://stockanalysis.com/stocks/bros/company/
+// Source: https://stockanalysis.com/stocks/ahr/company/
+// Source: https://stockanalysis.com/stocks/cart/company/
+// Source: https://stockanalysis.com/stocks/docu/company/
+// Source: https://stockanalysis.com/stocks/moh/company/
+// Source: https://stockanalysis.com/stocks/prax/company/
+// Source: https://stockanalysis.com/stocks/bah/company/
+// Source: https://stockanalysis.com/stocks/cava/company/
+// Source: https://stockanalysis.com/stocks/qrvo/company/
+// Source: https://stockanalysis.com/stocks/simo/company/
+// Source: https://stockanalysis.com/stocks/dar/company/
+// Source: https://stockanalysis.com/stocks/acm/company/
+// Source: https://stockanalysis.com/stocks/tx/company/
+// Source: https://stockanalysis.com/stocks/cnm/company/
+// Source: https://stockanalysis.com/stocks/alv/company/
+// Source: https://stockanalysis.com/stocks/asr/company/
+// Source: https://stockanalysis.com/stocks/frog/company/
+// Source: https://stockanalysis.com/stocks/axti/company/
+// Source: https://stockanalysis.com/stocks/sail/company/
+// Source: https://stockanalysis.com/stocks/saro/company/
+// Source: https://stockanalysis.com/stocks/kt/company/
+// Source: https://stockanalysis.com/stocks/w/company/
+// Source: https://stockanalysis.com/stocks/krys/company/
+// Source: https://stockanalysis.com/stocks/lgn/company/
+// Source: https://stockanalysis.com/stocks/avav/company/
+// Source: https://stockanalysis.com/stocks/ymm/company/
+// Source: https://stockanalysis.com/stocks/fr/company/
+// Source: https://stockanalysis.com/stocks/crus/company/
+// Source: https://stockanalysis.com/stocks/xp/company/
+// Source: https://stockanalysis.com/stocks/chwy/company/
+// Source: https://stockanalysis.com/stocks/ryan/company/
+// Source: https://stockanalysis.com/stocks/mbly/company/
+// Source: https://stockanalysis.com/stocks/algm/company/
+// Source: https://stockanalysis.com/stocks/krmn/company/
+// Source: https://stockanalysis.com/stocks/levi/company/
+// Source: https://stockanalysis.com/stocks/emn/company/
+// Source: https://stockanalysis.com/stocks/fds/company/
+// Source: https://stockanalysis.com/stocks/enph/company/
+// Source: https://stockanalysis.com/stocks/are/company/
+// Source: https://stockanalysis.com/stocks/z/company/
+// Source: https://stockanalysis.com/stocks/tem/company/
+// Source: https://stockanalysis.com/stocks/manh/company/
+// Source: https://stockanalysis.com/stocks/sfm/company/
+// Source: https://stockanalysis.com/stocks/sm/company/
+// Source: https://stockanalysis.com/stocks/nuvl/company/
+// Source: https://stockanalysis.com/stocks/you/company/
+// Source: https://stockanalysis.com/stocks/cwen/company/
+// Source: https://stockanalysis.com/stocks/fly/company/
+// Source: https://stockanalysis.com/stocks/mwh/company/
+// Source: https://stockanalysis.com/stocks/camt/company/
+// Source: https://stockanalysis.com/stocks/infa/company/
+// Source: https://stockanalysis.com/stocks/birk/company/
+// Source: https://stockanalysis.com/stocks/figr/company/
+// Source: https://stockanalysis.com/stocks/nclh/company/
+// Source: https://stockanalysis.com/stocks/hqy/company/
+// Source: https://stockanalysis.com/stocks/mtsr/company/
+// Source: https://stockanalysis.com/stocks/edu/company/
+// Source: https://stockanalysis.com/stocks/kgs/company/
+// Source: https://stockanalysis.com/stocks/cwan/company/
+// Source: https://stockanalysis.com/stocks/bili/company/
+// Source: https://stockanalysis.com/stocks/mos/company/
+// Source: https://stockanalysis.com/stocks/lth/company/
+// Source: https://stockanalysis.com/stocks/hr/company/
+// Source: https://stockanalysis.com/stocks/hcp/company/
+// Source: https://stockanalysis.com/stocks/plxs/company/
+// Source: https://stockanalysis.com/stocks/pcor/company/
+// Source: https://stockanalysis.com/stocks/st/company/
+// Source: https://stockanalysis.com/stocks/gkos/company/
+// Source: https://stockanalysis.com/stocks/jan/company/
+// Source: https://stockanalysis.com/stocks/brkr/company/
+// Source: https://stockanalysis.com/stocks/lkq/company/
+// Source: https://stockanalysis.com/stocks/grfs/company/
+// Source: https://stockanalysis.com/stocks/zk/company/
+// Source: https://stockanalysis.com/stocks/qmmm/company/
+// Source: https://stockanalysis.com/stocks/morn/company/
+// Source: https://stockanalysis.com/stocks/oscr/company/
+// Source: https://stockanalysis.com/stocks/chym/company/
+// Source: https://stockanalysis.com/stocks/ppc/company/
+// Source: https://stockanalysis.com/stocks/aclx/company/
+// Source: https://stockanalysis.com/stocks/celc/company/
+// Source: https://stockanalysis.com/stocks/lnth/company/
+// Source: https://stockanalysis.com/stocks/lstr/company/
+// Source: https://stockanalysis.com/stocks/kymr/company/
+// Source: https://stockanalysis.com/stocks/step/company/
+// Source: https://stockanalysis.com/stocks/cenx/company/
+// Source: https://stockanalysis.com/stocks/payc/company/
+// Source: https://stockanalysis.com/stocks/ssrm/company/
+// Source: https://stockanalysis.com/stocks/road/company/
+// Source: https://stockanalysis.com/stocks/ptgx/company/
+// Source: https://stockanalysis.com/stocks/s/company/
+// Source: https://stockanalysis.com/stocks/klar/company/
+// Source: https://stockanalysis.com/stocks/urbn/company/
+// Source: https://stockanalysis.com/stocks/gtes/company/
+// Source: https://stockanalysis.com/stocks/ingm/company/
+// Source: https://stockanalysis.com/stocks/ugp/company/
+// Source: https://stockanalysis.com/stocks/apge/company/
+// Source: https://stockanalysis.com/stocks/lb/company/
+// Source: https://stockanalysis.com/stocks/pcty/company/
+// Source: https://stockanalysis.com/stocks/pagp/company/
+// Source: https://stockanalysis.com/stocks/ttan/company/
+// Source: https://stockanalysis.com/stocks/rytm/company/
+// Source: https://stockanalysis.com/stocks/mirm/company/
+// Source: https://stockanalysis.com/stocks/pacs/company/
+// Source: https://stockanalysis.com/stocks/act/company/
+// Source: https://stockanalysis.com/stocks/tal/company/
+// Source: https://stockanalysis.com/stocks/etsy/company/
+// Source: https://stockanalysis.com/stocks/mrcy/company/
+// Source: https://stockanalysis.com/stocks/os/company/
+// Source: https://stockanalysis.com/stocks/loar/company/
+// Source: https://stockanalysis.com/stocks/appf/company/
+// Source: https://stockanalysis.com/stocks/czr/company/
+// Source: https://stockanalysis.com/stocks/flg/company/
+// Source: https://stockanalysis.com/stocks/psn/company/
+// Source: https://stockanalysis.com/stocks/ibp/company/
+// Source: https://stockanalysis.com/stocks/path/company/
+// Source: https://stockanalysis.com/stocks/kmx/company/
+// Source: https://stockanalysis.com/stocks/ptct/company/
+// Source: https://stockanalysis.com/stocks/otex/company/
+// Source: https://stockanalysis.com/stocks/blco/company/
+// Source: https://stockanalysis.com/stocks/gva/company/
+// Source: https://stockanalysis.com/stocks/cgon/company/
+// Source: https://stockanalysis.com/stocks/estc/company/
+// Source: https://stockanalysis.com/stocks/esnt/company/
+// Source: https://stockanalysis.com/stocks/peco/company/
+// Source: https://stockanalysis.com/stocks/syna/company/
+// Source: https://stockanalysis.com/stocks/avtr/company/
+// Source: https://stockanalysis.com/stocks/rrr/company/
+// Source: https://stockanalysis.com/stocks/crox/company/
+// Source: https://stockanalysis.com/stocks/obdc/company/
+// Source: https://stockanalysis.com/stocks/legn/company/
+// Source: https://stockanalysis.com/stocks/sei/company/
+// Source: https://stockanalysis.com/stocks/lqda/company/
+// Source: https://stockanalysis.com/stocks/mgy/company/
+// Source: https://stockanalysis.com/stocks/blte/company/
+// Source: https://stockanalysis.com/stocks/blsh/company/
+// Source: https://stockanalysis.com/stocks/ifs/company/
+// Source: https://stockanalysis.com/stocks/lyft/company/
+// Source: https://stockanalysis.com/stocks/plug/company/
+// Source: https://stockanalysis.com/stocks/eqpt/company/
+// Source: https://stockanalysis.com/stocks/lbrt/company/
+// Source: https://stockanalysis.com/stocks/dlb/company/
+// Source: https://stockanalysis.com/stocks/bma/company/
+// Source: https://stockanalysis.com/stocks/chh/company/
+// Source: https://stockanalysis.com/stocks/hlne/company/
+// Source: https://stockanalysis.com/stocks/ipgp/company/
+// Source: https://stockanalysis.com/stocks/navn/company/
+// Source: https://stockanalysis.com/stocks/site/company/
 // Source: https://www.cerebras.ai/press-release/cerebras-systems-announces-pricing-of-initial-public-offering
 window.ipos = [
   {
@@ -574,6 +1266,376 @@ window.ipos = [
     }
   },
   {
+    "ticker": "SNPS",
+    "name": "Synopsys, Inc.",
+    "date": "1992-02-26",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": null,
+    "current": 524.74,
+    "marketCap": 100.52,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1992-02-26",
+      "open": 7.125,
+      "high": 8.25,
+      "low": 6.875,
+      "close": 7.875,
+      "volume": 11616800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "FTNT",
+    "name": "Fortinet, Inc.",
+    "date": "2009-11-18",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": null,
+    "current": 133.93,
+    "marketCap": 98.12,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2009-11-18",
+      "open": 1.7,
+      "high": 1.75,
+      "low": 1.633,
+      "close": 1.662,
+      "volume": 136704000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "INTU",
+    "name": "Intuit Inc.",
+    "date": "1993-03-12",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 319.94,
+    "marketCap": 87.52,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-03-12",
+      "open": 2.2917,
+      "high": 2.75,
+      "low": 2.25,
+      "close": 2.6458,
+      "volume": 28573200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ASX",
+    "name": "ASE Technology Holding Co., Ltd.",
+    "date": "1995-12-15",
+    "exchange": "NYSE",
+    "sector": "Semiconductors",
+    "ipoPrice": null,
+    "current": 34.81,
+    "marketCap": 86.17,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "BE",
+    "name": "Bloom Energy Corporation",
+    "date": "2018-07-25",
+    "exchange": "NYSE",
+    "sector": "Electrical Equipment & Parts",
+    "ipoPrice": null,
+    "current": 302.49,
+    "marketCap": 86.04,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-07-25",
+      "open": 18.7,
+      "high": 25.0,
+      "low": 18.5,
+      "close": 25.0,
+      "volume": 13709500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BSX",
+    "name": "Boston Scientific Corporation",
+    "date": "1992-05-18",
+    "exchange": "NYSE",
+    "sector": "Medical Devices",
+    "ipoPrice": null,
+    "current": 57.78,
+    "marketCap": 85.88,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1992-05-19",
+      "open": 4.25,
+      "high": 4.3438,
+      "low": 4.2188,
+      "close": 4.2812,
+      "volume": 7799600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "UPS",
+    "name": "United Parcel Service, Inc.",
+    "date": "1999-11-10",
+    "exchange": "NYSE",
+    "sector": "Integrated Freight & Logistics",
+    "ipoPrice": null,
+    "current": 101.02,
+    "marketCap": 85.87,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1999-11-10",
+      "open": 65.0,
+      "high": 70.3125,
+      "low": 64.5,
+      "close": 68.25,
+      "volume": 80793700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "NXPI",
+    "name": "NXP Semiconductors N.V.",
+    "date": "2010-08-06",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductors",
+    "ipoPrice": null,
+    "current": 316.47,
+    "marketCap": 79.9,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2010-08-06",
+      "open": 13.0,
+      "high": 14.08,
+      "low": 12.99,
+      "close": 14.0,
+      "volume": 10678500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "DDOG",
+    "name": "Datadog, Inc.",
+    "date": "2019-09-19",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": 27.0,
+    "current": 222.32,
+    "marketCap": 79.14,
+    "dealSize": null,
+    "dayChange": 723.41,
+    "firstDay": {
+      "date": "2019-09-19",
+      "open": 40.35,
+      "high": 41.44,
+      "low": 36.03,
+      "close": 37.55,
+      "volume": 22025800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "E",
+    "name": "Eni S.p.A.",
+    "date": "1995-11-27",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Integrated",
+    "ipoPrice": null,
+    "current": 54.39,
+    "marketCap": 78.9,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1995-11-28",
+      "open": 13.15,
+      "high": 13.2,
+      "low": 13.15,
+      "close": 13.15,
+      "volume": 20880250,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ABNB",
+    "name": "Airbnb, Inc.",
+    "date": "2020-12-10",
+    "exchange": "NASDAQ",
+    "sector": "Travel Services",
+    "ipoPrice": 68.0,
+    "current": 132.35,
+    "marketCap": 78.55,
+    "dealSize": null,
+    "dayChange": 94.63,
+    "firstDay": {
+      "date": "2020-12-10",
+      "open": 146.0,
+      "high": 165.0,
+      "low": 141.25,
+      "close": 144.71,
+      "volume": 70447500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MPWR",
+    "name": "Monolithic Power Systems, Inc.",
+    "date": "2004-11-19",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductors",
+    "ipoPrice": null,
+    "current": 1589.81,
+    "marketCap": 78.11,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2004-11-19",
+      "open": 9.06,
+      "high": 9.93,
+      "low": 8.5,
+      "close": 9.84,
+      "volume": 3906200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "NET",
+    "name": "Cloudflare, Inc.",
+    "date": "2019-09-13",
+    "exchange": "NYSE",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 15.0,
+    "current": 216.17,
+    "marketCap": 76.41,
+    "dealSize": null,
+    "dayChange": 1341.13,
+    "firstDay": {
+      "date": "2019-09-13",
+      "open": 18.0,
+      "high": 19.41,
+      "low": 17.5,
+      "close": 18.0,
+      "volume": 35993700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CVNA",
+    "name": "Carvana Co.",
+    "date": "2017-04-28",
+    "exchange": "NYSE",
+    "sector": "Auto & Truck Dealerships",
+    "ipoPrice": null,
+    "current": 68.28,
+    "marketCap": 75.37,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2017-04-28",
+      "open": 2.7,
+      "high": 2.788,
+      "low": 2.14,
+      "close": 2.22,
+      "volume": 56489000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MPC",
+    "name": "Marathon Petroleum Corporation",
+    "date": "2011-07-01",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Refining & Marketing",
+    "ipoPrice": null,
+    "current": 254.65,
+    "marketCap": 74.34,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2011-07-01",
+      "open": 20.6,
+      "high": 23.715,
+      "low": 20.5,
+      "close": 21.1,
+      "volume": 8334200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "APO",
+    "name": "Apollo Global Management, Inc.",
+    "date": "2011-03-30",
+    "exchange": "NYSE",
+    "sector": "Asset Management",
+    "ipoPrice": null,
+    "current": 128.51,
+    "marketCap": 74.09,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2011-03-30",
+      "open": 18.7,
+      "high": 19.0,
+      "low": 18.15,
+      "close": 18.2,
+      "volume": 30086900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PSX",
+    "name": "Phillips 66",
+    "date": "2012-05-01",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Refining & Marketing",
+    "ipoPrice": null,
+    "current": 177.69,
+    "marketCap": 71.24,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2012-05-01",
+      "open": 33.74,
+      "high": 34.1,
+      "low": 32.58,
+      "close": 32.76,
+      "volume": 6878600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "DLR",
+    "name": "Digital Realty Trust, Inc.",
+    "date": "2004-10-29",
+    "exchange": "NYSE",
+    "sector": "REIT - Specialty",
+    "ipoPrice": null,
+    "current": 192.03,
+    "marketCap": 68.69,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2004-10-29",
+      "open": 12.0,
+      "high": 12.01,
+      "low": 12.0,
+      "close": 12.0,
+      "volume": 5951800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
     "ticker": "HOOD",
     "name": "Robinhood Markets, Inc.",
     "date": "2021-07-29",
@@ -591,6 +1653,27 @@ window.ipos = [
       "low": 33.35,
       "close": 34.82,
       "volume": 102474700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MFC",
+    "name": "Manulife Financial Corporation",
+    "date": "1999-09-23",
+    "exchange": "NYSE",
+    "sector": "Insurance - Life",
+    "ipoPrice": null,
+    "current": 38.53,
+    "marketCap": 64.33,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1999-09-24",
+      "open": 6.0938,
+      "high": 6.1562,
+      "low": 5.9062,
+      "close": 6.0938,
+      "volume": 36241400,
       "source": "Yahoo 1d"
     }
   },
@@ -616,6 +1699,69 @@ window.ipos = [
     }
   },
   {
+    "ticker": "STM",
+    "name": "STMicroelectronics N.V.",
+    "date": "1994-12-08",
+    "exchange": "NYSE",
+    "sector": "Semiconductors",
+    "ipoPrice": null,
+    "current": 66.86,
+    "marketCap": 60.06,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1994-12-08",
+      "open": 3.7083,
+      "high": 3.7292,
+      "low": 3.7083,
+      "close": 3.7083,
+      "volume": 41167800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SNOW",
+    "name": "Snowflake Inc.",
+    "date": "2020-09-16",
+    "exchange": "NYSE",
+    "sector": "Software - Application",
+    "ipoPrice": 120.0,
+    "current": 172.2,
+    "marketCap": 59.46,
+    "dealSize": null,
+    "dayChange": 43.5,
+    "firstDay": {
+      "date": "2020-09-16",
+      "open": 245.0,
+      "high": 319.0,
+      "low": 231.11,
+      "close": 253.93,
+      "volume": 36099700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TRGP",
+    "name": "Targa Resources Corp.",
+    "date": "2010-12-07",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Midstream",
+    "ipoPrice": null,
+    "current": 276.75,
+    "marketCap": 59.4,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2010-12-07",
+      "open": 24.1,
+      "high": 25.2,
+      "low": 23.5,
+      "close": 24.7,
+      "volume": 10577600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
     "ticker": "CRWV",
     "name": "CoreWeave, Inc.",
     "date": "2025-03-28",
@@ -633,6 +1779,69 @@ window.ipos = [
       "low": 37.46,
       "close": 40.0,
       "volume": 41091100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MPLX",
+    "name": "MPLX LP",
+    "date": "2012-10-26",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Midstream",
+    "ipoPrice": null,
+    "current": 56.47,
+    "marketCap": 57.3,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2012-10-26",
+      "open": 25.5,
+      "high": 27.68,
+      "low": 25.35,
+      "close": 27.2,
+      "volume": 14401300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MSTR",
+    "name": "Strategy Inc",
+    "date": "1998-06-11",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 159.89,
+    "marketCap": 56.11,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1998-06-11",
+      "open": 8.0,
+      "high": 12.25,
+      "low": 7.9375,
+      "close": 10.5625,
+      "volume": 10094800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ALL",
+    "name": "The Allstate Corporation",
+    "date": "1993-06-02",
+    "exchange": "NYSE",
+    "sector": "Insurance - Property & Casualty",
+    "ipoPrice": null,
+    "current": 216.6,
+    "marketCap": 55.76,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-06-03",
+      "open": 14.875,
+      "high": 15.0,
+      "low": 14.5,
+      "close": 14.6875,
+      "volume": 56603000,
       "source": "Yahoo 1d"
     }
   },
@@ -658,6 +1867,40 @@ window.ipos = [
     }
   },
   {
+    "ticker": "NBIS",
+    "name": "Nebius Group N.V.",
+    "date": "2011-05-24",
+    "exchange": "NASDAQ",
+    "sector": "Internet Content & Information",
+    "ipoPrice": null,
+    "current": 214.77,
+    "marketCap": 54.99,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "SE",
+    "name": "Sea Limited",
+    "date": "2017-10-20",
+    "exchange": "NYSE",
+    "sector": "Internet Retail",
+    "ipoPrice": null,
+    "current": 87.27,
+    "marketCap": 53.45,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2017-10-20",
+      "open": 16.25,
+      "high": 16.99,
+      "low": 14.0,
+      "close": 16.26,
+      "volume": 37563700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
     "ticker": "ALAB",
     "name": "Astera Labs, Inc.",
     "date": "2024-03-20",
@@ -675,6 +1918,90 @@ window.ipos = [
       "low": 50.61,
       "close": 62.03,
       "volume": 16843300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MT",
+    "name": "ArcelorMittal S.A.",
+    "date": "1997-08-08",
+    "exchange": "NYSE",
+    "sector": "Steel",
+    "ipoPrice": null,
+    "current": 66.08,
+    "marketCap": 51.63,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1997-08-08",
+      "open": 60.9575,
+      "high": 62.1767,
+      "low": 59.8739,
+      "close": 61.2285,
+      "volume": 789340,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ARGX",
+    "name": "argenx SE",
+    "date": "2017-05-18",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": null,
+    "current": 806.46,
+    "marketCap": 51.12,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2017-05-18",
+      "open": 17.9,
+      "high": 25.0,
+      "low": 17.33,
+      "close": 23.0,
+      "volume": 798800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ROK",
+    "name": "Rockwell Automation, Inc.",
+    "date": "1987-01-01",
+    "exchange": "NYSE",
+    "sector": "Specialty Industrial Machinery",
+    "ipoPrice": null,
+    "current": 452.29,
+    "marketCap": 50.33,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1987-01-02",
+      "open": 22.6875,
+      "high": 23.3125,
+      "low": 22.6875,
+      "close": 23.3125,
+      "volume": 281200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "EW",
+    "name": "Edwards Lifesciences Corporation",
+    "date": "2000-03-27",
+    "exchange": "NYSE",
+    "sector": "Medical Devices",
+    "ipoPrice": null,
+    "current": 85.78,
+    "marketCap": 49.39,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2000-03-27",
+      "open": 1.2708,
+      "high": 1.3854,
+      "low": 1.2708,
+      "close": 1.375,
+      "volume": 11026800,
       "source": "Yahoo 1d"
     }
   },
@@ -721,6 +2048,27 @@ window.ipos = [
     }
   },
   {
+    "ticker": "FLEX",
+    "name": "Flex Ltd.",
+    "date": "1994-03-18",
+    "exchange": "NASDAQ",
+    "sector": "Electronic Components",
+    "ipoPrice": null,
+    "current": 132.47,
+    "marketCap": 48.53,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1994-03-18",
+      "open": 1.4365,
+      "high": 1.4365,
+      "low": 1.3423,
+      "close": 1.3659,
+      "volume": 20359365,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
     "ticker": "GFS",
     "name": "GLOBALFOUNDRIES Inc.",
     "date": "2021-10-28",
@@ -738,6 +2086,158 @@ window.ipos = [
       "low": 44.48,
       "close": 46.4,
       "volume": 18618900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "AU",
+    "name": "AngloGold Ashanti plc",
+    "date": "1972-12-15",
+    "exchange": "NYSE",
+    "sector": "Gold",
+    "ipoPrice": null,
+    "current": 90.64,
+    "marketCap": 45.83,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "ON",
+    "name": "ON Semiconductor Corporation",
+    "date": "2000-04-28",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductors",
+    "ipoPrice": null,
+    "current": 116.2,
+    "marketCap": 45.54,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2000-05-02",
+      "open": 24.875,
+      "high": 25.0625,
+      "low": 22.375,
+      "close": 24.0,
+      "volume": 2051300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BIDU",
+    "name": "Baidu, Inc.",
+    "date": "2005-08-05",
+    "exchange": "NASDAQ",
+    "sector": "Internet Content & Information",
+    "ipoPrice": null,
+    "current": 127.79,
+    "marketCap": 43.48,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2005-08-05",
+      "open": 6.6,
+      "high": 15.121,
+      "low": 6.0,
+      "close": 12.254,
+      "volume": 226811000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "IX",
+    "name": "ORIX Corporation",
+    "date": "1970-04-01",
+    "exchange": "NYSE",
+    "sector": "Financial Conglomerates",
+    "ipoPrice": null,
+    "current": 38.85,
+    "marketCap": 43.46,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "MSCI",
+    "name": "MSCI Inc.",
+    "date": "2007-11-15",
+    "exchange": "NYSE",
+    "sector": "Financial Data & Stock Exchanges",
+    "ipoPrice": null,
+    "current": 588.55,
+    "marketCap": 42.85,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2007-11-15",
+      "open": 23.0,
+      "high": 28.45,
+      "low": 22.06,
+      "close": 26.1,
+      "volume": 11770500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CLS",
+    "name": "Celestica Inc.",
+    "date": "1998-06-30",
+    "exchange": "NYSE",
+    "sector": "Electronic Components",
+    "ipoPrice": null,
+    "current": 367.37,
+    "marketCap": 42.27,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1998-06-30",
+      "open": 9.2812,
+      "high": 9.4375,
+      "low": 9.0312,
+      "close": 9.375,
+      "volume": 6420400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TTWO",
+    "name": "Take-Two Interactive Software, Inc.",
+    "date": "1997-04-15",
+    "exchange": "NASDAQ",
+    "sector": "Electronic Gaming & Multimedia",
+    "ipoPrice": null,
+    "current": 227.55,
+    "marketCap": 42.25,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1997-04-15",
+      "open": 3.6667,
+      "high": 3.9167,
+      "low": 3.4167,
+      "close": 3.9167,
+      "volume": 1785600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "JD",
+    "name": "JD.com, Inc.",
+    "date": "2014-05-22",
+    "exchange": "NASDAQ",
+    "sector": "Internet Retail",
+    "ipoPrice": null,
+    "current": 30.52,
+    "marketCap": 41.22,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2014-05-22",
+      "open": 21.75,
+      "high": 22.8,
+      "low": 20.24,
+      "close": 20.9,
+      "volume": 84449700,
       "source": "Yahoo 1d"
     }
   },
@@ -763,6 +2263,53 @@ window.ipos = [
     }
   },
   {
+    "ticker": "ALNY",
+    "name": "Alnylam Pharmaceuticals, Inc.",
+    "date": "2004-05-28",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": null,
+    "current": 297.45,
+    "marketCap": 39.71,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2004-06-01",
+      "open": 6.1,
+      "high": 7.05,
+      "low": 6.08,
+      "close": 7.0,
+      "volume": 198200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "KDP",
+    "name": "Keurig Dr Pepper Inc.",
+    "date": "1993-09-21",
+    "exchange": "NASDAQ",
+    "sector": "Beverages - Non-Alcoholic",
+    "ipoPrice": null,
+    "current": 29.12,
+    "marketCap": 39.62,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "PUK",
+    "name": "Prudential plc",
+    "date": "1990-07-03",
+    "exchange": "NYSE",
+    "sector": "Insurance - Life",
+    "ipoPrice": null,
+    "current": 30.47,
+    "marketCap": 38.08,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
     "ticker": "VIK",
     "name": "Viking Holdings Ltd",
     "date": "2024-05-01",
@@ -780,6 +2327,195 @@ window.ipos = [
       "low": 25.71,
       "close": 26.1,
       "volume": 35017400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CBOE",
+    "name": "Cboe Global Markets, Inc.",
+    "date": "2010-06-15",
+    "exchange": "BATS",
+    "sector": "Financial Data & Stock Exchanges",
+    "ipoPrice": null,
+    "current": 357.35,
+    "marketCap": 37.4,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2010-06-15",
+      "open": 32.8,
+      "high": 33.75,
+      "low": 32.3,
+      "close": 32.49,
+      "volume": 17022500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "HIG",
+    "name": "The Hartford Insurance Group, Inc.",
+    "date": "1995-12-20",
+    "exchange": "NYSE",
+    "sector": "Insurance - Diversified",
+    "ipoPrice": null,
+    "current": 136.02,
+    "marketCap": 37.29,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1995-12-20",
+      "open": 23.9375,
+      "high": 24.6875,
+      "low": 23.9375,
+      "close": 24.5625,
+      "volume": 3904000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "UI",
+    "name": "Ubiquiti Inc.",
+    "date": "2011-10-14",
+    "exchange": "NYSE",
+    "sector": "Communication Equipment",
+    "ipoPrice": null,
+    "current": 610.81,
+    "marketCap": 36.97,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2011-10-14",
+      "open": 16.5,
+      "high": 19.0,
+      "low": 16.25,
+      "close": 17.5,
+      "volume": 2954400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "HUM",
+    "name": "Humana Inc.",
+    "date": "1993-01-22",
+    "exchange": "NYSE",
+    "sector": "Healthcare Plans",
+    "ipoPrice": null,
+    "current": 307.95,
+    "marketCap": 36.97,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-01-22",
+      "open": 19.625,
+      "high": 20.125,
+      "low": 19.625,
+      "close": 20.125,
+      "volume": 510600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "GFI",
+    "name": "Gold Fields Limited",
+    "date": "2007-08-24",
+    "exchange": "NYSE",
+    "sector": "Gold",
+    "ipoPrice": null,
+    "current": 39.53,
+    "marketCap": 36.73,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2007-08-24",
+      "open": 12.6098,
+      "high": 13.1094,
+      "low": 12.5754,
+      "close": 12.9113,
+      "volume": 7180088,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "IBKR",
+    "name": "Interactive Brokers Group, Inc.",
+    "date": "2007-05-04",
+    "exchange": "NASDAQ",
+    "sector": "Capital Markets",
+    "ipoPrice": null,
+    "current": 81.35,
+    "marketCap": 36.24,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2007-05-04",
+      "open": 8.25,
+      "high": 8.5625,
+      "low": 7.7575,
+      "close": 7.825,
+      "volume": 94059600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SATS",
+    "name": "EchoStar Corporation",
+    "date": "2007-12-31",
+    "exchange": "NASDAQ",
+    "sector": "Telecom Services",
+    "ipoPrice": null,
+    "current": 124.2,
+    "marketCap": 35.99,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2008-01-02",
+      "open": 28.363,
+      "high": 29.9838,
+      "low": 25.4052,
+      "close": 26.41,
+      "volume": 2288823,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "RYAAY",
+    "name": "Ryanair Holdings plc",
+    "date": "1997-05-29",
+    "exchange": "NASDAQ",
+    "sector": "Airlines",
+    "ipoPrice": null,
+    "current": 59.62,
+    "marketCap": 34.87,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1997-05-29",
+      "open": 1.1287,
+      "high": 1.321,
+      "low": 1.0902,
+      "close": 1.3082,
+      "volume": 169361878,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "STLD",
+    "name": "Steel Dynamics, Inc.",
+    "date": "1996-11-21",
+    "exchange": "NASDAQ",
+    "sector": "Steel",
+    "ipoPrice": null,
+    "current": 240.03,
+    "marketCap": 34.62,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1996-11-22",
+      "open": 4.375,
+      "high": 4.6562,
+      "low": 4.2188,
+      "close": 4.6562,
+      "volume": 16753600,
       "source": "Yahoo 1d"
     }
   },
@@ -805,6 +2541,53 @@ window.ipos = [
     }
   },
   {
+    "ticker": "VOD",
+    "name": "Vodafone Group Public Limited Company",
+    "date": "1988-10-25",
+    "exchange": "NASDAQ",
+    "sector": "Telecom Services",
+    "ipoPrice": null,
+    "current": 14.94,
+    "marketCap": 34.46,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "QSR",
+    "name": "Restaurant Brands International Inc.",
+    "date": "2006-05-18",
+    "exchange": "NYSE",
+    "sector": "Restaurants",
+    "ipoPrice": null,
+    "current": 75.38,
+    "marketCap": 34.4,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "ZTS",
+    "name": "Zoetis Inc.",
+    "date": "2013-02-01",
+    "exchange": "NYSE",
+    "sector": "Drug Manufacturers - Specialty & Generic",
+    "ipoPrice": null,
+    "current": 81.32,
+    "marketCap": 34.09,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2013-02-01",
+      "open": 31.5,
+      "high": 31.74,
+      "low": 30.47,
+      "close": 31.01,
+      "volume": 66789100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
     "ticker": "KVUE",
     "name": "Kenvue Inc.",
     "date": "2023-05-04",
@@ -822,6 +2605,258 @@ window.ipos = [
       "low": 25.25,
       "close": 26.9,
       "volume": 77004200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "RVMD",
+    "name": "Revolution Medicines, Inc.",
+    "date": "2020-02-13",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 17.0,
+    "current": 151.56,
+    "marketCap": 32.22,
+    "dealSize": null,
+    "dayChange": 791.53,
+    "firstDay": {
+      "date": "2020-02-13",
+      "open": 28.21,
+      "high": 32.49,
+      "low": 28.0,
+      "close": 28.9,
+      "volume": 7317200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "EL",
+    "name": "The Est\u00e9e Lauder Companies Inc.",
+    "date": "1995-11-16",
+    "exchange": "NYSE",
+    "sector": "Household & Personal Products",
+    "ipoPrice": null,
+    "current": 88.32,
+    "marketCap": 31.95,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1995-11-17",
+      "open": 8.125,
+      "high": 8.7188,
+      "low": 8.0938,
+      "close": 8.625,
+      "volume": 35659200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TSEM",
+    "name": "Tower Semiconductor Ltd.",
+    "date": "1994-10-25",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductors",
+    "ipoPrice": null,
+    "current": 283.43,
+    "marketCap": 31.95,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1994-10-26",
+      "open": 210.0,
+      "high": 221.25,
+      "low": 210.0,
+      "close": 210.0,
+      "volume": 216993,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "WDAY",
+    "name": "Workday, Inc.",
+    "date": "2012-10-12",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 128.14,
+    "marketCap": 31.65,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2012-10-12",
+      "open": 48.05,
+      "high": 51.37,
+      "low": 45.05,
+      "close": 48.69,
+      "volume": 18132800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "RPRX",
+    "name": "Royalty Pharma plc",
+    "date": "2020-06-16",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 28.0,
+    "current": 54.5,
+    "marketCap": 31.38,
+    "dealSize": null,
+    "dayChange": 94.64,
+    "firstDay": {
+      "date": "2020-06-16",
+      "open": 44.0,
+      "high": 46.27,
+      "low": 42.0,
+      "close": 44.5,
+      "volume": 27619300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ZM",
+    "name": "Zoom Communications, Inc.",
+    "date": "2019-04-18",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": 36.0,
+    "current": 105.64,
+    "marketCap": 30.98,
+    "dealSize": null,
+    "dayChange": 193.44,
+    "firstDay": {
+      "date": "2019-04-18",
+      "open": 65.0,
+      "high": 66.0,
+      "low": 60.321,
+      "close": 62.0,
+      "volume": 25764700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CQP",
+    "name": "Cheniere Energy Partners, L.P.",
+    "date": "2007-03-21",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Midstream",
+    "ipoPrice": null,
+    "current": 63.39,
+    "marketCap": 30.68,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2007-03-21",
+      "open": 22.0,
+      "high": 22.55,
+      "low": 21.5,
+      "close": 21.71,
+      "volume": 5474600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MTSI",
+    "name": "MACOM Technology Solutions Holdings, Inc.",
+    "date": "2012-03-15",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductors",
+    "ipoPrice": null,
+    "current": 385.98,
+    "marketCap": 29.45,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2012-03-15",
+      "open": 19.1,
+      "high": 21.1,
+      "low": 19.0,
+      "close": 20.55,
+      "volume": 4202500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ZS",
+    "name": "Zscaler, Inc.",
+    "date": "2018-03-16",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": null,
+    "current": 182.37,
+    "marketCap": 29.32,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-03-16",
+      "open": 27.5,
+      "high": 33.47,
+      "low": 26.06,
+      "close": 33.0,
+      "volume": 16931900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TCOM",
+    "name": "Trip.com Group Limited",
+    "date": "2003-12-09",
+    "exchange": "NASDAQ",
+    "sector": "Travel Services",
+    "ipoPrice": null,
+    "current": 46.37,
+    "marketCap": 29.2,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2003-12-09",
+      "open": 1.5006,
+      "high": 2.3344,
+      "low": 1.5,
+      "close": 2.1212,
+      "volume": 89640000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CNC",
+    "name": "Centene Corporation",
+    "date": "2001-12-13",
+    "exchange": "NYSE",
+    "sector": "Healthcare Plans",
+    "ipoPrice": null,
+    "current": 59.14,
+    "marketCap": 29.2,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2001-12-13",
+      "open": 1.1892,
+      "high": 1.475,
+      "low": 1.1892,
+      "close": 1.4333,
+      "volume": 56373600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "P",
+    "name": "Everpure, Inc.",
+    "date": "2015-10-07",
+    "exchange": "NYSE",
+    "sector": "Computer Hardware",
+    "ipoPrice": null,
+    "current": 87.2,
+    "marketCap": 28.96,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2015-10-07",
+      "open": 16.74,
+      "high": 17.0,
+      "low": 16.0,
+      "close": 16.01,
+      "volume": 18792300,
       "source": "Yahoo 1d"
     }
   },
@@ -847,6 +2882,90 @@ window.ipos = [
     }
   },
   {
+    "ticker": "TDY",
+    "name": "Teledyne Technologies Incorporated",
+    "date": "1999-11-23",
+    "exchange": "NYSE",
+    "sector": "Scientific & Technical Instruments",
+    "ipoPrice": null,
+    "current": 620.45,
+    "marketCap": 28.74,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1999-11-23",
+      "open": 8.4375,
+      "high": 8.4375,
+      "low": 8.4375,
+      "close": 8.4375,
+      "volume": 60000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BIIB",
+    "name": "Biogen Inc.",
+    "date": "1991-09-16",
+    "exchange": "NASDAQ",
+    "sector": "Drug Manufacturers - General",
+    "ipoPrice": null,
+    "current": 193.76,
+    "marketCap": 28.61,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1991-09-17",
+      "open": 3.0,
+      "high": 3.25,
+      "low": 3.0,
+      "close": 3.125,
+      "volume": 17096400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TWLO",
+    "name": "Twilio Inc.",
+    "date": "2016-06-23",
+    "exchange": "NYSE",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": null,
+    "current": 187.88,
+    "marketCap": 28.52,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2016-06-23",
+      "open": 23.99,
+      "high": 29.61,
+      "low": 23.66,
+      "close": 28.79,
+      "volume": 21272000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "VRSN",
+    "name": "VeriSign, Inc.",
+    "date": "1998-01-29",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": null,
+    "current": 310.0,
+    "marketCap": 28.25,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1998-01-30",
+      "open": 5.1875,
+      "high": 6.5625,
+      "low": 5.125,
+      "close": 6.375,
+      "volume": 18256800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
     "ticker": "CRCL",
     "name": "Circle Internet Group, Inc.",
     "date": "2025-06-05",
@@ -868,6 +2987,48 @@ window.ipos = [
     }
   },
   {
+    "ticker": "FSLR",
+    "name": "First Solar, Inc.",
+    "date": "2006-11-17",
+    "exchange": "NASDAQ",
+    "sector": "Solar",
+    "ipoPrice": null,
+    "current": 257.85,
+    "marketCap": 27.71,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2006-11-17",
+      "open": 24.5,
+      "high": 25.18,
+      "low": 23.5,
+      "close": 24.74,
+      "volume": 18358000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "NTAP",
+    "name": "NetApp, Inc.",
+    "date": "1995-11-21",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": null,
+    "current": 139.36,
+    "marketCap": 27.5,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1995-11-21",
+      "open": 1.0781,
+      "high": 1.3281,
+      "low": 1.0781,
+      "close": 1.2812,
+      "volume": 51412800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
     "ticker": "RDDT",
     "name": "Reddit, Inc.",
     "date": "2024-03-21",
@@ -885,6 +3046,5499 @@ window.ipos = [
       "low": 45.05,
       "close": 50.44,
       "volume": 48705500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BAP",
+    "name": "Credicorp Ltd.",
+    "date": "1995-10-25",
+    "exchange": "NYSE",
+    "sector": "Banks - Regional",
+    "ipoPrice": null,
+    "current": 334.3,
+    "marketCap": 26.56,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1995-10-25",
+      "open": 11.4801,
+      "high": 11.4801,
+      "low": 11.1698,
+      "close": 11.1698,
+      "volume": 2578,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MDB",
+    "name": "MongoDB, Inc.",
+    "date": "2017-10-19",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": null,
+    "current": 326.13,
+    "marketCap": 26.21,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2017-10-19",
+      "open": 33.0,
+      "high": 34.0,
+      "low": 29.1,
+      "close": 32.07,
+      "volume": 11508500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "VEEV",
+    "name": "Veeva Systems Inc.",
+    "date": "2013-10-16",
+    "exchange": "NYSE",
+    "sector": "Health Information Services",
+    "ipoPrice": null,
+    "current": 160.17,
+    "marketCap": 26.14,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2013-10-16",
+      "open": 38.0,
+      "high": 39.64,
+      "low": 35.06,
+      "close": 37.16,
+      "volume": 13954000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "FTAI",
+    "name": "FTAI Aviation Ltd.",
+    "date": "2015-05-15",
+    "exchange": "NASDAQ",
+    "sector": "Aerospace & Defense",
+    "ipoPrice": null,
+    "current": 252.13,
+    "marketCap": 25.86,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2015-05-15",
+      "open": 13.6635,
+      "high": 14.4833,
+      "low": 13.5354,
+      "close": 14.1332,
+      "volume": 12318920,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "EXPE",
+    "name": "Expedia Group, Inc.",
+    "date": "1999-11-10",
+    "exchange": "NASDAQ",
+    "sector": "Travel Services",
+    "ipoPrice": null,
+    "current": 214.65,
+    "marketCap": 25.76,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "AWK",
+    "name": "American Water Works Company, Inc.",
+    "date": "2008-04-23",
+    "exchange": "NYSE",
+    "sector": "Utilities - Regulated Water",
+    "ipoPrice": null,
+    "current": 125.2,
+    "marketCap": 24.45,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2008-04-23",
+      "open": 20.6,
+      "high": 21.45,
+      "low": 20.22,
+      "close": 20.6,
+      "volume": 23402800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "NMR",
+    "name": "Nomura Holdings, Inc.",
+    "date": "1961-10-01",
+    "exchange": "NYSE",
+    "sector": "Capital Markets",
+    "ipoPrice": null,
+    "current": 8.11,
+    "marketCap": 23.42,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "DRI",
+    "name": "Darden Restaurants, Inc.",
+    "date": "1995-05-05",
+    "exchange": "NYSE",
+    "sector": "Restaurants",
+    "ipoPrice": null,
+    "current": 203.51,
+    "marketCap": 23.31,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1995-05-09",
+      "open": 5.4379,
+      "high": 5.9593,
+      "low": 5.4379,
+      "close": 5.8103,
+      "volume": 2629321,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BNOX",
+    "name": "Bionomics Limited",
+    "date": "2021-12-16",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 15.45,
+    "current": 0.25,
+    "marketCap": 23.3,
+    "dealSize": null,
+    "dayChange": -98.36,
+    "firstDay": null
+  },
+  {
+    "ticker": "BNTX",
+    "name": "BioNTech SE",
+    "date": "2019-10-10",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 15.0,
+    "current": 92.14,
+    "marketCap": 23.3,
+    "dealSize": null,
+    "dayChange": 514.27,
+    "firstDay": {
+      "date": "2019-10-10",
+      "open": 16.5,
+      "high": 16.699,
+      "low": 13.01,
+      "close": 14.24,
+      "volume": 2805800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "INSM",
+    "name": "Insmed Incorporated",
+    "date": "2000-06-01",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": null,
+    "current": 106.24,
+    "marketCap": 23.03,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2000-06-01",
+      "open": 160.0,
+      "high": 170.0,
+      "low": 142.5,
+      "close": 165.0,
+      "volume": 3205,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SQM",
+    "name": "Sociedad Qu\u00edmica y Minera de Chile S.A.",
+    "date": "1993-09-20",
+    "exchange": "NYSE",
+    "sector": "Specialty Chemicals",
+    "ipoPrice": null,
+    "current": 80.18,
+    "marketCap": 22.9,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-09-21",
+      "open": 2.5803,
+      "high": 2.6534,
+      "low": 2.5073,
+      "close": 2.5073,
+      "volume": 17419974,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PAAS",
+    "name": "Pan American Silver Corp.",
+    "date": "1995-06-12",
+    "exchange": "NYSE",
+    "sector": "Gold",
+    "ipoPrice": null,
+    "current": 53.94,
+    "marketCap": 22.71,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1995-06-12",
+      "open": 5.0,
+      "high": 5.0,
+      "low": 4.6562,
+      "close": 4.875,
+      "volume": 13300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ULTA",
+    "name": "Ulta Beauty, Inc.",
+    "date": "2007-10-25",
+    "exchange": "NASDAQ",
+    "sector": "Specialty Retail",
+    "ipoPrice": null,
+    "current": 515.04,
+    "marketCap": 22.44,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2007-10-25",
+      "open": 33.0,
+      "high": 35.0,
+      "low": 28.89,
+      "close": 29.82,
+      "volume": 7486900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MTD",
+    "name": "Mettler-Toledo International Inc.",
+    "date": "1997-11-13",
+    "exchange": "NYSE",
+    "sector": "Diagnostics & Research",
+    "ipoPrice": null,
+    "current": 1103.09,
+    "marketCap": 22.29,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1997-11-14",
+      "open": 14.0625,
+      "high": 15.25,
+      "low": 14.0625,
+      "close": 14.875,
+      "volume": 2233500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "FFIV",
+    "name": "F5, Inc.",
+    "date": "1999-06-04",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": null,
+    "current": 393.63,
+    "marketCap": 22.21,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1999-06-04",
+      "open": 5.125,
+      "high": 7.9219,
+      "low": 5.0625,
+      "close": 7.4375,
+      "volume": 7386600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "VIV",
+    "name": "Telef\u00f4nica Brasil S.A.",
+    "date": "1998-11-16",
+    "exchange": "NYSE",
+    "sector": "Telecom Services",
+    "ipoPrice": null,
+    "current": 13.38,
+    "marketCap": 22.13,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1998-11-16",
+      "open": 27.75,
+      "high": 28.6875,
+      "low": 27.75,
+      "close": 28.4375,
+      "volume": 880900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "AFRM",
+    "name": "Affirm Holdings, Inc.",
+    "date": "2021-01-13",
+    "exchange": "NASDAQ",
+    "sector": "Credit Services",
+    "ipoPrice": 49.0,
+    "current": 65.22,
+    "marketCap": 21.84,
+    "dealSize": null,
+    "dayChange": 33.1,
+    "firstDay": {
+      "date": "2021-01-13",
+      "open": 90.9,
+      "high": 103.0,
+      "low": 90.01,
+      "close": 96.365,
+      "volume": 25159000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TEAM",
+    "name": "Atlassian Corporation",
+    "date": "2015-12-10",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 85.42,
+    "marketCap": 21.68,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2015-12-10",
+      "open": 27.67,
+      "high": 28.5,
+      "low": 26.5,
+      "close": 27.78,
+      "volume": 15009100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MKSI",
+    "name": "MKS Inc.",
+    "date": "1999-03-26",
+    "exchange": "NASDAQ",
+    "sector": "Scientific & Technical Instruments",
+    "ipoPrice": null,
+    "current": 320.62,
+    "marketCap": 21.66,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1999-03-30",
+      "open": 14.0625,
+      "high": 14.5,
+      "low": 13.625,
+      "close": 14.0625,
+      "volume": 4592500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "STE",
+    "name": "STERIS plc",
+    "date": "1992-06-01",
+    "exchange": "NYSE",
+    "sector": "Medical Devices",
+    "ipoPrice": null,
+    "current": 216.57,
+    "marketCap": 21.24,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1992-06-01",
+      "open": 1.8125,
+      "high": 2.0625,
+      "low": 1.8125,
+      "close": 2.0625,
+      "volume": 3012000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ULS",
+    "name": "UL Solutions Inc.",
+    "date": "2024-04-12",
+    "exchange": "NYSE",
+    "sector": "Specialty Business Services",
+    "ipoPrice": 28.0,
+    "current": 102.85,
+    "marketCap": 20.73,
+    "dealSize": null,
+    "dayChange": 267.32,
+    "firstDay": {
+      "date": "2024-04-12",
+      "open": 34.23,
+      "high": 34.97,
+      "low": 33.15,
+      "close": 34.94,
+      "volume": 14953800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ENTG",
+    "name": "Entegris, Inc.",
+    "date": "2000-07-11",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductor Equipment & Materials",
+    "ipoPrice": null,
+    "current": 135.28,
+    "marketCap": 20.63,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2000-07-11",
+      "open": 10.875,
+      "high": 11.625,
+      "low": 10.25,
+      "close": 11.1875,
+      "volume": 12890300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CHRW",
+    "name": "C.H. Robinson Worldwide, Inc.",
+    "date": "1997-10-15",
+    "exchange": "NASDAQ",
+    "sector": "Integrated Freight & Logistics",
+    "ipoPrice": null,
+    "current": 174.23,
+    "marketCap": 20.54,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1997-10-16",
+      "open": 5.8125,
+      "high": 5.8125,
+      "low": 5.5625,
+      "close": 5.6875,
+      "volume": 7436400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "AS",
+    "name": "Amer Sports, Inc.",
+    "date": "2024-02-01",
+    "exchange": "NYSE",
+    "sector": "Leisure",
+    "ipoPrice": 13.0,
+    "current": 35.26,
+    "marketCap": 20.52,
+    "dealSize": null,
+    "dayChange": 171.23,
+    "firstDay": {
+      "date": "2024-02-01",
+      "open": 13.4,
+      "high": 13.8,
+      "low": 13.1,
+      "close": 13.4,
+      "volume": 18656400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BURL",
+    "name": "Burlington Stores, Inc.",
+    "date": "2013-10-02",
+    "exchange": "NYSE",
+    "sector": "Apparel Retail",
+    "ipoPrice": null,
+    "current": 324.51,
+    "marketCap": 20.39,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2013-10-02",
+      "open": 23.05,
+      "high": 25.65,
+      "low": 22.61,
+      "close": 25.01,
+      "volume": 15051500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "IREN",
+    "name": "IREN Limited",
+    "date": "2021-11-17",
+    "exchange": "NASDAQ",
+    "sector": "Capital Markets",
+    "ipoPrice": 28.0,
+    "current": 56.83,
+    "marketCap": 20.31,
+    "dealSize": null,
+    "dayChange": 102.96,
+    "firstDay": {
+      "date": "2021-11-17",
+      "open": 28.0,
+      "high": 28.25,
+      "low": 21.46,
+      "close": 24.45,
+      "volume": 5815300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BSBR",
+    "name": "Banco Santander (Brasil) S.A.",
+    "date": "2009-10-07",
+    "exchange": "NYSE",
+    "sector": "Banks - Regional",
+    "ipoPrice": null,
+    "current": 5.39,
+    "marketCap": 20.18,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2009-10-07",
+      "open": 12.7395,
+      "high": 13.4483,
+      "low": 12.2605,
+      "close": 12.4617,
+      "volume": 149317996,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CHTR",
+    "name": "Charter Communications, Inc.",
+    "date": "1999-11-09",
+    "exchange": "NASDAQ",
+    "sector": "Telecom Services",
+    "ipoPrice": null,
+    "current": 145.15,
+    "marketCap": 20.1,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "MAIR",
+    "name": "Madison Air Solutions Corporation",
+    "date": "2026-04-16",
+    "exchange": "NYSE",
+    "sector": "Building Products & Equipment",
+    "ipoPrice": 27.0,
+    "current": 40.04,
+    "marketCap": 20.07,
+    "dealSize": null,
+    "dayChange": 48.3,
+    "firstDay": {
+      "date": "2026-04-16",
+      "open": 32.0,
+      "high": 32.5,
+      "low": 31.0,
+      "close": 31.75,
+      "volume": 36831100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TTMI",
+    "name": "TTM Technologies, Inc.",
+    "date": "2000-09-21",
+    "exchange": "NASDAQ",
+    "sector": "Electronic Components",
+    "ipoPrice": null,
+    "current": 189.92,
+    "marketCap": 19.72,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2000-09-25",
+      "open": 20.7812,
+      "high": 24.75,
+      "low": 20.375,
+      "close": 23.125,
+      "volume": 2082900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "NXT",
+    "name": "Nextpower Inc.",
+    "date": "2023-02-09",
+    "exchange": "NASDAQ",
+    "sector": "Solar",
+    "ipoPrice": 24.0,
+    "current": 130.5,
+    "marketCap": 19.61,
+    "dealSize": null,
+    "dayChange": 443.75,
+    "firstDay": {
+      "date": "2023-02-09",
+      "open": 30.31,
+      "high": 30.84,
+      "low": 28.51,
+      "close": 30.46,
+      "volume": 16331500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "RBA",
+    "name": "RB Global, Inc.",
+    "date": "1998-03-09",
+    "exchange": "NYSE",
+    "sector": "Specialty Business Services",
+    "ipoPrice": null,
+    "current": 104.72,
+    "marketCap": 19.51,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1998-03-10",
+      "open": 3.5104,
+      "high": 3.5833,
+      "low": 3.4583,
+      "close": 3.5208,
+      "volume": 12507000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SITM",
+    "name": "SiTime Corporation",
+    "date": "2019-11-21",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductors",
+    "ipoPrice": 13.0,
+    "current": 728.56,
+    "marketCap": 19.23,
+    "dealSize": null,
+    "dayChange": 5504.31,
+    "firstDay": {
+      "date": "2019-11-21",
+      "open": 16.9,
+      "high": 19.14,
+      "low": 16.21,
+      "close": 18.65,
+      "volume": 1032000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PKG",
+    "name": "Packaging Corporation of America",
+    "date": "2000-01-27",
+    "exchange": "NYSE",
+    "sector": "Packaging & Containers",
+    "ipoPrice": null,
+    "current": 215.91,
+    "marketCap": 19.12,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2000-01-28",
+      "open": 12.0,
+      "high": 12.1875,
+      "low": 12.0,
+      "close": 12.0,
+      "volume": 11192000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SNX",
+    "name": "TD SYNNEX Corporation",
+    "date": "2003-11-25",
+    "exchange": "NYSE",
+    "sector": "Electronics & Computer Distribution",
+    "ipoPrice": null,
+    "current": 237.34,
+    "marketCap": 19.08,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2003-11-25",
+      "open": 7.075,
+      "high": 7.15,
+      "low": 6.975,
+      "close": 7.1,
+      "volume": 6651600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BEKE",
+    "name": "KE Holdings Inc.",
+    "date": "2020-08-13",
+    "exchange": "NYSE",
+    "sector": "Real Estate Services",
+    "ipoPrice": 20.0,
+    "current": 16.4,
+    "marketCap": 18.96,
+    "dealSize": null,
+    "dayChange": -18.0,
+    "firstDay": {
+      "date": "2020-08-13",
+      "open": 35.06,
+      "high": 37.49,
+      "low": 31.79,
+      "close": 37.44,
+      "volume": 49492400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "AA",
+    "name": "Alcoa Corporation",
+    "date": "2016-11-01",
+    "exchange": "NYSE",
+    "sector": "Aluminum",
+    "ipoPrice": null,
+    "current": 71.38,
+    "marketCap": 18.84,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2016-11-01",
+      "open": 22.1,
+      "high": 23.55,
+      "low": 21.78,
+      "close": 23.0,
+      "volume": 32216900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "RS",
+    "name": "Reliance, Inc.",
+    "date": "1994-09-15",
+    "exchange": "NYSE",
+    "sector": "Steel",
+    "ipoPrice": null,
+    "current": 367.0,
+    "marketCap": 18.73,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1994-09-16",
+      "open": 3.4444,
+      "high": 3.6389,
+      "low": 3.3889,
+      "close": 3.6111,
+      "volume": 3978450,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ESS",
+    "name": "Essex Property Trust, Inc.",
+    "date": "1994-06-06",
+    "exchange": "NYSE",
+    "sector": "REIT - Residential",
+    "ipoPrice": null,
+    "current": 276.7,
+    "marketCap": 18.39,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1994-06-07",
+      "open": 19.125,
+      "high": 19.625,
+      "low": 19.125,
+      "close": 19.375,
+      "volume": 1595400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "RIVN",
+    "name": "Rivian Automotive, Inc.",
+    "date": "2021-11-10",
+    "exchange": "NASDAQ",
+    "sector": "Auto Manufacturers",
+    "ipoPrice": 78.0,
+    "current": 14.22,
+    "marketCap": 18.2,
+    "dealSize": null,
+    "dayChange": -81.77,
+    "firstDay": {
+      "date": "2021-11-10",
+      "open": 106.75,
+      "high": 119.46,
+      "low": 95.2,
+      "close": 100.73,
+      "volume": 103679500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "IOT",
+    "name": "Samsara Inc.",
+    "date": "2021-12-15",
+    "exchange": "NYSE",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 23.0,
+    "current": 31.15,
+    "marketCap": 18.15,
+    "dealSize": null,
+    "dayChange": 35.43,
+    "firstDay": {
+      "date": "2021-12-15",
+      "open": 24.9,
+      "high": 25.25,
+      "low": 23.75,
+      "close": 24.7,
+      "volume": 12675200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "WES",
+    "name": "Western Midstream Partners, LP",
+    "date": "2008-05-09",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Midstream",
+    "ipoPrice": null,
+    "current": 46.01,
+    "marketCap": 18.12,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "WCC",
+    "name": "WESCO International, Inc.",
+    "date": "1999-05-12",
+    "exchange": "NYSE",
+    "sector": "Industrial Distribution",
+    "ipoPrice": null,
+    "current": 363.57,
+    "marketCap": 17.71,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1999-05-12",
+      "open": 20.0,
+      "high": 20.8125,
+      "low": 19.625,
+      "close": 20.0,
+      "volume": 4504800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "RBC",
+    "name": "RBC Bearings Incorporated",
+    "date": "2005-08-10",
+    "exchange": "NYSE",
+    "sector": "Tools & Accessories",
+    "ipoPrice": null,
+    "current": 559.95,
+    "marketCap": 17.66,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2005-08-10",
+      "open": 14.8,
+      "high": 15.54,
+      "low": 14.6,
+      "close": 15.27,
+      "volume": 4659200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "KSPI",
+    "name": "Joint Stock Company Kaspi.kz",
+    "date": "2024-01-19",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 92.0,
+    "current": 91.54,
+    "marketCap": 17.4,
+    "dealSize": null,
+    "dayChange": -0.5,
+    "firstDay": {
+      "date": "2024-01-19",
+      "open": 92.5,
+      "high": 95.97,
+      "low": 90.74,
+      "close": 95.97,
+      "volume": 3410500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PTC",
+    "name": "PTC Inc.",
+    "date": "1989-12-07",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 148.23,
+    "marketCap": 17.12,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1989-12-08",
+      "open": 1.6406,
+      "high": 1.849,
+      "low": 1.6406,
+      "close": 1.8229,
+      "volume": 26329920,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "AGI",
+    "name": "Alamos Gold Inc.",
+    "date": "1999-09-02",
+    "exchange": "NYSE",
+    "sector": "Gold",
+    "ipoPrice": null,
+    "current": 38.34,
+    "marketCap": 16.93,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "TLK",
+    "name": "Perusahaan Perseroan (Persero) PT Telekomunikasi Indonesia Tbk",
+    "date": "1995-11-14",
+    "exchange": "NYSE",
+    "sector": "Telecom Services",
+    "ipoPrice": null,
+    "current": 16.35,
+    "marketCap": 16.36,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1995-11-14",
+      "open": 8.7963,
+      "high": 8.7963,
+      "low": 8.5648,
+      "close": 8.6227,
+      "volume": 10842768,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LI",
+    "name": "Li Auto Inc.",
+    "date": "2020-07-30",
+    "exchange": "NASDAQ",
+    "sector": "Auto Manufacturers",
+    "ipoPrice": 11.5,
+    "current": 15.89,
+    "marketCap": 16.2,
+    "dealSize": null,
+    "dayChange": 38.17,
+    "firstDay": {
+      "date": "2020-07-30",
+      "open": 15.49,
+      "high": 17.5,
+      "low": 15.1,
+      "close": 16.46,
+      "volume": 64611300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "OKTA",
+    "name": "Okta, Inc.",
+    "date": "2017-04-07",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": null,
+    "current": 92.24,
+    "marketCap": 16.17,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2017-04-07",
+      "open": 23.75,
+      "high": 24.5,
+      "low": 22.6,
+      "close": 23.51,
+      "volume": 7942500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SUI",
+    "name": "Sun Communities, Inc.",
+    "date": "1993-12-08",
+    "exchange": "NYSE",
+    "sector": "REIT - Residential",
+    "ipoPrice": null,
+    "current": 127.75,
+    "marketCap": 16.07,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-12-09",
+      "open": 20.125,
+      "high": 21.125,
+      "low": 20.125,
+      "close": 20.25,
+      "volume": 1600600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TPG",
+    "name": "TPG Inc.",
+    "date": "2022-01-13",
+    "exchange": "NASDAQ",
+    "sector": "Asset Management",
+    "ipoPrice": 29.5,
+    "current": 41.62,
+    "marketCap": 16.0,
+    "dealSize": null,
+    "dayChange": 41.08,
+    "firstDay": {
+      "date": "2022-01-13",
+      "open": 33.0,
+      "high": 34.99,
+      "low": 32.54,
+      "close": 34.0,
+      "volume": 14928500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "NVMI",
+    "name": "Nova Ltd.",
+    "date": "2000-04-07",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductor Equipment & Materials",
+    "ipoPrice": null,
+    "current": 503.49,
+    "marketCap": 16.0,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2000-04-11",
+      "open": 18.0,
+      "high": 22.1875,
+      "low": 17.625,
+      "close": 21.9375,
+      "volume": 4895500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LOGI",
+    "name": "Logitech International S.A.",
+    "date": "1997-03-27",
+    "exchange": "NASDAQ",
+    "sector": "Computer Hardware",
+    "ipoPrice": null,
+    "current": 112.63,
+    "marketCap": 15.96,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1997-03-27",
+      "open": 2.0625,
+      "high": 2.0938,
+      "low": 2.0,
+      "close": 2.0234,
+      "volume": 10659200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "GNRC",
+    "name": "Generac Holdings Inc.",
+    "date": "2010-02-11",
+    "exchange": "NYSE",
+    "sector": "Specialty Industrial Machinery",
+    "ipoPrice": null,
+    "current": 270.14,
+    "marketCap": 15.9,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2010-02-11",
+      "open": 13.0,
+      "high": 13.25,
+      "low": 12.4,
+      "close": 12.84,
+      "volume": 9627100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LDOS",
+    "name": "Leidos Holdings, Inc.",
+    "date": "2006-10-13",
+    "exchange": "NYSE",
+    "sector": "Information Technology Services",
+    "ipoPrice": null,
+    "current": 126.01,
+    "marketCap": 15.85,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2006-10-17",
+      "open": 44.6173,
+      "high": 44.642,
+      "low": 43.6049,
+      "close": 44.3704,
+      "volume": 1741338,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "IEX",
+    "name": "IDEX Corporation",
+    "date": "1991-06-21",
+    "exchange": "NYSE",
+    "sector": "Specialty Industrial Machinery",
+    "ipoPrice": null,
+    "current": 208.78,
+    "marketCap": 15.45,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1991-06-21",
+      "open": 3.9259,
+      "high": 3.9753,
+      "low": 3.9259,
+      "close": 3.9753,
+      "volume": 24300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CLH",
+    "name": "Clean Harbors, Inc.",
+    "date": "1987-11-24",
+    "exchange": "NYSE",
+    "sector": "Waste Management",
+    "ipoPrice": null,
+    "current": 286.92,
+    "marketCap": 15.16,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1987-11-24",
+      "open": 4.5,
+      "high": 4.625,
+      "low": 4.5,
+      "close": 4.5,
+      "volume": 184200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "DECK",
+    "name": "Deckers Outdoor Corporation",
+    "date": "1993-10-14",
+    "exchange": "NYSE",
+    "sector": "Footwear & Accessories",
+    "ipoPrice": null,
+    "current": 106.67,
+    "marketCap": 14.81,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-10-15",
+      "open": 1.0833,
+      "high": 1.3333,
+      "low": 1.0833,
+      "close": 1.2222,
+      "volume": 54590400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PFGC",
+    "name": "Performance Food Group Company",
+    "date": "2015-10-01",
+    "exchange": "NYSE",
+    "sector": "Food Distribution",
+    "ipoPrice": null,
+    "current": 93.63,
+    "marketCap": 14.71,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2015-10-01",
+      "open": 19.0,
+      "high": 19.9,
+      "low": 18.72,
+      "close": 19.2,
+      "volume": 5653000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BSAC",
+    "name": "Banco Santander-Chile",
+    "date": "1994-05-23",
+    "exchange": "NYSE",
+    "sector": "Banks - Regional",
+    "ipoPrice": null,
+    "current": 30.98,
+    "marketCap": 14.68,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "FPS",
+    "name": "Forgent Power Solutions, Inc.",
+    "date": "2026-02-05",
+    "exchange": "NYSE",
+    "sector": "Electrical Equipment & Parts",
+    "ipoPrice": 27.0,
+    "current": 47.9,
+    "marketCap": 14.58,
+    "dealSize": null,
+    "dayChange": 77.41,
+    "firstDay": {
+      "date": "2026-02-05",
+      "open": 26.0,
+      "high": 29.7,
+      "low": 25.95,
+      "close": 29.0,
+      "volume": 31560700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "AAOI",
+    "name": "Applied Optoelectronics, Inc.",
+    "date": "2013-09-26",
+    "exchange": "NASDAQ",
+    "sector": "Communication Equipment",
+    "ipoPrice": null,
+    "current": 181.49,
+    "marketCap": 14.56,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2013-09-26",
+      "open": 10.0,
+      "high": 10.09,
+      "low": 9.37,
+      "close": 9.96,
+      "volume": 946000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SKM",
+    "name": "SK Telecom Co., Ltd.",
+    "date": "1996-06-27",
+    "exchange": "NYSE",
+    "sector": "Telecom Services",
+    "ipoPrice": null,
+    "current": 37.76,
+    "marketCap": 14.44,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1996-06-27",
+      "open": 24.3108,
+      "high": 24.8762,
+      "low": 24.3108,
+      "close": 24.8762,
+      "volume": 977152,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TIGO",
+    "name": "Millicom International Cellular S.A.",
+    "date": "1994-02-28",
+    "exchange": "NASDAQ",
+    "sector": "Telecom Services",
+    "ipoPrice": null,
+    "current": 85.84,
+    "marketCap": 14.35,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "PAC",
+    "name": "Grupo Aeroportuario del Pac\u00edfico, S.A.B. de C.V.",
+    "date": "2006-02-24",
+    "exchange": "NYSE",
+    "sector": "Airports & Air Services",
+    "ipoPrice": null,
+    "current": 240.4,
+    "marketCap": 14.32,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2006-02-27",
+      "open": 28.62,
+      "high": 29.33,
+      "low": 28.0,
+      "close": 28.95,
+      "volume": 3042200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ARXS",
+    "name": "Arxis, Inc.",
+    "date": "2026-04-16",
+    "exchange": "NASDAQ",
+    "sector": "Electrical Equipment & Parts",
+    "ipoPrice": 28.0,
+    "current": 34.8,
+    "marketCap": 14.28,
+    "dealSize": null,
+    "dayChange": 24.29,
+    "firstDay": {
+      "date": "2026-04-16",
+      "open": 38.0,
+      "high": 39.05,
+      "low": 35.25,
+      "close": 38.75,
+      "volume": 19256400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PS",
+    "name": "Pershing Square Inc.",
+    "date": "2026-04-29",
+    "exchange": "NYSE",
+    "sector": "Asset Management",
+    "ipoPrice": 50.0,
+    "current": 35.67,
+    "marketCap": 14.27,
+    "dealSize": null,
+    "dayChange": -28.66,
+    "firstDay": {
+      "date": "2026-04-29",
+      "open": 24.0,
+      "high": 24.49,
+      "low": 22.01,
+      "close": 24.2,
+      "volume": 3286100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CDW",
+    "name": "CDW Corporation",
+    "date": "1993-05-27",
+    "exchange": "NASDAQ",
+    "sector": "Information Technology Services",
+    "ipoPrice": null,
+    "current": 110.82,
+    "marketCap": 14.16,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "EG",
+    "name": "Everest Group, Ltd.",
+    "date": "1995-10-02",
+    "exchange": "NYSE",
+    "sector": "Insurance - Reinsurance",
+    "ipoPrice": null,
+    "current": 352.71,
+    "marketCap": 13.96,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1995-10-03",
+      "open": 18.75,
+      "high": 19.875,
+      "low": 18.5,
+      "close": 19.625,
+      "volume": 10364800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CHKP",
+    "name": "Check Point Software Technologies Ltd.",
+    "date": "1996-06-28",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": null,
+    "current": 133.63,
+    "marketCap": 13.9,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1996-06-28",
+      "open": 3.2083,
+      "high": 4.0625,
+      "low": 3.1667,
+      "close": 4.0,
+      "volume": 32796000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TME",
+    "name": "Tencent Music Entertainment Group",
+    "date": "2018-12-12",
+    "exchange": "NYSE",
+    "sector": "Internet Content & Information",
+    "ipoPrice": null,
+    "current": 8.81,
+    "marketCap": 13.87,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-12-12",
+      "open": 14.1,
+      "high": 14.75,
+      "low": 13.75,
+      "close": 14.0,
+      "volume": 60283400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "HTHT",
+    "name": "H World Group Limited",
+    "date": "2010-03-26",
+    "exchange": "NASDAQ",
+    "sector": "Lodging",
+    "ipoPrice": null,
+    "current": 44.79,
+    "marketCap": 13.77,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2010-03-26",
+      "open": 3.375,
+      "high": 3.875,
+      "low": 3.3725,
+      "close": 3.48,
+      "volume": 23327200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "RBRK",
+    "name": "Rubrik, Inc.",
+    "date": "2024-04-25",
+    "exchange": "NYSE",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 32.0,
+    "current": 66.59,
+    "marketCap": 13.7,
+    "dealSize": null,
+    "dayChange": 108.09,
+    "firstDay": {
+      "date": "2024-04-25",
+      "open": 38.6,
+      "high": 40.0,
+      "low": 35.935,
+      "close": 37.0,
+      "volume": 18580300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TRU",
+    "name": "TransUnion",
+    "date": "2015-06-25",
+    "exchange": "NYSE",
+    "sector": "Financial Data & Stock Exchanges",
+    "ipoPrice": null,
+    "current": 70.66,
+    "marketCap": 13.62,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2015-06-25",
+      "open": 24.62,
+      "high": 25.75,
+      "low": 24.51,
+      "close": 25.4,
+      "volume": 25922300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BBIO",
+    "name": "BridgeBio Pharma, Inc.",
+    "date": "2019-06-27",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 17.0,
+    "current": 69.12,
+    "marketCap": 13.54,
+    "dealSize": null,
+    "dayChange": 306.59,
+    "firstDay": {
+      "date": "2019-06-27",
+      "open": 30.61,
+      "high": 31.2,
+      "low": 25.36,
+      "close": 27.55,
+      "volume": 4986000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BWA",
+    "name": "BorgWarner Inc.",
+    "date": "1993-08-12",
+    "exchange": "NYSE",
+    "sector": "Auto Parts",
+    "ipoPrice": null,
+    "current": 65.82,
+    "marketCap": 13.5,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-08-13",
+      "open": 2.7921,
+      "high": 2.8059,
+      "low": 2.7509,
+      "close": 2.7509,
+      "volume": 16809165,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TOST",
+    "name": "Toast, Inc.",
+    "date": "2021-09-22",
+    "exchange": "NYSE",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 40.0,
+    "current": 23.16,
+    "marketCap": 13.43,
+    "dealSize": null,
+    "dayChange": -42.1,
+    "firstDay": {
+      "date": "2021-09-22",
+      "open": 65.26,
+      "high": 65.99,
+      "low": 58.21,
+      "close": 62.51,
+      "volume": 14255600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "RRX",
+    "name": "Regal Rexnord Corporation",
+    "date": "1987-03-27",
+    "exchange": "NYSE",
+    "sector": "Specialty Industrial Machinery",
+    "ipoPrice": null,
+    "current": 200.78,
+    "marketCap": 13.37,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1987-03-27",
+      "open": 4.6944,
+      "high": 4.8056,
+      "low": 4.6944,
+      "close": 4.75,
+      "volume": 17100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ENLT",
+    "name": "Enlight Renewable Energy Ltd",
+    "date": "2023-02-10",
+    "exchange": "NASDAQ",
+    "sector": "Utilities - Renewable",
+    "ipoPrice": 18.0,
+    "current": 92.25,
+    "marketCap": 13.3,
+    "dealSize": null,
+    "dayChange": 412.5,
+    "firstDay": {
+      "date": "2023-02-10",
+      "open": 17.9,
+      "high": 18.0,
+      "low": 17.45,
+      "close": 17.75,
+      "volume": 4633700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SANM",
+    "name": "Sanmina Corporation",
+    "date": "1993-04-14",
+    "exchange": "NASDAQ",
+    "sector": "Electronic Components",
+    "ipoPrice": null,
+    "current": 246.44,
+    "marketCap": 13.21,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-04-14",
+      "open": 3.9375,
+      "high": 4.125,
+      "low": 3.75,
+      "close": 4.0312,
+      "volume": 2846400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ONON",
+    "name": "On Holding AG",
+    "date": "2021-09-15",
+    "exchange": "NYSE",
+    "sector": "Footwear & Accessories",
+    "ipoPrice": 24.0,
+    "current": 39.81,
+    "marketCap": 13.18,
+    "dealSize": null,
+    "dayChange": 65.88,
+    "firstDay": {
+      "date": "2021-09-15",
+      "open": 35.4,
+      "high": 38.0,
+      "low": 34.5,
+      "close": 35.0,
+      "volume": 13765800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "IESC",
+    "name": "IES Holdings, Inc.",
+    "date": "1998-01-26",
+    "exchange": "NASDAQ",
+    "sector": "Engineering & Construction",
+    "ipoPrice": null,
+    "current": 659.65,
+    "marketCap": 13.14,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1998-01-28",
+      "open": 241.4245,
+      "high": 252.107,
+      "low": 239.288,
+      "close": 247.834,
+      "volume": 21185,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "NIO",
+    "name": "NIO Inc.",
+    "date": "2018-09-12",
+    "exchange": "NYSE",
+    "sector": "Auto Manufacturers",
+    "ipoPrice": null,
+    "current": 5.2,
+    "marketCap": 13.01,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-09-12",
+      "open": 6.0,
+      "high": 6.93,
+      "low": 5.35,
+      "close": 6.6,
+      "volume": 66849000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PAYP",
+    "name": "PayPay Corporation",
+    "date": "2026-03-12",
+    "exchange": "NASDAQ",
+    "sector": "Credit Services",
+    "ipoPrice": 16.0,
+    "current": 19.11,
+    "marketCap": 12.94,
+    "dealSize": null,
+    "dayChange": 19.44,
+    "firstDay": {
+      "date": "2026-03-12",
+      "open": 19.0,
+      "high": 19.29,
+      "low": 17.0,
+      "close": 18.16,
+      "volume": 12338800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "NTNX",
+    "name": "Nutanix, Inc.",
+    "date": "2016-09-30",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": null,
+    "current": 47.12,
+    "marketCap": 12.69,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2016-09-30",
+      "open": 26.5,
+      "high": 39.4,
+      "low": 26.1,
+      "close": 37.0,
+      "volume": 30011500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CRBG",
+    "name": "Corebridge Financial, Inc.",
+    "date": "2022-09-15",
+    "exchange": "NYSE",
+    "sector": "Asset Management",
+    "ipoPrice": 21.0,
+    "current": 27.74,
+    "marketCap": 12.67,
+    "dealSize": null,
+    "dayChange": 32.1,
+    "firstDay": {
+      "date": "2022-09-16",
+      "open": 20.56,
+      "high": 20.81,
+      "low": 20.0,
+      "close": 20.72,
+      "volume": 4981700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "EXEL",
+    "name": "Exelixis, Inc.",
+    "date": "2000-04-07",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": null,
+    "current": 50.15,
+    "marketCap": 12.61,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "RNR",
+    "name": "RenaissanceRe Holdings Ltd.",
+    "date": "1995-07-26",
+    "exchange": "NYSE",
+    "sector": "Insurance - Reinsurance",
+    "ipoPrice": null,
+    "current": 295.56,
+    "marketCap": 12.6,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1995-07-27",
+      "open": 7.0833,
+      "high": 7.1667,
+      "low": 6.9062,
+      "close": 7.1667,
+      "volume": 7674600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "FUTU",
+    "name": "Futu Holdings Limited",
+    "date": "2019-03-08",
+    "exchange": "NASDAQ",
+    "sector": "Capital Markets",
+    "ipoPrice": 12.0,
+    "current": 89.76,
+    "marketCap": 12.58,
+    "dealSize": null,
+    "dayChange": 648.0,
+    "firstDay": {
+      "date": "2019-03-08",
+      "open": 14.76,
+      "high": 17.5,
+      "low": 14.68,
+      "close": 15.32,
+      "volume": 7250500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SWKS",
+    "name": "Skyworks Solutions, Inc.",
+    "date": "1968-03-13",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductors",
+    "ipoPrice": null,
+    "current": 82.42,
+    "marketCap": 12.4,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "ZBRA",
+    "name": "Zebra Technologies Corporation",
+    "date": "1991-08-15",
+    "exchange": "NASDAQ",
+    "sector": "Communication Equipment",
+    "ipoPrice": null,
+    "current": 255.55,
+    "marketCap": 12.17,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1991-08-15",
+      "open": 3.8889,
+      "high": 4.1667,
+      "low": 3.8889,
+      "close": 4.0556,
+      "volume": 10640250,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "AXSM",
+    "name": "Axsome Therapeutics, Inc.",
+    "date": "2015-11-19",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": null,
+    "current": 235.97,
+    "marketCap": 12.14,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2015-11-19",
+      "open": 9.0,
+      "high": 9.44,
+      "low": 8.32,
+      "close": 8.74,
+      "volume": 532300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "APTV",
+    "name": "Aptiv PLC",
+    "date": "1999-02-05",
+    "exchange": "NYSE",
+    "sector": "Auto Parts",
+    "ipoPrice": null,
+    "current": 57.36,
+    "marketCap": 12.14,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "VIAV",
+    "name": "Viavi Solutions Inc.",
+    "date": "1993-11-17",
+    "exchange": "NASDAQ",
+    "sector": "Communication Equipment",
+    "ipoPrice": null,
+    "current": 49.51,
+    "marketCap": 12.13,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-11-17",
+      "open": 1.1377,
+      "high": 1.2443,
+      "low": 1.1377,
+      "close": 1.1732,
+      "volume": 4385858,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BTSG",
+    "name": "BrightSpring Health Services, Inc.",
+    "date": "2024-01-26",
+    "exchange": "NASDAQ",
+    "sector": "Health Information Services",
+    "ipoPrice": 13.0,
+    "current": 58.5,
+    "marketCap": 12.03,
+    "dealSize": null,
+    "dayChange": 350.0,
+    "firstDay": {
+      "date": "2024-01-26",
+      "open": 12.0,
+      "high": 12.14,
+      "low": 10.99,
+      "close": 11.0,
+      "volume": 24876200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "DT",
+    "name": "Dynatrace, Inc.",
+    "date": "2019-08-01",
+    "exchange": "NYSE",
+    "sector": "Software - Application",
+    "ipoPrice": 16.0,
+    "current": 41.21,
+    "marketCap": 12.01,
+    "dealSize": null,
+    "dayChange": 157.56,
+    "firstDay": {
+      "date": "2019-08-01",
+      "open": 25.5,
+      "high": 26.37,
+      "low": 23.65,
+      "close": 23.85,
+      "volume": 29037100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "FIG",
+    "name": "Figma, Inc.",
+    "date": "2025-07-31",
+    "exchange": "NYSE",
+    "sector": "Software - Application",
+    "ipoPrice": 33.0,
+    "current": 22.71,
+    "marketCap": 12.0,
+    "dealSize": null,
+    "dayChange": -31.18,
+    "firstDay": {
+      "date": "2025-07-31",
+      "open": 85.0,
+      "high": 124.63,
+      "low": 84.105,
+      "close": 115.5,
+      "volume": 64409000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "GDDY",
+    "name": "GoDaddy Inc.",
+    "date": "2015-04-01",
+    "exchange": "NYSE",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": null,
+    "current": 90.46,
+    "marketCap": 11.98,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2015-04-01",
+      "open": 26.15,
+      "high": 26.84,
+      "low": 25.49,
+      "close": 26.15,
+      "volume": 23177400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "GWRE",
+    "name": "Guidewire Software, Inc.",
+    "date": "2012-01-25",
+    "exchange": "NYSE",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 140.26,
+    "marketCap": 11.87,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2012-01-25",
+      "open": 16.75,
+      "high": 18.0,
+      "low": 16.45,
+      "close": 17.12,
+      "volume": 7030900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "FMS",
+    "name": "Fresenius Medical Care AG",
+    "date": "1996-09-19",
+    "exchange": "NYSE",
+    "sector": "Medical Care Facilities",
+    "ipoPrice": null,
+    "current": 21.64,
+    "marketCap": 11.77,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1996-09-19",
+      "open": 11.125,
+      "high": 11.3125,
+      "low": 11.0,
+      "close": 11.125,
+      "volume": 4334000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CPT",
+    "name": "Camden Property Trust",
+    "date": "1993-07-22",
+    "exchange": "NYSE",
+    "sector": "REIT - Residential",
+    "ipoPrice": null,
+    "current": 107.47,
+    "marketCap": 11.19,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-07-22",
+      "open": 22.75,
+      "high": 23.0,
+      "low": 22.625,
+      "close": 23.0,
+      "volume": 3159100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CFLT",
+    "name": "Confluent, Inc.",
+    "date": "2021-06-24",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 36.0,
+    "current": 30.99,
+    "marketCap": 11.13,
+    "dealSize": null,
+    "dayChange": -13.92,
+    "firstDay": null
+  },
+  {
+    "ticker": "XE",
+    "name": "X-Energy, Inc.",
+    "date": "2026-04-24",
+    "exchange": "NASDAQ",
+    "sector": "Electrical Equipment & Parts",
+    "ipoPrice": 23.0,
+    "current": 28.32,
+    "marketCap": 11.11,
+    "dealSize": null,
+    "dayChange": 23.13,
+    "firstDay": {
+      "date": "2026-04-24",
+      "open": 30.11,
+      "high": 31.33,
+      "low": 26.9,
+      "close": 29.2,
+      "volume": 44389400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CACI",
+    "name": "CACI International Inc",
+    "date": "1979-04-02",
+    "exchange": "NYSE",
+    "sector": "Information Technology Services",
+    "ipoPrice": null,
+    "current": 501.35,
+    "marketCap": 11.08,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "BJ",
+    "name": "BJ's Wholesale Club Holdings, Inc.",
+    "date": "2018-06-28",
+    "exchange": "NYSE",
+    "sector": "Discount Stores",
+    "ipoPrice": null,
+    "current": 86.64,
+    "marketCap": 11.06,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-06-28",
+      "open": 21.25,
+      "high": 22.37,
+      "low": 20.56,
+      "close": 22.0,
+      "volume": 21172600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "FRVO",
+    "name": "Fervo Energy Company",
+    "date": "2026-05-13",
+    "exchange": "NASDAQ",
+    "sector": "Utilities - Independent Power Producers",
+    "ipoPrice": 27.0,
+    "current": 38.35,
+    "marketCap": 10.87,
+    "dealSize": null,
+    "dayChange": 42.04,
+    "firstDay": {
+      "date": "2026-05-13",
+      "open": 36.0,
+      "high": 38.41,
+      "low": 36.0,
+      "close": 36.54,
+      "volume": 35164300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ELAN",
+    "name": "Elanco Animal Health Incorporated",
+    "date": "2018-09-20",
+    "exchange": "NYSE",
+    "sector": "Drug Manufacturers - Specialty & Generic",
+    "ipoPrice": null,
+    "current": 21.73,
+    "marketCap": 10.85,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-09-20",
+      "open": 32.25,
+      "high": 36.01,
+      "low": 32.05,
+      "close": 36.0,
+      "volume": 40182700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PAG",
+    "name": "Penske Automotive Group, Inc.",
+    "date": "1996-10-23",
+    "exchange": "NYSE",
+    "sector": "Auto & Truck Dealerships",
+    "ipoPrice": null,
+    "current": 164.73,
+    "marketCap": 10.83,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1996-10-23",
+      "open": 17.0,
+      "high": 17.625,
+      "low": 17.0,
+      "close": 17.4375,
+      "volume": 7996800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TIMB",
+    "name": "TIM S.A.",
+    "date": "1998-11-16",
+    "exchange": "NYSE",
+    "sector": "Telecom Services",
+    "ipoPrice": null,
+    "current": 22.37,
+    "marketCap": 10.82,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1998-11-16",
+      "open": 7.5848,
+      "high": 7.7335,
+      "low": 7.5848,
+      "close": 7.6963,
+      "volume": 124058,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PINS",
+    "name": "Pinterest, Inc.",
+    "date": "2019-04-18",
+    "exchange": "NYSE",
+    "sector": "Internet Content & Information",
+    "ipoPrice": 19.0,
+    "current": 19.29,
+    "marketCap": 10.81,
+    "dealSize": null,
+    "dayChange": 1.53,
+    "firstDay": {
+      "date": "2019-04-18",
+      "open": 23.75,
+      "high": 25.18,
+      "low": 23.05,
+      "close": 24.4,
+      "volume": 87109500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PODD",
+    "name": "Insulet Corporation",
+    "date": "2007-05-15",
+    "exchange": "NASDAQ",
+    "sector": "Medical Devices",
+    "ipoPrice": null,
+    "current": 154.87,
+    "marketCap": 10.73,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2007-05-15",
+      "open": 17.0,
+      "high": 17.0,
+      "low": 15.77,
+      "close": 15.96,
+      "volume": 4850000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "IT",
+    "name": "Gartner, Inc.",
+    "date": "1993-10-04",
+    "exchange": "NYSE",
+    "sector": "Information Technology Services",
+    "ipoPrice": null,
+    "current": 160.01,
+    "marketCap": 10.71,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-10-05",
+      "open": 3.1875,
+      "high": 3.2812,
+      "low": 3.125,
+      "close": 3.2188,
+      "volume": 25536800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "AM",
+    "name": "Antero Midstream Corporation",
+    "date": "2014-11-05",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Midstream",
+    "ipoPrice": null,
+    "current": 22.17,
+    "marketCap": 10.53,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "KTOS",
+    "name": "Kratos Defense & Security Solutions, Inc.",
+    "date": "1999-11-05",
+    "exchange": "NASDAQ",
+    "sector": "Aerospace & Defense",
+    "ipoPrice": null,
+    "current": 56.18,
+    "marketCap": 10.53,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1999-11-05",
+      "open": 150.0,
+      "high": 690.0,
+      "low": 150.0,
+      "close": 620.0,
+      "volume": 1412150,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TTD",
+    "name": "The Trade Desk, Inc.",
+    "date": "2016-09-21",
+    "exchange": "NASDAQ",
+    "sector": "Advertising Agencies",
+    "ipoPrice": null,
+    "current": 22.38,
+    "marketCap": 10.52,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2016-09-21",
+      "open": 2.875,
+      "high": 3.04,
+      "low": 2.78,
+      "close": 3.01,
+      "volume": 63438000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CYTK",
+    "name": "Cytokinetics, Incorporated",
+    "date": "2004-04-29",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": null,
+    "current": 76.94,
+    "marketCap": 10.45,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2004-04-30",
+      "open": 97.14,
+      "high": 103.08,
+      "low": 96.6,
+      "close": 97.56,
+      "volume": 91800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SFD",
+    "name": "Smithfield Foods, Inc.",
+    "date": "2025-01-28",
+    "exchange": "NASDAQ",
+    "sector": "Packaged Foods",
+    "ipoPrice": 20.0,
+    "current": 26.34,
+    "marketCap": 10.36,
+    "dealSize": null,
+    "dayChange": 31.7,
+    "firstDay": {
+      "date": "2025-01-28",
+      "open": 21.05,
+      "high": 21.2,
+      "low": 19.1,
+      "close": 19.75,
+      "volume": 12165200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LINE",
+    "name": "Lineage, Inc.",
+    "date": "2024-07-25",
+    "exchange": "NASDAQ",
+    "sector": "REIT - Industrial",
+    "ipoPrice": 78.0,
+    "current": 40.88,
+    "marketCap": 10.34,
+    "dealSize": null,
+    "dayChange": -47.59,
+    "firstDay": {
+      "date": "2024-07-25",
+      "open": 82.0,
+      "high": 82.2,
+      "low": 80.15,
+      "close": 80.78,
+      "volume": 14243000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "HUBS",
+    "name": "HubSpot, Inc.",
+    "date": "2014-10-09",
+    "exchange": "NYSE",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 201.97,
+    "marketCap": 10.34,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2014-10-09",
+      "open": 32.95,
+      "high": 32.99,
+      "low": 29.07,
+      "close": 30.1,
+      "volume": 8259700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "WMS",
+    "name": "Advanced Drainage Systems, Inc.",
+    "date": "2014-07-25",
+    "exchange": "NYSE",
+    "sector": "Building Products & Equipment",
+    "ipoPrice": null,
+    "current": 133.0,
+    "marketCap": 10.19,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2014-07-25",
+      "open": 16.05,
+      "high": 16.38,
+      "low": 15.99,
+      "close": 16.15,
+      "volume": 5148400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "VSAT",
+    "name": "Viasat, Inc.",
+    "date": "1996-12-03",
+    "exchange": "NASDAQ",
+    "sector": "Communication Equipment",
+    "ipoPrice": null,
+    "current": 74.56,
+    "marketCap": 10.13,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1996-12-03",
+      "open": 4.75,
+      "high": 4.875,
+      "low": 4.5,
+      "close": 4.5,
+      "volume": 1852800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "IAG",
+    "name": "IAMGOLD Corporation",
+    "date": "1996-03-08",
+    "exchange": "NYSE",
+    "sector": "Gold",
+    "ipoPrice": null,
+    "current": 16.52,
+    "marketCap": 10.01,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "WYNN",
+    "name": "Wynn Resorts, Limited",
+    "date": "2002-10-25",
+    "exchange": "NASDAQ",
+    "sector": "Resorts & Casinos",
+    "ipoPrice": null,
+    "current": 97.24,
+    "marketCap": 9.95,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2002-10-25",
+      "open": 13.0,
+      "high": 13.15,
+      "low": 12.85,
+      "close": 13.01,
+      "volume": 13965800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "GME",
+    "name": "GameStop Corp.",
+    "date": "2002-02-13",
+    "exchange": "NYSE",
+    "sector": "Specialty Retail",
+    "ipoPrice": null,
+    "current": 21.96,
+    "marketCap": 9.85,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2002-02-13",
+      "open": 2.4062,
+      "high": 2.515,
+      "low": 2.3812,
+      "close": 2.5125,
+      "volume": 76216000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BROS",
+    "name": "Dutch Bros Inc.",
+    "date": "2021-09-15",
+    "exchange": "NYSE",
+    "sector": "Restaurants",
+    "ipoPrice": 23.0,
+    "current": 52.12,
+    "marketCap": 9.78,
+    "dealSize": null,
+    "dayChange": 126.61,
+    "firstDay": {
+      "date": "2021-09-15",
+      "open": 32.5,
+      "high": 40.1,
+      "low": 32.42,
+      "close": 36.68,
+      "volume": 15620700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "AHR",
+    "name": "American Healthcare REIT, Inc.",
+    "date": "2024-02-07",
+    "exchange": "NYSE",
+    "sector": "REIT - Healthcare Facilities",
+    "ipoPrice": 12.0,
+    "current": 50.19,
+    "marketCap": 9.77,
+    "dealSize": null,
+    "dayChange": 318.25,
+    "firstDay": {
+      "date": "2024-02-07",
+      "open": 12.85,
+      "high": 13.26,
+      "low": 12.63,
+      "close": 13.22,
+      "volume": 12732800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CART",
+    "name": "Maplebear Inc.",
+    "date": "2023-09-19",
+    "exchange": "NASDAQ",
+    "sector": "Internet Retail",
+    "ipoPrice": 30.0,
+    "current": 41.22,
+    "marketCap": 9.69,
+    "dealSize": null,
+    "dayChange": 37.4,
+    "firstDay": {
+      "date": "2023-09-19",
+      "open": 42.0,
+      "high": 42.95,
+      "low": 33.67,
+      "close": 33.7,
+      "volume": 39495900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "DOCU",
+    "name": "DocuSign, Inc.",
+    "date": "2018-04-27",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 49.53,
+    "marketCap": 9.62,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-04-27",
+      "open": 38.0,
+      "high": 40.89,
+      "low": 37.0,
+      "close": 39.73,
+      "volume": 16392400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MOH",
+    "name": "Molina Healthcare, Inc.",
+    "date": "2003-07-02",
+    "exchange": "NYSE",
+    "sector": "Healthcare Plans",
+    "ipoPrice": null,
+    "current": 184.14,
+    "marketCap": 9.59,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2003-07-02",
+      "open": 14.0,
+      "high": 14.16,
+      "low": 13.3333,
+      "close": 13.3333,
+      "volume": 8133000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PRAX",
+    "name": "Praxis Precision Medicines, Inc.",
+    "date": "2020-10-16",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 19.0,
+    "current": 343.56,
+    "marketCap": 9.58,
+    "dealSize": null,
+    "dayChange": 1708.21,
+    "firstDay": {
+      "date": "2020-10-16",
+      "open": 389.1,
+      "high": 462.3,
+      "low": 382.5,
+      "close": 417.0,
+      "volume": 288287,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BAH",
+    "name": "Booz Allen Hamilton Holding Corporation",
+    "date": "2010-11-17",
+    "exchange": "NYSE",
+    "sector": "Consulting Services",
+    "ipoPrice": null,
+    "current": 78.68,
+    "marketCap": 9.42,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2010-11-18",
+      "open": 19.45,
+      "high": 19.79,
+      "low": 19.0,
+      "close": 19.5,
+      "volume": 705800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CAVA",
+    "name": "CAVA Group, Inc.",
+    "date": "2023-06-15",
+    "exchange": "NYSE",
+    "sector": "Restaurants",
+    "ipoPrice": 22.0,
+    "current": 80.42,
+    "marketCap": 9.37,
+    "dealSize": null,
+    "dayChange": 265.55,
+    "firstDay": {
+      "date": "2023-06-15",
+      "open": 42.0,
+      "high": 47.89,
+      "low": 40.0,
+      "close": 43.78,
+      "volume": 16751800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "QRVO",
+    "name": "Qorvo, Inc.",
+    "date": "1997-06-03",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductors",
+    "ipoPrice": null,
+    "current": 106.43,
+    "marketCap": 9.37,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "SIMO",
+    "name": "Silicon Motion Technology Corporation",
+    "date": "2005-06-30",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductors",
+    "ipoPrice": null,
+    "current": 276.14,
+    "marketCap": 9.36,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2005-06-30",
+      "open": 10.6,
+      "high": 10.95,
+      "low": 9.5,
+      "close": 10.5,
+      "volume": 6642800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "DAR",
+    "name": "Darling Ingredients Inc.",
+    "date": "1994-09-22",
+    "exchange": "NYSE",
+    "sector": "Packaged Foods",
+    "ipoPrice": null,
+    "current": 58.6,
+    "marketCap": 9.31,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1994-09-22",
+      "open": 4.3333,
+      "high": 4.3333,
+      "low": 4.3333,
+      "close": 4.3333,
+      "volume": 1500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ACM",
+    "name": "AECOM",
+    "date": "2007-05-10",
+    "exchange": "NYSE",
+    "sector": "Engineering & Construction",
+    "ipoPrice": null,
+    "current": 72.04,
+    "marketCap": 9.26,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2007-05-10",
+      "open": 21.1,
+      "high": 21.99,
+      "low": 20.6,
+      "close": 21.1,
+      "volume": 20007900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TX",
+    "name": "Ternium S.A.",
+    "date": "2006-02-01",
+    "exchange": "NYSE",
+    "sector": "Steel",
+    "ipoPrice": null,
+    "current": 46.99,
+    "marketCap": 9.22,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2006-02-01",
+      "open": 23.05,
+      "high": 24.3,
+      "low": 22.55,
+      "close": 23.37,
+      "volume": 13285000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CNM",
+    "name": "Core & Main, Inc.",
+    "date": "2021-07-23",
+    "exchange": "NYSE",
+    "sector": "Industrial Distribution",
+    "ipoPrice": 20.0,
+    "current": 47.27,
+    "marketCap": 9.19,
+    "dealSize": null,
+    "dayChange": 136.35,
+    "firstDay": {
+      "date": "2021-07-23",
+      "open": 21.7,
+      "high": 25.86,
+      "low": 21.45,
+      "close": 23.7,
+      "volume": 10130400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ALV",
+    "name": "Autoliv, Inc.",
+    "date": "1997-04-28",
+    "exchange": "NYSE",
+    "sector": "Auto Parts",
+    "ipoPrice": null,
+    "current": 122.73,
+    "marketCap": 9.19,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1997-04-28",
+      "open": 26.2968,
+      "high": 26.2968,
+      "low": 25.3062,
+      "close": 25.4863,
+      "volume": 278294,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ASR",
+    "name": "Grupo Aeroportuario del Sureste, S. A. B. de C. V.",
+    "date": "2000-09-28",
+    "exchange": "NYSE",
+    "sector": "Airports & Air Services",
+    "ipoPrice": null,
+    "current": 301.76,
+    "marketCap": 9.17,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2000-09-28",
+      "open": 15.25,
+      "high": 15.375,
+      "low": 15.0,
+      "close": 15.1875,
+      "volume": 5731600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "FROG",
+    "name": "JFrog Ltd.",
+    "date": "2020-09-16",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": 44.0,
+    "current": 73.99,
+    "marketCap": 8.96,
+    "dealSize": null,
+    "dayChange": 68.16,
+    "firstDay": {
+      "date": "2020-09-16",
+      "open": 71.27,
+      "high": 77.0,
+      "low": 64.03,
+      "close": 64.79,
+      "volume": 14493200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "AXTI",
+    "name": "AXT, Inc.",
+    "date": "1998-05-21",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductor Equipment & Materials",
+    "ipoPrice": null,
+    "current": 140.83,
+    "marketCap": 8.96,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1998-05-21",
+      "open": 10.5,
+      "high": 11.5,
+      "low": 10.4375,
+      "close": 10.625,
+      "volume": 3224000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SAIL",
+    "name": "SailPoint, Inc.",
+    "date": "2025-02-13",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 23.0,
+    "current": 15.75,
+    "marketCap": 8.93,
+    "dealSize": null,
+    "dayChange": -31.52,
+    "firstDay": {
+      "date": "2025-02-13",
+      "open": 23.0,
+      "high": 23.25,
+      "low": 20.77,
+      "close": 22.0,
+      "volume": 43599000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SARO",
+    "name": "StandardAero, Inc.",
+    "date": "2024-10-02",
+    "exchange": "NYSE",
+    "sector": "Aerospace & Defense",
+    "ipoPrice": 24.0,
+    "current": 26.74,
+    "marketCap": 8.89,
+    "dealSize": null,
+    "dayChange": 11.42,
+    "firstDay": {
+      "date": "2024-10-02",
+      "open": 31.0,
+      "high": 33.01,
+      "low": 30.76,
+      "close": 32.75,
+      "volume": 27287300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "KT",
+    "name": "KT Corporation",
+    "date": "1999-05-26",
+    "exchange": "NYSE",
+    "sector": "Telecom Services",
+    "ipoPrice": null,
+    "current": 18.32,
+    "marketCap": 8.87,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1999-05-26",
+      "open": 30.125,
+      "high": 30.375,
+      "low": 30.0625,
+      "close": 30.3125,
+      "volume": 10920500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "W",
+    "name": "Wayfair Inc.",
+    "date": "2014-10-02",
+    "exchange": "NYSE",
+    "sector": "Internet Retail",
+    "ipoPrice": null,
+    "current": 67.07,
+    "marketCap": 8.85,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2014-10-02",
+      "open": 36.0,
+      "high": 39.43,
+      "low": 34.49,
+      "close": 37.72,
+      "volume": 16000600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "KRYS",
+    "name": "Krystal Biotech, Inc.",
+    "date": "2017-09-20",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": null,
+    "current": 299.45,
+    "marketCap": 8.83,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2017-09-20",
+      "open": 10.5,
+      "high": 11.31,
+      "low": 10.26,
+      "close": 10.64,
+      "volume": 456500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LGN",
+    "name": "Legence Corp.",
+    "date": "2025-09-12",
+    "exchange": "NASDAQ",
+    "sector": "Engineering & Construction",
+    "ipoPrice": 28.0,
+    "current": 81.58,
+    "marketCap": 8.81,
+    "dealSize": null,
+    "dayChange": 191.36,
+    "firstDay": {
+      "date": "2025-09-12",
+      "open": 27.0,
+      "high": 31.41,
+      "low": 26.96,
+      "close": 30.5,
+      "volume": 9811600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "AVAV",
+    "name": "AeroVironment, Inc.",
+    "date": "2007-01-23",
+    "exchange": "NASDAQ",
+    "sector": "Aerospace & Defense",
+    "ipoPrice": null,
+    "current": 174.23,
+    "marketCap": 8.78,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2007-01-23",
+      "open": 25.0,
+      "high": 26.22,
+      "low": 22.6,
+      "close": 23.93,
+      "volume": 6804600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "YMM",
+    "name": "Full Truck Alliance Co. Ltd.",
+    "date": "2021-06-22",
+    "exchange": "NYSE",
+    "sector": "Software - Application",
+    "ipoPrice": 19.0,
+    "current": 8.36,
+    "marketCap": 8.67,
+    "dealSize": null,
+    "dayChange": -56.0,
+    "firstDay": {
+      "date": "2021-06-23",
+      "open": 20.1,
+      "high": 21.5,
+      "low": 19.04,
+      "close": 21.0,
+      "volume": 13438500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "FR",
+    "name": "First Industrial Realty Trust, Inc.",
+    "date": "1994-06-23",
+    "exchange": "NYSE",
+    "sector": "REIT - Industrial",
+    "ipoPrice": null,
+    "current": 63.28,
+    "marketCap": 8.67,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1994-06-24",
+      "open": 23.625,
+      "high": 23.75,
+      "low": 23.5,
+      "close": 23.625,
+      "volume": 3086100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CRUS",
+    "name": "Cirrus Logic, Inc.",
+    "date": "1989-06-09",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductors",
+    "ipoPrice": null,
+    "current": 171.17,
+    "marketCap": 8.66,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1989-06-09",
+      "open": 5.75,
+      "high": 6.3125,
+      "low": 5.75,
+      "close": 6.1875,
+      "volume": 8359600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "XP",
+    "name": "XP Inc.",
+    "date": "2019-12-11",
+    "exchange": "NASDAQ",
+    "sector": "Capital Markets",
+    "ipoPrice": 27.0,
+    "current": 16.82,
+    "marketCap": 8.64,
+    "dealSize": null,
+    "dayChange": -37.7,
+    "firstDay": {
+      "date": "2019-12-11",
+      "open": 32.75,
+      "high": 35.0,
+      "low": 32.1,
+      "close": 34.46,
+      "volume": 34635800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CHWY",
+    "name": "Chewy, Inc.",
+    "date": "2019-06-14",
+    "exchange": "NYSE",
+    "sector": "Internet Retail",
+    "ipoPrice": 22.0,
+    "current": 20.73,
+    "marketCap": 8.64,
+    "dealSize": null,
+    "dayChange": -5.77,
+    "firstDay": {
+      "date": "2019-06-14",
+      "open": 36.0,
+      "high": 41.34,
+      "low": 32.74,
+      "close": 34.99,
+      "volume": 69671400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "RYAN",
+    "name": "Ryan Specialty Holdings, Inc.",
+    "date": "2021-07-22",
+    "exchange": "NYSE",
+    "sector": "Insurance - Specialty",
+    "ipoPrice": 23.5,
+    "current": 32.68,
+    "marketCap": 8.62,
+    "dealSize": null,
+    "dayChange": 39.06,
+    "firstDay": {
+      "date": "2021-07-22",
+      "open": 25.6,
+      "high": 28.43,
+      "low": 25.57,
+      "close": 27.5,
+      "volume": 15892000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MBLY",
+    "name": "Mobileye Global Inc.",
+    "date": "2022-10-26",
+    "exchange": "NASDAQ",
+    "sector": "Auto Parts",
+    "ipoPrice": 21.0,
+    "current": 10.18,
+    "marketCap": 8.57,
+    "dealSize": null,
+    "dayChange": -51.52,
+    "firstDay": {
+      "date": "2022-10-26",
+      "open": 26.71,
+      "high": 29.86,
+      "low": 26.03,
+      "close": 28.97,
+      "volume": 28655000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ALGM",
+    "name": "Allegro MicroSystems, Inc.",
+    "date": "2020-10-29",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductors",
+    "ipoPrice": 14.0,
+    "current": 45.95,
+    "marketCap": 8.56,
+    "dealSize": null,
+    "dayChange": 228.21,
+    "firstDay": {
+      "date": "2020-10-29",
+      "open": 19.4,
+      "high": 19.74,
+      "low": 17.02,
+      "close": 17.7,
+      "volume": 11098400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "KRMN",
+    "name": "Karman Holdings Inc.",
+    "date": "2025-02-13",
+    "exchange": "NYSE",
+    "sector": "Aerospace & Defense",
+    "ipoPrice": 22.0,
+    "current": 64.1,
+    "marketCap": 8.49,
+    "dealSize": null,
+    "dayChange": 191.36,
+    "firstDay": {
+      "date": "2025-02-13",
+      "open": 30.0,
+      "high": 30.99,
+      "low": 28.02,
+      "close": 30.05,
+      "volume": 12999100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LEVI",
+    "name": "Levi Strauss & Co.",
+    "date": "2019-03-21",
+    "exchange": "NYSE",
+    "sector": "Apparel Manufacturing",
+    "ipoPrice": 17.0,
+    "current": 22.02,
+    "marketCap": 8.47,
+    "dealSize": null,
+    "dayChange": 29.53,
+    "firstDay": {
+      "date": "2019-03-21",
+      "open": 22.22,
+      "high": 23.15,
+      "low": 22.0,
+      "close": 22.41,
+      "volume": 43433700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "EMN",
+    "name": "Eastman Chemical Company",
+    "date": "1993-10-10",
+    "exchange": "NYSE",
+    "sector": "Specialty Chemicals",
+    "ipoPrice": null,
+    "current": 74.12,
+    "marketCap": 8.47,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "FDS",
+    "name": "FactSet Research Systems Inc.",
+    "date": "1996-07-03",
+    "exchange": "NYSE",
+    "sector": "Financial Data & Stock Exchanges",
+    "ipoPrice": null,
+    "current": 232.0,
+    "marketCap": 8.45,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1996-07-03",
+      "open": 4.5833,
+      "high": 4.5833,
+      "low": 4.4167,
+      "close": 4.5,
+      "volume": 660600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ENPH",
+    "name": "Enphase Energy, Inc.",
+    "date": "2012-03-30",
+    "exchange": "NASDAQ",
+    "sector": "Solar",
+    "ipoPrice": null,
+    "current": 64.03,
+    "marketCap": 8.44,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2012-03-30",
+      "open": 7.5,
+      "high": 8.24,
+      "low": 7.06,
+      "close": 7.34,
+      "volume": 5048600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ARE",
+    "name": "Alexandria Real Estate Equities, Inc.",
+    "date": "1997-05-27",
+    "exchange": "NYSE",
+    "sector": "REIT - Office",
+    "ipoPrice": null,
+    "current": 48.37,
+    "marketCap": 8.43,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1997-05-28",
+      "open": 20.625,
+      "high": 21.375,
+      "low": 20.625,
+      "close": 21.0,
+      "volume": 1862700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "Z",
+    "name": "Zillow Group, Inc.",
+    "date": "2011-07-20",
+    "exchange": "NASDAQ",
+    "sector": "Internet Content & Information",
+    "ipoPrice": null,
+    "current": 36.34,
+    "marketCap": 8.34,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "TEM",
+    "name": "Tempus AI, Inc.",
+    "date": "2024-06-14",
+    "exchange": "NASDAQ",
+    "sector": "Health Information Services",
+    "ipoPrice": 37.0,
+    "current": 46.18,
+    "marketCap": 8.29,
+    "dealSize": null,
+    "dayChange": 24.81,
+    "firstDay": {
+      "date": "2024-06-14",
+      "open": 40.0,
+      "high": 43.88,
+      "low": 37.0,
+      "close": 40.25,
+      "volume": 6338900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MANH",
+    "name": "Manhattan Associates, Inc.",
+    "date": "1998-04-22",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 138.64,
+    "marketCap": 8.2,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1998-04-23",
+      "open": 6.5,
+      "high": 6.625,
+      "low": 5.4688,
+      "close": 5.4688,
+      "volume": 18922800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SFM",
+    "name": "Sprouts Farmers Market, Inc.",
+    "date": "2013-08-01",
+    "exchange": "NASDAQ",
+    "sector": "Grocery Stores",
+    "ipoPrice": null,
+    "current": 86.71,
+    "marketCap": 8.15,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2013-08-01",
+      "open": 35.0,
+      "high": 40.64,
+      "low": 33.0,
+      "close": 40.11,
+      "volume": 14759200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SM",
+    "name": "SM Energy Company",
+    "date": "1992-12-16",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Exploration & Production",
+    "ipoPrice": null,
+    "current": 33.77,
+    "marketCap": 8.1,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1992-12-16",
+      "open": 2.75,
+      "high": 2.875,
+      "low": 2.75,
+      "close": 2.75,
+      "volume": 2000000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "NUVL",
+    "name": "Nuvalent, Inc.",
+    "date": "2021-07-29",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 17.0,
+    "current": 102.12,
+    "marketCap": 8.07,
+    "dealSize": null,
+    "dayChange": 500.71,
+    "firstDay": {
+      "date": "2021-07-29",
+      "open": 18.1,
+      "high": 19.83,
+      "low": 17.0,
+      "close": 18.75,
+      "volume": 2342300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "YOU",
+    "name": "Clear Secure, Inc.",
+    "date": "2021-06-30",
+    "exchange": "NYSE",
+    "sector": "Software - Application",
+    "ipoPrice": 31.0,
+    "current": 60.06,
+    "marketCap": 8.03,
+    "dealSize": null,
+    "dayChange": 93.74,
+    "firstDay": {
+      "date": "2021-06-30",
+      "open": 38.55,
+      "high": 44.79,
+      "low": 38.26,
+      "close": 40.0,
+      "volume": 9014900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CWEN",
+    "name": "Clearway Energy, Inc.",
+    "date": "2013-07-17",
+    "exchange": "NYSE",
+    "sector": "Utilities - Renewable",
+    "ipoPrice": null,
+    "current": 38.97,
+    "marketCap": 8.0,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "FLY",
+    "name": "Firefly Aerospace Inc.",
+    "date": "2025-08-07",
+    "exchange": "NASDAQ",
+    "sector": "Aerospace & Defense",
+    "ipoPrice": 45.0,
+    "current": 49.5,
+    "marketCap": 7.93,
+    "dealSize": null,
+    "dayChange": 10.0,
+    "firstDay": {
+      "date": "2025-08-07",
+      "open": 70.0,
+      "high": 73.8,
+      "low": 60.03,
+      "close": 60.35,
+      "volume": 30556600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MWH",
+    "name": "SOLV Energy, Inc.",
+    "date": "2026-02-11",
+    "exchange": "NASDAQ",
+    "sector": "Utilities - Renewable",
+    "ipoPrice": 25.0,
+    "current": 38.44,
+    "marketCap": 7.78,
+    "dealSize": null,
+    "dayChange": 53.76,
+    "firstDay": {
+      "date": "2026-02-12",
+      "open": 30.54,
+      "high": 31.84,
+      "low": 29.69,
+      "close": 30.91,
+      "volume": 2259900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CAMT",
+    "name": "Camtek Ltd.",
+    "date": "2000-07-28",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductor Equipment & Materials",
+    "ipoPrice": null,
+    "current": 167.37,
+    "marketCap": 7.71,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2000-07-28",
+      "open": 6.5,
+      "high": 7.0,
+      "low": 4.5,
+      "close": 6.0,
+      "volume": 4252900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "INFA",
+    "name": "Informatica Inc.",
+    "date": "2021-10-27",
+    "exchange": "NYSE",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 29.0,
+    "current": 24.79,
+    "marketCap": 7.64,
+    "dealSize": null,
+    "dayChange": -14.52,
+    "firstDay": null
+  },
+  {
+    "ticker": "BIRK",
+    "name": "Birkenstock Holding plc",
+    "date": "2023-10-11",
+    "exchange": "NYSE",
+    "sector": "Footwear & Accessories",
+    "ipoPrice": 46.0,
+    "current": 41.38,
+    "marketCap": 7.61,
+    "dealSize": null,
+    "dayChange": -10.04,
+    "firstDay": {
+      "date": "2023-10-11",
+      "open": 41.0,
+      "high": 42.505,
+      "low": 40.04,
+      "close": 40.2,
+      "volume": 15725600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "FIGR",
+    "name": "Figure Technology Solutions, Inc.",
+    "date": "2025-09-11",
+    "exchange": "NASDAQ",
+    "sector": "Capital Markets",
+    "ipoPrice": 25.0,
+    "current": 33.95,
+    "marketCap": 7.51,
+    "dealSize": null,
+    "dayChange": 35.8,
+    "firstDay": {
+      "date": "2025-09-11",
+      "open": 36.0,
+      "high": 38.05,
+      "low": 30.13,
+      "close": 31.11,
+      "volume": 39451400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "NCLH",
+    "name": "Norwegian Cruise Line Holdings Ltd.",
+    "date": "2013-01-18",
+    "exchange": "NYSE",
+    "sector": "Travel Services",
+    "ipoPrice": null,
+    "current": 16.3,
+    "marketCap": 7.48,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2013-01-18",
+      "open": 25.1,
+      "high": 25.49,
+      "low": 24.16,
+      "close": 24.79,
+      "volume": 17761800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "HQY",
+    "name": "HealthEquity, Inc.",
+    "date": "2014-07-31",
+    "exchange": "NASDAQ",
+    "sector": "Health Information Services",
+    "ipoPrice": null,
+    "current": 88.11,
+    "marketCap": 7.44,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2014-07-31",
+      "open": 20.0,
+      "high": 20.0,
+      "low": 17.04,
+      "close": 17.6,
+      "volume": 7235400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MTSR",
+    "name": "Metsera, Inc.",
+    "date": "2025-01-31",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 18.0,
+    "current": 70.5,
+    "marketCap": 7.43,
+    "dealSize": null,
+    "dayChange": 291.67,
+    "firstDay": null
+  },
+  {
+    "ticker": "EDU",
+    "name": "New Oriental Education & Technology Group Inc.",
+    "date": "2006-09-07",
+    "exchange": "NYSE",
+    "sector": "Education & Training Services",
+    "ipoPrice": null,
+    "current": 46.43,
+    "marketCap": 7.39,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "KGS",
+    "name": "Kodiak Gas Services, Inc.",
+    "date": "2023-06-29",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Equipment & Services",
+    "ipoPrice": 16.0,
+    "current": 73.71,
+    "marketCap": 7.32,
+    "dealSize": null,
+    "dayChange": 360.69,
+    "firstDay": {
+      "date": "2023-06-29",
+      "open": 15.56,
+      "high": 15.91,
+      "low": 15.51,
+      "close": 15.7,
+      "volume": 4433800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CWAN",
+    "name": "Clearwater Analytics Holdings, Inc.",
+    "date": "2021-09-24",
+    "exchange": "NYSE",
+    "sector": "Software - Application",
+    "ipoPrice": 18.0,
+    "current": 24.32,
+    "marketCap": 7.28,
+    "dealSize": null,
+    "dayChange": 35.11,
+    "firstDay": {
+      "date": "2021-09-24",
+      "open": 23.75,
+      "high": 26.75,
+      "low": 23.25,
+      "close": 25.37,
+      "volume": 11931600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BILI",
+    "name": "Bilibili Inc.",
+    "date": "2018-03-28",
+    "exchange": "NASDAQ",
+    "sector": "Internet Content & Information",
+    "ipoPrice": null,
+    "current": 17.23,
+    "marketCap": 7.18,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-03-28",
+      "open": 9.8,
+      "high": 11.26,
+      "low": 9.62,
+      "close": 11.24,
+      "volume": 23929600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MOS",
+    "name": "The Mosaic Company",
+    "date": "2004-10-25",
+    "exchange": "NYSE",
+    "sector": "Agricultural Inputs",
+    "ipoPrice": null,
+    "current": 22.51,
+    "marketCap": 7.15,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2004-10-25",
+      "open": 15.0,
+      "high": 15.18,
+      "low": 14.8,
+      "close": 15.0,
+      "volume": 574800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LTH",
+    "name": "Life Time Group Holdings, Inc.",
+    "date": "2021-10-07",
+    "exchange": "NYSE",
+    "sector": "Leisure",
+    "ipoPrice": 18.0,
+    "current": 32.07,
+    "marketCap": 7.14,
+    "dealSize": null,
+    "dayChange": 78.17,
+    "firstDay": {
+      "date": "2021-10-07",
+      "open": 16.57,
+      "high": 18.02,
+      "low": 16.55,
+      "close": 17.75,
+      "volume": 12165800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "HR",
+    "name": "Healthcare Realty Trust Incorporated",
+    "date": "1993-05-26",
+    "exchange": "NYSE",
+    "sector": "REIT - Healthcare Facilities",
+    "ipoPrice": null,
+    "current": 20.36,
+    "marketCap": 7.14,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-05-27",
+      "open": 19.32,
+      "high": 19.4,
+      "low": 19.32,
+      "close": 19.32,
+      "volume": 1395500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "HCP",
+    "name": "HashiCorp, Inc.",
+    "date": "2021-12-09",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 80.0,
+    "current": 34.78,
+    "marketCap": 7.11,
+    "dealSize": null,
+    "dayChange": -56.53,
+    "firstDay": null
+  },
+  {
+    "ticker": "PLXS",
+    "name": "Plexus Corp.",
+    "date": "1986-02-05",
+    "exchange": "NASDAQ",
+    "sector": "Electronic Components",
+    "ipoPrice": null,
+    "current": 265.72,
+    "marketCap": 7.11,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1986-02-05",
+      "open": 1.6667,
+      "high": 1.6875,
+      "low": 1.6667,
+      "close": 1.6667,
+      "volume": 2130600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PCOR",
+    "name": "Procore Technologies, Inc.",
+    "date": "2021-05-20",
+    "exchange": "NYSE",
+    "sector": "Software - Application",
+    "ipoPrice": 67.0,
+    "current": 46.85,
+    "marketCap": 7.07,
+    "dealSize": null,
+    "dayChange": -30.07,
+    "firstDay": {
+      "date": "2021-05-20",
+      "open": 84.0,
+      "high": 90.05,
+      "low": 78.96,
+      "close": 88.0,
+      "volume": 8753800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ST",
+    "name": "Sensata Technologies Holding plc",
+    "date": "2010-03-11",
+    "exchange": "NYSE",
+    "sector": "Scientific & Technical Instruments",
+    "ipoPrice": null,
+    "current": 48.59,
+    "marketCap": 7.07,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2010-03-11",
+      "open": 18.0,
+      "high": 19.0,
+      "low": 18.0,
+      "close": 18.5,
+      "volume": 13231400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "GKOS",
+    "name": "Glaukos Corporation",
+    "date": "2015-06-25",
+    "exchange": "NYSE",
+    "sector": "Medical Devices",
+    "ipoPrice": null,
+    "current": 120.23,
+    "marketCap": 7.06,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2015-06-25",
+      "open": 29.11,
+      "high": 31.95,
+      "low": 28.0,
+      "close": 31.22,
+      "volume": 7554700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "JAN",
+    "name": "Janus Living, Inc.",
+    "date": "2026-03-20",
+    "exchange": "NYSE",
+    "sector": "REIT - Residential",
+    "ipoPrice": 20.0,
+    "current": 26.72,
+    "marketCap": 7.03,
+    "dealSize": null,
+    "dayChange": 33.6,
+    "firstDay": {
+      "date": "2026-03-20",
+      "open": 23.5,
+      "high": 23.96,
+      "low": 23.0,
+      "close": 23.6,
+      "volume": 15894500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BRKR",
+    "name": "Bruker Corporation",
+    "date": "2000-08-04",
+    "exchange": "NASDAQ",
+    "sector": "Medical Devices",
+    "ipoPrice": null,
+    "current": 45.69,
+    "marketCap": 6.96,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2000-08-04",
+      "open": 20.4688,
+      "high": 25.1875,
+      "low": 19.1875,
+      "close": 23.0625,
+      "volume": 9184900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LKQ",
+    "name": "LKQ Corporation",
+    "date": "2003-10-03",
+    "exchange": "NASDAQ",
+    "sector": "Auto Parts",
+    "ipoPrice": null,
+    "current": 27.15,
+    "marketCap": 6.92,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2003-10-06",
+      "open": 1.8963,
+      "high": 1.9863,
+      "low": 1.8787,
+      "close": 1.9737,
+      "volume": 3068800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "GRFS",
+    "name": "Grifols, S.A.",
+    "date": "2006-05-17",
+    "exchange": "NASDAQ",
+    "sector": "Drug Manufacturers - General",
+    "ipoPrice": null,
+    "current": 7.98,
+    "marketCap": 6.88,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "ZK",
+    "name": "ZEEKR Intelligent Technology Holding Limited",
+    "date": "2024-05-10",
+    "exchange": "NYSE",
+    "sector": "Auto Manufacturers",
+    "ipoPrice": 21.0,
+    "current": 26.74,
+    "marketCap": 6.85,
+    "dealSize": null,
+    "dayChange": 27.33,
+    "firstDay": null
+  },
+  {
+    "ticker": "QMMM",
+    "name": "QMMM Holdings Limited",
+    "date": "2024-07-19",
+    "exchange": "NASDAQ",
+    "sector": "Advertising Agencies",
+    "ipoPrice": 4.0,
+    "current": 119.4,
+    "marketCap": 6.83,
+    "dealSize": null,
+    "dayChange": 2885.0,
+    "firstDay": {
+      "date": "2024-07-19",
+      "open": 3.0,
+      "high": 4.2,
+      "low": 3.0,
+      "close": 4.07,
+      "volume": 3019800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MORN",
+    "name": "Morningstar, Inc.",
+    "date": "2005-05-03",
+    "exchange": "NASDAQ",
+    "sector": "Financial Data & Stock Exchanges",
+    "ipoPrice": null,
+    "current": 179.64,
+    "marketCap": 6.83,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2005-05-03",
+      "open": 18.66,
+      "high": 20.65,
+      "low": 18.51,
+      "close": 20.05,
+      "volume": 3273400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "OSCR",
+    "name": "Oscar Health, Inc.",
+    "date": "2021-03-03",
+    "exchange": "NYSE",
+    "sector": "Healthcare Plans",
+    "ipoPrice": 39.0,
+    "current": 22.64,
+    "marketCap": 6.82,
+    "dealSize": null,
+    "dayChange": -41.95,
+    "firstDay": {
+      "date": "2021-03-03",
+      "open": 36.0,
+      "high": 36.77,
+      "low": 34.0,
+      "close": 34.8,
+      "volume": 20587900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CHYM",
+    "name": "Chime Financial, Inc.",
+    "date": "2025-06-12",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": 27.0,
+    "current": 17.8,
+    "marketCap": 6.78,
+    "dealSize": null,
+    "dayChange": -34.07,
+    "firstDay": {
+      "date": "2025-06-12",
+      "open": 43.0,
+      "high": 44.94,
+      "low": 36.19,
+      "close": 37.11,
+      "volume": 36148200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PPC",
+    "name": "Pilgrim's Pride Corporation",
+    "date": "1987-01-01",
+    "exchange": "NASDAQ",
+    "sector": "Packaged Foods",
+    "ipoPrice": null,
+    "current": 28.46,
+    "marketCap": 6.77,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "ACLX",
+    "name": "Arcellx, Inc.",
+    "date": "2022-02-04",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 15.0,
+    "current": 115.07,
+    "marketCap": 6.75,
+    "dealSize": null,
+    "dayChange": 667.13,
+    "firstDay": {
+      "date": "2022-02-04",
+      "open": 19.0,
+      "high": 19.0,
+      "low": 15.7933,
+      "close": 16.8,
+      "volume": 1093132,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CELC",
+    "name": "Celcuity Inc.",
+    "date": "2017-09-20",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": null,
+    "current": 138.23,
+    "marketCap": 6.74,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2017-09-20",
+      "open": 12.6,
+      "high": 14.95,
+      "low": 11.1,
+      "close": 14.29,
+      "volume": 1207900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LNTH",
+    "name": "Lantheus Holdings, Inc.",
+    "date": "2015-06-25",
+    "exchange": "NASDAQ",
+    "sector": "Drug Manufacturers - Specialty & Generic",
+    "ipoPrice": null,
+    "current": 103.0,
+    "marketCap": 6.71,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2015-06-25",
+      "open": 6.12,
+      "high": 7.19,
+      "low": 5.97,
+      "close": 6.77,
+      "volume": 2066900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LSTR",
+    "name": "Landstar System, Inc.",
+    "date": "1993-03-05",
+    "exchange": "NASDAQ",
+    "sector": "Integrated Freight & Logistics",
+    "ipoPrice": null,
+    "current": 194.01,
+    "marketCap": 6.58,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-03-05",
+      "open": 1.625,
+      "high": 1.6562,
+      "low": 1.625,
+      "close": 1.625,
+      "volume": 18987200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "KYMR",
+    "name": "Kymera Therapeutics, Inc.",
+    "date": "2020-08-21",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 20.0,
+    "current": 78.89,
+    "marketCap": 6.49,
+    "dealSize": null,
+    "dayChange": 294.45,
+    "firstDay": {
+      "date": "2020-08-21",
+      "open": 35.01,
+      "high": 37.745,
+      "low": 28.33,
+      "close": 33.26,
+      "volume": 3875200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "STEP",
+    "name": "StepStone Group Inc.",
+    "date": "2020-09-16",
+    "exchange": "NASDAQ",
+    "sector": "Asset Management",
+    "ipoPrice": 18.0,
+    "current": 53.74,
+    "marketCap": 6.48,
+    "dealSize": null,
+    "dayChange": 198.56,
+    "firstDay": {
+      "date": "2020-09-16",
+      "open": 24.75,
+      "high": 25.89,
+      "low": 23.22,
+      "close": 25.0,
+      "volume": 9321800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CENX",
+    "name": "Century Aluminum Company",
+    "date": "1996-03-28",
+    "exchange": "NASDAQ",
+    "sector": "Aluminum",
+    "ipoPrice": null,
+    "current": 65.05,
+    "marketCap": 6.44,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1996-03-29",
+      "open": 13.0,
+      "high": 13.875,
+      "low": 13.0,
+      "close": 13.625,
+      "volume": 2670700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PAYC",
+    "name": "Paycom Software, Inc.",
+    "date": "2014-04-15",
+    "exchange": "NYSE",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 137.8,
+    "marketCap": 6.43,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2014-04-15",
+      "open": 17.9,
+      "high": 17.92,
+      "low": 15.15,
+      "close": 15.35,
+      "volume": 3531700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SSRM",
+    "name": "SSR Mining Inc.",
+    "date": "1996-08-01",
+    "exchange": "NASDAQ",
+    "sector": "Gold",
+    "ipoPrice": null,
+    "current": 29.72,
+    "marketCap": 6.41,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1996-08-01",
+      "open": 4.25,
+      "high": 4.25,
+      "low": 4.0,
+      "close": 4.125,
+      "volume": 4300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ROAD",
+    "name": "Construction Partners, Inc.",
+    "date": "2018-05-04",
+    "exchange": "NASDAQ",
+    "sector": "Engineering & Construction",
+    "ipoPrice": null,
+    "current": 112.86,
+    "marketCap": 6.38,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-05-04",
+      "open": 13.0,
+      "high": 13.24,
+      "low": 12.0,
+      "close": 12.1,
+      "volume": 4086300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PTGX",
+    "name": "Protagonist Therapeutics, Inc.",
+    "date": "2016-08-11",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": null,
+    "current": 99.19,
+    "marketCap": 6.38,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2016-08-11",
+      "open": 12.0,
+      "high": 12.0,
+      "low": 11.2,
+      "close": 11.7,
+      "volume": 1632000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "S",
+    "name": "SentinelOne, Inc.",
+    "date": "2021-06-30",
+    "exchange": "NYSE",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 35.0,
+    "current": 18.71,
+    "marketCap": 6.37,
+    "dealSize": null,
+    "dayChange": -46.54,
+    "firstDay": {
+      "date": "2021-06-30",
+      "open": 46.0,
+      "high": 46.5,
+      "low": 41.11,
+      "close": 42.5,
+      "volume": 20587300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "KLAR",
+    "name": "Klarna Group plc",
+    "date": "2025-09-10",
+    "exchange": "NYSE",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 40.0,
+    "current": 16.57,
+    "marketCap": 6.27,
+    "dealSize": null,
+    "dayChange": -58.58,
+    "firstDay": {
+      "date": "2025-09-11",
+      "open": 45.5,
+      "high": 47.22,
+      "low": 42.74,
+      "close": 42.74,
+      "volume": 14059900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "URBN",
+    "name": "Urban Outfitters, Inc.",
+    "date": "1993-11-09",
+    "exchange": "NASDAQ",
+    "sector": "Apparel Retail",
+    "ipoPrice": null,
+    "current": 73.01,
+    "marketCap": 6.25,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1993-11-09",
+      "open": 1.4375,
+      "high": 1.5312,
+      "low": 1.3125,
+      "close": 1.4844,
+      "volume": 30484800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "GTES",
+    "name": "Gates Industrial Corporation plc",
+    "date": "2018-01-25",
+    "exchange": "NYSE",
+    "sector": "Specialty Industrial Machinery",
+    "ipoPrice": null,
+    "current": 24.48,
+    "marketCap": 6.21,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-01-25",
+      "open": 19.05,
+      "high": 19.41,
+      "low": 18.25,
+      "close": 18.5,
+      "volume": 19855800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "INGM",
+    "name": "Ingram Micro Holding Corporation",
+    "date": "2024-10-24",
+    "exchange": "NYSE",
+    "sector": "Information Technology Services",
+    "ipoPrice": 22.0,
+    "current": 26.64,
+    "marketCap": 6.14,
+    "dealSize": null,
+    "dayChange": 21.09,
+    "firstDay": {
+      "date": "2024-10-24",
+      "open": 25.28,
+      "high": 25.69,
+      "low": 24.17,
+      "close": 24.6,
+      "volume": 7748000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "UGP",
+    "name": "Ultrapar Participa\u00e7\u00f5es S.A.",
+    "date": "1999-10-07",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Refining & Marketing",
+    "ipoPrice": null,
+    "current": 5.69,
+    "marketCap": 6.1,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1999-10-07",
+      "open": 1.6875,
+      "high": 1.6953,
+      "low": 1.375,
+      "close": 1.375,
+      "volume": 52540000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "APGE",
+    "name": "Apogee Therapeutics, Inc.",
+    "date": "2023-07-14",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 17.0,
+    "current": 81.05,
+    "marketCap": 6.08,
+    "dealSize": null,
+    "dayChange": 376.76,
+    "firstDay": {
+      "date": "2023-07-14",
+      "open": 21.5,
+      "high": 21.96,
+      "low": 19.99,
+      "close": 21.23,
+      "volume": 4710200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LB",
+    "name": "LandBridge Company LLC",
+    "date": "2024-06-28",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Equipment & Services",
+    "ipoPrice": 17.0,
+    "current": 78.63,
+    "marketCap": 6.06,
+    "dealSize": null,
+    "dayChange": 362.53,
+    "firstDay": {
+      "date": "2024-06-28",
+      "open": 19.0,
+      "high": 23.51,
+      "low": 18.75,
+      "close": 23.15,
+      "volume": 3203400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PCTY",
+    "name": "Paylocity Holding Corporation",
+    "date": "2014-03-19",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 113.02,
+    "marketCap": 6.05,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2014-03-19",
+      "open": 31.0,
+      "high": 31.0,
+      "low": 23.99,
+      "close": 24.04,
+      "volume": 9435400,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PAGP",
+    "name": "Plains GP Holdings, L.P.",
+    "date": "2013-10-16",
+    "exchange": "NASDAQ",
+    "sector": "Oil & Gas Midstream",
+    "ipoPrice": null,
+    "current": 25.95,
+    "marketCap": 6.05,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2013-10-16",
+      "open": 60.6667,
+      "high": 61.3867,
+      "low": 58.64,
+      "close": 58.6667,
+      "volume": 19753200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TTAN",
+    "name": "ServiceTitan, Inc.",
+    "date": "2024-12-12",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": 71.0,
+    "current": 63.17,
+    "marketCap": 6.02,
+    "dealSize": null,
+    "dayChange": -11.03,
+    "firstDay": {
+      "date": "2024-12-12",
+      "open": 101.0,
+      "high": 105.0,
+      "low": 100.05,
+      "close": 101.0,
+      "volume": 5140900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "RYTM",
+    "name": "Rhythm Pharmaceuticals, Inc.",
+    "date": "2017-10-05",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": null,
+    "current": 87.81,
+    "marketCap": 6.02,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2017-10-09",
+      "open": 25.45,
+      "high": 25.45,
+      "low": 23.985,
+      "close": 24.57,
+      "volume": 351000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MIRM",
+    "name": "Mirum Pharmaceuticals, Inc.",
+    "date": "2019-07-18",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 15.0,
+    "current": 98.62,
+    "marketCap": 6.01,
+    "dealSize": null,
+    "dayChange": 557.47,
+    "firstDay": {
+      "date": "2019-07-18",
+      "open": 13.0,
+      "high": 13.62,
+      "low": 12.72,
+      "close": 13.21,
+      "volume": 1474300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PACS",
+    "name": "PACS Group, Inc.",
+    "date": "2024-04-11",
+    "exchange": "NYSE",
+    "sector": "Medical Care Facilities",
+    "ipoPrice": 21.0,
+    "current": 37.75,
+    "marketCap": 5.97,
+    "dealSize": null,
+    "dayChange": 79.76,
+    "firstDay": {
+      "date": "2024-04-11",
+      "open": 23.0,
+      "high": 23.59,
+      "low": 22.61,
+      "close": 23.0,
+      "volume": 6552800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ACT",
+    "name": "Enact Holdings, Inc.",
+    "date": "2021-09-16",
+    "exchange": "NASDAQ",
+    "sector": "Insurance - Specialty",
+    "ipoPrice": 19.0,
+    "current": 42.73,
+    "marketCap": 5.97,
+    "dealSize": null,
+    "dayChange": 124.89,
+    "firstDay": {
+      "date": "2021-09-16",
+      "open": 20.0,
+      "high": 21.349,
+      "low": 19.51,
+      "close": 20.49,
+      "volume": 3415200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "TAL",
+    "name": "TAL Education Group",
+    "date": "2010-10-20",
+    "exchange": "NYSE",
+    "sector": "Education & Training Services",
+    "ipoPrice": null,
+    "current": 9.77,
+    "marketCap": 5.94,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2010-10-20",
+      "open": 2.3333,
+      "high": 2.6233,
+      "low": 2.2033,
+      "close": 2.5,
+      "volume": 49119600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ETSY",
+    "name": "Etsy, Inc.",
+    "date": "2015-04-16",
+    "exchange": "NYSE",
+    "sector": "Internet Retail",
+    "ipoPrice": null,
+    "current": 62.38,
+    "marketCap": 5.92,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2015-04-16",
+      "open": 31.0,
+      "high": 35.74,
+      "low": 28.22,
+      "close": 30.0,
+      "volume": 19763300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MRCY",
+    "name": "Mercury Systems, Inc.",
+    "date": "1998-01-30",
+    "exchange": "NASDAQ",
+    "sector": "Aerospace & Defense",
+    "ipoPrice": null,
+    "current": 98.55,
+    "marketCap": 5.92,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1998-01-30",
+      "open": 5.25,
+      "high": 5.3125,
+      "low": 5.25,
+      "close": 5.25,
+      "volume": 3807200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "OS",
+    "name": "OneStream, Inc.",
+    "date": "2024-07-24",
+    "exchange": "NASDAQ",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 20.0,
+    "current": 24.0,
+    "marketCap": 5.9,
+    "dealSize": null,
+    "dayChange": 20.0,
+    "firstDay": {
+      "date": "2024-07-24",
+      "open": 26.0,
+      "high": 27.95,
+      "low": 25.51,
+      "close": 26.85,
+      "volume": 10766512,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LOAR",
+    "name": "Loar Holdings Inc.",
+    "date": "2024-04-25",
+    "exchange": "NYSE",
+    "sector": "Aerospace & Defense",
+    "ipoPrice": 28.0,
+    "current": 62.34,
+    "marketCap": 5.84,
+    "dealSize": null,
+    "dayChange": 122.64,
+    "firstDay": {
+      "date": "2024-04-25",
+      "open": 45.0,
+      "high": 52.85,
+      "low": 42.57,
+      "close": 48.8,
+      "volume": 6965100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "APPF",
+    "name": "AppFolio, Inc.",
+    "date": "2015-06-26",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 164.92,
+    "marketCap": 5.83,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2015-06-26",
+      "open": 12.15,
+      "high": 14.87,
+      "low": 12.11,
+      "close": 14.08,
+      "volume": 3529100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CZR",
+    "name": "Caesars Entertainment, Inc.",
+    "date": "1989-12-13",
+    "exchange": "NASDAQ",
+    "sector": "Resorts & Casinos",
+    "ipoPrice": null,
+    "current": 28.47,
+    "marketCap": 5.8,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "FLG",
+    "name": "Flagstar Bank, National Association",
+    "date": "1993-10-01",
+    "exchange": "NYSE",
+    "sector": "Banks - Regional",
+    "ipoPrice": null,
+    "current": 13.85,
+    "marketCap": 5.77,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "PSN",
+    "name": "Parsons Corporation",
+    "date": "2019-05-08",
+    "exchange": "NYSE",
+    "sector": "Information Technology Services",
+    "ipoPrice": 27.0,
+    "current": 53.71,
+    "marketCap": 5.75,
+    "dealSize": null,
+    "dayChange": 98.93,
+    "firstDay": {
+      "date": "2019-05-08",
+      "open": 30.65,
+      "high": 31.44,
+      "low": 29.2,
+      "close": 30.07,
+      "volume": 14797300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "IBP",
+    "name": "Installed Building Products, Inc.",
+    "date": "2014-02-13",
+    "exchange": "NYSE",
+    "sector": "Residential Construction",
+    "ipoPrice": null,
+    "current": 214.22,
+    "marketCap": 5.74,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2014-02-13",
+      "open": 12.3,
+      "high": 12.94,
+      "low": 12.27,
+      "close": 12.8,
+      "volume": 3809600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PATH",
+    "name": "UiPath, Inc.",
+    "date": "2021-04-21",
+    "exchange": "NYSE",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 56.0,
+    "current": 10.93,
+    "marketCap": 5.73,
+    "dealSize": null,
+    "dayChange": -80.48,
+    "firstDay": {
+      "date": "2021-04-21",
+      "open": 65.5,
+      "high": 70.74,
+      "low": 64.84,
+      "close": 69.0,
+      "volume": 23791600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "KMX",
+    "name": "CarMax, Inc.",
+    "date": "1997-02-04",
+    "exchange": "NYSE",
+    "sector": "Auto & Truck Dealerships",
+    "ipoPrice": null,
+    "current": 40.33,
+    "marketCap": 5.72,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1997-02-04",
+      "open": 11.0,
+      "high": 11.0,
+      "low": 10.3125,
+      "close": 10.5625,
+      "volume": 26677600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PTCT",
+    "name": "PTC Therapeutics, Inc.",
+    "date": "2013-06-20",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": null,
+    "current": 68.81,
+    "marketCap": 5.71,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2013-06-20",
+      "open": 15.8,
+      "high": 17.4,
+      "low": 15.63,
+      "close": 16.49,
+      "volume": 3371700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "OTEX",
+    "name": "Open Text Corporation",
+    "date": "1998-09-09",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 23.47,
+    "marketCap": 5.7,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1998-09-09",
+      "open": 1.625,
+      "high": 1.7188,
+      "low": 1.625,
+      "close": 1.7188,
+      "volume": 111200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BLCO",
+    "name": "Bausch + Lomb Corporation",
+    "date": "2022-05-06",
+    "exchange": "NYSE",
+    "sector": "Medical Instruments & Supplies",
+    "ipoPrice": 18.0,
+    "current": 15.92,
+    "marketCap": 5.68,
+    "dealSize": null,
+    "dayChange": -11.56,
+    "firstDay": {
+      "date": "2022-05-06",
+      "open": 18.5,
+      "high": 20.2,
+      "low": 18.4,
+      "close": 20.0,
+      "volume": 15225300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "GVA",
+    "name": "Granite Construction Incorporated",
+    "date": "1990-04-20",
+    "exchange": "NYSE",
+    "sector": "Engineering & Construction",
+    "ipoPrice": null,
+    "current": 129.95,
+    "marketCap": 5.68,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1990-04-20",
+      "open": 5.2593,
+      "high": 5.4815,
+      "low": 5.2593,
+      "close": 5.3333,
+      "volume": 7090200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CGON",
+    "name": "CG Oncology, Inc.",
+    "date": "2024-01-25",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 19.0,
+    "current": 64.13,
+    "marketCap": 5.67,
+    "dealSize": null,
+    "dayChange": 237.53,
+    "firstDay": {
+      "date": "2024-01-25",
+      "open": 29.0,
+      "high": 40.9,
+      "low": 28.55,
+      "close": 37.17,
+      "volume": 8824800,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ESTC",
+    "name": "Elastic N.V.",
+    "date": "2018-10-05",
+    "exchange": "NYSE",
+    "sector": "Software - Application",
+    "ipoPrice": null,
+    "current": 54.81,
+    "marketCap": 5.67,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-10-05",
+      "open": 70.0,
+      "high": 74.2,
+      "low": 66.17,
+      "close": 70.0,
+      "volume": 7172900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "ESNT",
+    "name": "Essent Group Ltd.",
+    "date": "2013-10-31",
+    "exchange": "NYSE",
+    "sector": "Insurance - Specialty",
+    "ipoPrice": null,
+    "current": 60.78,
+    "marketCap": 5.6,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2013-10-31",
+      "open": 22.0,
+      "high": 22.1,
+      "low": 20.3,
+      "close": 21.0,
+      "volume": 16022300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PECO",
+    "name": "Phillips Edison & Company, Inc.",
+    "date": "2021-07-15",
+    "exchange": "NASDAQ",
+    "sector": "REIT - Retail",
+    "ipoPrice": 28.0,
+    "current": 40.3,
+    "marketCap": 5.59,
+    "dealSize": null,
+    "dayChange": 43.93,
+    "firstDay": {
+      "date": "2021-07-15",
+      "open": 28.0,
+      "high": 28.43,
+      "low": 27.5,
+      "close": 27.83,
+      "volume": 6715500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SYNA",
+    "name": "Synaptics Incorporated",
+    "date": "2002-01-29",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductors",
+    "ipoPrice": null,
+    "current": 143.69,
+    "marketCap": 5.55,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2002-01-29",
+      "open": 8.74,
+      "high": 9.0933,
+      "low": 8.1933,
+      "close": 8.74,
+      "volume": 10910700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "AVTR",
+    "name": "Avantor, Inc.",
+    "date": "2019-05-17",
+    "exchange": "NYSE",
+    "sector": "Medical Instruments & Supplies",
+    "ipoPrice": 14.0,
+    "current": 8.12,
+    "marketCap": 5.54,
+    "dealSize": null,
+    "dayChange": -42.0,
+    "firstDay": {
+      "date": "2019-05-17",
+      "open": 14.72,
+      "high": 14.95,
+      "low": 14.0,
+      "close": 14.5,
+      "volume": 39172200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "RRR",
+    "name": "Red Rock Resorts, Inc.",
+    "date": "2016-04-27",
+    "exchange": "NASDAQ",
+    "sector": "Resorts & Casinos",
+    "ipoPrice": null,
+    "current": 55.38,
+    "marketCap": 5.51,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2016-04-27",
+      "open": 18.5,
+      "high": 19.18,
+      "low": 18.25,
+      "close": 18.7,
+      "volume": 13630200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CROX",
+    "name": "Crocs, Inc.",
+    "date": "2006-02-08",
+    "exchange": "NASDAQ",
+    "sector": "Footwear & Accessories",
+    "ipoPrice": null,
+    "current": 110.44,
+    "marketCap": 5.49,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2006-02-08",
+      "open": 15.0,
+      "high": 16.25,
+      "low": 14.07,
+      "close": 14.275,
+      "volume": 23814000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "OBDC",
+    "name": "Blue Owl Capital Corporation",
+    "date": "2019-07-18",
+    "exchange": "NYSE",
+    "sector": "Asset Management",
+    "ipoPrice": 15.3,
+    "current": 11.03,
+    "marketCap": 5.48,
+    "dealSize": null,
+    "dayChange": -27.91,
+    "firstDay": {
+      "date": "2019-07-18",
+      "open": 15.5,
+      "high": 15.86,
+      "low": 15.02,
+      "close": 15.49,
+      "volume": 3258000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LEGN",
+    "name": "Legend Biotech Corporation",
+    "date": "2020-06-05",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 23.0,
+    "current": 29.37,
+    "marketCap": 5.46,
+    "dealSize": null,
+    "dayChange": 27.7,
+    "firstDay": {
+      "date": "2020-06-05",
+      "open": 37.01,
+      "high": 39.94,
+      "low": 35.0,
+      "close": 37.0,
+      "volume": 8606300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SEI",
+    "name": "Solaris Energy Infrastructure, Inc.",
+    "date": "2017-05-12",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Equipment & Services",
+    "ipoPrice": null,
+    "current": 74.27,
+    "marketCap": 5.46,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2017-05-12",
+      "open": 12.21,
+      "high": 12.47,
+      "low": 11.0,
+      "close": 11.55,
+      "volume": 4329500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LQDA",
+    "name": "Liquidia Corporation",
+    "date": "2018-07-26",
+    "exchange": "NASDAQ",
+    "sector": "Drug Manufacturers - Specialty & Generic",
+    "ipoPrice": null,
+    "current": 60.98,
+    "marketCap": 5.42,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-07-26",
+      "open": 12.25,
+      "high": 13.43,
+      "low": 10.8,
+      "close": 11.1,
+      "volume": 1757900,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "MGY",
+    "name": "Magnolia Oil & Gas Corporation",
+    "date": "2017-05-05",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Exploration & Production",
+    "ipoPrice": null,
+    "current": 29.24,
+    "marketCap": 5.41,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": null
+  },
+  {
+    "ticker": "BLTE",
+    "name": "Belite Bio, Inc",
+    "date": "2022-04-29",
+    "exchange": "NASDAQ",
+    "sector": "Biotechnology",
+    "ipoPrice": 6.0,
+    "current": 137.3,
+    "marketCap": 5.4,
+    "dealSize": null,
+    "dayChange": 2188.33,
+    "firstDay": {
+      "date": "2022-04-29",
+      "open": 12.5,
+      "high": 17.5,
+      "low": 9.64,
+      "close": 10.59,
+      "volume": 3434000,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BLSH",
+    "name": "Bullish",
+    "date": "2025-08-13",
+    "exchange": "NYSE",
+    "sector": "Software - Infrastructure",
+    "ipoPrice": 37.0,
+    "current": 35.18,
+    "marketCap": 5.33,
+    "dealSize": null,
+    "dayChange": -4.92,
+    "firstDay": {
+      "date": "2025-08-13",
+      "open": 95.69,
+      "high": 118.0,
+      "low": 68.0,
+      "close": 68.0,
+      "volume": 58207600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "IFS",
+    "name": "Intercorp Financial Services Inc.",
+    "date": "2019-07-19",
+    "exchange": "NYSE",
+    "sector": "Banks - Regional",
+    "ipoPrice": 46.0,
+    "current": 49.05,
+    "marketCap": 5.3,
+    "dealSize": null,
+    "dayChange": 6.63,
+    "firstDay": {
+      "date": "2019-07-19",
+      "open": 46.0,
+      "high": 47.46,
+      "low": 44.31,
+      "close": 47.0,
+      "volume": 2450600,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LYFT",
+    "name": "Lyft, Inc.",
+    "date": "2019-03-29",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": 72.0,
+    "current": 13.9,
+    "marketCap": 5.28,
+    "dealSize": null,
+    "dayChange": -80.69,
+    "firstDay": {
+      "date": "2019-03-29",
+      "open": 87.33,
+      "high": 88.6,
+      "low": 78.02,
+      "close": 78.29,
+      "volume": 71485200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "PLUG",
+    "name": "Plug Power Inc.",
+    "date": "1999-10-29",
+    "exchange": "NASDAQ",
+    "sector": "Electrical Equipment & Parts",
+    "ipoPrice": null,
+    "current": 3.78,
+    "marketCap": 5.27,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1999-10-29",
+      "open": 157.5,
+      "high": 196.875,
+      "low": 150.0,
+      "close": 160.0,
+      "volume": 542660,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "EQPT",
+    "name": "EquipmentShare.com Inc.",
+    "date": "2026-01-23",
+    "exchange": "NASDAQ",
+    "sector": "Rental & Leasing Services",
+    "ipoPrice": 24.5,
+    "current": 20.73,
+    "marketCap": 5.23,
+    "dealSize": null,
+    "dayChange": -15.39,
+    "firstDay": {
+      "date": "2026-01-23",
+      "open": 28.5,
+      "high": 33.0,
+      "low": 28.0,
+      "close": 32.56,
+      "volume": 17411100,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "LBRT",
+    "name": "Liberty Energy Inc.",
+    "date": "2018-01-12",
+    "exchange": "NYSE",
+    "sector": "Oil & Gas Equipment & Services",
+    "ipoPrice": null,
+    "current": 31.84,
+    "marketCap": 5.2,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2018-01-12",
+      "open": 21.2,
+      "high": 22.12,
+      "low": 21.05,
+      "close": 21.75,
+      "volume": 10448700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "DLB",
+    "name": "Dolby Laboratories, Inc.",
+    "date": "2005-02-17",
+    "exchange": "NYSE",
+    "sector": "Specialty Business Services",
+    "ipoPrice": null,
+    "current": 54.71,
+    "marketCap": 5.18,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2005-02-17",
+      "open": 23.0,
+      "high": 25.45,
+      "low": 22.9,
+      "close": 24.3,
+      "volume": 21616200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "BMA",
+    "name": "Banco Macro S.A.",
+    "date": "2006-03-24",
+    "exchange": "NYSE",
+    "sector": "Banks - Regional",
+    "ipoPrice": null,
+    "current": 75.95,
+    "marketCap": 5.16,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2006-03-27",
+      "open": 22.89,
+      "high": 23.05,
+      "low": 22.23,
+      "close": 23.05,
+      "volume": 1065200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "CHH",
+    "name": "Choice Hotels International, Inc.",
+    "date": "1997-09-16",
+    "exchange": "NYSE",
+    "sector": "Lodging",
+    "ipoPrice": null,
+    "current": 113.12,
+    "marketCap": 5.1,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "1997-09-16",
+      "open": 9.9375,
+      "high": 9.9375,
+      "low": 9.8125,
+      "close": 9.9062,
+      "volume": 71200,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "HLNE",
+    "name": "Hamilton Lane Incorporated",
+    "date": "2017-03-01",
+    "exchange": "NASDAQ",
+    "sector": "Asset Management",
+    "ipoPrice": null,
+    "current": 90.32,
+    "marketCap": 5.07,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2017-03-01",
+      "open": 17.85,
+      "high": 18.5,
+      "low": 17.74,
+      "close": 18.02,
+      "volume": 7162700,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "IPGP",
+    "name": "IPG Photonics Corporation",
+    "date": "2006-12-13",
+    "exchange": "NASDAQ",
+    "sector": "Semiconductor Equipment & Materials",
+    "ipoPrice": null,
+    "current": 119.0,
+    "marketCap": 5.05,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2006-12-13",
+      "open": 25.0,
+      "high": 26.06,
+      "low": 21.61,
+      "close": 25.6,
+      "volume": 10771500,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "NAVN",
+    "name": "Navan, Inc.",
+    "date": "2025-10-30",
+    "exchange": "NASDAQ",
+    "sector": "Software - Application",
+    "ipoPrice": 25.0,
+    "current": 19.88,
+    "marketCap": 5.02,
+    "dealSize": null,
+    "dayChange": -20.48,
+    "firstDay": {
+      "date": "2025-10-30",
+      "open": 22.0,
+      "high": 22.75,
+      "low": 19.74,
+      "close": 20.0,
+      "volume": 17742300,
+      "source": "Yahoo 1d"
+    }
+  },
+  {
+    "ticker": "SITE",
+    "name": "SiteOne Landscape Supply, Inc.",
+    "date": "2016-05-12",
+    "exchange": "NYSE",
+    "sector": "Industrial Distribution",
+    "ipoPrice": null,
+    "current": 113.36,
+    "marketCap": 5.02,
+    "dealSize": null,
+    "dayChange": null,
+    "firstDay": {
+      "date": "2016-05-12",
+      "open": 25.64,
+      "high": 26.97,
+      "low": 25.49,
+      "close": 26.67,
+      "volume": 6437000,
       "source": "Yahoo 1d"
     }
   }
