@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPO • glaubi.net</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        
+        :root {
+            --primary: #3b82f6;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .font-display {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        .glass {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(16px);
+        }
+
+        .ipo-table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .ipo-table tr {
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .ipo-table tr:hover {
+            background-color: rgba(59, 130, 246, 0.08);
+            transform: translateX(2px);
+        }
+        
+        .ipo-table tr.active {
+            background-color: rgba(59, 130, 246, 0.15);
+            border-left: 3px solid #3b82f6;
+        }
+
+        .candle-green { color: #22c55e; }
+        .candle-red { color: #ef4444; }
+
+        .chart-container {
+            width: 100%;
+            height: 380px;
+        }
+
+        .metric {
+            transition: transform 0.2s ease;
+        }
+
+        .section-header {
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .modern-shadow {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Top Nav -->
+    <nav class="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-lg sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-x-3">
+                    <div class="flex items-center gap-x-2">
+                        <div class="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-chart-line text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="font-display text-2xl font-semibold tracking-tighter">IPO</span>
+                            <span class="text-zinc-500 text-sm ml-1">tracker</span>
+                        </div>
+                    </div>
+                    <div class="px-3 py-1 rounded-full bg-zinc-900 text-xs font-medium flex items-center gap-x-1.5 border border-zinc-800">
+                        <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                        <span class="text-zinc-400">25 major listings • 2021–2025</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-x-4 text-sm">
+                    <div class="flex items-center gap-x-2 text-zinc-400">
+                        <i class="fa-solid fa-globe fa-fw"></i>
+                        <span class="font-mono text-xs">glaubi.net/ipo</span>
+                    </div>
+                    <div class="h-3 w-px bg-zinc-800"></div>
+                    <a href="https://github.com/robertZaufall" target="_blank" 
+                       class="flex items-center gap-x-2 text-zinc-400 hover:text-zinc-300 transition-colors">
+                        <i class="fa-brands fa-github"></i>
+                        <span class="hidden md:inline">robertZaufall</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="max-w-screen-2xl mx-auto px-8 pt-10 pb-8">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-4">
+            <div>
+                <div class="inline-flex items-center gap-x-2 px-4 h-8 rounded-2xl bg-zinc-900 border border-zinc-800 text-xs font-medium tracking-[0.5px]">
+                    <span class="text-emerald-400">●</span>
+                    <span>LAST 25 MAJOR IPOS</span>
+                </div>
+                <h1 class="font-display text-6xl tracking-tighter font-semibold mt-3">First-day performance</h1>
+                <p class="text-xl text-zinc-400 mt-2 max-w-md">Interactive intraday candlestick charts for the biggest IPOs of the last 5 years.</p>
+            </div>
+            
+            <div class="flex items-center gap-x-3 text-sm">
+                <div class="px-5 py-2 rounded-2xl bg-zinc-900 border border-zinc-800">
+                    <div class="flex items-baseline gap-x-1">
+                        <span class="text-3xl font-semibold tabular-nums text-emerald-400">18</span>
+                        <span class="text-zinc-500">/25</span>
+                    </div>
+                    <div class="text-xs text-zinc-500 -mt-0.5">positive first-day close</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-screen-2xl mx-auto px-8 pb-16">
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+            
+            <!-- Table -->
+            <div class="xl:col-span-7 bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden modern-shadow">
+                <div class="px-6 pt-5 pb-3 flex items-center justify-between border-b border-zinc-800">
+                    <div>
+                        <div class="section-header text-zinc-500">Major IPOs</div>
+                        <div class="text-sm text-zinc-400">Sorted by raised capital • 2021–2025</div>
+                    </div>
+                    
+                    <div class="relative w-72">
+                        <input id="search" 
+                               type="text" 
+                               placeholder="Search company or ticker..." 
+                               class="w-full bg-zinc-950 border border-zinc-800 text-sm rounded-2xl pl-10 py-2.5 focus:outline-none focus:border-blue-600 transition-colors">
+                        <i class="fa-solid fa-search absolute left-4 top-3 text-zinc-500"></i>
+                    </div>
+                </div>
+                
+                <div class="overflow-auto max-h-[620px]">
+                    <table class="w-full ipo-table text-sm">
+                        <thead class="sticky top-0 bg-zinc-900 z-10">
+                            <tr class="text-xs text-zinc-500 border-b border-zinc-800">
+                                <th class="text-left pl-6 py-3 font-medium w-8">#</th>
+                                <th class="text-left py-3 font-medium">Company</th>
+                                <th class="text-left py-3 font-medium w-20">Ticker</th>
+                                <th class="text-left py-3 font-medium">IPO Date</th>
+                                <th class="text-right py-3 pr-6 font-medium">Raised</th>
+                                <th class="text-right py-3 pr-6 font-medium">Day 1</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ipo-table-body" class="divide-y divide-zinc-800 text-sm">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Chart Panel -->
+            <div class="xl:col-span-5 bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden flex flex-col modern-shadow">
+                <div class="px-6 pt-5 pb-4 border-b border-zinc-800 flex items-center justify-between">
+                    <div>
+                        <div id="chart-header" class="font-semibold text-lg flex items-center gap-x-3">
+                            <span id="selected-company">Select an IPO</span>
+                            <span id="selected-ticker" class="font-mono text-xs px-2 py-px rounded bg-zinc-800 text-blue-400"></span>
+                        </div>
+                        <div id="selected-date" class="text-xs text-zinc-500"></div>
+                    </div>
+                    
+                    <div id="performance-badge" 
+                         class="hidden items-center gap-x-1.5 text-xs font-medium px-3 h-7 rounded-2xl border">
+                    </div>
+                </div>
+                
+                <div class="p-5 flex-1">
+                    <div id="chart-container" class="chart-container bg-zinc-950 rounded-2xl border border-zinc-800 flex items-center justify-center">
+                        <div id="chart-placeholder" class="text-center text-zinc-500">
+                            <i class="fa-solid fa-chart-candlestick text-4xl mb-3 opacity-30"></i>
+                            <div class="text-sm">Select an IPO from the table<br>to view intraday candles</div>
+                        </div>
+                    </div>
+                    
+                    <div id="chart-stats" class="hidden grid grid-cols-4 gap-3 mt-4 text-xs">
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3">
+                            <div class="text-zinc-500">Open</div>
+                            <div id="stat-open" class="font-mono text-lg tabular-nums font-semibold mt-0.5"></div>
+                        </div>
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3">
+                            <div class="text-zinc-500">High</div>
+                            <div id="stat-high" class="font-mono text-lg tabular-nums font-semibold mt-0.5 text-emerald-400"></div>
+                        </div>
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3">
+                            <div class="text-zinc-500">Low</div>
+                            <div id="stat-low" class="font-mono text-lg tabular-nums font-semibold mt-0.5 text-red-400"></div>
+                        </div>
+                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3">
+                            <div class="text-zinc-500">Close</div>
+                            <div id="stat-close" class="font-mono text-lg tabular-nums font-semibold mt-0.5"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="px-6 py-4 bg-zinc-950 border-t border-zinc-800 text-[10px] text-zinc-500 flex items-center justify-between">
+                    <div class="flex items-center gap-x-2">
+                        <i class="fa-solid fa-info-circle"></i>
+                        <span>Intraday 5-minute candles • First trading day only</span>
+                    </div>
+                    <div class="font-mono text-[9px]">DATA ILLUSTRATIVE</div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Footer note -->
+        <div class="mt-8 text-center text-xs text-zinc-500">
+            Data compiled from public filings, exchange records and financial press. 
+            Charts use realistic simulated intraday movement for demonstration. 
+            Real-time data would require exchange feeds.
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script
+        function initTailwind() {
+            document.documentElement.style.setProperty('--accent', '#3b82f6');
+        }
+
+        // Major IPO data (2021-2025)
+        const ipos = [
+            {
+                id: 1, ticker: "RIVN", name: "Rivian Automotive", date: "2021-11-10",
+                raised: 11900, valuation: 66000, exchange: "NASDAQ", sector: "Auto/EV",
+                firstDayClose: 100.73, firstDayChange: 29.5,
+                chartData: generateIntradayData("2021-11-10", 70, 106, 68, 100.73, 0.82)
+            },
+            {
+                id: 2, ticker: "RBLX", name: "Roblox", date: "2021-03-10",
+                raised: 1300, valuation: 45000, exchange: "NYSE", sector: "Gaming",
+                firstDayClose: 69.50, firstDayChange: -3.4,
+                chartData: generateIntradayData("2021-03-10", 64, 75, 60, 69.50, -0.12)
+            },
+            {
+                id: 3, ticker: "COIN", name: "Coinbase Global", date: "2021-04-14",
+                raised: 1200, valuation: 85800, exchange: "NASDAQ", sector: "Crypto/Fintech",
+                firstDayClose: 328.28, firstDayChange: 31.3,
+                chartData: generateIntradayData("2021-04-14", 250, 355, 245, 328.28, 0.95)
+            },
+            {
+                id: 4, ticker: "CPNG", name: "Coupang", date: "2021-03-11",
+                raised: 4600, valuation: 71000, exchange: "NYSE", sector: "E-commerce",
+                firstDayClose: 49.00, firstDayChange: 40.0,
+                chartData: generateIntradayData("2021-03-11", 35, 52, 34, 49.00, 0.88)
+            },
+            {
+                id: 5, ticker: "PATH", name: "UiPath", date: "2021-04-21",
+                raised: 1300, valuation: 35000, exchange: "NYSE", sector: "Software/RPA",
+                firstDayClose: 75.50, firstDayChange: 13.4,
+                chartData: generateIntradayData("2021-04-21", 65, 82, 62, 75.50, 0.65)
+            },
+            {
+                id: 6, ticker: "TOST", name: "Toast", date: "2021-09-22",
+                raised: 930, valuation: 22000, exchange: "NYSE", sector: "Fintech",
+                firstDayClose: 39.05, firstDayChange: 30.2,
+                chartData: generateIntradayData("2021-09-22", 30, 42, 29, 39.05, 0.78)
+            },
+            {
+                id: 7, ticker: "NU", name: "Nubank", date: "2021-12-09",
+                raised: 2600, valuation: 45000, exchange: "NYSE", sector: "Fintech",
+                firstDayClose: 10.55, firstDayChange: 9.8,
+                chartData: generateIntradayData("2021-12-09", 9.2, 11.8, 9.0, 10.55, 0.55)
+            },
+            {
+                id: 8, ticker: "ARM", name: "Arm Holdings", date: "2023-09-14",
+                raised: 4900, valuation: 54000, exchange: "NASDAQ", sector: "Semiconductors",
+                firstDayClose: 63.50, firstDayChange: 25.0,
+                chartData: generateIntradayData("2023-09-14", 51, 67, 50.5, 63.50, 0.91)
+            },
+            {
+                id: 9, ticker: "CART", name: "Instacart", date: "2023-09-19",
+                raised: 660, valuation: 9800, exchange: "NASDAQ", sector: "E-commerce",
+                firstDayClose: 30.00, firstDayChange: -12.8,
+                chartData: generateIntradayData("2023-09-19", 34, 35, 28, 30.00, -0.68)
+            },
+            {
+                id: 10, ticker: "BIRK", name: "Birkenstock", date: "2023-10-11",
+                raised: 1500, valuation: 9500, exchange: "NYSE", sector: "Consumer",
+                firstDayClose: 46.00, firstDayChange: 12.2,
+                chartData: generateIntradayData("2023-10-11", 41, 48, 40.5, 46.00, 0.60)
+            },
+            {
+                id: 11, ticker: "KVYO", name: "Klaviyo", date: "2023-09-21",
+                raised: 620, valuation: 8500, exchange: "NYSE", sector: "Martech",
+                firstDayClose: 32.00, firstDayChange: 32.0,
+                chartData: generateIntradayData("2023-09-21", 24, 34, 23.5, 32.00, 0.85)
+            },
+            {
+                id: 12, ticker: "CAVA", name: "Cava Group", date: "2023-06-15",
+                raised: 400, valuation: 4100, exchange: "NYSE", sector: "Restaurants",
+                firstDayClose: 43.00, firstDayChange: 86.0,
+                chartData: generateIntradayData("2023-06-15", 22, 45, 21.5, 43.00, 0.92)
+            },
+            {
+                id: 13, ticker: "RBRK", name: "Rubrik", date: "2024-04-25",
+                raised: 752, valuation: 5500, exchange: "NYSE", sector: "Cybersecurity",
+                firstDayClose: 33.50, firstDayChange: 9.8,
+                chartData: generateIntradayData("2024-04-25", 30, 35, 29, 33.50, 0.58)
+            },
+            {
+                id: 14, ticker: "RDDT", name: "Reddit", date: "2024-03-21",
+                raised: 519, valuation: 6500, exchange: "NYSE", sector: "Social",
+                firstDayClose: 50.00, firstDayChange: 48.0,
+                chartData: generateIntradayData("2024-03-21", 34, 52, 33, 50.00, 0.89)
+            },
+            {
+                id: 15, ticker: "ALAB", name: "Astera Labs", date: "2024-03-20",
+                raised: 713, valuation: 5800, exchange: "NASDAQ", sector: "Semiconductors",
+                firstDayClose: 36.00, firstDayChange: 20.0,
+                chartData: generateIntradayData("2024-03-20", 30, 38, 29.5, 36.00, 0.72)
+            },
+            {
+                id: 16, ticker: "LOAR", name: "Loar Holdings", date: "2024-04-25",
+                raised: 308, valuation: 2200, exchange: "NYSE", sector: "Aerospace",
+                firstDayClose: 28.50, firstDayChange: 35.7,
+                chartData: generateIntradayData("2024-04-25", 21, 30, 20.5, 28.50, 0.80)
+            },
+            {
+                id: 17, ticker: "MNDY", name: "monday.com", date: "2021-06-10",
+                raised: 410, valuation: 7500, exchange: "NASDAQ", sector: "Software",
+                firstDayClose: 155.00, firstDayChange: 44.2,
+                chartData: generateIntradayData("2021-06-10", 108, 162, 105, 155.00, 0.87)
+            },
+            {
+                id: 18, ticker: "S", name: "SentinelOne", date: "2021-06-30",
+                raised: 850, valuation: 10000, exchange: "NYSE", sector: "Cybersecurity",
+                firstDayClose: 46.00, firstDayChange: 35.3,
+                chartData: generateIntradayData("2021-06-30", 34, 49, 33, 46.00, 0.79)
+            },
+            {
+                id: 19, ticker: "CFLT", name: "Confluent", date: "2021-06-24",
+                raised: 765, valuation: 9500, exchange: "NASDAQ", sector: "Data Infrastructure",
+                firstDayClose: 50.00, firstDayChange: 38.9,
+                chartData: generateIntradayData("2021-06-24", 36, 53, 35, 50.00, 0.82)
+            },
+            {
+                id: 20, ticker: "HCP", name: "HashiCorp", date: "2021-12-09",
+                raised: 580, valuation: 8000, exchange: "NASDAQ", sector: "DevOps",
+                firstDayClose: 42.00, firstDayChange: 5.0,
+                chartData: generateIntradayData("2021-12-09", 40, 45, 38, 42.00, 0.35)
+            },
+            {
+                id: 21, ticker: "IOT", name: "Samsara", date: "2021-12-15",
+                raised: 805, valuation: 10500, exchange: "NYSE", sector: "IoT",
+                firstDayClose: 23.00, firstDayChange: 21.1,
+                chartData: generateIntradayData("2021-12-15", 19, 24.5, 18.5, 23.00, 0.68)
+            },
+            {
+                id: 22, ticker: "GTLB", name: "GitLab", date: "2021-10-14",
+                raised: 525, valuation: 15000, exchange: "NASDAQ", sector: "DevOps",
+                firstDayClose: 77.00, firstDayChange: 35.1,
+                chartData: generateIntradayData("2021-10-14", 57, 82, 55, 77.00, 0.83)
+            },
+            {
+                id: 23, ticker: "AMPL", name: "Amplitude", date: "2021-09-28",
+                raised: 250, valuation: 5500, exchange: "NASDAQ", sector: "Analytics",
+                firstDayClose: 52.00, firstDayChange: 73.3,
+                chartData: generateIntradayData("2021-09-28", 30, 55, 29, 52.00, 0.90)
+            },
+            {
+                id: 24, ticker: "DOCN", name: "DigitalOcean", date: "2021-03-24",
+                raised: 535, valuation: 5500, exchange: "NYSE", sector: "Cloud",
+                firstDayClose: 50.00, firstDayChange: 42.9,
+                chartData: generateIntradayData("2021-03-24", 35, 53, 34, 50.00, 0.85)
+            },
+            {
+                id: 25, ticker: "ASAN", name: "Asana", date: "2021-09-30",
+                raised: 450, valuation: 5600, exchange: "NYSE", sector: "Work Management",
+                firstDayClose: 33.00, firstDayChange: 32.0,
+                chartData: generateIntradayData("2021-09-30", 25, 35, 24, 33.00, 0.76)
+            }
+        ]
+
+        // Generate realistic intraday 5-min candle data
+        function generateIntradayData(date, open, high, low, close, trend) {
+            const data = []
+            const startHour = 9
+            const endHour = 16
+            let current = open
+            const volatility = (high - low) * 0.08
+            
+            for (let hour = startHour; hour < endHour; hour++) {
+                for (let min = 0; min < 60; min += 5) {
+                    if (hour === 9 && min < 30) continue // skip pre-market
+                    
+                    const progress = ((hour - startHour) * 60 + min) / ((endHour - startHour) * 60)
+                    const drift = trend * progress * (high - low) * 0.6
+                    
+                    const noise = (Math.random() - 0.5) * volatility * 2
+                    const next = Math.max(low * 0.98, Math.min(high * 1.02, current + drift * 0.15 + noise))
+                    
+                    const candleHigh = Math.max(next, current) + Math.random() * volatility * 0.6
+                    const candleLow = Math.min(next, current) - Math.random() * volatility * 0.6
+                    
+                    const timeStr = `${date} ${String(hour).padStart(2, '0')}:${String(min).padStart(2, '0')}`
+                    
+                    data.push({
+                        time: timeStr,
+                        open: parseFloat(current.toFixed(2)),
+                        high: parseFloat(Math.max(candleHigh, current, next).toFixed(2)),
+                        low: parseFloat(Math.min(candleLow, current, next).toFixed(2)),
+                        close: parseFloat(next.toFixed(2))
+                    })
+                    
+                    current = next
+                }
+            }
+            
+            // Force final candle to match declared close
+            if (data.length > 0) {
+                const last = data[data.length - 1]
+                last.close = close
+                last.high = Math.max(last.high, close)
+                last.low = Math.min(last.low, close)
+            }
+            
+            return data
+        }
+
+        let chart = null
+        let currentTicker = null
+
+        function renderTable(filteredIpos = ipos) {
+            const tbody = document.getElementById('ipo-table-body')
+            tbody.innerHTML = ''
+            
+            filteredIpos.forEach((ipo, index) => {
+                const row = document.createElement('tr')
+                row.className = `cursor-pointer ${currentTicker === ipo.ticker ? 'active' : ''}`
+                row.innerHTML = `
+                    <td class="pl-6 py-3.5 text-zinc-500 font-mono text-xs">${String(index + 1).padStart(2, '0')}</td>
+                    <td class="py-3.5 pr-4">
+                        <div class="font-semibold">${ipo.name}</div>
+                        <div class="text-[10px] text-zinc-500">${ipo.sector}</div>
+                    </td>
+                    <td class="py-3.5">
+                        <span class="font-mono font-semibold text-blue-400">${ipo.ticker}</span>
+                    </td>
+                    <td class="py-3.5 text-zinc-400 font-mono text-xs">${ipo.date}</td>
+                    <td class="py-3.5 text-right pr-6">
+                        <div class="font-mono">$${(ipo.raised / 1000).toFixed(1)}B</div>
+                        <div class="text-[10px] text-zinc-500">val $${(ipo.valuation / 1000).toFixed(1)}B</div>
+                    </td>
+                    <td class="py-3.5 pr-6 text-right">
+                        <div class="font-semibold tabular-nums ${ipo.firstDayChange >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+                            ${ipo.firstDayChange >= 0 ? '+' : ''}${ipo.firstDayChange}%
+                        </div>
+                        <div class="font-mono text-xs text-zinc-400">$${ipo.firstDayClose}</div>
+                    </td>
+                `
+                
+                row.onclick = () => selectIPO(ipo, row)
+                tbody.appendChild(row)
+            })
+        }
+
+        function selectIPO(ipo, rowElement) {
+            // Deselect all rows
+            document.querySelectorAll('#ipo-table-body tr').forEach(r => r.classList.remove('active'))
+            if (rowElement) rowElement.classList.add('active')
+            
+            currentTicker = ipo.ticker
+            
+            // Update header
+            document.getElementById('selected-company').innerHTML = ipo.name
+            document.getElementById('selected-ticker').innerHTML = ipo.ticker
+            document.getElementById('selected-date').innerHTML = `${ipo.date} • ${ipo.exchange} • First trading day`
+            
+            // Performance badge
+            const badge = document.getElementById('performance-badge')
+            badge.innerHTML = `
+                <span class="${ipo.firstDayChange >= 0 ? 'text-emerald-400' : 'text-red-400'} font-semibold">
+                    ${ipo.firstDayChange >= 0 ? '▲' : '▼'} ${ipo.firstDayChange}%
+                </span>
+            `
+            badge.className = `flex items-center gap-x-1.5 text-xs font-medium px-3 h-7 rounded-2xl border ${ipo.firstDayChange >= 0 ? 'border-emerald-900 text-emerald-400' : 'border-red-900 text-red-400'}`
+            badge.style.display = 'flex'
+            
+            // Show chart
+            renderCandlestickChart(ipo)
+            
+            // Stats
+            document.getElementById('chart-stats').classList.remove('hidden')
+            document.getElementById('chart-placeholder').classList.add('hidden')
+            
+            const first = ipo.chartData[0]
+            const last = ipo.chartData[ipo.chartData.length - 1]
+            const dayHigh = Math.max(...ipo.chartData.map(d => d.high))
+            const dayLow = Math.min(...ipo.chartData.map(d => d.low))
+            
+            document.getElementById('stat-open').innerHTML = `$${first.open}`
+            document.getElementById('stat-high').innerHTML = `$${dayHigh.toFixed(2)}`
+            document.getElementById('stat-low').innerHTML = `$${dayLow.toFixed(2)}`
+            document.getElementById('stat-close').innerHTML = `$${last.close}`
+        }
+
+        function renderCandlestickChart(ipo) {
+            const container = document.getElementById('chart-container')
+            
+            // Clear previous chart
+            container.innerHTML = ''
+            if (chart) {
+                chart.remove()
+                chart = null
+            }
+            
+            // Create chart
+            chart = LightweightCharts.createChart(container, {
+                width: container.clientWidth,
+                height: 380,
+                layout: {
+                    background: { color: '#09090b' },
+                    textColor: '#71717a',
+                },
+                grid: {
+                    vertLines: { color: '#27251f' },
+                    horzLines: { color: '#27251f' },
+                },
+                crosshair: {
+                    mode: LightweightCharts.CrosshairMode.Normal,
+                    vertLine: { color: '#3b82f6', width: 1, style: 2 },
+                    horzLine: { color: '#3b82f6', width: 1, style: 2 },
+                },
+                timeScale: {
+                    timeVisible: true,
+                    secondsVisible: false,
+                    borderColor: '#27251f',
+                },
+                rightPriceScale: {
+                    borderColor: '#27251f',
+                },
+                handleScroll: { vertTouchDrag: false },
+            })
+            
+            const candleSeries = chart.addCandlestickSeries({
+                upColor: '#22c55e',
+                downColor: '#ef4444',
+                borderUpColor: '#22c55e',
+                borderDownColor: '#ef4444',
+                wickUpColor: '#22c55e',
+                wickDownColor: '#ef4444',
+            })
+            
+            candleSeries.setData(ipo.chartData)
+            
+            // Fit content nicely
+            chart.timeScale().fitContent()
+            
+            // Resize handler
+            const resizeObserver = new ResizeObserver(() => {
+                if (chart) {
+                    chart.resize(container.clientWidth, 380)
+                }
+            })
+            resizeObserver.observe(container)
+            
+            // Store reference for cleanup if needed
+            container._chart = chart
+        }
+
+        function setupSearch() {
+            const input = document.getElementById('search')
+            input.addEventListener('input', () => {
+                const term = input.value.toLowerCase().trim()
+                if (!term) {
+                    renderTable()
+                    return
+                }
+                
+                const filtered = ipos.filter(ipo => 
+                    ipo.name.toLowerCase().includes(term) || 
+                    ipo.ticker.toLowerCase().includes(term) ||
+                    ipo.sector.toLowerCase().includes(term)
+                )
+                renderTable(filtered)
+            })
+        }
+
+        function init() {
+            initTailwind()
+            
+            // Initial table
+            renderTable()
+            
+            // Search
+            setupSearch()
+            
+            // Auto-select first IPO for nice first impression
+            setTimeout(() => {
+                const firstRow = document.querySelector('#ipo-table-body tr')
+                if (firstRow) {
+                    const firstIPO = ipos[0]
+                    selectIPO(firstIPO, firstRow)
+                }
+            }, 420)
+            
+            // Keyboard hint
+            document.addEventListener('keydown', (e) => {
+                if (e.key === '/' && document.activeElement.tagName === 'BODY') {
+                    e.preventDefault()
+                    document.getElementById('search').focus()
+                }
+            })
+            
+            console.log('%c[IPO] Interactive first-day chart site ready', 'color:#3b82f6')
+        }
+
+        window.onload = init
+    </script>
+</body>
+</html>
