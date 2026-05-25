@@ -521,65 +521,65 @@
         function renderCandlestickChart(ipo) {
             const container = document.getElementById('chart-container')
             
-            // Clear previous chart
+            // Clear previous chart completely
             container.innerHTML = ''
             if (chart) {
-                chart.remove()
+                try { chart.remove() } catch(e) {}
                 chart = null
             }
-            
-            // Create chart
-            chart = LightweightCharts.createChart(container, {
-                width: container.clientWidth,
-                height: 380,
-                layout: {
-                    background: { color: '#09090b' },
-                    textColor: '#71717a',
-                },
-                grid: {
-                    vertLines: { color: '#27251f' },
-                    horzLines: { color: '#27251f' },
-                },
-                crosshair: {
-                    mode: LightweightCharts.CrosshairMode.Normal,
-                    vertLine: { color: '#3b82f6', width: 1, style: 2 },
-                    horzLine: { color: '#3b82f6', width: 1, style: 2 },
-                },
-                timeScale: {
-                    timeVisible: true,
-                    secondsVisible: false,
-                    borderColor: '#27251f',
-                },
-                rightPriceScale: {
-                    borderColor: '#27251f',
-                },
-                handleScroll: { vertTouchDrag: false },
+
+            // Create fresh container to avoid stale DOM issues
+            const chartDiv = document.createElement('div')
+            chartDiv.style.width = '100%'
+            chartDiv.style.height = '380px'
+            container.appendChild(chartDiv)
+
+            // Ensure container has dimensions before creating chart
+            requestAnimationFrame(() => {
+                const w = chartDiv.clientWidth || 800
+                
+                chart = LightweightCharts.createChart(chartDiv, {
+                    width: w,
+                    height: 380,
+                    layout: {
+                        background: { color: '#09090b' },
+                        textColor: '#71717a',
+                    },
+                    grid: {
+                        vertLines: { color: '#27251f' },
+                        horzLines: { color: '#27251f' },
+                    },
+                    crosshair: {
+                        mode: LightweightCharts.CrosshairMode.Normal,
+                        vertLine: { color: '#3b82f6', width: 1, style: 2 },
+                        horzLine: { color: '#3b82f6', width: 1, style: 2 },
+                    },
+                    timeScale: {
+                        timeVisible: true,
+                        secondsVisible: false,
+                        borderColor: '#27251f',
+                    },
+                    rightPriceScale: {
+                        borderColor: '#27251f',
+                    },
+                    handleScroll: { vertTouchDrag: false },
+                })
+
+                const candleSeries = chart.addCandlestickSeries({
+                    upColor: '#22c55e',
+                    downColor: '#ef4444',
+                    borderUpColor: '#22c55e',
+                    borderDownColor: '#ef4444',
+                    wickUpColor: '#22c55e',
+                    wickDownColor: '#ef4444',
+                })
+
+                candleSeries.setData(ipo.chartData)
+                chart.timeScale().fitContent()
+
+                // Store for potential cleanup
+                chartDiv._chart = chart
             })
-            
-            const candleSeries = chart.addCandlestickSeries({
-                upColor: '#22c55e',
-                downColor: '#ef4444',
-                borderUpColor: '#22c55e',
-                borderDownColor: '#ef4444',
-                wickUpColor: '#22c55e',
-                wickDownColor: '#ef4444',
-            })
-            
-            candleSeries.setData(ipo.chartData)
-            
-            // Fit content nicely
-            chart.timeScale().fitContent()
-            
-            // Resize handler
-            const resizeObserver = new ResizeObserver(() => {
-                if (chart) {
-                    chart.resize(container.clientWidth, 380)
-                }
-            })
-            resizeObserver.observe(container)
-            
-            // Store reference for cleanup if needed
-            container._chart = chart
         }
 
         function setupSearch() {
