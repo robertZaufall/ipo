@@ -8,7 +8,7 @@ window.ipoAnalysis = {
   "generatedAt": "2026-05-26",
   "asOf": "2026-05-26",
   "windowYears": 15,
-  "defaultFilter": "gt10",
+  "defaultFilter": "gt25",
   "defaultTradingPlaceFilter": "all",
   "filters": [
     {

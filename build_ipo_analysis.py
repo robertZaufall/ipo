@@ -67,7 +67,7 @@ CAP_ANALYSIS_FILTERS = [
     {"id": "gt50", "label": ">$50B", "analysisLabel": ">$50B IPOs"},
 ]
 
-DEFAULT_CAP_ANALYSIS_FILTER = "gt10"
+DEFAULT_CAP_ANALYSIS_FILTER = "gt25"
 
 TRADING_PLACE_FILTERS = [
     {"id": "all", "label": "All", "analysisLabel": ""},

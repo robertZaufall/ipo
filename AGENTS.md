@@ -17,7 +17,7 @@ This repo builds the static `ipo` page published at:
 - The top analysis panel is an inline SVG/HTML view generated in browser JavaScript from precomputed cap-filtered data in `ipo-analysis.js`.
 - The visible analysis UI contains two distribution charts followed by balanced side-by-side `Decision odds` and `Timing tells` panels. Do not re-add the removed checkpoint pill or trailing "not a buy signal" note unless Rob asks.
 - IPO cards include five micro charts below the metadata: IPO price to first-day close, first-day start price to first-day end price, first-day low to first-day end price, IPO price to current price, and first-day close to current price.
-- The market-cap and trading-place segmented filters sit in the header above the analysis panel so they control both the probability analysis and the card list. The default cap filter is `>$10B`; other cap options are `<$10B`, all (`*`), `>$25B`, and `>$50B`. The default trading-place filter is `All`; other options are `NASDAQ` and `NYSE`.
+- The market-cap and trading-place segmented filters sit in the header above the analysis panel so they control both the probability analysis and the card list. The default cap filter is `>$25B`; other cap options are `<$10B`, all (`*`), `>$10B`, and `>$50B`. The default trading-place filter is `All`; other options are `NASDAQ` and `NYSE`.
 - The card toolbar below the analysis keeps only search plus the Date/Cap sort toggle.
 - Do not reintroduce charting CDNs unless Rob explicitly asks. Earlier chart-library attempts rendered blank in production.
 - The chart path only draws real first-trading-day 5-minute OHLCV bars from `chart-data.js`. Suppress cards without exact bars; do not reintroduce daily-OHLC estimates or synthetic fallback charts unless Rob explicitly asks.
@@ -261,7 +261,7 @@ Before calling an IPO change done:
 - Missing exact 5-minute bars are suppressed from the card list, not rendered as estimated charts.
 - Search filters cards by ticker/company/exchange/sector.
 - Sort button toggles between IPO date recent-first and market cap biggest-first.
-- Cap filter defaults to `>$10B` and can switch to `<$10B`, all (`*`), `>$25B`, and `>$50B`.
+- Cap filter defaults to `>$25B` and can switch to `<$10B`, all (`*`), `>$10B`, and `>$50B`.
 - Trading-place filter defaults to `All` and can switch to `NASDAQ` or `NYSE`.
 - Inline JavaScript syntax still passes, for example:
   `perl -0ne 'while(/<script>(.*?)<\/script>/sg){print $1}' index.html > /tmp/ipo-inline.js && node --check /tmp/ipo-inline.js`

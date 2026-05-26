@@ -55,8 +55,8 @@
                     <div id="cap-filter" role="group" aria-label="Filter IPO analysis and cards by market cap" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs sm:text-sm font-semibold grid grid-cols-5 gap-1">
                         <button id="cap-under10" type="button" data-cap-filter="under10" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&lt;$10B</button>
                         <button id="cap-all" type="button" data-cap-filter="all" aria-pressed="false" aria-label="All market caps" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">*</button>
-                        <button id="cap-gt10" type="button" data-cap-filter="gt10" aria-pressed="true" class="rounded-xl flex items-center justify-center transition-colors bg-blue-600 text-white">&gt;$10B</button>
-                        <button id="cap-gt25" type="button" data-cap-filter="gt25" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$25B</button>
+                        <button id="cap-gt10" type="button" data-cap-filter="gt10" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$10B</button>
+                        <button id="cap-gt25" type="button" data-cap-filter="gt25" aria-pressed="true" class="rounded-xl flex items-center justify-center transition-colors bg-blue-600 text-white">&gt;$25B</button>
                         <button id="cap-gt50" type="button" data-cap-filter="gt50" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$50B</button>
                     </div>
                     <div id="trading-place-filter" role="group" aria-label="Filter IPO analysis and cards by trading place" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs sm:text-sm font-semibold grid grid-cols-3 gap-1">
@@ -102,7 +102,7 @@
     </main>
 
     <script>
-        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-26-4';
+        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-26-5';
         ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js'].forEach(src => {
             document.write(`<script src="${src}?v=${encodeURIComponent(IPO_ASSET_VERSION)}"><\/script>`);
         });
@@ -116,7 +116,7 @@
 
         let sortMode = 'date';
         let searchTerm = '';
-        let capFilterMode = ipoAnalysis?.defaultFilter || 'gt10';
+        let capFilterMode = ipoAnalysis?.defaultFilter || 'gt25';
         let tradingPlaceFilterMode = ipoAnalysis?.defaultTradingPlaceFilter || 'all';
 
         const CAP_FILTERS = [
