@@ -424,7 +424,10 @@ def fetch_profile(ipo: dict) -> dict:
     except urllib.error.URLError:
         company = ""
 
-    current = parse_current_price(overview) or ipo.get("current")
+    overview_current = parse_current_price(overview)
+    current = overview_current or ipo.get("current")
+    current_source = "StockAnalysis current price" if overview_current is not None else ipo.get("currentSource")
+    current_as_of = dt.datetime.now(tz=UTC).isoformat().replace("+00:00", "Z") if overview_current is not None else ipo.get("currentAsOf")
     market_cap = parse_market_cap_b(parse_row_value(overview, "Market Cap")) or ipo.get("marketCap")
     exchange = parse_row_value(company, "Exchange") or parse_row_value(overview, "Stock Exchange") or ipo.get("exchange")
     industry = parse_row_value(company, "Industry") or ipo.get("sector")
@@ -445,6 +448,9 @@ def fetch_profile(ipo: dict) -> dict:
         "sector": industry or sector or "",
         "ipoPrice": ipo_price,
         "current": current,
+        "currentAsOf": current_as_of,
+        "currentSource": current_source,
+        "currentCurrency": ipo.get("currentCurrency") or "USD",
         "marketCap": market_cap,
         "dealSize": deal_size,
         "dayChange": day_change if day_change is not None else ipo.get("dayChange"),
@@ -487,6 +493,72 @@ def yahoo_url(ticker: str, date_s: str, interval: str, *, days: int = 1) -> str:
         }
     )
     return f"{YAHOO_CHART_BASE}/{urllib.parse.quote(yahoo_symbol(ticker))}?{params}"
+
+
+def yahoo_latest_quote_url(ticker: str) -> str:
+    params = urllib.parse.urlencode(
+        {
+            "range": "1d",
+            "interval": "1m",
+            "includePrePost": "false",
+        }
+    )
+    return f"{YAHOO_CHART_BASE}/{urllib.parse.quote(yahoo_symbol(ticker))}?{params}"
+
+
+def iso_from_epoch(timestamp: int | float | None) -> str | None:
+    if timestamp is None:
+        return None
+    try:
+        return dt.datetime.fromtimestamp(int(timestamp), tz=UTC).isoformat().replace("+00:00", "Z")
+    except (OverflowError, OSError, ValueError):
+        return None
+
+
+def fetch_latest_quote_yahoo(ticker: str) -> dict | None:
+    data = fetch_json(yahoo_latest_quote_url(ticker))
+    result = ((data.get("chart") or {}).get("result") or [None])[0]
+    if not result:
+        error = (data.get("chart") or {}).get("error") or {}
+        raise RuntimeError(error.get("description") or error.get("code") or "No chart result")
+
+    meta = result.get("meta") or {}
+    price = meta.get("regularMarketPrice")
+    timestamp = meta.get("regularMarketTime")
+    quote = (((result.get("indicators") or {}).get("quote") or [{}])[0])
+    close_values = [value for value in quote.get("close") or [] if isinstance(value, (int, float)) and math.isfinite(value)]
+    if price is None and close_values:
+        price = close_values[-1]
+        timestamps = result.get("timestamp") or []
+        timestamp = timestamps[-1] if timestamps else timestamp
+    if price is None:
+        return None
+    price = float(price)
+    if not math.isfinite(price):
+        return None
+    return {
+        "price": rounded(price, 4),
+        "asOf": iso_from_epoch(timestamp),
+        "source": "Yahoo regularMarketPrice",
+        "currency": meta.get("currency") or "USD",
+    }
+
+
+def apply_latest_quote(ipo: dict, quote: dict | None) -> dict:
+    if not quote or quote.get("price") is None:
+        return ipo
+    current = quote["price"]
+    day_change = ipo.get("dayChange")
+    if ipo.get("ipoPrice"):
+        day_change = (current - ipo["ipoPrice"]) / ipo["ipoPrice"] * 100
+    return {
+        **ipo,
+        "current": current,
+        "currentAsOf": quote.get("asOf"),
+        "currentSource": quote.get("source"),
+        "currentCurrency": quote.get("currency"),
+        "dayChange": day_change,
+    }
 
 
 def alpaca_interval(interval: str) -> str:
@@ -776,6 +848,9 @@ def card_record(ipo: dict) -> dict:
         "sector": ipo.get("sector") or "",
         "ipoPrice": rounded(ipo.get("ipoPrice")),
         "current": rounded(ipo.get("current")),
+        "currentAsOf": ipo.get("currentAsOf"),
+        "currentSource": ipo.get("currentSource"),
+        "currentCurrency": ipo.get("currentCurrency"),
         "marketCap": rounded(ipo.get("marketCap")),
         "dealSize": rounded(ipo.get("dealSize")),
         "dayChange": rounded(ipo.get("dayChange")),
@@ -896,6 +971,18 @@ def build(args: argparse.Namespace) -> int:
     selected = sorted(selected_by_ticker.values(), key=lambda item: (item.get("marketCap") or 0, item.get("date") or ""), reverse=True)
     print(f"Selected {len(top_selected)} top-cap IPOs plus {len(recent_selected)} recent IPOs after {args.recent_after_year}.")
     print(f"Tracking {len(selected)} unique IPO candidates. Cards render only when exact intraday bars exist.")
+    if not args.no_yahoo_latest:
+        print("Refreshing latest quote prices from Yahoo Finance.")
+        refreshed_selected = []
+        for item in selected:
+            try:
+                quote = fetch_latest_quote_yahoo(item["ticker"])
+                refreshed_selected.append(apply_latest_quote(item, quote))
+            except Exception as exc:
+                print(f"warning: {item['ticker']} Yahoo latest quote failed: {exc}", file=sys.stderr)
+                refreshed_selected.append(item)
+            time.sleep(args.current_price_delay)
+        selected = refreshed_selected
     for item in selected:
         current = f"${item['current']:.2f}" if item.get("current") is not None else "current n/a"
         print(f"- {item['ticker']}: ${item['marketCap']:.2f}B market cap, {current}")
@@ -982,6 +1069,7 @@ def build(args: argparse.Namespace) -> int:
         *source_urls,
         *[item["detailUrl"] for item in selected],
         *[item["companyUrl"] for item in selected],
+        *([yahoo_latest_quote_url(item["ticker"]) for item in selected] if not args.no_yahoo_latest else []),
         *[PRICING_RELEASES[item["ticker"]] for item in selected if item["ticker"] in PRICING_RELEASES],
     ]
     chart_sources = [
@@ -1023,6 +1111,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--alpaca-delay", type=float, default=0.25, help="seconds to wait after each Alpaca request")
     parser.add_argument("--no-alpha-vantage", action="store_true", help="disable Alpha Vantage fallback even when an API key env var is set")
     parser.add_argument("--alpha-vantage-delay", type=float, default=12.1, help="seconds to wait after each Alpha Vantage request; lower this for premium keys")
+    parser.add_argument("--no-yahoo-latest", action="store_true", help="disable Yahoo latest quote refresh for current/today prices")
+    parser.add_argument("--current-price-delay", type=float, default=0.05, help="seconds to wait after each latest quote request")
     parser.add_argument("--max-workers", type=int, default=8)
     parser.add_argument("--request-delay", type=float, default=0.15)
     parser.add_argument("--output-dir", default=".")

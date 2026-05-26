@@ -27,7 +27,7 @@ Open `http://localhost:8080`.
 python3 refresh_ipo_data.py --threshold-b 5 --limit 500 --candidate-limit 1000
 ```
 
-The refresh uses StockAnalysis for IPO metadata, Yahoo Finance chart endpoints for first-day OHLCV data, and Alpaca market data as the main exact intraday fallback when paper/data credentials are available through `APCA_API_KEY_ID` plus `APCA_API_SECRET_KEY` or compatible `ALPACA_*` env vars. Candle charts use only exact 5-minute rows in `chart-data.js`; missing exact bars are suppressed rather than estimated.
+The refresh uses StockAnalysis for IPO metadata, Yahoo Finance chart endpoints for latest quote prices and first-day OHLCV data, and Alpaca market data as the main exact intraday fallback when paper/data credentials are available through `APCA_API_KEY_ID` plus `APCA_API_SECRET_KEY` or compatible `ALPACA_*` env vars. Candle charts use only exact 5-minute rows in `chart-data.js`; missing exact bars are suppressed rather than estimated.
 
 API keys are read only from the environment and must not be committed. Alpaca credentials are sent only in request headers. Alpha Vantage remains an optional fallback, but historical intraday month requests require a premium-enabled Alpha Vantage key.
 

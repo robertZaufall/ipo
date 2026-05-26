@@ -799,7 +799,10 @@ window.ipos = [
       "close": 2.511,
       "volume": 893181924,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "GOOG",
@@ -820,7 +823,10 @@ window.ipos = [
       "close": 2.4991,
       "volume": 897427216,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TSLA",
@@ -841,7 +847,10 @@ window.ipos = [
       "close": 1.5927,
       "volume": 281494500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AMD",
@@ -854,7 +863,10 @@ window.ipos = [
     "marketCap": 762.32,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ASML",
@@ -875,7 +887,10 @@ window.ipos = [
       "close": 2.7394,
       "volume": 71337728,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "JNJ",
@@ -888,7 +903,10 @@ window.ipos = [
     "marketCap": 564.11,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "COST",
@@ -909,7 +927,10 @@ window.ipos = [
       "close": 9.1562,
       "volume": 1186400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ARM",
@@ -930,7 +951,10 @@ window.ipos = [
       "close": 63.59,
       "volume": 130534500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BABA",
@@ -951,7 +975,10 @@ window.ipos = [
       "close": 93.89,
       "volume": 271879400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:03:34Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AZN",
@@ -972,7 +999,10 @@ window.ipos = [
       "close": 10.0833,
       "volume": 207000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PANW",
@@ -993,7 +1023,10 @@ window.ipos = [
       "close": 8.855,
       "volume": 42096600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ANET",
@@ -1014,7 +1047,10 @@ window.ipos = [
       "close": 3.4375,
       "volume": 116081600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ADI",
@@ -1027,7 +1063,10 @@ window.ipos = [
     "marketCap": 193.41,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "DELL",
@@ -1040,7 +1079,10 @@ window.ipos = [
     "marketCap": 191.75,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:02:55Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SAN",
@@ -1061,7 +1103,10 @@ window.ipos = [
       "close": 4.3505,
       "volume": 5826240,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MRVL",
@@ -1082,7 +1127,10 @@ window.ipos = [
       "close": 14.25,
       "volume": 3518000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CRWD",
@@ -1094,7 +1142,7 @@ window.ipos = [
     "current": 663.46,
     "marketCap": 168.87,
     "dealSize": null,
-    "dayChange": 1851.35,
+    "dayChange": 1851.3529411764707,
     "firstDay": {
       "date": "2019-06-12",
       "open": 63.5,
@@ -1103,7 +1151,10 @@ window.ipos = [
       "close": 58.0,
       "volume": 19449200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CRM",
@@ -1124,7 +1175,10 @@ window.ipos = [
       "close": 4.3,
       "volume": 43574400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "UBER",
@@ -1136,7 +1190,7 @@ window.ipos = [
     "current": 71.82,
     "marketCap": 146.2,
     "dealSize": null,
-    "dayChange": 59.6,
+    "dayChange": 59.59999999999999,
     "firstDay": {
       "date": "2019-05-10",
       "open": 42.0,
@@ -1145,7 +1199,10 @@ window.ipos = [
       "close": 41.57,
       "volume": 186322500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PDD",
@@ -1166,7 +1223,10 @@ window.ipos = [
       "close": 26.7,
       "volume": 43213200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SHOP",
@@ -1187,7 +1247,10 @@ window.ipos = [
       "close": 2.568,
       "volume": 123039000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SONY",
@@ -1200,7 +1263,10 @@ window.ipos = [
     "marketCap": 133.77,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SPOT",
@@ -1221,7 +1287,10 @@ window.ipos = [
       "close": 149.01,
       "volume": 30526500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NOW",
@@ -1242,7 +1311,10 @@ window.ipos = [
       "close": 4.92,
       "volume": 54612000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CDNS",
@@ -1263,7 +1335,10 @@ window.ipos = [
       "close": 2.0,
       "volume": 10395450,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SNPS",
@@ -1284,7 +1359,10 @@ window.ipos = [
       "close": 7.875,
       "volume": 11616800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FTNT",
@@ -1305,7 +1383,10 @@ window.ipos = [
       "close": 1.662,
       "volume": 136704000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "INTU",
@@ -1326,7 +1407,10 @@ window.ipos = [
       "close": 2.6458,
       "volume": 28573200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ASX",
@@ -1339,7 +1423,10 @@ window.ipos = [
     "marketCap": 86.17,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BE",
@@ -1360,7 +1447,10 @@ window.ipos = [
       "close": 25.0,
       "volume": 13709500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BSX",
@@ -1381,7 +1471,10 @@ window.ipos = [
       "close": 4.2812,
       "volume": 7799600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "UPS",
@@ -1402,7 +1495,10 @@ window.ipos = [
       "close": 68.25,
       "volume": 80793700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NXPI",
@@ -1423,7 +1519,10 @@ window.ipos = [
       "close": 14.0,
       "volume": 10678500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "DDOG",
@@ -1435,7 +1534,7 @@ window.ipos = [
     "current": 222.32,
     "marketCap": 79.14,
     "dealSize": null,
-    "dayChange": 723.41,
+    "dayChange": 723.4074074074074,
     "firstDay": {
       "date": "2019-09-19",
       "open": 40.35,
@@ -1444,7 +1543,10 @@ window.ipos = [
       "close": 37.55,
       "volume": 22025800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "E",
@@ -1465,7 +1567,10 @@ window.ipos = [
       "close": 13.15,
       "volume": 20880250,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ABNB",
@@ -1477,7 +1582,7 @@ window.ipos = [
     "current": 132.35,
     "marketCap": 78.55,
     "dealSize": null,
-    "dayChange": 94.63,
+    "dayChange": 94.63235294117646,
     "firstDay": {
       "date": "2020-12-10",
       "open": 146.0,
@@ -1486,7 +1591,10 @@ window.ipos = [
       "close": 144.71,
       "volume": 70447500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MPWR",
@@ -1507,7 +1615,10 @@ window.ipos = [
       "close": 9.84,
       "volume": 3906200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NET",
@@ -1519,7 +1630,7 @@ window.ipos = [
     "current": 216.17,
     "marketCap": 76.41,
     "dealSize": null,
-    "dayChange": 1341.13,
+    "dayChange": 1341.1333333333334,
     "firstDay": {
       "date": "2019-09-13",
       "open": 18.0,
@@ -1528,7 +1639,10 @@ window.ipos = [
       "close": 18.0,
       "volume": 35993700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:02:49Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CVNA",
@@ -1549,7 +1663,10 @@ window.ipos = [
       "close": 2.22,
       "volume": 56489000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:02:41Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MPC",
@@ -1570,7 +1687,10 @@ window.ipos = [
       "close": 21.1,
       "volume": 8334200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "APO",
@@ -1591,7 +1711,10 @@ window.ipos = [
       "close": 18.2,
       "volume": 30086900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PSX",
@@ -1612,7 +1735,10 @@ window.ipos = [
       "close": 32.76,
       "volume": 6878600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "DLR",
@@ -1633,7 +1759,10 @@ window.ipos = [
       "close": 12.0,
       "volume": 5951800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "HOOD",
@@ -1645,7 +1774,7 @@ window.ipos = [
     "current": 73.64,
     "marketCap": 66.31,
     "dealSize": null,
-    "dayChange": 93.79,
+    "dayChange": 93.78947368421052,
     "firstDay": {
       "date": "2021-07-29",
       "open": 38.0,
@@ -1654,7 +1783,10 @@ window.ipos = [
       "close": 34.82,
       "volume": 102474700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MFC",
@@ -1675,7 +1807,10 @@ window.ipos = [
       "close": 6.0938,
       "volume": 36241400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NU",
@@ -1687,7 +1822,7 @@ window.ipos = [
     "current": 12.73,
     "marketCap": 61.89,
     "dealSize": null,
-    "dayChange": 41.44,
+    "dayChange": 41.44444444444445,
     "firstDay": {
       "date": "2021-12-09",
       "open": 11.25,
@@ -1696,7 +1831,10 @@ window.ipos = [
       "close": 10.33,
       "volume": 90160800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "STM",
@@ -1717,7 +1855,10 @@ window.ipos = [
       "close": 3.7083,
       "volume": 41167800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SNOW",
@@ -1729,7 +1870,7 @@ window.ipos = [
     "current": 172.2,
     "marketCap": 59.46,
     "dealSize": null,
-    "dayChange": 43.5,
+    "dayChange": 43.499999999999986,
     "firstDay": {
       "date": "2020-09-16",
       "open": 245.0,
@@ -1738,7 +1879,10 @@ window.ipos = [
       "close": 253.93,
       "volume": 36099700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TRGP",
@@ -1759,7 +1903,10 @@ window.ipos = [
       "close": 24.7,
       "volume": 10577600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CRWV",
@@ -1771,7 +1918,7 @@ window.ipos = [
     "current": 105.49,
     "marketCap": 57.55,
     "dealSize": null,
-    "dayChange": 163.72,
+    "dayChange": 163.725,
     "firstDay": {
       "date": "2025-03-28",
       "open": 39.0,
@@ -1780,7 +1927,10 @@ window.ipos = [
       "close": 40.0,
       "volume": 41091100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MPLX",
@@ -1801,7 +1951,10 @@ window.ipos = [
       "close": 27.2,
       "volume": 14401300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MSTR",
@@ -1822,7 +1975,10 @@ window.ipos = [
       "close": 10.5625,
       "volume": 10094800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ALL",
@@ -1843,7 +1999,10 @@ window.ipos = [
       "close": 14.6875,
       "volume": 56603000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CBRS",
@@ -1855,7 +2014,7 @@ window.ipos = [
     "current": 256.78,
     "marketCap": 55.24,
     "dealSize": 5550.0,
-    "dayChange": 38.8,
+    "dayChange": 38.79999999999998,
     "firstDay": {
       "date": "2026-05-14",
       "open": 350.0,
@@ -1864,7 +2023,10 @@ window.ipos = [
       "close": 311.07,
       "volume": 33497900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NBIS",
@@ -1877,7 +2039,10 @@ window.ipos = [
     "marketCap": 54.99,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SE",
@@ -1898,7 +2063,10 @@ window.ipos = [
       "close": 16.26,
       "volume": 37563700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ALAB",
@@ -1910,7 +2078,7 @@ window.ipos = [
     "current": 306.88,
     "marketCap": 52.6,
     "dealSize": null,
-    "dayChange": 752.44,
+    "dayChange": 752.4444444444445,
     "firstDay": {
       "date": "2024-03-20",
       "open": 52.56,
@@ -1919,7 +2087,10 @@ window.ipos = [
       "close": 62.03,
       "volume": 16843300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MT",
@@ -1940,7 +2111,10 @@ window.ipos = [
       "close": 61.2285,
       "volume": 789340,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ARGX",
@@ -1961,7 +2135,10 @@ window.ipos = [
       "close": 23.0,
       "volume": 798800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ROK",
@@ -1982,7 +2159,10 @@ window.ipos = [
       "close": 23.3125,
       "volume": 281200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "EW",
@@ -2003,7 +2183,10 @@ window.ipos = [
       "close": 1.375,
       "volume": 11026800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "COIN",
@@ -2015,7 +2198,7 @@ window.ipos = [
     "current": 184.99,
     "marketCap": 48.74,
     "dealSize": null,
-    "dayChange": -26.0,
+    "dayChange": -26.003999999999994,
     "firstDay": {
       "date": "2021-04-14",
       "open": 381.0,
@@ -2024,7 +2207,10 @@ window.ipos = [
       "close": 328.28,
       "volume": 81065700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MDLN",
@@ -2036,7 +2222,7 @@ window.ipos = [
     "current": 37.01,
     "marketCap": 48.62,
     "dealSize": null,
-    "dayChange": 27.62,
+    "dayChange": 27.62068965517241,
     "firstDay": {
       "date": "2025-12-17",
       "open": 35.0,
@@ -2045,7 +2231,10 @@ window.ipos = [
       "close": 41.0,
       "volume": 78930900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FLEX",
@@ -2066,7 +2255,10 @@ window.ipos = [
       "close": 1.3659,
       "volume": 20359365,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "GFS",
@@ -2078,7 +2270,7 @@ window.ipos = [
     "current": 85.64,
     "marketCap": 46.97,
     "dealSize": null,
-    "dayChange": 82.21,
+    "dayChange": 82.2127659574468,
     "firstDay": {
       "date": "2021-10-28",
       "open": 47.01,
@@ -2087,7 +2279,10 @@ window.ipos = [
       "close": 46.4,
       "volume": 18618900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AU",
@@ -2100,7 +2295,10 @@ window.ipos = [
     "marketCap": 45.83,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ON",
@@ -2121,7 +2319,10 @@ window.ipos = [
       "close": 24.0,
       "volume": 2051300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BIDU",
@@ -2142,7 +2343,10 @@ window.ipos = [
       "close": 12.254,
       "volume": 226811000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "IX",
@@ -2155,7 +2359,10 @@ window.ipos = [
     "marketCap": 43.46,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MSCI",
@@ -2176,7 +2383,10 @@ window.ipos = [
       "close": 26.1,
       "volume": 11770500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CLS",
@@ -2197,7 +2407,10 @@ window.ipos = [
       "close": 9.375,
       "volume": 6420400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TTWO",
@@ -2218,7 +2431,10 @@ window.ipos = [
       "close": 3.9167,
       "volume": 1785600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "JD",
@@ -2239,7 +2455,10 @@ window.ipos = [
       "close": 20.9,
       "volume": 84449700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CRDO",
@@ -2260,7 +2479,10 @@ window.ipos = [
       "close": 11.65,
       "volume": 5371700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ALNY",
@@ -2281,7 +2503,10 @@ window.ipos = [
       "close": 7.0,
       "volume": 198200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "KDP",
@@ -2294,7 +2519,10 @@ window.ipos = [
     "marketCap": 39.62,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PUK",
@@ -2307,7 +2535,10 @@ window.ipos = [
     "marketCap": 38.08,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "VIK",
@@ -2319,7 +2550,7 @@ window.ipos = [
     "current": 84.23,
     "marketCap": 37.58,
     "dealSize": null,
-    "dayChange": 250.96,
+    "dayChange": 250.95833333333334,
     "firstDay": {
       "date": "2024-05-01",
       "open": 26.15,
@@ -2328,7 +2559,10 @@ window.ipos = [
       "close": 26.1,
       "volume": 35017400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CBOE",
@@ -2349,7 +2583,10 @@ window.ipos = [
       "close": 32.49,
       "volume": 17022500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "HIG",
@@ -2370,7 +2607,10 @@ window.ipos = [
       "close": 24.5625,
       "volume": 3904000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "UI",
@@ -2391,7 +2631,10 @@ window.ipos = [
       "close": 17.5,
       "volume": 2954400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "HUM",
@@ -2412,7 +2655,10 @@ window.ipos = [
       "close": 20.125,
       "volume": 510600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "GFI",
@@ -2433,7 +2679,10 @@ window.ipos = [
       "close": 12.9113,
       "volume": 7180088,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "IBKR",
@@ -2454,7 +2703,10 @@ window.ipos = [
       "close": 7.825,
       "volume": 94059600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SATS",
@@ -2475,7 +2727,10 @@ window.ipos = [
       "close": 26.41,
       "volume": 2288823,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RYAAY",
@@ -2496,7 +2751,10 @@ window.ipos = [
       "close": 1.3082,
       "volume": 169361878,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "STLD",
@@ -2517,7 +2775,10 @@ window.ipos = [
       "close": 4.6562,
       "volume": 16753600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RBLX",
@@ -2529,7 +2790,7 @@ window.ipos = [
     "current": 48.16,
     "marketCap": 34.48,
     "dealSize": null,
-    "dayChange": 7.02,
+    "dayChange": 7.022222222222214,
     "firstDay": {
       "date": "2021-03-10",
       "open": 64.5,
@@ -2538,7 +2799,10 @@ window.ipos = [
       "close": 69.5,
       "volume": 97069300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:02:35Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "VOD",
@@ -2551,7 +2815,10 @@ window.ipos = [
     "marketCap": 34.46,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "QSR",
@@ -2564,7 +2831,10 @@ window.ipos = [
     "marketCap": 34.4,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ZTS",
@@ -2585,7 +2855,10 @@ window.ipos = [
       "close": 31.01,
       "volume": 66789100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "KVUE",
@@ -2597,7 +2870,7 @@ window.ipos = [
     "current": 17.53,
     "marketCap": 33.66,
     "dealSize": null,
-    "dayChange": -20.32,
+    "dayChange": -20.318181818181813,
     "firstDay": {
       "date": "2023-05-04",
       "open": 25.53,
@@ -2606,7 +2879,10 @@ window.ipos = [
       "close": 26.9,
       "volume": 77004200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RVMD",
@@ -2618,7 +2894,7 @@ window.ipos = [
     "current": 151.56,
     "marketCap": 32.22,
     "dealSize": null,
-    "dayChange": 791.53,
+    "dayChange": 791.5294117647059,
     "firstDay": {
       "date": "2020-02-13",
       "open": 28.21,
@@ -2627,7 +2903,10 @@ window.ipos = [
       "close": 28.9,
       "volume": 7317200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "EL",
@@ -2648,7 +2927,10 @@ window.ipos = [
       "close": 8.625,
       "volume": 35659200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TSEM",
@@ -2669,7 +2951,10 @@ window.ipos = [
       "close": 210.0,
       "volume": 216993,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "WDAY",
@@ -2690,7 +2975,10 @@ window.ipos = [
       "close": 48.69,
       "volume": 18132800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RPRX",
@@ -2702,7 +2990,7 @@ window.ipos = [
     "current": 54.5,
     "marketCap": 31.38,
     "dealSize": null,
-    "dayChange": 94.64,
+    "dayChange": 94.64285714285714,
     "firstDay": {
       "date": "2020-06-16",
       "open": 44.0,
@@ -2711,7 +2999,10 @@ window.ipos = [
       "close": 44.5,
       "volume": 27619300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ZM",
@@ -2723,7 +3014,7 @@ window.ipos = [
     "current": 105.64,
     "marketCap": 30.98,
     "dealSize": null,
-    "dayChange": 193.44,
+    "dayChange": 193.44444444444443,
     "firstDay": {
       "date": "2019-04-18",
       "open": 65.0,
@@ -2732,7 +3023,10 @@ window.ipos = [
       "close": 62.0,
       "volume": 25764700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CQP",
@@ -2753,7 +3047,10 @@ window.ipos = [
       "close": 21.71,
       "volume": 5474600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MTSI",
@@ -2774,7 +3071,10 @@ window.ipos = [
       "close": 20.55,
       "volume": 4202500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ZS",
@@ -2795,7 +3095,10 @@ window.ipos = [
       "close": 33.0,
       "volume": 16931900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TCOM",
@@ -2816,7 +3119,10 @@ window.ipos = [
       "close": 2.1212,
       "volume": 89640000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CNC",
@@ -2837,7 +3143,10 @@ window.ipos = [
       "close": 1.4333,
       "volume": 56373600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "P",
@@ -2858,7 +3167,10 @@ window.ipos = [
       "close": 16.01,
       "volume": 18792300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CPNG",
@@ -2870,7 +3182,7 @@ window.ipos = [
     "current": 16.12,
     "marketCap": 28.94,
     "dealSize": null,
-    "dayChange": -53.94,
+    "dayChange": -53.942857142857136,
     "firstDay": {
       "date": "2021-03-11",
       "open": 63.5,
@@ -2879,7 +3191,10 @@ window.ipos = [
       "close": 49.25,
       "volume": 91584100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TDY",
@@ -2900,7 +3215,10 @@ window.ipos = [
       "close": 8.4375,
       "volume": 60000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BIIB",
@@ -2921,7 +3239,10 @@ window.ipos = [
       "close": 3.125,
       "volume": 17096400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TWLO",
@@ -2942,7 +3263,10 @@ window.ipos = [
       "close": 28.79,
       "volume": 21272000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "VRSN",
@@ -2963,7 +3287,10 @@ window.ipos = [
       "close": 6.375,
       "volume": 18256800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CRCL",
@@ -2975,7 +3302,7 @@ window.ipos = [
     "current": 113.12,
     "marketCap": 28.12,
     "dealSize": null,
-    "dayChange": 264.9,
+    "dayChange": 264.90322580645164,
     "firstDay": {
       "date": "2025-06-05",
       "open": 69.0,
@@ -2984,7 +3311,10 @@ window.ipos = [
       "close": 83.23,
       "volume": 47192000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FSLR",
@@ -3005,7 +3335,10 @@ window.ipos = [
       "close": 24.74,
       "volume": 18358000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NTAP",
@@ -3026,7 +3359,10 @@ window.ipos = [
       "close": 1.2812,
       "volume": 51412800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RDDT",
@@ -3038,7 +3374,7 @@ window.ipos = [
     "current": 141.67,
     "marketCap": 27.27,
     "dealSize": null,
-    "dayChange": 316.68,
+    "dayChange": 316.67647058823525,
     "firstDay": {
       "date": "2024-03-21",
       "open": 47.0,
@@ -3047,7 +3383,10 @@ window.ipos = [
       "close": 50.44,
       "volume": 48705500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BAP",
@@ -3068,7 +3407,10 @@ window.ipos = [
       "close": 11.1698,
       "volume": 2578,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MDB",
@@ -3089,7 +3431,10 @@ window.ipos = [
       "close": 32.07,
       "volume": 11508500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "VEEV",
@@ -3110,7 +3455,10 @@ window.ipos = [
       "close": 37.16,
       "volume": 13954000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FTAI",
@@ -3131,7 +3479,10 @@ window.ipos = [
       "close": 14.1332,
       "volume": 12318920,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "EXPE",
@@ -3144,7 +3495,10 @@ window.ipos = [
     "marketCap": 25.76,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AWK",
@@ -3165,7 +3519,10 @@ window.ipos = [
       "close": 20.6,
       "volume": 23402800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NMR",
@@ -3178,7 +3535,10 @@ window.ipos = [
     "marketCap": 23.42,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "DRI",
@@ -3199,7 +3559,10 @@ window.ipos = [
       "close": 5.8103,
       "volume": 2629321,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BNOX",
@@ -3208,11 +3571,14 @@ window.ipos = [
     "exchange": "NASDAQ",
     "sector": "Biotechnology",
     "ipoPrice": 15.45,
-    "current": 0.25,
+    "current": 0.2531,
     "marketCap": 23.3,
     "dealSize": null,
-    "dayChange": -98.36,
-    "firstDay": null
+    "dayChange": -98.36181229773463,
+    "firstDay": null,
+    "currentAsOf": "2026-05-26T00:33:23.293784Z",
+    "currentSource": "StockAnalysis current price",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BNTX",
@@ -3224,7 +3590,7 @@ window.ipos = [
     "current": 92.14,
     "marketCap": 23.3,
     "dealSize": null,
-    "dayChange": 514.27,
+    "dayChange": 514.2666666666667,
     "firstDay": {
       "date": "2019-10-10",
       "open": 16.5,
@@ -3233,7 +3599,10 @@ window.ipos = [
       "close": 14.24,
       "volume": 2805800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "INSM",
@@ -3254,7 +3623,10 @@ window.ipos = [
       "close": 165.0,
       "volume": 3205,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SQM",
@@ -3275,7 +3647,10 @@ window.ipos = [
       "close": 2.5073,
       "volume": 17419974,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PAAS",
@@ -3296,7 +3671,10 @@ window.ipos = [
       "close": 4.875,
       "volume": 13300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ULTA",
@@ -3317,7 +3695,10 @@ window.ipos = [
       "close": 29.82,
       "volume": 7486900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MTD",
@@ -3338,7 +3719,10 @@ window.ipos = [
       "close": 14.875,
       "volume": 2233500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FFIV",
@@ -3359,7 +3743,10 @@ window.ipos = [
       "close": 7.4375,
       "volume": 7386600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "VIV",
@@ -3380,7 +3767,10 @@ window.ipos = [
       "close": 28.4375,
       "volume": 880900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AFRM",
@@ -3392,7 +3782,7 @@ window.ipos = [
     "current": 65.22,
     "marketCap": 21.84,
     "dealSize": null,
-    "dayChange": 33.1,
+    "dayChange": 33.10204081632653,
     "firstDay": {
       "date": "2021-01-13",
       "open": 90.9,
@@ -3401,7 +3791,10 @@ window.ipos = [
       "close": 96.365,
       "volume": 25159000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TEAM",
@@ -3422,7 +3815,10 @@ window.ipos = [
       "close": 27.78,
       "volume": 15009100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MKSI",
@@ -3443,7 +3839,10 @@ window.ipos = [
       "close": 14.0625,
       "volume": 4592500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "STE",
@@ -3464,7 +3863,10 @@ window.ipos = [
       "close": 2.0625,
       "volume": 3012000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ULS",
@@ -3476,7 +3878,7 @@ window.ipos = [
     "current": 102.85,
     "marketCap": 20.73,
     "dealSize": null,
-    "dayChange": 267.32,
+    "dayChange": 267.32142857142856,
     "firstDay": {
       "date": "2024-04-12",
       "open": 34.23,
@@ -3485,7 +3887,10 @@ window.ipos = [
       "close": 34.94,
       "volume": 14953800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ENTG",
@@ -3506,7 +3911,10 @@ window.ipos = [
       "close": 11.1875,
       "volume": 12890300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CHRW",
@@ -3527,7 +3935,10 @@ window.ipos = [
       "close": 5.6875,
       "volume": 7436400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AS",
@@ -3539,7 +3950,7 @@ window.ipos = [
     "current": 35.26,
     "marketCap": 20.52,
     "dealSize": null,
-    "dayChange": 171.23,
+    "dayChange": 171.2307692307692,
     "firstDay": {
       "date": "2024-02-01",
       "open": 13.4,
@@ -3548,7 +3959,10 @@ window.ipos = [
       "close": 13.4,
       "volume": 18656400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BURL",
@@ -3569,7 +3983,10 @@ window.ipos = [
       "close": 25.01,
       "volume": 15051500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "IREN",
@@ -3581,7 +3998,7 @@ window.ipos = [
     "current": 56.83,
     "marketCap": 20.31,
     "dealSize": null,
-    "dayChange": 102.96,
+    "dayChange": 102.96428571428571,
     "firstDay": {
       "date": "2021-11-17",
       "open": 28.0,
@@ -3590,7 +4007,10 @@ window.ipos = [
       "close": 24.45,
       "volume": 5815300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BSBR",
@@ -3611,7 +4031,10 @@ window.ipos = [
       "close": 12.4617,
       "volume": 149317996,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CHTR",
@@ -3624,7 +4047,10 @@ window.ipos = [
     "marketCap": 20.1,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MAIR",
@@ -3636,7 +4062,7 @@ window.ipos = [
     "current": 40.04,
     "marketCap": 20.07,
     "dealSize": null,
-    "dayChange": 48.3,
+    "dayChange": 48.29629629629629,
     "firstDay": {
       "date": "2026-04-16",
       "open": 32.0,
@@ -3645,7 +4071,10 @@ window.ipos = [
       "close": 31.75,
       "volume": 36831100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TTMI",
@@ -3666,7 +4095,10 @@ window.ipos = [
       "close": 23.125,
       "volume": 2082900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NXT",
@@ -3687,7 +4119,10 @@ window.ipos = [
       "close": 30.46,
       "volume": 16331500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RBA",
@@ -3708,7 +4143,10 @@ window.ipos = [
       "close": 3.5208,
       "volume": 12507000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SITM",
@@ -3720,7 +4158,7 @@ window.ipos = [
     "current": 728.56,
     "marketCap": 19.23,
     "dealSize": null,
-    "dayChange": 5504.31,
+    "dayChange": 5504.3076923076915,
     "firstDay": {
       "date": "2019-11-21",
       "open": 16.9,
@@ -3729,7 +4167,10 @@ window.ipos = [
       "close": 18.65,
       "volume": 1032000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PKG",
@@ -3750,7 +4191,10 @@ window.ipos = [
       "close": 12.0,
       "volume": 11192000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SNX",
@@ -3771,7 +4215,10 @@ window.ipos = [
       "close": 7.1,
       "volume": 6651600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BEKE",
@@ -3783,7 +4230,7 @@ window.ipos = [
     "current": 16.4,
     "marketCap": 18.96,
     "dealSize": null,
-    "dayChange": -18.0,
+    "dayChange": -18.000000000000007,
     "firstDay": {
       "date": "2020-08-13",
       "open": 35.06,
@@ -3792,7 +4239,10 @@ window.ipos = [
       "close": 37.44,
       "volume": 49492400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AA",
@@ -3813,7 +4263,10 @@ window.ipos = [
       "close": 23.0,
       "volume": 32216900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RS",
@@ -3834,7 +4287,10 @@ window.ipos = [
       "close": 3.6111,
       "volume": 3978450,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ESS",
@@ -3855,7 +4311,10 @@ window.ipos = [
       "close": 19.375,
       "volume": 1595400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RIVN",
@@ -3867,7 +4326,7 @@ window.ipos = [
     "current": 14.22,
     "marketCap": 18.2,
     "dealSize": null,
-    "dayChange": -81.77,
+    "dayChange": -81.76923076923077,
     "firstDay": {
       "date": "2021-11-10",
       "open": 106.75,
@@ -3876,7 +4335,10 @@ window.ipos = [
       "close": 100.73,
       "volume": 103679500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "IOT",
@@ -3888,7 +4350,7 @@ window.ipos = [
     "current": 31.15,
     "marketCap": 18.15,
     "dealSize": null,
-    "dayChange": 35.43,
+    "dayChange": 35.43478260869565,
     "firstDay": {
       "date": "2021-12-15",
       "open": 24.9,
@@ -3897,7 +4359,10 @@ window.ipos = [
       "close": 24.7,
       "volume": 12675200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "WES",
@@ -3910,7 +4375,10 @@ window.ipos = [
     "marketCap": 18.12,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "WCC",
@@ -3931,7 +4399,10 @@ window.ipos = [
       "close": 20.0,
       "volume": 4504800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RBC",
@@ -3952,7 +4423,10 @@ window.ipos = [
       "close": 15.27,
       "volume": 4659200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "KSPI",
@@ -3964,7 +4438,7 @@ window.ipos = [
     "current": 91.54,
     "marketCap": 17.4,
     "dealSize": null,
-    "dayChange": -0.5,
+    "dayChange": -0.4999999999999932,
     "firstDay": {
       "date": "2024-01-19",
       "open": 92.5,
@@ -3973,7 +4447,10 @@ window.ipos = [
       "close": 95.97,
       "volume": 3410500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PTC",
@@ -3994,7 +4471,10 @@ window.ipos = [
       "close": 1.8229,
       "volume": 26329920,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AGI",
@@ -4007,7 +4487,10 @@ window.ipos = [
     "marketCap": 16.93,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TLK",
@@ -4028,7 +4511,10 @@ window.ipos = [
       "close": 8.6227,
       "volume": 10842768,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LI",
@@ -4040,7 +4526,7 @@ window.ipos = [
     "current": 15.89,
     "marketCap": 16.2,
     "dealSize": null,
-    "dayChange": 38.17,
+    "dayChange": 38.173913043478265,
     "firstDay": {
       "date": "2020-07-30",
       "open": 15.49,
@@ -4049,7 +4535,10 @@ window.ipos = [
       "close": 16.46,
       "volume": 64611300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "OKTA",
@@ -4070,7 +4559,10 @@ window.ipos = [
       "close": 23.51,
       "volume": 7942500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SUI",
@@ -4091,7 +4583,10 @@ window.ipos = [
       "close": 20.25,
       "volume": 1600600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TPG",
@@ -4103,7 +4598,7 @@ window.ipos = [
     "current": 41.62,
     "marketCap": 16.0,
     "dealSize": null,
-    "dayChange": 41.08,
+    "dayChange": 41.084745762711854,
     "firstDay": {
       "date": "2022-01-13",
       "open": 33.0,
@@ -4112,7 +4607,10 @@ window.ipos = [
       "close": 34.0,
       "volume": 14928500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NVMI",
@@ -4133,7 +4631,10 @@ window.ipos = [
       "close": 21.9375,
       "volume": 4895500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LOGI",
@@ -4154,7 +4655,10 @@ window.ipos = [
       "close": 2.0234,
       "volume": 10659200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "GNRC",
@@ -4175,7 +4679,10 @@ window.ipos = [
       "close": 12.84,
       "volume": 9627100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LDOS",
@@ -4196,7 +4703,10 @@ window.ipos = [
       "close": 44.3704,
       "volume": 1741338,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "IEX",
@@ -4217,7 +4727,10 @@ window.ipos = [
       "close": 3.9753,
       "volume": 24300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CLH",
@@ -4238,7 +4751,10 @@ window.ipos = [
       "close": 4.5,
       "volume": 184200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "DECK",
@@ -4259,7 +4775,10 @@ window.ipos = [
       "close": 1.2222,
       "volume": 54590400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PFGC",
@@ -4280,7 +4799,10 @@ window.ipos = [
       "close": 19.2,
       "volume": 5653000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BSAC",
@@ -4293,7 +4815,10 @@ window.ipos = [
     "marketCap": 14.68,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FPS",
@@ -4305,7 +4830,7 @@ window.ipos = [
     "current": 47.9,
     "marketCap": 14.58,
     "dealSize": null,
-    "dayChange": 77.41,
+    "dayChange": 77.4074074074074,
     "firstDay": {
       "date": "2026-02-05",
       "open": 26.0,
@@ -4314,7 +4839,10 @@ window.ipos = [
       "close": 29.0,
       "volume": 31560700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AAOI",
@@ -4335,7 +4863,10 @@ window.ipos = [
       "close": 9.96,
       "volume": 946000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SKM",
@@ -4356,7 +4887,10 @@ window.ipos = [
       "close": 24.8762,
       "volume": 977152,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TIGO",
@@ -4369,7 +4903,10 @@ window.ipos = [
     "marketCap": 14.35,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PAC",
@@ -4390,7 +4927,10 @@ window.ipos = [
       "close": 28.95,
       "volume": 3042200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ARXS",
@@ -4402,7 +4942,7 @@ window.ipos = [
     "current": 34.8,
     "marketCap": 14.28,
     "dealSize": null,
-    "dayChange": 24.29,
+    "dayChange": 24.285714285714274,
     "firstDay": {
       "date": "2026-04-16",
       "open": 38.0,
@@ -4411,7 +4951,10 @@ window.ipos = [
       "close": 38.75,
       "volume": 19256400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PS",
@@ -4423,7 +4966,7 @@ window.ipos = [
     "current": 35.67,
     "marketCap": 14.27,
     "dealSize": null,
-    "dayChange": -28.66,
+    "dayChange": -28.659999999999997,
     "firstDay": {
       "date": "2026-04-29",
       "open": 24.0,
@@ -4432,7 +4975,10 @@ window.ipos = [
       "close": 24.2,
       "volume": 3286100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CDW",
@@ -4445,7 +4991,10 @@ window.ipos = [
     "marketCap": 14.16,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "EG",
@@ -4466,7 +5015,10 @@ window.ipos = [
       "close": 19.625,
       "volume": 10364800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CHKP",
@@ -4487,7 +5039,10 @@ window.ipos = [
       "close": 4.0,
       "volume": 32796000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TME",
@@ -4508,7 +5063,10 @@ window.ipos = [
       "close": 14.0,
       "volume": 60283400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "HTHT",
@@ -4529,7 +5087,10 @@ window.ipos = [
       "close": 3.48,
       "volume": 23327200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RBRK",
@@ -4541,7 +5102,7 @@ window.ipos = [
     "current": 66.59,
     "marketCap": 13.7,
     "dealSize": null,
-    "dayChange": 108.09,
+    "dayChange": 108.09375000000001,
     "firstDay": {
       "date": "2024-04-25",
       "open": 38.6,
@@ -4550,7 +5111,10 @@ window.ipos = [
       "close": 37.0,
       "volume": 18580300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TRU",
@@ -4571,7 +5135,10 @@ window.ipos = [
       "close": 25.4,
       "volume": 25922300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BBIO",
@@ -4583,7 +5150,7 @@ window.ipos = [
     "current": 69.12,
     "marketCap": 13.54,
     "dealSize": null,
-    "dayChange": 306.59,
+    "dayChange": 306.5882352941177,
     "firstDay": {
       "date": "2019-06-27",
       "open": 30.61,
@@ -4592,7 +5159,10 @@ window.ipos = [
       "close": 27.55,
       "volume": 4986000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BWA",
@@ -4613,7 +5183,10 @@ window.ipos = [
       "close": 2.7509,
       "volume": 16809165,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TOST",
@@ -4634,7 +5207,10 @@ window.ipos = [
       "close": 62.51,
       "volume": 14255600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RRX",
@@ -4655,7 +5231,10 @@ window.ipos = [
       "close": 4.75,
       "volume": 17100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ENLT",
@@ -4676,7 +5255,10 @@ window.ipos = [
       "close": 17.75,
       "volume": 4633700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SANM",
@@ -4697,7 +5279,10 @@ window.ipos = [
       "close": 4.0312,
       "volume": 2846400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ONON",
@@ -4709,7 +5294,7 @@ window.ipos = [
     "current": 39.81,
     "marketCap": 13.18,
     "dealSize": null,
-    "dayChange": 65.88,
+    "dayChange": 65.875,
     "firstDay": {
       "date": "2021-09-15",
       "open": 35.4,
@@ -4718,7 +5303,10 @@ window.ipos = [
       "close": 35.0,
       "volume": 13765800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "IESC",
@@ -4739,7 +5327,10 @@ window.ipos = [
       "close": 247.834,
       "volume": 21185,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NIO",
@@ -4760,7 +5351,10 @@ window.ipos = [
       "close": 6.6,
       "volume": 66849000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PAYP",
@@ -4772,7 +5366,7 @@ window.ipos = [
     "current": 19.11,
     "marketCap": 12.94,
     "dealSize": null,
-    "dayChange": 19.44,
+    "dayChange": 19.437499999999996,
     "firstDay": {
       "date": "2026-03-12",
       "open": 19.0,
@@ -4781,7 +5375,10 @@ window.ipos = [
       "close": 18.16,
       "volume": 12338800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NTNX",
@@ -4802,7 +5399,10 @@ window.ipos = [
       "close": 37.0,
       "volume": 30011500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CRBG",
@@ -4814,7 +5414,7 @@ window.ipos = [
     "current": 27.74,
     "marketCap": 12.67,
     "dealSize": null,
-    "dayChange": 32.1,
+    "dayChange": 32.09523809523809,
     "firstDay": {
       "date": "2022-09-16",
       "open": 20.56,
@@ -4823,7 +5423,10 @@ window.ipos = [
       "close": 20.72,
       "volume": 4981700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "EXEL",
@@ -4836,7 +5439,10 @@ window.ipos = [
     "marketCap": 12.61,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RNR",
@@ -4857,7 +5463,10 @@ window.ipos = [
       "close": 7.1667,
       "volume": 7674600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FUTU",
@@ -4878,7 +5487,10 @@ window.ipos = [
       "close": 15.32,
       "volume": 7250500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SWKS",
@@ -4891,7 +5503,10 @@ window.ipos = [
     "marketCap": 12.4,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ZBRA",
@@ -4912,7 +5527,10 @@ window.ipos = [
       "close": 4.0556,
       "volume": 10640250,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AXSM",
@@ -4933,7 +5551,10 @@ window.ipos = [
       "close": 8.74,
       "volume": 532300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "APTV",
@@ -4946,7 +5567,10 @@ window.ipos = [
     "marketCap": 12.14,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "VIAV",
@@ -4967,7 +5591,10 @@ window.ipos = [
       "close": 1.1732,
       "volume": 4385858,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BTSG",
@@ -4988,7 +5615,10 @@ window.ipos = [
       "close": 11.0,
       "volume": 24876200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "DT",
@@ -5000,7 +5630,7 @@ window.ipos = [
     "current": 41.21,
     "marketCap": 12.01,
     "dealSize": null,
-    "dayChange": 157.56,
+    "dayChange": 157.5625,
     "firstDay": {
       "date": "2019-08-01",
       "open": 25.5,
@@ -5009,7 +5639,10 @@ window.ipos = [
       "close": 23.85,
       "volume": 29037100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FIG",
@@ -5021,7 +5654,7 @@ window.ipos = [
     "current": 22.71,
     "marketCap": 12.0,
     "dealSize": null,
-    "dayChange": -31.18,
+    "dayChange": -31.181818181818176,
     "firstDay": {
       "date": "2025-07-31",
       "open": 85.0,
@@ -5030,7 +5663,10 @@ window.ipos = [
       "close": 115.5,
       "volume": 64409000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "GDDY",
@@ -5051,7 +5687,10 @@ window.ipos = [
       "close": 26.15,
       "volume": 23177400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "GWRE",
@@ -5072,7 +5711,10 @@ window.ipos = [
       "close": 17.12,
       "volume": 7030900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FMS",
@@ -5093,7 +5735,10 @@ window.ipos = [
       "close": 11.125,
       "volume": 4334000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CPT",
@@ -5114,7 +5759,10 @@ window.ipos = [
       "close": 23.0,
       "volume": 3159100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CFLT",
@@ -5126,8 +5774,11 @@ window.ipos = [
     "current": 30.99,
     "marketCap": 11.13,
     "dealSize": null,
-    "dayChange": -13.92,
-    "firstDay": null
+    "dayChange": -13.916666666666671,
+    "firstDay": null,
+    "currentAsOf": "2026-05-26T00:33:23.293784Z",
+    "currentSource": "StockAnalysis current price",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "XE",
@@ -5139,7 +5790,7 @@ window.ipos = [
     "current": 28.32,
     "marketCap": 11.11,
     "dealSize": null,
-    "dayChange": 23.13,
+    "dayChange": 23.130434782608695,
     "firstDay": {
       "date": "2026-04-24",
       "open": 30.11,
@@ -5148,7 +5799,10 @@ window.ipos = [
       "close": 29.2,
       "volume": 44389400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CACI",
@@ -5161,7 +5815,10 @@ window.ipos = [
     "marketCap": 11.08,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BJ",
@@ -5182,7 +5839,10 @@ window.ipos = [
       "close": 22.0,
       "volume": 21172600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FRVO",
@@ -5194,7 +5854,7 @@ window.ipos = [
     "current": 38.35,
     "marketCap": 10.87,
     "dealSize": null,
-    "dayChange": 42.04,
+    "dayChange": 42.037037037037045,
     "firstDay": {
       "date": "2026-05-13",
       "open": 36.0,
@@ -5203,7 +5863,10 @@ window.ipos = [
       "close": 36.54,
       "volume": 35164300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ELAN",
@@ -5224,7 +5887,10 @@ window.ipos = [
       "close": 36.0,
       "volume": 40182700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PAG",
@@ -5245,7 +5911,10 @@ window.ipos = [
       "close": 17.4375,
       "volume": 7996800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TIMB",
@@ -5266,7 +5935,10 @@ window.ipos = [
       "close": 7.6963,
       "volume": 124058,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PINS",
@@ -5278,7 +5950,7 @@ window.ipos = [
     "current": 19.29,
     "marketCap": 10.81,
     "dealSize": null,
-    "dayChange": 1.53,
+    "dayChange": 1.5263157894736799,
     "firstDay": {
       "date": "2019-04-18",
       "open": 23.75,
@@ -5287,7 +5959,10 @@ window.ipos = [
       "close": 24.4,
       "volume": 87109500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PODD",
@@ -5308,7 +5983,10 @@ window.ipos = [
       "close": 15.96,
       "volume": 4850000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "IT",
@@ -5329,7 +6007,10 @@ window.ipos = [
       "close": 3.2188,
       "volume": 25536800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AM",
@@ -5342,7 +6023,10 @@ window.ipos = [
     "marketCap": 10.53,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "KTOS",
@@ -5363,7 +6047,10 @@ window.ipos = [
       "close": 620.0,
       "volume": 1412150,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TTD",
@@ -5384,7 +6071,10 @@ window.ipos = [
       "close": 3.01,
       "volume": 63438000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CYTK",
@@ -5405,7 +6095,10 @@ window.ipos = [
       "close": 97.56,
       "volume": 91800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SFD",
@@ -5426,7 +6119,10 @@ window.ipos = [
       "close": 19.75,
       "volume": 12165200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LINE",
@@ -5438,7 +6134,7 @@ window.ipos = [
     "current": 40.88,
     "marketCap": 10.34,
     "dealSize": null,
-    "dayChange": -47.59,
+    "dayChange": -47.58974358974359,
     "firstDay": {
       "date": "2024-07-25",
       "open": 82.0,
@@ -5447,7 +6143,10 @@ window.ipos = [
       "close": 80.78,
       "volume": 14243000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "HUBS",
@@ -5468,7 +6167,10 @@ window.ipos = [
       "close": 30.1,
       "volume": 8259700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "WMS",
@@ -5489,7 +6191,10 @@ window.ipos = [
       "close": 16.15,
       "volume": 5148400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "VSAT",
@@ -5510,7 +6215,10 @@ window.ipos = [
       "close": 4.5,
       "volume": 1852800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "IAG",
@@ -5523,7 +6231,10 @@ window.ipos = [
     "marketCap": 10.01,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "WYNN",
@@ -5544,7 +6255,10 @@ window.ipos = [
       "close": 13.01,
       "volume": 13965800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "GME",
@@ -5565,7 +6279,10 @@ window.ipos = [
       "close": 2.5125,
       "volume": 76216000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BROS",
@@ -5577,7 +6294,7 @@ window.ipos = [
     "current": 52.12,
     "marketCap": 9.78,
     "dealSize": null,
-    "dayChange": 126.61,
+    "dayChange": 126.60869565217389,
     "firstDay": {
       "date": "2021-09-15",
       "open": 32.5,
@@ -5586,7 +6303,10 @@ window.ipos = [
       "close": 36.68,
       "volume": 15620700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AHR",
@@ -5598,7 +6318,7 @@ window.ipos = [
     "current": 50.19,
     "marketCap": 9.77,
     "dealSize": null,
-    "dayChange": 318.25,
+    "dayChange": 318.24999999999994,
     "firstDay": {
       "date": "2024-02-07",
       "open": 12.85,
@@ -5607,7 +6327,10 @@ window.ipos = [
       "close": 13.22,
       "volume": 12732800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CART",
@@ -5619,7 +6342,7 @@ window.ipos = [
     "current": 41.22,
     "marketCap": 9.69,
     "dealSize": null,
-    "dayChange": 37.4,
+    "dayChange": 37.39999999999999,
     "firstDay": {
       "date": "2023-09-19",
       "open": 42.0,
@@ -5628,7 +6351,10 @@ window.ipos = [
       "close": 33.7,
       "volume": 39495900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "DOCU",
@@ -5649,7 +6375,10 @@ window.ipos = [
       "close": 39.73,
       "volume": 16392400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MOH",
@@ -5670,7 +6399,10 @@ window.ipos = [
       "close": 13.3333,
       "volume": 8133000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PRAX",
@@ -5682,7 +6414,7 @@ window.ipos = [
     "current": 343.56,
     "marketCap": 9.58,
     "dealSize": null,
-    "dayChange": 1708.21,
+    "dayChange": 1708.2105263157896,
     "firstDay": {
       "date": "2020-10-16",
       "open": 389.1,
@@ -5691,7 +6423,10 @@ window.ipos = [
       "close": 417.0,
       "volume": 288287,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BAH",
@@ -5712,7 +6447,10 @@ window.ipos = [
       "close": 19.5,
       "volume": 705800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CAVA",
@@ -5724,7 +6462,7 @@ window.ipos = [
     "current": 80.42,
     "marketCap": 9.37,
     "dealSize": null,
-    "dayChange": 265.55,
+    "dayChange": 265.54545454545456,
     "firstDay": {
       "date": "2023-06-15",
       "open": 42.0,
@@ -5733,7 +6471,10 @@ window.ipos = [
       "close": 43.78,
       "volume": 16751800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "QRVO",
@@ -5746,7 +6487,10 @@ window.ipos = [
     "marketCap": 9.37,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SIMO",
@@ -5767,7 +6511,10 @@ window.ipos = [
       "close": 10.5,
       "volume": 6642800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "DAR",
@@ -5788,7 +6535,10 @@ window.ipos = [
       "close": 4.3333,
       "volume": 1500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ACM",
@@ -5809,7 +6559,10 @@ window.ipos = [
       "close": 21.1,
       "volume": 20007900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TX",
@@ -5830,7 +6583,10 @@ window.ipos = [
       "close": 23.37,
       "volume": 13285000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CNM",
@@ -5842,7 +6598,7 @@ window.ipos = [
     "current": 47.27,
     "marketCap": 9.19,
     "dealSize": null,
-    "dayChange": 136.35,
+    "dayChange": 136.35000000000002,
     "firstDay": {
       "date": "2021-07-23",
       "open": 21.7,
@@ -5851,7 +6607,10 @@ window.ipos = [
       "close": 23.7,
       "volume": 10130400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ALV",
@@ -5872,7 +6631,10 @@ window.ipos = [
       "close": 25.4863,
       "volume": 278294,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ASR",
@@ -5893,7 +6655,10 @@ window.ipos = [
       "close": 15.1875,
       "volume": 5731600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:54Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FROG",
@@ -5905,7 +6670,7 @@ window.ipos = [
     "current": 73.99,
     "marketCap": 8.96,
     "dealSize": null,
-    "dayChange": 68.16,
+    "dayChange": 68.1590909090909,
     "firstDay": {
       "date": "2020-09-16",
       "open": 71.27,
@@ -5914,7 +6679,10 @@ window.ipos = [
       "close": 64.79,
       "volume": 14493200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AXTI",
@@ -5935,7 +6703,10 @@ window.ipos = [
       "close": 10.625,
       "volume": 3224000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SAIL",
@@ -5947,7 +6718,7 @@ window.ipos = [
     "current": 15.75,
     "marketCap": 8.93,
     "dealSize": null,
-    "dayChange": -31.52,
+    "dayChange": -31.521739130434785,
     "firstDay": {
       "date": "2025-02-13",
       "open": 23.0,
@@ -5956,7 +6727,10 @@ window.ipos = [
       "close": 22.0,
       "volume": 43599000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SARO",
@@ -5968,7 +6742,7 @@ window.ipos = [
     "current": 26.74,
     "marketCap": 8.89,
     "dealSize": null,
-    "dayChange": 11.42,
+    "dayChange": 11.416666666666659,
     "firstDay": {
       "date": "2024-10-02",
       "open": 31.0,
@@ -5977,7 +6751,10 @@ window.ipos = [
       "close": 32.75,
       "volume": 27287300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "KT",
@@ -5998,7 +6775,10 @@ window.ipos = [
       "close": 30.3125,
       "volume": 10920500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "W",
@@ -6019,7 +6799,10 @@ window.ipos = [
       "close": 37.72,
       "volume": 16000600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "KRYS",
@@ -6040,7 +6823,10 @@ window.ipos = [
       "close": 10.64,
       "volume": 456500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LGN",
@@ -6052,7 +6838,7 @@ window.ipos = [
     "current": 81.58,
     "marketCap": 8.81,
     "dealSize": null,
-    "dayChange": 191.36,
+    "dayChange": 191.35714285714286,
     "firstDay": {
       "date": "2025-09-12",
       "open": 27.0,
@@ -6061,7 +6847,10 @@ window.ipos = [
       "close": 30.5,
       "volume": 9811600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AVAV",
@@ -6082,7 +6871,10 @@ window.ipos = [
       "close": 23.93,
       "volume": 6804600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "YMM",
@@ -6094,7 +6886,7 @@ window.ipos = [
     "current": 8.36,
     "marketCap": 8.67,
     "dealSize": null,
-    "dayChange": -56.0,
+    "dayChange": -56.00000000000001,
     "firstDay": {
       "date": "2021-06-23",
       "open": 20.1,
@@ -6103,7 +6895,10 @@ window.ipos = [
       "close": 21.0,
       "volume": 13438500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FR",
@@ -6124,7 +6919,10 @@ window.ipos = [
       "close": 23.625,
       "volume": 3086100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CRUS",
@@ -6145,7 +6943,10 @@ window.ipos = [
       "close": 6.1875,
       "volume": 8359600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "XP",
@@ -6157,7 +6958,7 @@ window.ipos = [
     "current": 16.82,
     "marketCap": 8.64,
     "dealSize": null,
-    "dayChange": -37.7,
+    "dayChange": -37.7037037037037,
     "firstDay": {
       "date": "2019-12-11",
       "open": 32.75,
@@ -6166,7 +6967,10 @@ window.ipos = [
       "close": 34.46,
       "volume": 34635800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CHWY",
@@ -6178,7 +6982,7 @@ window.ipos = [
     "current": 20.73,
     "marketCap": 8.64,
     "dealSize": null,
-    "dayChange": -5.77,
+    "dayChange": -5.772727272727271,
     "firstDay": {
       "date": "2019-06-14",
       "open": 36.0,
@@ -6187,7 +6991,10 @@ window.ipos = [
       "close": 34.99,
       "volume": 69671400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RYAN",
@@ -6199,7 +7006,7 @@ window.ipos = [
     "current": 32.68,
     "marketCap": 8.62,
     "dealSize": null,
-    "dayChange": 39.06,
+    "dayChange": 39.06382978723404,
     "firstDay": {
       "date": "2021-07-22",
       "open": 25.6,
@@ -6208,7 +7015,10 @@ window.ipos = [
       "close": 27.5,
       "volume": 15892000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MBLY",
@@ -6220,7 +7030,7 @@ window.ipos = [
     "current": 10.18,
     "marketCap": 8.57,
     "dealSize": null,
-    "dayChange": -51.52,
+    "dayChange": -51.523809523809526,
     "firstDay": {
       "date": "2022-10-26",
       "open": 26.71,
@@ -6229,7 +7039,10 @@ window.ipos = [
       "close": 28.97,
       "volume": 28655000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ALGM",
@@ -6241,7 +7054,7 @@ window.ipos = [
     "current": 45.95,
     "marketCap": 8.56,
     "dealSize": null,
-    "dayChange": 228.21,
+    "dayChange": 228.21428571428575,
     "firstDay": {
       "date": "2020-10-29",
       "open": 19.4,
@@ -6250,7 +7063,10 @@ window.ipos = [
       "close": 17.7,
       "volume": 11098400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "KRMN",
@@ -6262,7 +7078,7 @@ window.ipos = [
     "current": 64.1,
     "marketCap": 8.49,
     "dealSize": null,
-    "dayChange": 191.36,
+    "dayChange": 191.36363636363635,
     "firstDay": {
       "date": "2025-02-13",
       "open": 30.0,
@@ -6271,7 +7087,10 @@ window.ipos = [
       "close": 30.05,
       "volume": 12999100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LEVI",
@@ -6283,7 +7102,7 @@ window.ipos = [
     "current": 22.02,
     "marketCap": 8.47,
     "dealSize": null,
-    "dayChange": 29.53,
+    "dayChange": 29.52941176470588,
     "firstDay": {
       "date": "2019-03-21",
       "open": 22.22,
@@ -6292,7 +7111,10 @@ window.ipos = [
       "close": 22.41,
       "volume": 43433700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "EMN",
@@ -6305,7 +7127,10 @@ window.ipos = [
     "marketCap": 8.47,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FDS",
@@ -6326,7 +7151,10 @@ window.ipos = [
       "close": 4.5,
       "volume": 660600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ENPH",
@@ -6347,7 +7175,10 @@ window.ipos = [
       "close": 7.34,
       "volume": 5048600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ARE",
@@ -6368,7 +7199,10 @@ window.ipos = [
       "close": 21.0,
       "volume": 1862700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "Z",
@@ -6381,7 +7215,10 @@ window.ipos = [
     "marketCap": 8.34,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TEM",
@@ -6393,7 +7230,7 @@ window.ipos = [
     "current": 46.18,
     "marketCap": 8.29,
     "dealSize": null,
-    "dayChange": 24.81,
+    "dayChange": 24.81081081081081,
     "firstDay": {
       "date": "2024-06-14",
       "open": 40.0,
@@ -6402,7 +7239,10 @@ window.ipos = [
       "close": 40.25,
       "volume": 6338900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MANH",
@@ -6423,7 +7263,10 @@ window.ipos = [
       "close": 5.4688,
       "volume": 18922800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SFM",
@@ -6444,7 +7287,10 @@ window.ipos = [
       "close": 40.11,
       "volume": 14759200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SM",
@@ -6465,7 +7311,10 @@ window.ipos = [
       "close": 2.75,
       "volume": 2000000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NUVL",
@@ -6477,7 +7326,7 @@ window.ipos = [
     "current": 102.12,
     "marketCap": 8.07,
     "dealSize": null,
-    "dayChange": 500.71,
+    "dayChange": 500.7058823529412,
     "firstDay": {
       "date": "2021-07-29",
       "open": 18.1,
@@ -6486,7 +7335,10 @@ window.ipos = [
       "close": 18.75,
       "volume": 2342300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "YOU",
@@ -6498,7 +7350,7 @@ window.ipos = [
     "current": 60.06,
     "marketCap": 8.03,
     "dealSize": null,
-    "dayChange": 93.74,
+    "dayChange": 93.74193548387098,
     "firstDay": {
       "date": "2021-06-30",
       "open": 38.55,
@@ -6507,7 +7359,10 @@ window.ipos = [
       "close": 40.0,
       "volume": 9014900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CWEN",
@@ -6520,7 +7375,10 @@ window.ipos = [
     "marketCap": 8.0,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FLY",
@@ -6541,7 +7399,10 @@ window.ipos = [
       "close": 60.35,
       "volume": 30556600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MWH",
@@ -6553,7 +7414,7 @@ window.ipos = [
     "current": 38.44,
     "marketCap": 7.78,
     "dealSize": null,
-    "dayChange": 53.76,
+    "dayChange": 53.759999999999984,
     "firstDay": {
       "date": "2026-02-12",
       "open": 30.54,
@@ -6562,7 +7423,10 @@ window.ipos = [
       "close": 30.91,
       "volume": 2259900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CAMT",
@@ -6583,7 +7447,10 @@ window.ipos = [
       "close": 6.0,
       "volume": 4252900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "INFA",
@@ -6595,8 +7462,11 @@ window.ipos = [
     "current": 24.79,
     "marketCap": 7.64,
     "dealSize": null,
-    "dayChange": -14.52,
-    "firstDay": null
+    "dayChange": -14.517241379310347,
+    "firstDay": null,
+    "currentAsOf": "2026-05-26T00:33:23.293784Z",
+    "currentSource": "StockAnalysis current price",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BIRK",
@@ -6608,7 +7478,7 @@ window.ipos = [
     "current": 41.38,
     "marketCap": 7.61,
     "dealSize": null,
-    "dayChange": -10.04,
+    "dayChange": -10.04347826086956,
     "firstDay": {
       "date": "2023-10-11",
       "open": 41.0,
@@ -6617,7 +7487,10 @@ window.ipos = [
       "close": 40.2,
       "volume": 15725600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FIGR",
@@ -6629,7 +7502,7 @@ window.ipos = [
     "current": 33.95,
     "marketCap": 7.51,
     "dealSize": null,
-    "dayChange": 35.8,
+    "dayChange": 35.80000000000001,
     "firstDay": {
       "date": "2025-09-11",
       "open": 36.0,
@@ -6638,7 +7511,10 @@ window.ipos = [
       "close": 31.11,
       "volume": 39451400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NCLH",
@@ -6659,7 +7535,10 @@ window.ipos = [
       "close": 24.79,
       "volume": 17761800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "HQY",
@@ -6680,7 +7559,10 @@ window.ipos = [
       "close": 17.6,
       "volume": 7235400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MTSR",
@@ -6692,8 +7574,11 @@ window.ipos = [
     "current": 70.5,
     "marketCap": 7.43,
     "dealSize": null,
-    "dayChange": 291.67,
-    "firstDay": null
+    "dayChange": 291.66666666666663,
+    "firstDay": null,
+    "currentAsOf": "2026-05-26T00:33:23.293784Z",
+    "currentSource": "StockAnalysis current price",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "EDU",
@@ -6706,7 +7591,10 @@ window.ipos = [
     "marketCap": 7.39,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:02:23Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "KGS",
@@ -6718,7 +7606,7 @@ window.ipos = [
     "current": 73.71,
     "marketCap": 7.32,
     "dealSize": null,
-    "dayChange": 360.69,
+    "dayChange": 360.68749999999994,
     "firstDay": {
       "date": "2023-06-29",
       "open": 15.56,
@@ -6727,7 +7615,10 @@ window.ipos = [
       "close": 15.7,
       "volume": 4433800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CWAN",
@@ -6739,7 +7630,7 @@ window.ipos = [
     "current": 24.32,
     "marketCap": 7.28,
     "dealSize": null,
-    "dayChange": 35.11,
+    "dayChange": 35.111111111111114,
     "firstDay": {
       "date": "2021-09-24",
       "open": 23.75,
@@ -6748,7 +7639,10 @@ window.ipos = [
       "close": 25.37,
       "volume": 11931600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BILI",
@@ -6769,7 +7663,10 @@ window.ipos = [
       "close": 11.24,
       "volume": 23929600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MOS",
@@ -6790,7 +7687,10 @@ window.ipos = [
       "close": 15.0,
       "volume": 574800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LTH",
@@ -6802,7 +7702,7 @@ window.ipos = [
     "current": 32.07,
     "marketCap": 7.14,
     "dealSize": null,
-    "dayChange": 78.17,
+    "dayChange": 78.16666666666667,
     "firstDay": {
       "date": "2021-10-07",
       "open": 16.57,
@@ -6811,7 +7711,10 @@ window.ipos = [
       "close": 17.75,
       "volume": 12165800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "HR",
@@ -6832,7 +7735,10 @@ window.ipos = [
       "close": 19.32,
       "volume": 1395500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "HCP",
@@ -6844,8 +7750,11 @@ window.ipos = [
     "current": 34.78,
     "marketCap": 7.11,
     "dealSize": null,
-    "dayChange": -56.53,
-    "firstDay": null
+    "dayChange": -56.525000000000006,
+    "firstDay": null,
+    "currentAsOf": "2026-05-26T00:33:23.293784Z",
+    "currentSource": "StockAnalysis current price",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PLXS",
@@ -6866,7 +7775,10 @@ window.ipos = [
       "close": 1.6667,
       "volume": 2130600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PCOR",
@@ -6878,7 +7790,7 @@ window.ipos = [
     "current": 46.85,
     "marketCap": 7.07,
     "dealSize": null,
-    "dayChange": -30.07,
+    "dayChange": -30.07462686567164,
     "firstDay": {
       "date": "2021-05-20",
       "open": 84.0,
@@ -6887,7 +7799,10 @@ window.ipos = [
       "close": 88.0,
       "volume": 8753800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ST",
@@ -6908,7 +7823,10 @@ window.ipos = [
       "close": 18.5,
       "volume": 13231400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "GKOS",
@@ -6929,7 +7847,10 @@ window.ipos = [
       "close": 31.22,
       "volume": 7554700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "JAN",
@@ -6941,7 +7862,7 @@ window.ipos = [
     "current": 26.72,
     "marketCap": 7.03,
     "dealSize": null,
-    "dayChange": 33.6,
+    "dayChange": 33.599999999999994,
     "firstDay": {
       "date": "2026-03-20",
       "open": 23.5,
@@ -6950,7 +7871,10 @@ window.ipos = [
       "close": 23.6,
       "volume": 15894500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BRKR",
@@ -6971,7 +7895,10 @@ window.ipos = [
       "close": 23.0625,
       "volume": 9184900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LKQ",
@@ -6992,7 +7919,10 @@ window.ipos = [
       "close": 1.9737,
       "volume": 3068800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "GRFS",
@@ -7005,7 +7935,10 @@ window.ipos = [
     "marketCap": 6.88,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ZK",
@@ -7017,8 +7950,11 @@ window.ipos = [
     "current": 26.74,
     "marketCap": 6.85,
     "dealSize": null,
-    "dayChange": 27.33,
-    "firstDay": null
+    "dayChange": 27.333333333333325,
+    "firstDay": null,
+    "currentAsOf": "2026-05-26T00:33:23.293784Z",
+    "currentSource": "StockAnalysis current price",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "QMMM",
@@ -7039,7 +7975,10 @@ window.ipos = [
       "close": 4.07,
       "volume": 3019800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-15T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MORN",
@@ -7060,7 +7999,10 @@ window.ipos = [
       "close": 20.05,
       "volume": 3273400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "OSCR",
@@ -7072,7 +8014,7 @@ window.ipos = [
     "current": 22.64,
     "marketCap": 6.82,
     "dealSize": null,
-    "dayChange": -41.95,
+    "dayChange": -41.94871794871794,
     "firstDay": {
       "date": "2021-03-03",
       "open": 36.0,
@@ -7081,7 +8023,10 @@ window.ipos = [
       "close": 34.8,
       "volume": 20587900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CHYM",
@@ -7093,7 +8038,7 @@ window.ipos = [
     "current": 17.8,
     "marketCap": 6.78,
     "dealSize": null,
-    "dayChange": -34.07,
+    "dayChange": -34.074074074074076,
     "firstDay": {
       "date": "2025-06-12",
       "open": 43.0,
@@ -7102,7 +8047,10 @@ window.ipos = [
       "close": 37.11,
       "volume": 36148200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PPC",
@@ -7115,7 +8063,10 @@ window.ipos = [
     "marketCap": 6.77,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ACLX",
@@ -7127,7 +8078,7 @@ window.ipos = [
     "current": 115.07,
     "marketCap": 6.75,
     "dealSize": null,
-    "dayChange": 667.13,
+    "dayChange": 667.1333333333333,
     "firstDay": {
       "date": "2022-02-04",
       "open": 19.0,
@@ -7136,7 +8087,10 @@ window.ipos = [
       "close": 16.8,
       "volume": 1093132,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-15T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CELC",
@@ -7157,7 +8111,10 @@ window.ipos = [
       "close": 14.29,
       "volume": 1207900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LNTH",
@@ -7178,7 +8135,10 @@ window.ipos = [
       "close": 6.77,
       "volume": 2066900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LSTR",
@@ -7199,7 +8159,10 @@ window.ipos = [
       "close": 1.625,
       "volume": 18987200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "KYMR",
@@ -7220,7 +8183,10 @@ window.ipos = [
       "close": 33.26,
       "volume": 3875200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "STEP",
@@ -7232,7 +8198,7 @@ window.ipos = [
     "current": 53.74,
     "marketCap": 6.48,
     "dealSize": null,
-    "dayChange": 198.56,
+    "dayChange": 198.55555555555557,
     "firstDay": {
       "date": "2020-09-16",
       "open": 24.75,
@@ -7241,7 +8207,10 @@ window.ipos = [
       "close": 25.0,
       "volume": 9321800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CENX",
@@ -7262,7 +8231,10 @@ window.ipos = [
       "close": 13.625,
       "volume": 2670700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PAYC",
@@ -7283,7 +8255,10 @@ window.ipos = [
       "close": 15.35,
       "volume": 3531700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:01:31Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SSRM",
@@ -7304,7 +8279,10 @@ window.ipos = [
       "close": 4.125,
       "volume": 4300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ROAD",
@@ -7325,7 +8303,10 @@ window.ipos = [
       "close": 12.1,
       "volume": 4086300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PTGX",
@@ -7346,7 +8327,10 @@ window.ipos = [
       "close": 11.7,
       "volume": 1632000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "S",
@@ -7358,7 +8342,7 @@ window.ipos = [
     "current": 18.71,
     "marketCap": 6.37,
     "dealSize": null,
-    "dayChange": -46.54,
+    "dayChange": -46.542857142857144,
     "firstDay": {
       "date": "2021-06-30",
       "open": 46.0,
@@ -7367,7 +8351,10 @@ window.ipos = [
       "close": 42.5,
       "volume": 20587300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "KLAR",
@@ -7379,7 +8366,7 @@ window.ipos = [
     "current": 16.57,
     "marketCap": 6.27,
     "dealSize": null,
-    "dayChange": -58.58,
+    "dayChange": -58.575,
     "firstDay": {
       "date": "2025-09-11",
       "open": 45.5,
@@ -7388,7 +8375,10 @@ window.ipos = [
       "close": 42.74,
       "volume": 14059900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "URBN",
@@ -7409,7 +8399,10 @@ window.ipos = [
       "close": 1.4844,
       "volume": 30484800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "GTES",
@@ -7430,7 +8423,10 @@ window.ipos = [
       "close": 18.5,
       "volume": 19855800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "INGM",
@@ -7442,7 +8438,7 @@ window.ipos = [
     "current": 26.64,
     "marketCap": 6.14,
     "dealSize": null,
-    "dayChange": 21.09,
+    "dayChange": 21.090909090909093,
     "firstDay": {
       "date": "2024-10-24",
       "open": 25.28,
@@ -7451,7 +8447,10 @@ window.ipos = [
       "close": 24.6,
       "volume": 7748000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "UGP",
@@ -7472,7 +8471,10 @@ window.ipos = [
       "close": 1.375,
       "volume": 52540000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "APGE",
@@ -7481,10 +8483,10 @@ window.ipos = [
     "exchange": "NASDAQ",
     "sector": "Biotechnology",
     "ipoPrice": 17.0,
-    "current": 81.05,
+    "current": 81.16,
     "marketCap": 6.08,
     "dealSize": null,
-    "dayChange": 376.76,
+    "dayChange": 377.4117647058823,
     "firstDay": {
       "date": "2023-07-14",
       "open": 21.5,
@@ -7493,7 +8495,10 @@ window.ipos = [
       "close": 21.23,
       "volume": 4710200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LB",
@@ -7505,7 +8510,7 @@ window.ipos = [
     "current": 78.63,
     "marketCap": 6.06,
     "dealSize": null,
-    "dayChange": 362.53,
+    "dayChange": 362.52941176470586,
     "firstDay": {
       "date": "2024-06-28",
       "open": 19.0,
@@ -7514,7 +8519,10 @@ window.ipos = [
       "close": 23.15,
       "volume": 3203400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PCTY",
@@ -7535,7 +8543,10 @@ window.ipos = [
       "close": 24.04,
       "volume": 9435400,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PAGP",
@@ -7556,7 +8567,10 @@ window.ipos = [
       "close": 58.6667,
       "volume": 19753200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TTAN",
@@ -7568,7 +8582,7 @@ window.ipos = [
     "current": 63.17,
     "marketCap": 6.02,
     "dealSize": null,
-    "dayChange": -11.03,
+    "dayChange": -11.028169014084504,
     "firstDay": {
       "date": "2024-12-12",
       "open": 101.0,
@@ -7577,7 +8591,10 @@ window.ipos = [
       "close": 101.0,
       "volume": 5140900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RYTM",
@@ -7586,7 +8603,7 @@ window.ipos = [
     "exchange": "NASDAQ",
     "sector": "Biotechnology",
     "ipoPrice": null,
-    "current": 87.81,
+    "current": 87.84,
     "marketCap": 6.02,
     "dealSize": null,
     "dayChange": null,
@@ -7598,7 +8615,10 @@ window.ipos = [
       "close": 24.57,
       "volume": 351000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MIRM",
@@ -7610,7 +8630,7 @@ window.ipos = [
     "current": 98.62,
     "marketCap": 6.01,
     "dealSize": null,
-    "dayChange": 557.47,
+    "dayChange": 557.4666666666667,
     "firstDay": {
       "date": "2019-07-18",
       "open": 13.0,
@@ -7619,7 +8639,10 @@ window.ipos = [
       "close": 13.21,
       "volume": 1474300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PACS",
@@ -7631,7 +8654,7 @@ window.ipos = [
     "current": 37.75,
     "marketCap": 5.97,
     "dealSize": null,
-    "dayChange": 79.76,
+    "dayChange": 79.76190476190477,
     "firstDay": {
       "date": "2024-04-11",
       "open": 23.0,
@@ -7640,7 +8663,10 @@ window.ipos = [
       "close": 23.0,
       "volume": 6552800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ACT",
@@ -7652,7 +8678,7 @@ window.ipos = [
     "current": 42.73,
     "marketCap": 5.97,
     "dealSize": null,
-    "dayChange": 124.89,
+    "dayChange": 124.89473684210523,
     "firstDay": {
       "date": "2021-09-16",
       "open": 20.0,
@@ -7661,7 +8687,10 @@ window.ipos = [
       "close": 20.49,
       "volume": 3415200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "TAL",
@@ -7682,7 +8711,10 @@ window.ipos = [
       "close": 2.5,
       "volume": 49119600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ETSY",
@@ -7703,7 +8735,10 @@ window.ipos = [
       "close": 30.0,
       "volume": 19763300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MRCY",
@@ -7724,7 +8759,10 @@ window.ipos = [
       "close": 5.25,
       "volume": 3807200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "OS",
@@ -7745,7 +8783,10 @@ window.ipos = [
       "close": 26.85,
       "volume": 10766512,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-03-31T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LOAR",
@@ -7757,7 +8798,7 @@ window.ipos = [
     "current": 62.34,
     "marketCap": 5.84,
     "dealSize": null,
-    "dayChange": 122.64,
+    "dayChange": 122.64285714285717,
     "firstDay": {
       "date": "2024-04-25",
       "open": 45.0,
@@ -7766,7 +8807,10 @@ window.ipos = [
       "close": 48.8,
       "volume": 6965100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "APPF",
@@ -7787,7 +8831,10 @@ window.ipos = [
       "close": 14.08,
       "volume": 3529100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CZR",
@@ -7800,7 +8847,10 @@ window.ipos = [
     "marketCap": 5.8,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "FLG",
@@ -7813,7 +8863,10 @@ window.ipos = [
     "marketCap": 5.77,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PSN",
@@ -7825,7 +8878,7 @@ window.ipos = [
     "current": 53.71,
     "marketCap": 5.75,
     "dealSize": null,
-    "dayChange": 98.93,
+    "dayChange": 98.92592592592592,
     "firstDay": {
       "date": "2019-05-08",
       "open": 30.65,
@@ -7834,7 +8887,10 @@ window.ipos = [
       "close": 30.07,
       "volume": 14797300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "IBP",
@@ -7855,7 +8911,10 @@ window.ipos = [
       "close": 12.8,
       "volume": 3809600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PATH",
@@ -7867,7 +8926,7 @@ window.ipos = [
     "current": 10.93,
     "marketCap": 5.73,
     "dealSize": null,
-    "dayChange": -80.48,
+    "dayChange": -80.48214285714286,
     "firstDay": {
       "date": "2021-04-21",
       "open": 65.5,
@@ -7876,7 +8935,10 @@ window.ipos = [
       "close": 69.0,
       "volume": 23791600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "KMX",
@@ -7897,7 +8959,10 @@ window.ipos = [
       "close": 10.5625,
       "volume": 26677600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PTCT",
@@ -7918,7 +8983,10 @@ window.ipos = [
       "close": 16.49,
       "volume": 3371700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "OTEX",
@@ -7939,7 +9007,10 @@ window.ipos = [
       "close": 1.7188,
       "volume": 111200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BLCO",
@@ -7951,7 +9022,7 @@ window.ipos = [
     "current": 15.92,
     "marketCap": 5.68,
     "dealSize": null,
-    "dayChange": -11.56,
+    "dayChange": -11.555555555555557,
     "firstDay": {
       "date": "2022-05-06",
       "open": 18.5,
@@ -7960,7 +9031,10 @@ window.ipos = [
       "close": 20.0,
       "volume": 15225300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "GVA",
@@ -7981,7 +9055,10 @@ window.ipos = [
       "close": 5.3333,
       "volume": 7090200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CGON",
@@ -7990,10 +9067,10 @@ window.ipos = [
     "exchange": "NASDAQ",
     "sector": "Biotechnology",
     "ipoPrice": 19.0,
-    "current": 64.13,
+    "current": 64.25,
     "marketCap": 5.67,
     "dealSize": null,
-    "dayChange": 237.53,
+    "dayChange": 238.15789473684214,
     "firstDay": {
       "date": "2024-01-25",
       "open": 29.0,
@@ -8002,7 +9079,10 @@ window.ipos = [
       "close": 37.17,
       "volume": 8824800,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ESTC",
@@ -8023,7 +9103,10 @@ window.ipos = [
       "close": 70.0,
       "volume": 7172900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "ESNT",
@@ -8044,7 +9127,10 @@ window.ipos = [
       "close": 21.0,
       "volume": 16022300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PECO",
@@ -8056,7 +9142,7 @@ window.ipos = [
     "current": 40.3,
     "marketCap": 5.59,
     "dealSize": null,
-    "dayChange": 43.93,
+    "dayChange": 43.928571428571416,
     "firstDay": {
       "date": "2021-07-15",
       "open": 28.0,
@@ -8065,7 +9151,10 @@ window.ipos = [
       "close": 27.83,
       "volume": 6715500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SYNA",
@@ -8086,7 +9175,10 @@ window.ipos = [
       "close": 8.74,
       "volume": 10910700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "AVTR",
@@ -8098,7 +9190,7 @@ window.ipos = [
     "current": 8.12,
     "marketCap": 5.54,
     "dealSize": null,
-    "dayChange": -42.0,
+    "dayChange": -42.00000000000001,
     "firstDay": {
       "date": "2019-05-17",
       "open": 14.72,
@@ -8107,7 +9199,10 @@ window.ipos = [
       "close": 14.5,
       "volume": 39172200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "RRR",
@@ -8128,7 +9223,10 @@ window.ipos = [
       "close": 18.7,
       "volume": 13630200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CROX",
@@ -8149,7 +9247,10 @@ window.ipos = [
       "close": 14.275,
       "volume": 23814000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "OBDC",
@@ -8161,7 +9262,7 @@ window.ipos = [
     "current": 11.03,
     "marketCap": 5.48,
     "dealSize": null,
-    "dayChange": -27.91,
+    "dayChange": -27.90849673202615,
     "firstDay": {
       "date": "2019-07-18",
       "open": 15.5,
@@ -8170,7 +9271,10 @@ window.ipos = [
       "close": 15.49,
       "volume": 3258000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LEGN",
@@ -8182,7 +9286,7 @@ window.ipos = [
     "current": 29.37,
     "marketCap": 5.46,
     "dealSize": null,
-    "dayChange": 27.7,
+    "dayChange": 27.69565217391305,
     "firstDay": {
       "date": "2020-06-05",
       "open": 37.01,
@@ -8191,7 +9295,10 @@ window.ipos = [
       "close": 37.0,
       "volume": 8606300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SEI",
@@ -8212,7 +9319,10 @@ window.ipos = [
       "close": 11.55,
       "volume": 4329500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LQDA",
@@ -8233,7 +9343,10 @@ window.ipos = [
       "close": 11.1,
       "volume": 1757900,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "MGY",
@@ -8246,7 +9359,10 @@ window.ipos = [
     "marketCap": 5.41,
     "dealSize": null,
     "dayChange": null,
-    "firstDay": null
+    "firstDay": null,
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BLTE",
@@ -8258,7 +9374,7 @@ window.ipos = [
     "current": 137.3,
     "marketCap": 5.4,
     "dealSize": null,
-    "dayChange": 2188.33,
+    "dayChange": 2188.3333333333335,
     "firstDay": {
       "date": "2022-04-29",
       "open": 12.5,
@@ -8267,7 +9383,10 @@ window.ipos = [
       "close": 10.59,
       "volume": 3434000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BLSH",
@@ -8279,7 +9398,7 @@ window.ipos = [
     "current": 35.18,
     "marketCap": 5.33,
     "dealSize": null,
-    "dayChange": -4.92,
+    "dayChange": -4.91891891891892,
     "firstDay": {
       "date": "2025-08-13",
       "open": 95.69,
@@ -8288,7 +9407,10 @@ window.ipos = [
       "close": 68.0,
       "volume": 58207600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "IFS",
@@ -8300,7 +9422,7 @@ window.ipos = [
     "current": 49.05,
     "marketCap": 5.3,
     "dealSize": null,
-    "dayChange": 6.63,
+    "dayChange": 6.630434782608689,
     "firstDay": {
       "date": "2019-07-19",
       "open": 46.0,
@@ -8309,7 +9431,10 @@ window.ipos = [
       "close": 47.0,
       "volume": 2450600,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LYFT",
@@ -8321,7 +9446,7 @@ window.ipos = [
     "current": 13.9,
     "marketCap": 5.28,
     "dealSize": null,
-    "dayChange": -80.69,
+    "dayChange": -80.69444444444444,
     "firstDay": {
       "date": "2019-03-29",
       "open": 87.33,
@@ -8330,7 +9455,10 @@ window.ipos = [
       "close": 78.29,
       "volume": 71485200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "PLUG",
@@ -8351,7 +9479,10 @@ window.ipos = [
       "close": 160.0,
       "volume": 542660,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "EQPT",
@@ -8363,7 +9494,7 @@ window.ipos = [
     "current": 20.73,
     "marketCap": 5.23,
     "dealSize": null,
-    "dayChange": -15.39,
+    "dayChange": -15.387755102040815,
     "firstDay": {
       "date": "2026-01-23",
       "open": 28.5,
@@ -8372,7 +9503,10 @@ window.ipos = [
       "close": 32.56,
       "volume": 17411100,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "LBRT",
@@ -8393,7 +9527,10 @@ window.ipos = [
       "close": 21.75,
       "volume": 10448700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "DLB",
@@ -8414,7 +9551,10 @@ window.ipos = [
       "close": 24.3,
       "volume": 21616200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "BMA",
@@ -8435,7 +9575,10 @@ window.ipos = [
       "close": 23.05,
       "volume": 1065200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:03Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "CHH",
@@ -8456,7 +9599,10 @@ window.ipos = [
       "close": 9.9062,
       "volume": 71200,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "HLNE",
@@ -8477,7 +9623,10 @@ window.ipos = [
       "close": 18.02,
       "volume": 7162700,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "IPGP",
@@ -8498,7 +9647,10 @@ window.ipos = [
       "close": 25.6,
       "volume": 10771500,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:01Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "NAVN",
@@ -8510,7 +9662,7 @@ window.ipos = [
     "current": 19.88,
     "marketCap": 5.02,
     "dealSize": null,
-    "dayChange": -20.48,
+    "dayChange": -20.480000000000004,
     "firstDay": {
       "date": "2025-10-30",
       "open": 22.0,
@@ -8519,7 +9671,10 @@ window.ipos = [
       "close": 20.0,
       "volume": 17742300,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:00Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   },
   {
     "ticker": "SITE",
@@ -8540,6 +9695,9 @@ window.ipos = [
       "close": 26.67,
       "volume": 6437000,
       "source": "Yahoo 1d"
-    }
+    },
+    "currentAsOf": "2026-05-22T20:00:02Z",
+    "currentSource": "Yahoo regularMarketPrice",
+    "currentCurrency": "USD"
   }
 ];

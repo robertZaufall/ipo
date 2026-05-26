@@ -41,7 +41,8 @@ IPO object fields:
 - `exchange`
 - `sector`
 - `ipoPrice` - offer price in USD
-- `current` - latest/current StockAnalysis price when refreshed
+- `current` - latest quote price refreshed from Yahoo Finance chart metadata when available; StockAnalysis price remains the fallback
+- `currentAsOf`, `currentSource`, `currentCurrency` - quote provenance for `current`
 - `marketCap` - billions USD
 - `dealSize` - millions USD raised
 - `dayChange` - percent from IPO price to current price
@@ -80,7 +81,8 @@ Per-ticker detail source:
 
 - `https://stockanalysis.com/stocks/<ticker>/`
 - `https://stockanalysis.com/stocks/<ticker>/company/`
-- Pull or verify current price, market cap, IPO price/date, exchange, sector/industry, and related company fields from the StockAnalysis ticker pages when available.
+- Pull or verify market cap, IPO price/date, exchange, sector/industry, and related company fields from the StockAnalysis ticker pages when available.
+- Refresh the displayed current/today price from Yahoo Finance latest chart metadata during data generation; if Yahoo is unavailable for a ticker, keep the StockAnalysis fallback value.
 - For `CBRS`, also checked Cerebras' own IPO pricing release:
   `https://www.cerebras.ai/press-release/cerebras-systems-announces-pricing-of-initial-public-offering`
 
