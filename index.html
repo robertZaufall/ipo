@@ -96,7 +96,7 @@
         <div id="empty-state" class="hidden mt-8 bg-zinc-900 border border-zinc-800 rounded-2xl p-8 text-center text-zinc-400">No IPO cards match that search.</div>
 
         <footer class="mt-10 border-t border-zinc-900 pt-5 text-xs text-zinc-500 leading-6">
-            <p>IPO dates, prices, current prices, and market caps are refreshed from public market data sources. Data can be delayed, incomplete, wrong, or unavailable and is provided without guarantee. Use your own judgment; investment decisions and consequences remain your responsibility.</p>
+            <p><span class="font-semibold text-zinc-400">Data snapshot:</span> IPO dates, prices, current* prices, market caps, and chart data were captured on 2026-05-26. This static page has not been updated since that snapshot; future refreshes may happen only sporadically or not at all. Data can be delayed, incomplete, wrong, or unavailable and is provided without guarantee. Use your own judgment; investment decisions and consequences remain your responsibility.</p>
             <p class="mt-2 text-center">&copy; <span id="copyright-year"></span> Robert Zaufall &middot; <a class="text-zinc-500 hover:text-zinc-300 transition-colors" href="https://glaubi.net/">glaubi.net</a> &middot; <a class="text-zinc-500 hover:text-zinc-300 transition-colors" href="https://github.com/robertZaufall/ipo">GitHub</a></p>
         </footer>
     </main>
@@ -620,7 +620,7 @@
             };
             const priceReferenceLines = [
                 { label: 'IPO', price: Number(ipo.ipoPrice), color: '#c084fc', dash: '6 5' },
-                { label: 'Current', price: Number(ipo.current), color: '#22d3ee', dash: '3 5' }
+                { label: 'Current*', price: Number(ipo.current), color: '#22d3ee', dash: '3 5' }
             ].filter(ref => Number.isFinite(ref.price) && ref.price >= rawMin && ref.price <= rawMax).map(ref => {
                 const yy = y(ref.price);
                 const labelText = `${ref.label} ${fmtUsd(ref.price)}`;
@@ -697,7 +697,7 @@
                 points.push(microPoint(xValue, row.close, row.date));
             });
             if (Number.isFinite(endValue)) {
-                points.push(microPoint(1, endValue, 'Today'));
+                points.push(microPoint(1, endValue, 'Current*'));
             }
             return points.filter(Boolean);
         }
@@ -1177,14 +1177,14 @@
                         ${buyTimingMetric(ipo, data)}
                         ${metric(medianQuote ? `Median ${formatElapsedPlain(medianQuote.medianDeltaMinutes)}` : 'Median price', fmtUsd(medianQuote?.price), 'text-blue-400')}
                         ${metric('End price', fmtUsd(summary.endPrice), dayEndedUp ? 'text-emerald-400' : 'text-red-400')}
-                        ${metric('Current', fmtUsd(ipo.current))}
+                        ${metric('Current*', fmtUsd(ipo.current))}
                     </div>
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 mt-3">
                         ${progressMicroChart('IPO to day-one close', 'IPO', 'Close', ipo.ipoPrice, summary.endPrice, firstDayClosePath(data, ipo.ipoPrice, 'IPO'))}
                         ${progressMicroChart('Start price to end price', 'Start', 'End', summary.startPrice, summary.endPrice, firstDayStartEndPath(data))}
                         ${progressMicroChart('Day-one low to end price', 'Low', 'End', summary.lowPrice, summary.endPrice, lowToEndPath(data))}
-                        ${progressMicroChart('IPO to today', 'IPO', 'Today', ipo.ipoPrice, ipo.current, roughHistoryPath(ipo, ipo.ipoPrice, ipo.current, 'IPO'))}
-                        ${progressMicroChart('Day-one close to today', 'Close', 'Today', summary.endPrice, ipo.current, roughHistoryPath(ipo, summary.endPrice, ipo.current, 'Close'))}
+                        ${progressMicroChart('IPO to current*', 'IPO', 'Current*', ipo.ipoPrice, ipo.current, roughHistoryPath(ipo, ipo.ipoPrice, ipo.current, 'IPO'))}
+                        ${progressMicroChart('Day-one close to current*', 'Close', 'Current*', summary.endPrice, ipo.current, roughHistoryPath(ipo, summary.endPrice, ipo.current, 'Close'))}
                     </div>
                 </div>
             </article>`;

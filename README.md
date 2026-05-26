@@ -2,9 +2,9 @@
 
 Static first-day IPO chart page for `https://glaubi.net/ipo`.
 
-The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top buying-decision dashboard built from those exact bars. The header market-cap filter defaults to `>$25B`, the trading-place filter defaults to `All`, and both switch the card list plus the precomputed probability analysis. Each card links the company name to its Yahoo Finance quote page, shows cap plus deal-size pills in the header when available, and keeps the metric strip focused on IPO price, start price, low price, buy timing, median, end price, and current price. Cards intentionally do not show the ambiguous generated IPO-to-today return field.
+The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top buying-decision dashboard built from those exact bars. The header market-cap filter defaults to `>$25B`, the trading-place filter defaults to `All`, and both switch the card list plus the precomputed probability analysis. Each card links the company name to its Yahoo Finance quote page, shows cap plus deal-size pills in the header when available, and keeps the metric strip focused on IPO price, start price, low price, buy timing, median, end price, and current* snapshot price. Cards intentionally do not show the ambiguous generated IPO-to-current return field.
 
-Each card also includes five micro charts comparing IPO price, first-day start, first-day low, first-day close, and today's price. Micro-chart lines use exact IPO-day 5-minute closes where possible and sampled Yahoo weekly closes for rough longer-term paths.
+Each card also includes five micro charts comparing IPO price, first-day start, first-day low, first-day close, and current* snapshot price. Micro-chart lines use exact IPO-day 5-minute closes where possible and sampled Yahoo weekly closes for rough longer-term paths.
 
 ## Screenshots
 

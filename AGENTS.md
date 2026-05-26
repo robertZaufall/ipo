@@ -22,8 +22,8 @@ Path placeholders in this file are intentional. Substitute them with the matchin
 - Visible chart source labels are compact provider markers: `(Y)` for Yahoo, `(A)` for Alpaca, and `(AV)` for Alpha Vantage. The generated `firstDayBarSources` values keep their full provider labels.
 - IPO card company names link to their Yahoo Finance quote pages.
 - IPO card header pills show market cap and, when available, deal size. Do not render the deal pill when `dealSize` is missing or non-positive.
-- IPO card metric order is: `IPO price`, `Start price`, `Low price`, `Buy timing`, `Median`, `End price`, `Current`. Do not re-add `Market cap` or `Deal size` to the metric row because those values belong in the header pills.
-- IPO cards include five micro charts below the metric row: IPO price to first-day close, first-day start price to first-day end price, first-day low to first-day end price, IPO price to current price, and first-day close to current price. First-day micro-chart paths use exact 5-minute closes. Longer IPO/current paths use sampled rough Yahoo weekly closes from `roughPriceSeries` when available, with endpoint fallback.
+- IPO card metric order is: `IPO price`, `Start price`, `Low price`, `Buy timing`, `Median`, `End price`, `Current*`. Do not re-add `Market cap` or `Deal size` to the metric row because those values belong in the header pills.
+- IPO cards include five micro charts below the metric row: IPO price to first-day close, first-day start price to first-day end price, first-day low to first-day end price, IPO price to current* snapshot price, and first-day close to current* snapshot price. First-day micro-chart paths use exact 5-minute closes. Longer IPO/current paths use sampled rough Yahoo weekly closes from `roughPriceSeries` when available, with endpoint fallback.
 - IPO cards do not render the generated IPO-to-current `dayChange` value. Do not re-add the top return pill or the `IPO return` metric unless explicitly requested.
 - Main candle charts can show multiple low markers. The markers must be selected from the same near-low price range and every pair of selected marker times must be at least one hour apart.
 - The market-cap and trading-place segmented filters sit in the header above the analysis panel so they control both the probability analysis and the card list. The default cap filter is `>$25B`; other cap options are `<$10B`, all (`*`), `>$10B`, and `>$50B`. The default trading-place filter is `All`; other options are `NASDAQ` and `NYSE`.
@@ -51,7 +51,7 @@ IPO object fields:
 - `exchange`
 - `sector`
 - `ipoPrice` - offer price in USD
-- `current` - latest quote price refreshed from Yahoo Finance chart metadata when available; StockAnalysis price remains the fallback
+- `current` - latest quote price refreshed from Yahoo Finance chart metadata when available; StockAnalysis price remains the fallback. Visible UI labels this as `Current*` because the static page shows a snapshot, not a live quote.
 - `currentAsOf`, `currentSource`, `currentCurrency` - quote provenance for `current`
 - `marketCap` - billions USD
 - `dealSize` - millions USD raised
@@ -98,7 +98,8 @@ Per-ticker detail source:
 - `https://stockanalysis.com/stocks/<ticker>/`
 - `https://stockanalysis.com/stocks/<ticker>/company/`
 - Pull or verify market cap, IPO price/date, exchange, sector/industry, and related company fields from the StockAnalysis ticker pages when available.
-- Refresh the displayed current/today price from Yahoo Finance latest chart metadata during data generation; if Yahoo is unavailable for a ticker, keep the StockAnalysis fallback value.
+- Refresh the displayed current* snapshot price from Yahoo Finance latest chart metadata during data generation; if Yahoo is unavailable for a ticker, keep the StockAnalysis fallback value.
+- When adding a new symbol or refreshing symbol data, update the public data snapshot date in the footer of `index.html` so the visible freshness term matches the data actually shown.
 - Fetch sampled Yahoo weekly closes for `roughPriceSeries`; these are only used for small micro-chart shape hints, not for main candle charts or low-timing analysis.
 - For `CBRS`, also checked Cerebras' own IPO pricing release:
   `https://www.cerebras.ai/press-release/cerebras-systems-announces-pricing-of-initial-public-offering`
@@ -278,7 +279,7 @@ Before calling an IPO change done:
 - `CBRS` is present and its chart uses real Yahoo 5-minute bars and does not begin at `$185`.
 - Main candle charts show the top elapsed-minutes axis, active-filter median timing line, compact provider marker, and only show IPO-price/current-price horizontal reference lines when those values are within that chart's first-day OHLC range.
 - Low markers on main candle charts are in the same near-low price band and are spaced at least one hour apart.
-- IPO cards link company names to Yahoo Finance quote pages, show cap/deal header pills, and use the metric order `IPO price`, `Start price`, `Low price`, `Buy timing`, `Median`, `End price`, `Current`.
+- IPO cards link company names to Yahoo Finance quote pages, show cap/deal header pills, and use the metric order `IPO price`, `Start price`, `Low price`, `Buy timing`, `Median`, `End price`, `Current*`.
 - IPO cards do not show `IPO return`, `Return —`, generated `dayChange`, `Market cap`, or `Deal size` in the metric row.
 - Missing exact 5-minute bars are suppressed from the card list, not rendered as estimated charts.
 - Search filters cards by ticker/company/exchange/sector.
