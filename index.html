@@ -102,7 +102,7 @@
     </main>
 
     <script>
-        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-26-5';
+        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-26-8';
         ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js'].forEach(src => {
             document.write(`<script src="${src}?v=${encodeURIComponent(IPO_ASSET_VERSION)}"><\/script>`);
         });
@@ -405,9 +405,31 @@
             </div>`;
         }
 
+        function bucketMarkerInfo(buckets, marker) {
+            if (!marker || !Number.isFinite(marker.value) || !Array.isArray(buckets)) return null;
+            const startKey = marker.startKey || 'minMinutes';
+            const endKey = marker.endKey || 'maxMinutes';
+            for (let index = 0; index < buckets.length; index += 1) {
+                const bucket = buckets[index];
+                const start = Number(bucket?.[startKey]);
+                const rawEnd = bucket?.[endKey];
+                const fallbackEnd = Number.isFinite(marker.fallbackEnd) ? marker.fallbackEnd : start + 60;
+                const end = rawEnd == null ? fallbackEnd : Number(rawEnd);
+                if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) continue;
+                const isOpenEnded = rawEnd == null;
+                const containsValue = marker.value >= start && (isOpenEnded || marker.value < end || (index === buckets.length - 1 && marker.value <= end));
+                if (!containsValue) continue;
+                const ratio = Math.max(0, Math.min(1, (marker.value - start) / (end - start)));
+                return { index, ratio, bucket };
+            }
+            return null;
+        }
+
         function bucketChartSvg(buckets, topBucket, config) {
             const compact = window.matchMedia('(max-width: 640px)').matches;
             const horizontal = compact || config.forceHorizontal;
+            const markerInfo = bucketMarkerInfo(buckets, config.marker);
+            const markerLabel = config.marker?.label || 'Median';
             if (horizontal) {
                 const W = compact ? 420 : 760;
                 const hasSecondary = Boolean(config.secondaryLabel);
@@ -434,7 +456,12 @@
                     return `<g><title>${escapeHtml(primaryLabel)} · ${escapeHtml(secondaryLabel || fmtWholePct(bucket.pct))}: ${count} IPOs (${fmtWholePct(bucket.pct)})</title>${label}<rect x="${ml}" y="${(y + (hasSecondary ? 3 : 0)).toFixed(1)}" width="${barW.toFixed(1)}" height="${hasSecondary ? rowH - 6 : rowH}" fill="${fill}" rx="5"/><text x="${(ml + barW + 8).toFixed(1)}" y="${countY.toFixed(1)}" font-size="12" font-weight="700" fill="${selected ? '#bfdbfe' : '#d4d4d8'}">${count}</text><text x="${W - mr + 5}" y="${countY.toFixed(1)}" font-size="11" fill="#71717a">${fmtWholePct(bucket.pct)}</text></g>`;
                 }).join('');
                 const title = compact ? config.compactTitle : config.title;
-                return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(config.ariaLabel)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="18" font-size="12" font-weight="700" fill="#d4d4d8">${escapeHtml(title)}</text>${rows}<text x="${ml}" y="${H - 18}" font-size="11" fill="#71717a">${escapeHtml(config.footer)}</text></svg>`;
+                const marker = markerInfo ? (() => {
+                    const y = mt + markerInfo.index * (rowH + rowGap);
+                    const centerY = y + rowH / 2;
+                    return `<g><title>${escapeHtml(markerLabel)}</title><circle cx="${(ml - 16).toFixed(1)}" cy="${centerY.toFixed(1)}" r="4" fill="#f59e0b"/><text x="${W - mr}" y="${(centerY + 4).toFixed(1)}" text-anchor="end" font-size="11" font-weight="700" fill="#fbbf24">${escapeHtml(markerLabel)}</text></g>`;
+                })() : '';
+                return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(config.ariaLabel)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="18" font-size="12" font-weight="700" fill="#d4d4d8">${escapeHtml(title)}</text>${rows}${marker}<text x="${ml}" y="${H - 18}" font-size="11" fill="#71717a">${escapeHtml(config.footer)}</text></svg>`;
             }
             const W = 760;
             const H = config.height || 236;
@@ -475,7 +502,17 @@
                 const countLabelY = Math.max(y - 8, 34);
                 return `<g><title>${titleLabel}: ${count} IPOs (${fmtWholePct(bucket.pct)})</title><rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${fill}" rx="5"/><text x="${(x + barW / 2).toFixed(1)}" y="${countLabelY.toFixed(1)}" text-anchor="middle" font-size="12" fill="${selected ? '#bfdbfe' : '#d4d4d8'}">${count}</text><text x="${(x + barW / 2).toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-size="${axisLabelSize}" fill="#a1a1aa">${label}</text>${secondaryAxisLabel}<text x="${(x + barW / 2).toFixed(1)}" y="${pctY.toFixed(1)}" text-anchor="middle" font-size="${pctLabelSize}" fill="#71717a">${fmtWholePct(bucket.pct)}</text></g>`;
             }).join('');
-            return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(config.ariaLabel)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="18" font-size="12" font-weight="700" fill="#d4d4d8">${escapeHtml(config.title)}</text>${grid}<line x1="${ml}" x2="${W - mr}" y1="${(mt + plotH).toFixed(1)}" y2="${(mt + plotH).toFixed(1)}" stroke="#3f3f46"/>${bars}<text x="${W - mr}" y="18" text-anchor="end" font-size="11" fill="#71717a">Count of IPOs</text></svg>`;
+            const marker = markerInfo ? (() => {
+                const markerX = ml + markerInfo.index * (barW + barGap) + markerInfo.ratio * barW;
+                const label = escapeHtml(markerLabel);
+                return `<g><title>${label}</title><line x1="${markerX.toFixed(1)}" x2="${markerX.toFixed(1)}" y1="${mt}" y2="${(mt + plotH).toFixed(1)}" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 4"/><path d="M ${(markerX - 5).toFixed(1)} ${mt} L ${(markerX + 5).toFixed(1)} ${mt} L ${markerX.toFixed(1)} ${(mt + 8).toFixed(1)} Z" fill="#f59e0b"/></g>`;
+            })() : '';
+            const markerLegend = config.marker ? (() => {
+                const labelWidth = Math.min(220, Math.max(64, markerLabel.length * 6.2));
+                const lineX = W - mr - labelWidth - 24;
+                return `<g><line x1="${lineX.toFixed(1)}" x2="${(lineX + 18).toFixed(1)}" y1="34" y2="34" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 4"/><text x="${W - mr}" y="38" text-anchor="end" font-size="11" font-weight="700" fill="#fbbf24">${escapeHtml(markerLabel)}</text></g>`;
+            })() : '';
+            return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(config.ariaLabel)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="18" font-size="12" font-weight="700" fill="#d4d4d8">${escapeHtml(config.title)}</text>${grid}<line x1="${ml}" x2="${W - mr}" y1="${(mt + plotH).toFixed(1)}" y2="${(mt + plotH).toFixed(1)}" stroke="#3f3f46"/>${bars}${marker}<text x="${W - mr}" y="18" text-anchor="end" font-size="11" fill="#71717a">Count of IPOs</text>${markerLegend}</svg>`;
         }
 
         function lowTimingChartSvg(analysis) {
@@ -483,11 +520,21 @@
                 title: 'Time from first trade to first-day low',
                 compactTitle: 'From first trade to low',
                 footer: 'Count of IPOs by elapsed time',
-                ariaLabel: 'Distribution of first-day low timing from first trade'
+                ariaLabel: 'Distribution of first-day low timing from first trade',
+                marker: {
+                    value: analysis.medianDeltaMinutes,
+                    label: `Median ${formatElapsedPlain(analysis.medianDeltaMinutes)}`,
+                    startKey: 'minMinutes',
+                    endKey: 'maxMinutes',
+                    fallbackEnd: 300
+                }
             });
         }
 
         function clockTimingChartSvg(analysis) {
+            const medianLowMinute = Number.isFinite(analysis.medianLowMinute) ? Math.round(analysis.medianLowMinute) : null;
+            const medianLowTime = analysis.medianLowTime || (medianLowMinute == null ? '—' : minutesToTime(medianLowMinute));
+            const medianLowGerman = analysis.medianLowGermanTime ? ` (${analysis.medianLowGermanTime} DE)` : '';
             return bucketChartSvg(analysis.clockBuckets || [], analysis.topClockBucket, {
                 title: 'Market clock time of first-day low',
                 compactTitle: 'Clock time of low',
@@ -498,6 +545,12 @@
                 axisLabelSize: 10,
                 secondaryAxisLabelSize: 10,
                 pctLabelSize: 11,
+                marker: {
+                    value: analysis.medianLowMinute,
+                    label: `Median ${medianLowTime}${medianLowGerman}`,
+                    startKey: 'startMinute',
+                    endKey: 'endMinute'
+                },
                 primaryLabel: bucket => bucket.nycLabel || bucket.label,
                 secondaryLabel: bucket => bucket.germanChartLabel || (bucket.berlinLabel ? `${bucket.berlinLabel} (DE)` : '')
             });
@@ -530,31 +583,105 @@
             return '$5B+ IPOs';
         }
 
-        function decisionOddRow(checkpoint, colorClass, barClass, sampleSize) {
+        function dashboardMetric(label, value, helper, colorClass = 'text-zinc-100') {
+            return `<div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 min-h-[118px]">
+                <div class="text-xs font-semibold uppercase text-zinc-500">${escapeHtml(label)}</div>
+                <div class="mt-2 font-display text-3xl ${colorClass}">${escapeHtml(value)}</div>
+                <div class="mt-2 text-xs leading-5 text-zinc-500">${escapeHtml(helper)}</div>
+            </div>`;
+        }
+
+        function checkpointByMinutes(analysis, minutes) {
+            return (analysis.decisionCheckpoints || []).find(checkpoint => Number(checkpoint.minutes) === minutes) || null;
+        }
+
+        function decisionTone(pct) {
+            if (pct >= 55) return ['text-emerald-400', 'bg-emerald-500'];
+            if (pct >= 35) return ['text-blue-400', 'bg-blue-500'];
+            return ['text-amber-400', 'bg-amber-500'];
+        }
+
+        function decisionOddRow(checkpoint, sampleSize) {
             const pct = Number(checkpoint?.stillAheadPct) || 0;
             const count = Number(checkpoint?.stillAheadCount) || 0;
             const label = checkpoint?.label || 'Wait';
             const missedPct = Number(checkpoint?.missedPct) || 0;
-            return `<div class="h-full min-h-[102px] rounded-xl border border-zinc-800 bg-zinc-900/50 p-3">
+            const [colorClass, barClass] = decisionTone(pct);
+            return `<div class="h-full min-h-[104px] rounded-2xl border border-zinc-800 bg-zinc-950 p-3.5">
                 <div class="flex items-baseline justify-between gap-3">
-                    <span class="text-sm font-semibold text-zinc-200">${escapeHtml(label)}</span>
+                    <span class="text-sm font-semibold text-zinc-200">If you ${escapeHtml(label.toLowerCase())}</span>
                     <span class="font-mono text-base font-semibold ${colorClass}">${fmtWholePct(pct)}</span>
                 </div>
                 <div class="mt-2 h-1.5 rounded-full bg-zinc-800 overflow-hidden">
                     <div class="h-full rounded-full ${barClass}" style="width:${Math.max(0, Math.min(100, pct)).toFixed(1)}%"></div>
                 </div>
-                <div class="mt-1.5 text-xs leading-5 text-zinc-500">${count}/${sampleSize} lows still ahead · ${fmtWholePct(missedPct)} already gone</div>
+                <div class="mt-1.5 text-xs leading-5 text-zinc-500">${count}/${sampleSize} lows were still ahead · ${fmtWholePct(missedPct)} had already happened</div>
             </div>`;
         }
 
         function insightChip(value, label, helper, colorClass) {
-            return `<div class="h-full min-h-[102px] rounded-xl border border-zinc-800 bg-zinc-900/50 p-3">
+            return `<div class="h-full min-h-[112px] rounded-2xl border border-zinc-800 bg-zinc-950 p-3.5">
                 <div class="flex items-start justify-between gap-3">
-                    <div class="text-sm font-semibold leading-5 text-zinc-200">${label}</div>
+                    <div class="text-sm font-semibold leading-5 text-zinc-200">${escapeHtml(label)}</div>
                     <div class="font-mono text-base font-semibold ${colorClass}">${fmtWholePct(value)}</div>
                 </div>
-                <div class="text-xs text-zinc-500 mt-1.5 leading-5">${helper}</div>
+                <div class="text-xs text-zinc-500 mt-1.5 leading-5">${escapeHtml(helper)}</div>
             </div>`;
+        }
+
+        function decisionTimelineSvg(analysis) {
+            const buckets = analysis.buckets || [];
+            const W = 880;
+            const H = 142;
+            const left = 44;
+            const right = 32;
+            const top = 34;
+            const barY = 58;
+            const barH = 18;
+            const domainMax = 300;
+            const plotW = W - left - right;
+            const x = minutes => left + Math.max(0, Math.min(domainMax, minutes)) / domainMax * plotW;
+            const maxCount = Math.max(...buckets.map(bucket => bucket.count || 0), 1);
+            const segments = buckets.map(bucket => {
+                const start = Number(bucket.minMinutes);
+                const end = bucket.maxMinutes == null ? domainMax : Number(bucket.maxMinutes);
+                if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return '';
+                const selected = analysis.topBucket && bucket.label === analysis.topBucket.label;
+                const fill = selected ? '#3b82f6' : '#52525b';
+                const opacity = selected ? 1 : (0.34 + 0.48 * ((bucket.count || 0) / maxCount));
+                const xx = x(start);
+                const width = Math.max(2, x(end) - xx - 2);
+                const text = width > 82
+                    ? `<text x="${(xx + width / 2).toFixed(1)}" y="${(barY + 13).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="700" fill="${selected ? '#dbeafe' : '#e4e4e7'}">${escapeHtml(bucket.label)} · ${fmtWholePct(bucket.pct)}</text>`
+                    : '';
+                return `<g><title>${escapeHtml(bucket.label)}: ${bucket.count || 0} IPOs (${fmtWholePct(bucket.pct)})</title><rect x="${xx.toFixed(1)}" y="${barY}" width="${width.toFixed(1)}" height="${barH}" rx="5" fill="${fill}" opacity="${opacity.toFixed(2)}"/>${text}</g>`;
+            }).join('');
+            const ticks = [
+                [0, 'first trade'],
+                [30, '30m'],
+                [60, '1h'],
+                [120, '2h'],
+                [180, '3h'],
+                [240, '4h'],
+                [300, '4h+']
+            ].map(([minute, label]) => {
+                const xx = x(minute);
+                return `<g><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(barY + barH + 8).toFixed(1)}" y2="${(barY + barH + 14).toFixed(1)}" stroke="#3f3f46"/><text x="${xx.toFixed(1)}" y="${(barY + barH + 30).toFixed(1)}" text-anchor="middle" font-size="10" fill="#a1a1aa">${label}</text></g>`;
+            }).join('');
+            const medianMinutes = Number(analysis.medianDeltaMinutes);
+            const median = Number.isFinite(medianMinutes) ? (() => {
+                const xx = x(medianMinutes);
+                return `<g><title>Median low: ${formatElapsedPlain(medianMinutes)}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${top}" y2="${(barY + barH + 17).toFixed(1)}" stroke="#f59e0b" stroke-width="1.6" stroke-dasharray="4 4"/><path d="M ${(xx - 6).toFixed(1)} ${top} L ${(xx + 6).toFixed(1)} ${top} L ${xx.toFixed(1)} ${(top + 9).toFixed(1)} Z" fill="#f59e0b"/><line x1="${W - right - 86}" x2="${W - right - 68}" y1="42" y2="42" stroke="#f59e0b" stroke-width="1.6" stroke-dasharray="4 4"/><text x="${W - right}" y="46" text-anchor="end" font-size="11" font-weight="700" fill="#fbbf24">median ${formatElapsedPlain(medianMinutes)}</text></g>`;
+            })() : '';
+            const checkpointDots = (analysis.decisionCheckpoints || []).map(checkpoint => {
+                const minute = Number(checkpoint.minutes);
+                if (!Number.isFinite(minute)) return '';
+                const xx = x(minute);
+                const pct = Number(checkpoint.stillAheadPct) || 0;
+                const color = pct >= 55 ? '#34d399' : pct >= 35 ? '#60a5fa' : '#fbbf24';
+                return `<g><title>${escapeHtml(checkpoint.label)}: ${fmtWholePct(pct)} still ahead</title><circle cx="${xx.toFixed(1)}" cy="112" r="4" fill="${color}"/><text x="${xx.toFixed(1)}" y="130" text-anchor="middle" font-size="9" fill="#71717a">${fmtWholePct(pct)}</text></g>`;
+            }).join('');
+            return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="IPO first-day low timing decision timeline"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${left}" y="22" font-size="12" font-weight="700" fill="#d4d4d8">Elapsed-time opportunity map</text><text x="${W - right}" y="22" text-anchor="end" font-size="11" fill="#71717a">lower bars show odds low was still ahead</text>${segments}<line x1="${left}" x2="${W - right}" y1="${(barY + barH + 8).toFixed(1)}" y2="${(barY + barH + 8).toFixed(1)}" stroke="#27272a"/>${ticks}${checkpointDots}${median}</svg>`;
         }
 
         function renderAnalysis() {
@@ -572,33 +699,34 @@
             const medianClockLabel = `${analysis.medianLowTime || '—'}${analysis.medianLowGermanTime ? ` (${analysis.medianLowGermanTime})` : ''}`;
             const medianClockMetric = medianClockLabel;
             const insights = analysis.decisionInsights || {};
-            const decisionRows = (analysis.decisionCheckpoints || []).map((checkpoint, index) => {
-                const colors = [
-                    ['text-emerald-400', 'bg-emerald-500'],
-                    ['text-emerald-400', 'bg-emerald-500'],
-                    ['text-blue-400', 'bg-blue-500'],
-                    ['text-blue-400', 'bg-blue-500'],
-                    ['text-amber-400', 'bg-amber-500'],
-                    ['text-amber-400', 'bg-amber-500']
-                ][index] || ['text-blue-400', 'bg-blue-500'];
-                return decisionOddRow(checkpoint, colors[0], colors[1], analysis.sampleSize);
-            }).join('');
+            const wait30 = checkpointByMinutes(analysis, 30);
+            const wait60 = checkpointByMinutes(analysis, 60);
+            const decisionRows = (analysis.decisionCheckpoints || []).map(checkpoint => decisionOddRow(checkpoint, analysis.sampleSize)).join('');
+            const wait30Text = wait30 ? fmtWholePct(wait30.stillAheadPct) : '—';
+            const wait60Text = wait60 ? fmtWholePct(wait60.stillAheadPct) : '—';
             mount.innerHTML = `
-                <div class="p-5 sm:p-6 border-b border-zinc-800 flex flex-col xl:flex-row gap-5 xl:items-end xl:justify-between">
-                    <div class="max-w-3xl">
-                        <div class="section-header text-blue-400">First-day buyer window</div>
-                        <h2 class="font-display text-3xl sm:text-4xl tracking-tight mt-1">When the day-one low tends to appear</h2>
-                        <p class="text-zinc-400 mt-2 leading-7">For ${escapeHtml(analysisLabel)} in this sample since ${analysis.cutoffDate}, the typical day-one low came ${formatElapsedPlain(analysis.medianDeltaMinutes)} after trading opened, around ${medianClockLabel}. The most common low window was ${topWindow} after the first print; by clock time, lows clustered most often between ${topClockWindow} New York time${topClockBerlin ? ` (${topClockBerlin})` : ''}.</p>
-                    </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-2 gap-3 text-sm xl:w-[360px]">
-                        ${metric('Sample', `${analysis.sampleSize} IPOs`)}
-                        ${metric('Median low', formatElapsedPlain(analysis.medianDeltaMinutes), 'text-blue-400')}
-                        ${metric('Median clock', medianClockMetric, 'text-blue-400')}
-                        ${metric('Low 2h+', fmtWholePct(analysis.afterTwoHoursPct), 'text-amber-400')}
+                <div class="p-5 sm:p-6 border-b border-zinc-800 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.20),transparent_34rem)]">
+                    <div class="grid xl:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)] gap-5 items-stretch">
+                        <div class="min-w-0 flex flex-col gap-4">
+                            <div>
+                                <div class="section-header text-blue-400">IPO buying decision dashboard</div>
+                                <h2 class="font-display text-3xl sm:text-4xl mt-1">How patient should the first order be?</h2>
+                                <p class="text-zinc-400 mt-2 leading-7">For ${escapeHtml(analysisLabel)} since ${analysis.cutoffDate}, the median first-day low appeared ${formatElapsedPlain(analysis.medianDeltaMinutes)} after the first public trade, around ${medianClockLabel}. The dashboard below turns those first-day charts into wait-time odds for pacing an entry.</p>
+                            </div>
+                            <div class="bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden">
+                                ${decisionTimelineSvg(analysis)}
+                            </div>
+                        </div>
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            ${dashboardMetric('Sample', `${analysis.sampleSize} IPOs`, 'Exact 5-minute first-day charts in this filter.')}
+                            ${dashboardMetric('Typical low', formatElapsedPlain(analysis.medianDeltaMinutes), `Most common elapsed window: ${topWindow}.`, 'text-blue-400')}
+                            ${dashboardMetric('After 30m', wait30Text, 'Chance the first-day low was still ahead.', 'text-emerald-400')}
+                            ${dashboardMetric('After 1h', wait60Text, 'Chance the first-day low was still ahead.', 'text-blue-400')}
+                        </div>
                     </div>
                 </div>
                 <div class="p-5 sm:p-6 space-y-5">
-                    <div class="space-y-4">
+                    <div class="grid xl:grid-cols-2 gap-4">
                         <div class="bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden">
                             ${lowTimingChartSvg(analysis)}
                         </div>
@@ -606,22 +734,36 @@
                             ${clockTimingChartSvg(analysis)}
                         </div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-5 items-stretch">
+                    <div class="grid xl:grid-cols-2 gap-5 items-stretch">
                         <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 h-full">
-                            <div class="section-header text-blue-400">Decision odds</div>
-                            <p class="text-zinc-400 mt-2 leading-6 text-sm">If you wait instead of chasing the first print, these are the odds that the first-day low was still ahead.</p>
-                            <div class="mt-4 grid md:grid-cols-2 auto-rows-fr gap-3">${decisionRows}</div>
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <div class="section-header text-blue-400">Decision odds</div>
+                                    <p class="text-zinc-400 mt-2 leading-6 text-sm">Read each row as: after waiting this long, how often was the day-one low still in front of you?</p>
+                                </div>
+                                <div class="hidden sm:block text-right">
+                                    <div class="text-xs text-zinc-500">median clock</div>
+                                    <div class="font-mono text-lg font-semibold text-blue-400">${escapeHtml(medianClockMetric)}</div>
+                                </div>
+                            </div>
+                            <div class="mt-4 grid sm:grid-cols-2 2xl:grid-cols-3 gap-3">${decisionRows}</div>
                         </div>
                         <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 h-full">
-                            <div class="section-header text-blue-400">Timing tells</div>
-                            <p class="text-zinc-400 mt-2 leading-6 text-sm">Each number shows how often that timing pattern happened in the current exact-data sample.</p>
-                            <div class="grid md:grid-cols-2 auto-rows-fr gap-3 mt-3">
-                                ${insightChip(insights.openingPrintLow?.pct, 'The low was the very first traded price', 'If you waited even one candle, this low was already gone.', 'text-red-400')}
-                                ${insightChip(insights.openingRushLow?.pct, 'The low happened inside the first 30 minutes', 'A 30-minute wait missed these lows, but avoided chasing the first tick.', 'text-amber-400')}
-                                ${insightChip(insights.lowAfterNoon?.pct, 'The low was still ahead after noon in New York', 'These IPOs gave buyers time to watch the first wave settle.', 'text-blue-400')}
-                                ${insightChip(insights.finalHourLow?.pct, 'The low did not arrive until the final hour', 'These were late-day fades, where patience mattered most.', 'text-emerald-400')}
+                            <div class="section-header text-blue-400">Timing signals</div>
+                            <p class="text-zinc-400 mt-2 leading-6 text-sm">Useful patterns from the selected sample, written for order pacing instead of statistics class.</p>
+                            <div class="grid sm:grid-cols-2 gap-3 mt-3">
+                                ${insightChip(insights.openingPrintLow?.pct, 'Very first trade was already the low', 'Waiting missed these, but also avoided blindly buying the opening print.', 'text-red-400')}
+                                ${insightChip(insights.openingRushLow?.pct, 'Low appeared inside the first 30 minutes', 'These were fast opportunities; a long wait would have missed them.', 'text-amber-400')}
+                                ${insightChip(insights.lowAfterNoon?.pct, 'Low was still ahead after noon New York time', 'These IPOs gave buyers more time to watch the first wave settle.', 'text-blue-400')}
+                                ${insightChip(insights.finalHourLow?.pct, 'Low arrived in the final trading hour', 'Less common, but this is where patience mattered the most.', 'text-emerald-400')}
                             </div>
                         </div>
+                    </div>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+                        ${metric('Median clock', medianClockMetric, 'text-blue-400')}
+                        ${metric('Most common clock', `${topClockWindow}${topClockBerlin ? ` (${topClockBerlin})` : ''}`)}
+                        ${metric('Low 2h+', fmtWholePct(analysis.afterTwoHoursPct), 'text-amber-400')}
+                        ${metric('Current view', analysisLabel)}
                     </div>
                 </div>`;
         }
