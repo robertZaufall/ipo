@@ -69,6 +69,14 @@ CAP_ANALYSIS_FILTERS = [
 
 DEFAULT_CAP_ANALYSIS_FILTER = "gt10"
 
+TRADING_PLACE_FILTERS = [
+    {"id": "all", "label": "All", "analysisLabel": ""},
+    {"id": "nasdaq", "label": "NASDAQ", "analysisLabel": "NASDAQ"},
+    {"id": "nyse", "label": "NYSE", "analysisLabel": "NYSE"},
+]
+
+DEFAULT_TRADING_PLACE_FILTER = "all"
+
 EXPERT_NOTES = [
     {
         "source": "SEC Investor.gov",
@@ -452,6 +460,25 @@ def cap_filter_matches(ipo: dict[str, Any], filter_id: str) -> bool:
     return True
 
 
+def trading_place_filter_matches(ipo: dict[str, Any], filter_id: str) -> bool:
+    if filter_id == "all":
+        return True
+    exchange = str(ipo.get("exchange") or "").strip().upper()
+    if filter_id == "nasdaq":
+        return exchange == "NASDAQ"
+    if filter_id == "nyse":
+        return exchange == "NYSE"
+    return True
+
+
+def combined_analysis_label(cap_filter: dict[str, str], trading_place_filter: dict[str, str]) -> str:
+    cap_label = cap_filter["analysisLabel"]
+    trading_label = trading_place_filter["analysisLabel"]
+    if trading_label:
+        return f"{cap_label} on {trading_label}"
+    return cap_label
+
+
 def build_cap_analysis_package(
     ipos: list[dict[str, Any]],
     first_day_bars: dict[str, list[list[Any]]],
@@ -460,21 +487,35 @@ def build_cap_analysis_package(
     as_of: str = REFRESH_DATE,
 ) -> dict[str, Any]:
     by_cap: dict[str, dict[str, Any]] = {}
+    by_filter: dict[str, dict[str, dict[str, Any]]] = {}
     for filter_config in CAP_ANALYSIS_FILTERS:
         filter_id = filter_config["id"]
-        filtered_ipos = [ipo for ipo in ipos if cap_filter_matches(ipo, filter_id)]
-        analysis = build_analysis(filtered_ipos, first_day_bars, first_day_bar_sources, as_of=as_of)
-        analysis["capFilter"] = filter_config
-        by_cap[filter_id] = analysis
+        by_filter[filter_id] = {}
+        for trading_place_config in TRADING_PLACE_FILTERS:
+            trading_place_id = trading_place_config["id"]
+            filtered_ipos = [
+                ipo
+                for ipo in ipos
+                if cap_filter_matches(ipo, filter_id) and trading_place_filter_matches(ipo, trading_place_id)
+            ]
+            analysis = build_analysis(filtered_ipos, first_day_bars, first_day_bar_sources, as_of=as_of)
+            analysis["capFilter"] = filter_config
+            analysis["tradingPlaceFilter"] = trading_place_config
+            analysis["analysisLabel"] = combined_analysis_label(filter_config, trading_place_config)
+            by_filter[filter_id][trading_place_id] = analysis
+        by_cap[filter_id] = by_filter[filter_id][DEFAULT_TRADING_PLACE_FILTER]
     return {
         "generatedAt": dt.date.today().isoformat(),
         "asOf": as_of,
         "windowYears": ANALYSIS_YEARS,
         "defaultFilter": DEFAULT_CAP_ANALYSIS_FILTER,
+        "defaultTradingPlaceFilter": DEFAULT_TRADING_PLACE_FILTER,
         "filters": CAP_ANALYSIS_FILTERS,
+        "tradingPlaceFilters": TRADING_PLACE_FILTERS,
         "byCap": by_cap,
+        "byFilter": by_filter,
         "expertNotes": EXPERT_NOTES,
-        "methodology": "Uses precomputed cap-filtered analyses from exact first-trading-day 5-minute OHLCV bars stored in chart-data.js. No daily-OHLC estimates or synthetic fallback charts are included in the chart display or timing analysis.",
+        "methodology": "Uses precomputed cap- and trading-place-filtered analyses from exact first-trading-day 5-minute OHLCV bars stored in chart-data.js. No daily-OHLC estimates or synthetic fallback charts are included in the chart display or timing analysis.",
     }
 
 

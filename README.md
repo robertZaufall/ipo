@@ -2,14 +2,14 @@
 
 Static first-day IPO chart page for `https://glaubi.net/ipo`.
 
-The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top timing analysis built from those exact bars. The header market-cap filter defaults to `>$10B` and switches both the card list and the precomputed probability analysis. Each card includes three micro charts comparing IPO price, first-day close, and today's price.
+The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top timing analysis built from those exact bars. The header market-cap filter defaults to `>$10B`, the trading-place filter defaults to `All`, and both switch the card list plus the precomputed probability analysis. Each card includes three micro charts comparing IPO price, first-day close, and today's price.
 
 ## Files
 
 - `index.html` - static page, styles, chart renderer, search, and sort toggle.
 - `ipo-data.js` - generated IPO card metadata.
 - `chart-data.js` - generated exact 5-minute first-day bars where available.
-- `ipo-analysis.js` - generated 15-year low-timing analysis, decision odds, and timing insights, precomputed per cap filter.
+- `ipo-analysis.js` - generated 15-year low-timing analysis, decision odds, and timing insights, precomputed per cap and trading-place filter.
 - `refresh_ipo_data.py` - refreshes IPO metadata, chart data, and analysis.
 - `build_ipo_analysis.py` - rebuilds only `ipo-analysis.js` from existing generated data.
 
@@ -46,7 +46,7 @@ python3 -m py_compile refresh_ipo_data.py build_ipo_analysis.py
 perl -0ne 'while(/<script>(.*?)<\/script>/sg){print $1}' index.html > /tmp/ipo-inline.js && node --check /tmp/ipo-inline.js
 ```
 
-For visual QA, serve the page locally and check that the header cap filter changes the `Sample`, `Decision odds`, and card count together. Also check the `Decision odds` / `Timing tells` panels, search, sort toggle, the `CBRS` Yahoo chart, and at least one Alpaca-sourced chart such as `ARM`.
+For visual QA, serve the page locally and check that the header cap and trading-place filters change the `Sample`, `Decision odds`, and card count together. Also check the `Decision odds` / `Timing tells` panels, search, sort toggle, the `CBRS` Yahoo chart, and at least one Alpaca-sourced chart such as `ARM`.
 
 ## Deploy
 

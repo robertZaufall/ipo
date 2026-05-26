@@ -51,12 +51,19 @@
                 </div>
                 <h1 class="font-display text-5xl sm:text-6xl tracking-tighter font-semibold mt-3">First-day moves for market giants</h1>
                 <p class="text-lg sm:text-xl text-zinc-400 mt-2 max-w-3xl">A day-one view of top IPO companies.</p>
-                <div id="cap-filter" role="group" aria-label="Filter IPO analysis and cards by market cap" class="mt-5 h-12 w-full max-w-[34rem] rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs sm:text-sm font-semibold grid grid-cols-5 gap-1">
-                    <button id="cap-under10" type="button" data-cap-filter="under10" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&lt;$10B</button>
-                    <button id="cap-all" type="button" data-cap-filter="all" aria-pressed="false" aria-label="All market caps" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">*</button>
-                    <button id="cap-gt10" type="button" data-cap-filter="gt10" aria-pressed="true" class="rounded-xl flex items-center justify-center transition-colors bg-blue-600 text-white">&gt;$10B</button>
-                    <button id="cap-gt25" type="button" data-cap-filter="gt25" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$25B</button>
-                    <button id="cap-gt50" type="button" data-cap-filter="gt50" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$50B</button>
+                <div class="mt-5 grid gap-3 lg:grid-cols-[minmax(0,34rem)_minmax(16rem,22rem)]">
+                    <div id="cap-filter" role="group" aria-label="Filter IPO analysis and cards by market cap" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs sm:text-sm font-semibold grid grid-cols-5 gap-1">
+                        <button id="cap-under10" type="button" data-cap-filter="under10" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&lt;$10B</button>
+                        <button id="cap-all" type="button" data-cap-filter="all" aria-pressed="false" aria-label="All market caps" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">*</button>
+                        <button id="cap-gt10" type="button" data-cap-filter="gt10" aria-pressed="true" class="rounded-xl flex items-center justify-center transition-colors bg-blue-600 text-white">&gt;$10B</button>
+                        <button id="cap-gt25" type="button" data-cap-filter="gt25" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$25B</button>
+                        <button id="cap-gt50" type="button" data-cap-filter="gt50" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$50B</button>
+                    </div>
+                    <div id="trading-place-filter" role="group" aria-label="Filter IPO analysis and cards by trading place" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs sm:text-sm font-semibold grid grid-cols-3 gap-1">
+                        <button id="place-all" type="button" data-trading-place-filter="all" aria-pressed="true" class="rounded-xl flex items-center justify-center transition-colors bg-blue-600 text-white">All</button>
+                        <button id="place-nasdaq" type="button" data-trading-place-filter="nasdaq" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">NASDAQ</button>
+                        <button id="place-nyse" type="button" data-trading-place-filter="nyse" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">NYSE</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -110,6 +117,7 @@
         let sortMode = 'date';
         let searchTerm = '';
         let capFilterMode = ipoAnalysis?.defaultFilter || 'gt10';
+        let tradingPlaceFilterMode = ipoAnalysis?.defaultTradingPlaceFilter || 'all';
 
         const CAP_FILTERS = [
             { id: 'under10', label: '<$10B', buttonId: 'cap-under10' },
@@ -117,6 +125,11 @@
             { id: 'gt10', label: '>$10B', buttonId: 'cap-gt10' },
             { id: 'gt25', label: '>$25B', buttonId: 'cap-gt25' },
             { id: 'gt50', label: '>$50B', buttonId: 'cap-gt50' }
+        ];
+        const TRADING_PLACE_FILTERS = [
+            { id: 'all', label: 'All', buttonId: 'place-all' },
+            { id: 'nasdaq', label: 'NASDAQ', buttonId: 'place-nasdaq' },
+            { id: 'nyse', label: 'NYSE', buttonId: 'place-nyse' }
         ];
 
         const fmtUsd = v => v == null || !isFinite(v) ? '—' : '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -489,6 +502,13 @@
         }
 
         function currentAnalysis() {
+            if (ipoAnalysis?.byFilter) {
+                return ipoAnalysis.byFilter[capFilterMode]?.[tradingPlaceFilterMode]
+                    || ipoAnalysis.byFilter[capFilterMode]?.[ipoAnalysis.defaultTradingPlaceFilter]
+                    || ipoAnalysis.byFilter[ipoAnalysis.defaultFilter]?.[tradingPlaceFilterMode]
+                    || ipoAnalysis.byFilter[ipoAnalysis.defaultFilter]?.[ipoAnalysis.defaultTradingPlaceFilter]
+                    || null;
+            }
             if (ipoAnalysis?.byCap) {
                 return ipoAnalysis.byCap[capFilterMode]
                     || ipoAnalysis.byCap[ipoAnalysis.defaultFilter]
@@ -499,6 +519,7 @@
         }
 
         function currentAnalysisLabel(analysis) {
+            if (analysis?.analysisLabel) return analysis.analysisLabel;
             if (analysis?.capFilter?.analysisLabel) return analysis.capFilter.analysisLabel;
             if (capFilterMode === 'under10') return '<$10B IPOs';
             if (capFilterMode === 'gt10') return '>$10B IPOs';
@@ -661,13 +682,21 @@
             return true;
         }
 
+        function tradingPlaceFilterMatches(ipo) {
+            if (tradingPlaceFilterMode === 'all') return true;
+            const exchange = String(ipo.exchange || '').trim().toUpperCase();
+            if (tradingPlaceFilterMode === 'nasdaq') return exchange === 'NASDAQ';
+            if (tradingPlaceFilterMode === 'nyse') return exchange === 'NYSE';
+            return true;
+        }
+
         function exactChartIpos() {
             return ipos.filter(hasExactChartData);
         }
 
         function visibleIpos() {
             const term = searchTerm.trim().toLowerCase();
-            const exactIpos = exactChartIpos().filter(capFilterMatches);
+            const exactIpos = exactChartIpos().filter(ipo => capFilterMatches(ipo) && tradingPlaceFilterMatches(ipo));
             const filtered = term ? exactIpos.filter(ipo => `${ipo.ticker} ${ipo.name} ${ipo.exchange} ${ipo.sector || ''}`.toLowerCase().includes(term)) : [...exactIpos];
             filtered.sort((a, b) => sortMode === 'date'
                 ? b.date.localeCompare(a.date) || (b.marketCap || 0) - (a.marketCap || 0)
@@ -679,9 +708,14 @@
             const exactCount = exactChartIpos().length;
             const list = visibleIpos();
             const capLabel = CAP_FILTERS.find(filter => filter.id === capFilterMode)?.label || '*';
-            const countLabel = capFilterMode === 'all'
+            const placeLabel = TRADING_PLACE_FILTERS.find(filter => filter.id === tradingPlaceFilterMode)?.label || 'All';
+            const activeLabels = [
+                capFilterMode === 'all' ? '' : capLabel,
+                tradingPlaceFilterMode === 'all' ? '' : placeLabel
+            ].filter(Boolean).join(' ');
+            const countLabel = !activeLabels
                 ? `${list.length} ${list.length === 1 ? 'listing' : 'listings'} with exact 5m data`
-                : `${list.length} ${capLabel} ${list.length === 1 ? 'listing' : 'listings'} · ${exactCount} exact total`;
+                : `${list.length} ${activeLabels} ${list.length === 1 ? 'listing' : 'listings'} · ${exactCount} exact total`;
             document.getElementById('cards').innerHTML = list.map(cardHtml).join('');
             document.getElementById('nav-count').textContent = countLabel;
             document.getElementById('empty-state').classList.toggle('hidden', list.length !== 0);
@@ -716,6 +750,19 @@
             });
         }
 
+        function setTradingPlaceFilterState() {
+            TRADING_PLACE_FILTERS.forEach(filter => {
+                const button = document.getElementById(filter.buttonId);
+                if (!button) return;
+                const selected = filter.id === tradingPlaceFilterMode;
+                button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+                button.classList.toggle('bg-blue-600', selected);
+                button.classList.toggle('text-white', selected);
+                button.classList.toggle('text-zinc-400', !selected);
+                button.classList.toggle('hover:text-zinc-200', !selected);
+            });
+        }
+
         document.getElementById('search').addEventListener('input', event => {
             searchTerm = event.target.value;
             renderCards();
@@ -738,8 +785,20 @@
             renderCards();
         });
 
+        document.getElementById('trading-place-filter')?.addEventListener('click', event => {
+            const button = event.target.closest('button[data-trading-place-filter]');
+            if (!button) return;
+            const nextMode = button.dataset.tradingPlaceFilter;
+            if (!TRADING_PLACE_FILTERS.some(filter => filter.id === nextMode)) return;
+            tradingPlaceFilterMode = nextMode;
+            setTradingPlaceFilterState();
+            renderAnalysis();
+            renderCards();
+        });
+
         setSortToggleState();
         setCapFilterState();
+        setTradingPlaceFilterState();
         document.getElementById('copyright-year').textContent = new Date().getFullYear();
         renderAnalysis();
         renderCards();
