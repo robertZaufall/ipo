@@ -3,7 +3,6 @@
 This repo builds the static `ipo` page published at:
 
 - Public URL: `https://glaubi.net/ipo`
-- GitHub Pages upstream/fallback: `https://robertzaufall.github.io/ipo`
 - GitHub repo: `https://github.com/robertZaufall/ipo`
 - Local site repo: `/Users/master/clawd/projects/ipo-site`
 - Cloudflare Worker proxy source: `/Users/master/clawd/projects/ipo-proxy`
@@ -168,12 +167,12 @@ python3 build_ipo_analysis.py --input-dir . --output-dir .
 
 ## Deploy Site
 
-The site repo is Git-backed and pushes to GitHub. The live `https://glaubi.net/ipo` route currently uses the Cloudflare Worker proxy to fetch the latest static files from GitHub raw `main`; GitHub Pages remains configured as an upstream/fallback but has had stuck or failed builds. Treat the Worker-backed public route as the production verification target.
+The site repo is Git-backed and pushes to GitHub. The live `https://glaubi.net/ipo` route uses the Cloudflare Worker proxy to fetch the latest static files from GitHub raw `main`; GitHub Pages is intentionally disabled and should not be treated as a production target.
 
 ```sh
 cd /Users/master/clawd/projects/ipo-site
 git status --short
-git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py .nojekyll .github/workflows/pages.yml AGENTS.md README.md LICENSE
+git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py AGENTS.md README.md LICENSE
 git commit -m "Update IPO site"
 git push
 ```

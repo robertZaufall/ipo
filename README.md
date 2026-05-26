@@ -18,8 +18,6 @@ The site shows large IPO companies as full-width cards only when exact 5-minute 
 - `ipo-analysis.js` - generated 15-year low-timing analysis, decision odds, and timing insights, precomputed per cap and trading-place filter.
 - `refresh_ipo_data.py` - refreshes IPO metadata, chart data, and analysis.
 - `build_ipo_analysis.py` - rebuilds only `ipo-analysis.js` from existing generated data.
-- `.nojekyll` - keeps GitHub Pages from running Jekyll over the static files.
-- `.github/workflows/pages.yml` - explicit GitHub Pages workflow kept for Pages recovery, though the public `glaubi.net/ipo` route currently uses the Worker proxy described below.
 
 ## Run Locally
 
@@ -60,10 +58,10 @@ For visual QA, serve the page locally and check that the header cap and trading-
 
 ## Deploy
 
-This repo is pushed to GitHub at `https://github.com/robertZaufall/ipo`. The public route `https://glaubi.net/ipo` is served by the Cloudflare Worker in `/Users/master/clawd/projects/ipo-proxy`, which currently fetches the static files from GitHub raw `main` and injects `<base href="/ipo/">`. GitHub Pages at `https://robertzaufall.github.io/ipo/` exists as an upstream/fallback but has had stuck or failed legacy builds, so verify `glaubi.net/ipo` as the live surface.
+This repo is pushed to GitHub at `https://github.com/robertZaufall/ipo`. The public route `https://glaubi.net/ipo` is served by the Cloudflare Worker in `/Users/master/clawd/projects/ipo-proxy`, which fetches the static files from GitHub raw `main` and injects `<base href="/ipo/">`.
 
 ```sh
-git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py .nojekyll .github/workflows/pages.yml README.md LICENSE AGENTS.md
+git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py README.md LICENSE AGENTS.md
 git commit -m "Update IPO site"
 git push
 ```
