@@ -214,9 +214,11 @@
         function chartSummary(data) {
             const first = data[0];
             const last = data[data.length - 1];
+            const lows = data.map(bar => bar.low).filter(Number.isFinite);
             return {
                 startPrice: first ? first.open : null,
-                endPrice: last ? last.close : null
+                endPrice: last ? last.close : null,
+                lowPrice: lows.length ? Math.min(...lows) : null
             };
         }
 
@@ -658,8 +660,10 @@
                         ${metric('Deal size', fmtDeal(ipo.dealSize))}
                         ${metric('IPO return', fmtPct(ipo.dayChange), positive ? 'text-emerald-400' : 'text-red-400')}
                     </div>
-                    <div class="grid md:grid-cols-3 gap-3 mt-3">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 mt-3">
                         ${progressMicroChart('IPO to day-one close', 'IPO', 'Close', ipo.ipoPrice, summary.endPrice)}
+                        ${progressMicroChart('Start price to end price', 'Start', 'End', summary.startPrice, summary.endPrice)}
+                        ${progressMicroChart('Day-one low to end price', 'Low', 'End', summary.lowPrice, summary.endPrice)}
                         ${progressMicroChart('IPO to today', 'IPO', 'Today', ipo.ipoPrice, ipo.current)}
                         ${progressMicroChart('Day-one close to today', 'Close', 'Today', summary.endPrice, ipo.current)}
                     </div>

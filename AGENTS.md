@@ -16,7 +16,7 @@ This repo builds the static `ipo` page published at:
 - Candlestick charts are inline SVG generated in browser JavaScript.
 - The top analysis panel is an inline SVG/HTML view generated in browser JavaScript from precomputed cap-filtered data in `ipo-analysis.js`.
 - The visible analysis UI contains two distribution charts followed by balanced side-by-side `Decision odds` and `Timing tells` panels. Do not re-add the removed checkpoint pill or trailing "not a buy signal" note unless Rob asks.
-- IPO cards include three micro charts below the metadata: IPO price to first-day close, IPO price to current price, and first-day close to current price.
+- IPO cards include five micro charts below the metadata: IPO price to first-day close, first-day start price to first-day end price, first-day low to first-day end price, IPO price to current price, and first-day close to current price.
 - The market-cap and trading-place segmented filters sit in the header above the analysis panel so they control both the probability analysis and the card list. The default cap filter is `>$10B`; other cap options are `<$10B`, all (`*`), `>$25B`, and `>$50B`. The default trading-place filter is `All`; other options are `NASDAQ` and `NYSE`.
 - The card toolbar below the analysis keeps only search plus the Date/Cap sort toggle.
 - Do not reintroduce charting CDNs unless Rob explicitly asks. Earlier chart-library attempts rendered blank in production.
@@ -255,7 +255,7 @@ Before calling an IPO change done:
 - Clock-time chart labels use 24-hour NYC and German ` (DE)` format, not AM/PM labels.
 - No included IPO has a known `firstDay.open` below `$1`.
 - `CBRS` is present and its chart uses real Yahoo 5-minute bars and does not begin at `$185`.
-- Main candle charts do not show an IPO offer-price reference line; IPO-price progress is shown only in the three card micro charts.
+- Main candle charts do not show an IPO offer-price reference line; IPO-price and first-day progress are shown only in the card micro charts.
 - Missing exact 5-minute bars are suppressed from the card list, not rendered as estimated charts.
 - Search filters cards by ticker/company/exchange/sector.
 - Sort button toggles between IPO date recent-first and market cap biggest-first.
