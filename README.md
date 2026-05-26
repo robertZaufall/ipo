@@ -4,7 +4,11 @@ Static first-day IPO chart page for `https://glaubi.net/ipo`.
 
 The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top buying-decision dashboard built from those exact bars. The header market-cap filter defaults to `>$25B`, the trading-place filter defaults to `All`, and both switch the card list plus the precomputed probability analysis. Each card includes five micro charts comparing IPO price, first-day start, first-day low, first-day close, and today's price.
 
+## Screenshots
+
 ![IPO decision dashboard screenshot](docs/ipo-dashboard.png)
+
+![Latest IPO card screenshot](docs/latest-ipo-card.png)
 
 ## Files
 
