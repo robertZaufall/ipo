@@ -194,9 +194,14 @@
             return ticks;
         }
 
+        function rawFiveMinuteBars(ipo) {
+            const rows = firstDayBars[ipo.ticker];
+            return Array.isArray(rows) ? rows : [];
+        }
+
         function chartData(ipo) {
-            const realBars = firstDayBars[ipo.ticker];
-            if (realBars && realBars.length) {
+            const realBars = rawFiveMinuteBars(ipo);
+            if (realBars.length) {
                 return realBars.map((row, index) => ({
                     index,
                     time: row[0],
@@ -210,6 +215,19 @@
                 }));
             }
             return [];
+        }
+
+        function closeLinePointsFromFiveMinuteRows(ipo, x, y) {
+            return rawFiveMinuteBars(ipo)
+                .map(row => {
+                    const closeValue = row[4];
+                    return {
+                        minute: timeToMinutes(row[0]),
+                        close: closeValue == null || closeValue === '' ? NaN : Number(closeValue)
+                    };
+                })
+                .filter(point => Number.isFinite(point.minute) && Number.isFinite(point.close))
+                .map(point => `${x(point.minute).toFixed(1)},${y(point.close).toFixed(1)}`);
         }
 
         function chartSummary(data) {
@@ -378,11 +396,9 @@
                 const bodyH = Math.max(1.5, bodyBottom - bodyTop);
                 return `<g><title>${ipo.ticker} ${d.time || i + 1} O ${fmtUsd(d.open)} H ${fmtUsd(d.high)} L ${fmtUsd(d.low)} C ${fmtUsd(d.close)}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${y(d.high).toFixed(1)}" y2="${y(d.low).toFixed(1)}" stroke="${color}" stroke-width="1.35"/><rect x="${(xx - candleW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${candleW.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${color}" rx="1"/></g>`;
             }).join('');
-            const closePoints = data
-                .filter(d => Number.isFinite(d.minute) && Number.isFinite(d.close))
-                .map(d => `${x(d.minute).toFixed(1)},${y(d.close).toFixed(1)}`);
+            const closePoints = closeLinePointsFromFiveMinuteRows(ipo, x, y);
             const closeLine = closePoints.length > 1
-                ? `<g><title>${ipo.ticker} close-price line</title><polyline points="${closePoints.join(' ')}" fill="none" stroke="#09090b" stroke-width="${compact ? 2.4 : 2.8}" stroke-linejoin="round" stroke-linecap="round" opacity="0.45"/><polyline points="${closePoints.join(' ')}" fill="none" stroke="#a1a1aa" stroke-width="${compact ? 0.75 : 0.9}" stroke-linejoin="round" stroke-linecap="round" opacity="0.82"/></g>`
+                ? `<g><title>${ipo.ticker} original 5-minute close line</title><polyline points="${closePoints.join(' ')}" fill="none" stroke="#09090b" stroke-width="${compact ? 2.4 : 2.8}" stroke-linejoin="round" stroke-linecap="round" opacity="0.45"/><polyline points="${closePoints.join(' ')}" fill="none" stroke="#a1a1aa" stroke-width="${compact ? 0.75 : 0.9}" stroke-linejoin="round" stroke-linecap="round" opacity="0.82"/></g>`
                 : '';
             const maxVolume = Math.max(...data.map(d => Number(d.volume) || 0), 1);
             const volumeBars = data.map(d => {
