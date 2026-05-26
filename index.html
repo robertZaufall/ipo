@@ -17,14 +17,14 @@
         .chart-svg text { user-select: none; }
     </style>
 </head>
-<body class="bg-zinc-950 text-zinc-200">
+<body id="top" class="bg-zinc-950 text-zinc-200">
     <nav class="border-b border-zinc-800 bg-zinc-950/85 backdrop-blur-lg sticky top-0 z-50">
         <div class="max-w-screen-xl mx-auto px-5 sm:px-8">
             <div class="flex items-center justify-between h-16 gap-4">
                 <div class="flex items-center gap-x-3 min-w-0">
-                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
+                    <a href="#top" aria-label="Jump to top" class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shrink-0 hover:bg-blue-500 transition-colors">
                         <i class="fa-solid fa-chart-line text-white text-lg"></i>
-                    </div>
+                    </a>
                     <div class="min-w-0">
                         <span class="font-display text-2xl font-semibold tracking-tighter">IPO</span>
                         <span class="text-zinc-500 text-sm ml-1">tracker</span>
@@ -102,7 +102,7 @@
     </main>
 
     <script>
-        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-26-12';
+        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-26-rough-mini';
         ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js'].forEach(src => {
             document.write(`<script src="${src}?v=${encodeURIComponent(IPO_ASSET_VERSION)}"><\/script>`);
         });
@@ -112,6 +112,7 @@
 
         const firstDayBars = window.firstDayBars || {};
         const firstDayBarSources = window.firstDayBarSources || {};
+        const roughPriceSeries = window.roughPriceSeries || {};
         const ipoAnalysis = window.ipoAnalysis || null;
 
         let sortMode = 'date';
@@ -141,6 +142,7 @@
         const MARKET_CLOSE_MINUTES = 16 * 60;
         const HALF_HOUR_MINUTES = 30;
         const LOW_MARKER_MIN_GAP_MINUTES = 60;
+        const TIME_ZONE_FORMATTERS = {};
 
         function timeToMinutes(time) {
             if (!time) return null;
@@ -176,6 +178,110 @@
             return Number.isFinite(value) ? `${Math.round(value)}%` : '—';
         }
 
+        function timeZoneFormatter(timeZone, includeDate = true) {
+            const key = `${timeZone}:${includeDate ? 'date-time' : 'time'}`;
+            if (!TIME_ZONE_FORMATTERS[key]) {
+                TIME_ZONE_FORMATTERS[key] = new Intl.DateTimeFormat('en-GB', {
+                    timeZone,
+                    ...(includeDate ? { year: 'numeric', month: '2-digit', day: '2-digit' } : {}),
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    ...(includeDate ? { second: '2-digit' } : {}),
+                    hourCycle: 'h23'
+                });
+            }
+            return TIME_ZONE_FORMATTERS[key];
+        }
+
+        function timeZoneOffsetMillis(date, timeZone) {
+            const parts = Object.fromEntries(
+                timeZoneFormatter(timeZone).formatToParts(date)
+                    .filter(part => part.type !== 'literal')
+                    .map(part => [part.type, Number(part.value)])
+            );
+            const asUtc = Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute, parts.second || 0);
+            return asUtc - date.getTime();
+        }
+
+        function newYorkMarketTimeToUtc(dateString, minute) {
+            if (!dateString || !Number.isFinite(minute)) return null;
+            const match = String(dateString).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+            if (!match) return null;
+            const [, year, month, day] = match.map(Number);
+            const hours = Math.floor(minute / 60);
+            const minutes = minute % 60;
+            const localAsUtc = new Date(Date.UTC(year, month - 1, day, hours, minutes, 0));
+            const firstPass = new Date(localAsUtc.getTime() - timeZoneOffsetMillis(localAsUtc, 'America/New_York'));
+            return new Date(localAsUtc.getTime() - timeZoneOffsetMillis(firstPass, 'America/New_York'));
+        }
+
+        function germanTimeLabel(dateString, minute) {
+            try {
+                const utcDate = newYorkMarketTimeToUtc(dateString, minute);
+                return utcDate ? timeZoneFormatter('Europe/Berlin', false).format(utcDate) : '';
+            } catch {
+                return '';
+            }
+        }
+
+        function germanSuffixLabel(germanLabel) {
+            const label = String(germanLabel || '')
+                .trim()
+                .replace(/\s*\(DE\)\s*$/, '')
+                .replace(/^DE\s+/, '')
+                .trim();
+            if (/^\(DE\s+.+\)$/.test(label)) return label;
+            return label ? `(DE ${label})` : '';
+        }
+
+        function germanLineLabel(germanLabel) {
+            const label = String(germanLabel || '')
+                .trim()
+                .replace(/^\(DE\s+(.+)\)$/, '$1')
+                .replace(/\s*\(DE\)\s*$/, '')
+                .replace(/^DE\s+/, '')
+                .trim();
+            return label ? `${label} (DE)` : '';
+        }
+
+        function dualTimeLabel(dateString, minute, fallbackTime = null) {
+            const marketTime = fallbackTime || (Number.isFinite(minute) ? minutesToTime(minute) : '');
+            const germanTime = germanTimeLabel(dateString, minute);
+            const germanSuffix = germanSuffixLabel(germanTime);
+            return [marketTime, germanSuffix].filter(Boolean).join(' ');
+        }
+
+        function dualClockLabel(marketTime, germanTime) {
+            return [marketTime || '—', germanSuffixLabel(germanTime)].filter(Boolean).join(' ');
+        }
+
+        function clockBucketGermanSuffix(bucket) {
+            return germanSuffixLabel(bucket?.germanChartLabel || bucket?.berlinLabel || '');
+        }
+
+        function clockBucketGermanLineLabel(bucket) {
+            return germanLineLabel(bucket?.germanChartLabel || bucket?.berlinLabel || '');
+        }
+
+        function clockBucketGermanAxisLabel(bucket) {
+            return clockBucketGermanLineLabel(bucket).replace(/\s*\(DE\)\s*$/, '');
+        }
+
+        function clockBucketLabel(bucket) {
+            if (!bucket) return '—';
+            return [bucket.nycLabel || bucket.label || '—', clockBucketGermanSuffix(bucket)].filter(Boolean).join(' ');
+        }
+
+        function dualClockMetricValue(marketTime, germanTime) {
+            const germanLine = germanLineLabel(germanTime);
+            return `<div class="leading-tight">${escapeHtml(marketTime || '—')}${germanLine ? `<br><span class="text-zinc-400">${escapeHtml(germanLine)}</span>` : ''}</div>`;
+        }
+
+        function clockBucketMetricValue(bucket) {
+            if (!bucket) return '—';
+            return dualClockMetricValue(bucket.nycLabel || bucket.label || '—', bucket.germanChartLabel || bucket.berlinLabel || '');
+        }
+
         function chartTimeDomain(data) {
             const minutes = data.map(d => d.minute).filter(Number.isFinite);
             const first = minutes.length ? Math.min(...minutes) : MARKET_OPEN_MINUTES;
@@ -192,6 +298,41 @@
                 ticks.push(minute);
             }
             return ticks;
+        }
+
+        function chartElapsedTicks(firstMinute, domain, compact) {
+            if (!Number.isFinite(firstMinute)) return [];
+            const maxDelta = domain.end - firstMinute;
+            if (maxDelta < 0) return [];
+            const step = compact ? 60 : HALF_HOUR_MINUTES;
+            const ticks = [0];
+            for (let delta = step; delta <= maxDelta + 0.1; delta += step) {
+                ticks.push(delta);
+            }
+            return ticks;
+        }
+
+        function elapsedAxisLabel(delta) {
+            if (!Number.isFinite(delta)) return '';
+            const total = Math.max(0, Math.round(delta));
+            if (total === 0) return '0m';
+            const hours = Math.floor(total / 60);
+            const minutes = total % 60;
+            if (hours && minutes) return `+${hours}h${String(minutes).padStart(2, '0')}m`;
+            return hours ? `+${hours}h` : `+${minutes}m`;
+        }
+
+        function compactBarSourceLabel(source) {
+            const label = String(source || '').toLowerCase();
+            if (label.includes('alpaca')) return '(A)';
+            if (label.includes('yahoo')) return '(Y)';
+            if (label.includes('alpha vantage')) return '(AV)';
+            return source || '';
+        }
+
+        function yahooFinanceUrl(ticker) {
+            const symbol = String(ticker || '').trim();
+            return `https://finance.yahoo.com/quote/${encodeURIComponent(symbol)}`;
         }
 
         function rawFiveMinuteBars(ipo) {
@@ -279,10 +420,10 @@
             };
         }
 
-        function buyTimingMetric(data) {
-            const empty = `<div class="col-span-2 lg:col-span-2 xl:col-span-2 bg-zinc-950 border border-zinc-800 rounded-2xl p-3">
+        function buyTimingMetric(ipo, data) {
+            const empty = `<div class="col-span-2 lg:col-span-2 xl:col-span-2 bg-zinc-950 border border-zinc-800 rounded-2xl p-3 min-h-[88px] flex flex-col justify-center">
                 <div class="text-zinc-500 text-xs">Buy timing</div>
-                <div class="font-mono text-base sm:text-lg font-semibold mt-0.5 text-zinc-500">—</div>
+                <div class="font-mono text-base sm:text-lg font-semibold mt-0.5 text-zinc-500">&mdash;</div>
             </div>`;
             if (!data.length) return empty;
             const firstMinute = data[0]?.minute;
@@ -294,6 +435,7 @@
                 .map(point => ({
                     deltaMinutes: point.minute - firstMinute,
                     time: point.time || minutesToTime(point.minute),
+                    germanTime: germanTimeLabel(ipo.date, point.minute),
                     price: point.low,
                     exact: point.low === lowPoint.low
                 }));
@@ -310,15 +452,23 @@
                 .filter(timing => timing !== primaryTiming)
                 .map(timing => formatElapsedPlain(timing.deltaMinutes));
             const extraCount = uniqueTimings.length - visibleTimings.length;
-            const secondaryParts = [
-                `${primaryTiming.time} · ${fmtUsd(primaryTiming.price)}`,
+            const germanClockLine = germanLineLabel(primaryTiming.germanTime);
+            const secondaryText = [
                 otherTimings.length ? `Near lows ${otherTimings.join(', ')}` : '',
                 extraCount > 0 ? `+${extraCount} more` : ''
-            ].filter(Boolean);
-            return `<div class="col-span-2 lg:col-span-2 xl:col-span-2 bg-amber-500/[0.06] border border-amber-500/35 rounded-2xl p-3">
-                <div class="text-amber-300 text-xs">Buy timing</div>
-                <div class="font-display text-2xl sm:text-3xl leading-none mt-0.5 text-amber-300">${formatElapsedPlain(primaryTiming.deltaMinutes)}</div>
-                <div class="mt-1 text-xs leading-5 text-zinc-500">${secondaryParts.map(escapeHtml).join(' · ')}</div>
+            ].filter(Boolean).join(' · ');
+            return `<div class="col-span-2 lg:col-span-2 xl:col-span-2 bg-amber-500/[0.06] border border-amber-500/35 rounded-2xl p-3 min-h-[88px] flex flex-col justify-center">
+                <div class="grid gap-3 items-center" style="grid-template-columns:minmax(0,1.2fr) minmax(6rem,0.8fr);">
+                    <div class="min-w-0">
+                        <div class="text-amber-300 text-xs">Buy timing</div>
+                        <div class="font-display leading-none mt-0.5 text-amber-300" style="white-space:nowrap;font-size:1.55rem;">${formatElapsedPlain(primaryTiming.deltaMinutes)}</div>
+                    </div>
+                    <div class="rounded-xl border border-amber-500/25 bg-zinc-950/70 px-3 py-2 text-center shadow-inner min-w-0">
+                        <div class="font-mono text-sm font-semibold leading-none text-zinc-100">${escapeHtml(primaryTiming.time || '--')}</div>
+                        ${germanClockLine ? `<div class="mt-1 font-mono text-xs leading-none text-zinc-400" style="white-space:nowrap;">${escapeHtml(germanClockLine)}</div>` : ''}
+                    </div>
+                </div>
+                ${secondaryText ? `<div class="mt-1.5 truncate text-[11px] leading-4 text-zinc-500">${escapeHtml(secondaryText)}</div>` : ''}
             </div>`;
         }
 
@@ -333,7 +483,7 @@
             }
             const ml = compact ? 50 : 64;
             const mr = compact ? 16 : 24;
-            const mt = compact ? 34 : 32;
+            const mt = compact ? 56 : 56;
             const mb = compact ? 86 : 74;
             const titleSize = compact ? 10 : 13;
             const axisSize = compact ? 10 : 11;
@@ -359,11 +509,11 @@
             const firstMinute = data[0]?.minute;
             const lowPriceLabel = `Low ${fmtUsd(lowPoint.low)}`;
             const tickLabelY = axisBottomY + (compact ? 17 : 17);
-            const lowLabelBaseY = axisBottomY + (compact ? 39 : 35);
-            const lowLabelRowGap = compact ? 18 : 15;
+            const lowLabelBaseY = mt + (compact ? 33 : 31);
+            const lowLabelRowGap = compact ? 14 : 13;
             const lowLabelRows = [];
             const lowLabelMinGap = compact ? 34 : 54;
-            const lowLabelMaxRows = 3;
+            const lowLabelMaxRows = 2;
             const analysisForChart = currentAnalysis();
             const medianDeltaMinutes = Number(analysisForChart?.medianDeltaMinutes);
             const medianReferenceMinute = Number.isFinite(firstMinute) && Number.isFinite(medianDeltaMinutes)
@@ -382,11 +532,31 @@
                 const xx = x(minute);
                 const isHour = minute % 60 === 0;
                 const dash = isHour ? '' : ' stroke-dasharray="3 7"';
+                const marketTime = minutesToTime(minute);
+                const germanLine = germanLineLabel(germanTimeLabel(ipo.date, minute));
                 const label = !compact || isHour || minute === domain.start || minute === domain.end
-                    ? `<text x="${xx.toFixed(1)}" y="${tickLabelY}" text-anchor="middle" font-size="${axisSize}" fill="${isHour ? '#a1a1aa' : '#71717a'}">${minutesToTime(minute)}</text>`
+                    ? `<text x="${xx.toFixed(1)}" y="${tickLabelY}" text-anchor="middle" font-size="${axisSize}" fill="${isHour ? '#a1a1aa' : '#71717a'}"><tspan x="${xx.toFixed(1)}">${marketTime}</tspan>${germanLine ? `<tspan x="${xx.toFixed(1)}" dy="${compact ? 12 : 13}" font-size="${Math.max(8, axisSize - 1)}" fill="#71717a">${germanLine}</tspan>` : ''}</text>`
                     : '';
                 return `<line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="${isHour ? '#3f3f46' : '#27272a'}"${dash}/>${label}`;
             }).join('');
+            const elapsedAxis = Number.isFinite(firstMinute) ? (() => {
+                const axisY = mt;
+                const labelY = mt - (compact ? 10 : 11);
+                const ticks = chartElapsedTicks(firstMinute, domain, compact)
+                    .filter(delta => {
+                        const minute = firstMinute + delta;
+                        return minute >= domain.start && minute <= domain.end;
+                    });
+                const tickLabels = ticks.map(delta => {
+                    const minute = firstMinute + delta;
+                    const xx = x(minute);
+                    const major = delta === 0 || delta % 60 === 0;
+                    return `<g><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(axisY - (major ? 8 : 6)).toFixed(1)}" y2="${axisY.toFixed(1)}" stroke="${major ? '#a1a1aa' : '#71717a'}"/><text x="${xx.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-size="${axisSize}" font-weight="${major ? 700 : 500}" fill="${major ? '#d4d4d8' : '#a1a1aa'}">${elapsedAxisLabel(delta)}</text></g>`;
+                }).join('');
+                const axisStart = Math.max(firstMinute, domain.start);
+                const legend = compact ? '' : `<text x="${W - mr}" y="${(mt - 30).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#71717a">minutes from first trade</text>`;
+                return `<g><title>${ipo.ticker} elapsed minutes from first trade</title>${legend}<line x1="${x(axisStart).toFixed(1)}" x2="${(W - mr).toFixed(1)}" y1="${axisY.toFixed(1)}" y2="${axisY.toFixed(1)}" stroke="#52525b" stroke-width="1.2"/>${tickLabels}</g>`;
+            })() : '';
             const candles = data.map((d, i) => {
                 const up = d.close >= d.open;
                 const color = up ? '#22c55e' : '#ef4444';
@@ -394,7 +564,7 @@
                 const bodyTop = y(Math.max(d.open, d.close));
                 const bodyBottom = y(Math.min(d.open, d.close));
                 const bodyH = Math.max(1.5, bodyBottom - bodyTop);
-                return `<g><title>${ipo.ticker} ${d.time || i + 1} O ${fmtUsd(d.open)} H ${fmtUsd(d.high)} L ${fmtUsd(d.low)} C ${fmtUsd(d.close)}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${y(d.high).toFixed(1)}" y2="${y(d.low).toFixed(1)}" stroke="${color}" stroke-width="1.35"/><rect x="${(xx - candleW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${candleW.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${color}" rx="1"/></g>`;
+                return `<g><title>${ipo.ticker} ${dualTimeLabel(ipo.date, d.minute, d.time || null)} O ${fmtUsd(d.open)} H ${fmtUsd(d.high)} L ${fmtUsd(d.low)} C ${fmtUsd(d.close)}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${y(d.high).toFixed(1)}" y2="${y(d.low).toFixed(1)}" stroke="${color}" stroke-width="1.35"/><rect x="${(xx - candleW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${candleW.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${color}" rx="1"/></g>`;
             }).join('');
             const closePoints = closeLinePointsFromFiveMinuteRows(ipo, x, y);
             const closeLine = closePoints.length > 1
@@ -408,7 +578,7 @@
                 const volume = Number(d.volume) || 0;
                 const barH = Math.max(1, (volume / maxVolume) * (volumeH - 16));
                 const yy = axisBottomY - barH;
-                return `<rect x="${(xx - candleW / 2).toFixed(1)}" y="${yy.toFixed(1)}" width="${candleW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${color}" opacity="0.28" rx="1"><title>${ipo.ticker} ${d.time || minutesToTime(d.minute)} volume ${volume.toLocaleString('en-US')}</title></rect>`;
+                return `<rect x="${(xx - candleW / 2).toFixed(1)}" y="${yy.toFixed(1)}" width="${candleW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${color}" opacity="0.28" rx="1"><title>${ipo.ticker} ${dualTimeLabel(ipo.date, d.minute, d.time || null)} volume ${volume.toLocaleString('en-US')}</title></rect>`;
             }).join('');
             const volumePanel = `<g><line x1="${ml}" x2="${W - mr}" y1="${volumeTopY.toFixed(1)}" y2="${volumeTopY.toFixed(1)}" stroke="#27272a"/><text x="${ml + 4}" y="${(volumeTopY + 14).toFixed(1)}" font-size="${axisSize}" fill="#71717a">Volume</text>${volumeBars}</g>`;
             const lowGuideLines = `<line x1="${ml}" x2="${W - mr}" y1="${lowY.toFixed(1)}" y2="${lowY.toFixed(1)}" stroke="#f59e0b" stroke-dasharray="4 5"/>${lowPoints.map(point => {
@@ -426,7 +596,8 @@
                 const labelX = Math.min(W - mr - 6, Math.max(ml + 6, xx));
                 const labelAnchor = labelX <= ml + 8 ? 'start' : labelX >= W - mr - 8 ? 'end' : 'middle';
                 const deltaLabel = formatElapsedMinutes(point.minute - firstMinute);
-                return `<g><title>${ipo.ticker} ${point.time || minutesToTime(point.minute)} low ${fmtUsd(point.low)}</title><circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${isExactLow ? (compact ? 3.5 : 4.5) : (compact ? 2.8 : 3.5)}" fill="#f59e0b" stroke="#09090b" stroke-width="1.5" opacity="${isExactLow ? 1 : 0.78}"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(axisBottomY - 5).toFixed(1)}" y2="${(axisBottomY + 6).toFixed(1)}" stroke="#fbbf24" stroke-width="${isExactLow ? 1.8 : 1.3}" opacity="${isExactLow ? 1 : 0.75}"/><text x="${labelX.toFixed(1)}" y="${(lowLabelBaseY + row * lowLabelRowGap).toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" fill="#fbbf24">${deltaLabel}</text></g>`;
+                const labelY = lowLabelBaseY + row * lowLabelRowGap;
+                return `<g><title>${ipo.ticker} ${dualTimeLabel(ipo.date, point.minute, point.time || null)} low ${fmtUsd(point.low)}</title><circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${isExactLow ? (compact ? 3.5 : 4.5) : (compact ? 2.8 : 3.5)}" fill="#f59e0b" stroke="#09090b" stroke-width="1.5" opacity="${isExactLow ? 1 : 0.78}"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#f59e0b" stroke-width="${isExactLow ? 1.7 : 1.2}" stroke-dasharray="4 5" opacity="${isExactLow ? 0.85 : 0.45}"/><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#09090b" stroke="#09090b" stroke-width="3" opacity="0.85">${deltaLabel}</text><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#fbbf24">${deltaLabel}</text></g>`;
             }).join('');
             const medianReferenceLine = Number.isFinite(medianReferenceMinute) && medianReferenceMinute >= domain.start && medianReferenceMinute <= domain.end ? (() => {
                 const xx = x(medianReferenceMinute);
@@ -458,15 +629,84 @@
                 return `<g><title>${ipo.ticker} ${escapeHtml(ref.label)} reference ${fmtUsd(ref.price)}</title><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#09090b" stroke-width="4.5" opacity="0.7"/><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="${ref.color}" stroke-width="${compact ? 1.4 : 1.7}" stroke-dasharray="${ref.dash}" opacity="0.92"/><rect x="${ml + 5}" y="${(labelY - 12).toFixed(1)}" width="${labelW.toFixed(1)}" height="16" rx="4" fill="#09090b" opacity="0.9" stroke="${ref.color}" stroke-opacity="0.28"/><text x="${ml + 10}" y="${labelY.toFixed(1)}" font-size="${axisSize}" font-weight="700" fill="${ref.color}">${escapeHtml(labelText)}</text></g>`;
             }).join('');
             const lowPriceMarker = `<text x="${W - mr - 4}" y="${Math.max(mt + 14, lowY - 7).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#fbbf24">${lowPriceLabel}</text>`;
-            const sourceLabel = data[0]?.source || '5m bars';
-            return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} first-day intraday candle chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${ipo.ticker} first-day intraday candles · ${sourceLabel}</text>${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${volumePanel}${lowGuideLines}${candles}${closeLine}${priceReferenceLines}${medianReferenceLine}${lowPriceMarker}${lowMarkers}</svg>`;
+            const sourceLabel = compactBarSourceLabel(data[0]?.source || '5m bars');
+            return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} first-day intraday candle chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${ipo.ticker} first-day intraday candles · ${sourceLabel}</text>${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${elapsedAxis}${volumePanel}${lowGuideLines}${candles}${closeLine}${priceReferenceLines}${medianReferenceLine}${lowPriceMarker}${lowMarkers}</svg>`;
         }
 
         function metric(label, value, extra = '') {
-            return `<div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3"><div class="text-zinc-500 text-xs">${label}</div><div class="font-mono text-base sm:text-lg font-semibold mt-0.5 ${extra}">${value}</div></div>`;
+            return `<div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3 min-h-[88px] flex flex-col justify-center"><div class="text-zinc-500 text-xs">${label}</div><div class="font-mono text-base sm:text-lg font-semibold mt-0.5 ${extra}">${value}</div></div>`;
         }
 
-        function progressMicroChart(title, startLabel, endLabel, start, end) {
+        function microPoint(x, value, label = '') {
+            const price = Number(value);
+            const pos = Number(x);
+            if (!Number.isFinite(price) || !Number.isFinite(pos)) return null;
+            return { x: Math.max(0, Math.min(1, pos)), value: price, label };
+        }
+
+        function firstDayClosePath(data, startValue = null, startLabel = '') {
+            const closes = data
+                .filter(bar => Number.isFinite(bar.minute) && Number.isFinite(bar.close))
+                .sort((a, b) => a.minute - b.minute);
+            const firstMinute = closes[0]?.minute;
+            const lastMinute = closes[closes.length - 1]?.minute;
+            const span = Math.max((lastMinute || 0) - (firstMinute || 0), 1);
+            const points = [];
+            if (Number.isFinite(startValue)) {
+                points.push(microPoint(0, startValue, startLabel));
+            }
+            closes.forEach(bar => {
+                const xValue = 0.08 + ((bar.minute - firstMinute) / span) * 0.92;
+                points.push(microPoint(xValue, bar.close, bar.time || minutesToTime(bar.minute)));
+            });
+            return points.filter(Boolean);
+        }
+
+        function firstDayStartEndPath(data) {
+            if (!data.length) return [];
+            return firstDayClosePath(data, data[0].open, data[0].time || 'Start');
+        }
+
+        function lowToEndPath(data) {
+            const { lowPoint } = chartLowPoints(data);
+            if (!lowPoint) return [];
+            const afterLow = data
+                .filter(bar => Number.isFinite(bar.minute) && Number.isFinite(bar.close) && bar.minute >= lowPoint.minute)
+                .sort((a, b) => a.minute - b.minute);
+            const firstMinute = lowPoint.minute;
+            const lastMinute = afterLow[afterLow.length - 1]?.minute;
+            const span = Math.max((lastMinute || 0) - firstMinute, 1);
+            const points = [microPoint(0, lowPoint.low, lowPoint.time || minutesToTime(lowPoint.minute))];
+            afterLow.forEach(bar => {
+                points.push(microPoint((bar.minute - firstMinute) / span, bar.close, bar.time || minutesToTime(bar.minute)));
+            });
+            return points.filter(Boolean);
+        }
+
+        function roughHistoryPath(ipo, startValue, endValue, startLabel = '') {
+            const rows = Array.isArray(roughPriceSeries[ipo.ticker]) ? roughPriceSeries[ipo.ticker] : [];
+            const points = [];
+            if (Number.isFinite(startValue)) {
+                points.push(microPoint(0, startValue, startLabel));
+            }
+            const validRows = rows
+                .map(row => ({ date: row[0], close: Number(row[1]) }))
+                .filter(row => row.date && Number.isFinite(row.close));
+            validRows.forEach((row, index) => {
+                const xValue = validRows.length > 1 ? 0.04 + (index / (validRows.length - 1)) * 0.9 : 0.5;
+                points.push(microPoint(xValue, row.close, row.date));
+            });
+            if (Number.isFinite(endValue)) {
+                points.push(microPoint(1, endValue, 'Today'));
+            }
+            return points.filter(Boolean);
+        }
+
+        function fallbackMicroPath(start, end) {
+            return [microPoint(0, start), microPoint(1, end)].filter(Boolean);
+        }
+
+        function progressMicroChart(title, startLabel, endLabel, start, end, series = null) {
             const safeTitle = escapeHtml(title);
             const safeStartLabel = escapeHtml(startLabel);
             const safeEndLabel = escapeHtml(endLabel);
@@ -482,27 +722,44 @@
             const color = positive ? '#22c55e' : '#ef4444';
             const textColor = positive ? 'text-emerald-400' : 'text-red-400';
             const W = 360;
-            const H = 54;
+            const H = 76;
             const left = 26;
             const right = W - 26;
-            const top = 10;
-            const bottom = H - 12;
-            const min = Math.min(start, end);
-            const max = Math.max(start, end);
-            const pad = Math.max((max - min) * 0.18, Math.max(max, 1) * 0.02);
+            const top = 6;
+            const bottom = H - 16;
+            const rawPoints = Array.isArray(series) && series.length > 1 ? series : fallbackMicroPath(start, end);
+            const pathPoints = rawPoints
+                .map(point => microPoint(point.x, point.value, point.label || ''))
+                .filter(Boolean)
+                .sort((a, b) => a.x - b.x);
+            const values = [...pathPoints.map(point => point.value), start, end].filter(Number.isFinite);
+            const min = Math.min(...values);
+            const max = Math.max(...values);
+            const pad = Math.max((max - min) * 0.06, Math.max(max, 1) * 0.006);
+            const x = point => left + point.x * (right - left);
             const y = value => top + ((max + pad - value) / Math.max((max + pad) - (min - pad), 0.01)) * (bottom - top);
             const yStart = y(start);
             const yEnd = y(end);
-            const area = `M ${left} ${bottom} L ${left} ${yStart.toFixed(1)} L ${right} ${yEnd.toFixed(1)} L ${right} ${bottom} Z`;
+            const linePoints = pathPoints
+                .map(point => `${x(point).toFixed(1)},${y(point.value).toFixed(1)}`)
+                .join(' ');
+            const area = pathPoints.length > 1
+                ? `M ${left} ${bottom} L ${linePoints.replaceAll(' ', ' L ')} L ${right} ${bottom} Z`
+                : '';
+            const pathTitle = pathPoints.length > 2
+                ? `<title>${safeTitle}: rough real-price path from ${pathPoints.length} points</title>`
+                : '';
             return `<div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3 min-h-[112px]">
                 <div class="flex items-baseline justify-between gap-3">
                     <div class="text-zinc-500 text-xs">${safeTitle}</div>
                     <div class="font-mono text-sm font-semibold ${textColor}">${fmtPct(change)}</div>
                 </div>
-                <svg class="mt-2 w-full h-[54px] block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${safeTitle}: ${safeStartLabel} ${fmtUsd(start)} to ${safeEndLabel} ${fmtUsd(end)}">
+                <svg class="mt-2 w-full h-[76px] block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${safeTitle}: ${safeStartLabel} ${fmtUsd(start)} to ${safeEndLabel} ${fmtUsd(end)}">
+                    ${pathTitle}
                     <line x1="${left}" x2="${right}" y1="${bottom}" y2="${bottom}" stroke="#27272a"/>
-                    <path d="${area}" fill="${color}" opacity="0.08"/>
-                    <line x1="${left}" x2="${right}" y1="${yStart.toFixed(1)}" y2="${yEnd.toFixed(1)}" stroke="${color}" stroke-width="2.2" stroke-linecap="round"/>
+                    ${area ? `<path d="${area}" fill="${color}" opacity="0.08"/>` : ''}
+                    <polyline points="${linePoints}" fill="none" stroke="#09090b" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" opacity="0.55"/>
+                    <polyline points="${linePoints}" fill="none" stroke="${color}" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"/>
                     <circle cx="${left}" cy="${yStart.toFixed(1)}" r="4" fill="#09090b" stroke="#a1a1aa" stroke-width="1.5"/>
                     <circle cx="${right}" cy="${yEnd.toFixed(1)}" r="4" fill="${color}" stroke="#09090b" stroke-width="1.5"/>
                     <text x="${left}" y="${H - 1}" text-anchor="middle" font-size="9" fill="#71717a">${safeStartLabel}</text>
@@ -541,14 +798,14 @@
             const markerInfo = bucketMarkerInfo(buckets, config.marker);
             const markerLabel = config.marker?.label || 'Median';
             if (horizontal) {
-                const W = compact ? 420 : 760;
+                const W = compact ? 420 : 900;
                 const hasSecondary = Boolean(config.secondaryLabel);
-                const ml = hasSecondary ? (compact ? 252 : 280) : 70;
-                const mr = compact ? 48 : 54;
-                const mt = 34;
-                const rowGap = hasSecondary ? 12 : 10;
-                const rowH = hasSecondary ? 36 : 30;
-                const H = mt + buckets.length * (rowH + rowGap) + 42;
+                const ml = hasSecondary ? (compact ? 252 : 340) : (compact ? 78 : 92);
+                const mr = compact ? 48 : 64;
+                const mt = compact ? 36 : 48;
+                const rowGap = hasSecondary ? (compact ? 12 : 14) : (compact ? 10 : 12);
+                const rowH = hasSecondary ? (compact ? 36 : 46) : (compact ? 30 : 38);
+                const H = mt + buckets.length * (rowH + rowGap) + (compact ? 42 : 58);
                 const plotW = W - ml - mr;
                 const maxCount = Math.max(...buckets.map(bucket => bucket.count || 0), 1);
                 const rows = buckets.map((bucket, index) => {
@@ -560,37 +817,37 @@
                     const primaryLabel = config.primaryLabel ? config.primaryLabel(bucket) : bucket.label;
                     const secondaryLabel = config.secondaryLabel ? config.secondaryLabel(bucket) : '';
                     const label = hasSecondary
-                        ? `<text x="14" y="${(y + 13).toFixed(1)}" font-size="${compact ? 9 : 10}" font-weight="700" fill="#d4d4d8">${escapeHtml(primaryLabel)}</text><text x="14" y="${(y + 29).toFixed(1)}" font-size="${compact ? 8 : 9}" fill="#a1a1aa">${escapeHtml(secondaryLabel)}</text>`
-                        : `<text x="${ml - 10}" y="${(y + 19).toFixed(1)}" text-anchor="end" font-size="12" fill="#d4d4d8">${escapeHtml(primaryLabel)}</text>`;
-                    const countY = y + (hasSecondary ? 23 : 19);
-                    return `<g><title>${escapeHtml(primaryLabel)} · ${escapeHtml(secondaryLabel || fmtWholePct(bucket.pct))}: ${count} IPOs (${fmtWholePct(bucket.pct)})</title>${label}<rect x="${ml}" y="${(y + (hasSecondary ? 3 : 0)).toFixed(1)}" width="${barW.toFixed(1)}" height="${hasSecondary ? rowH - 6 : rowH}" fill="${fill}" rx="5"/><text x="${(ml + barW + 8).toFixed(1)}" y="${countY.toFixed(1)}" font-size="12" font-weight="700" fill="${selected ? '#bfdbfe' : '#d4d4d8'}">${count}</text><text x="${W - mr + 5}" y="${countY.toFixed(1)}" font-size="11" fill="#71717a">${fmtWholePct(bucket.pct)}</text></g>`;
+                        ? `<text x="16" y="${(y + (compact ? 13 : 17)).toFixed(1)}" font-size="${compact ? 10 : 14}" font-weight="700" fill="#d4d4d8">${escapeHtml(primaryLabel)}</text><text x="16" y="${(y + (compact ? 29 : 36)).toFixed(1)}" font-size="${compact ? 9 : 12}" fill="#a1a1aa">${escapeHtml(secondaryLabel)}</text>`
+                        : `<text x="${ml - 12}" y="${(y + (compact ? 19 : 24)).toFixed(1)}" text-anchor="end" font-size="${compact ? 12 : 15}" fill="#d4d4d8">${escapeHtml(primaryLabel)}</text>`;
+                    const countY = y + (hasSecondary ? (compact ? 23 : 29) : (compact ? 19 : 24));
+                    return `<g><title>${escapeHtml(primaryLabel)} · ${escapeHtml(secondaryLabel || fmtWholePct(bucket.pct))}: ${count} IPOs (${fmtWholePct(bucket.pct)})</title>${label}<rect x="${ml}" y="${(y + (hasSecondary ? 4 : 0)).toFixed(1)}" width="${barW.toFixed(1)}" height="${hasSecondary ? rowH - 8 : rowH}" fill="${fill}" rx="6"/><text x="${(ml + barW + 10).toFixed(1)}" y="${countY.toFixed(1)}" font-size="${compact ? 12 : 15}" font-weight="700" fill="${selected ? '#bfdbfe' : '#d4d4d8'}">${count}</text><text x="${W - mr + 6}" y="${countY.toFixed(1)}" font-size="${compact ? 11 : 13}" fill="#71717a">${fmtWholePct(bucket.pct)}</text></g>`;
                 }).join('');
                 const title = compact ? config.compactTitle : config.title;
                 const marker = markerInfo ? (() => {
                     const y = mt + markerInfo.index * (rowH + rowGap);
                     const centerY = y + rowH / 2;
-                    return `<g><title>${escapeHtml(markerLabel)}</title><circle cx="${(ml - 16).toFixed(1)}" cy="${centerY.toFixed(1)}" r="4" fill="#f59e0b"/><text x="${W - mr}" y="${(centerY + 4).toFixed(1)}" text-anchor="end" font-size="11" font-weight="700" fill="#fbbf24">${escapeHtml(markerLabel)}</text></g>`;
+                    return `<g><title>${escapeHtml(markerLabel)}</title><circle cx="${(ml - 18).toFixed(1)}" cy="${centerY.toFixed(1)}" r="${compact ? 4 : 5}" fill="#f59e0b"/><text x="${W - mr}" y="${(centerY + 5).toFixed(1)}" text-anchor="end" font-size="${compact ? 11 : 14}" font-weight="700" fill="#fbbf24">${escapeHtml(markerLabel)}</text></g>`;
                 })() : '';
-                return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(config.ariaLabel)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="18" font-size="12" font-weight="700" fill="#d4d4d8">${escapeHtml(title)}</text>${rows}${marker}<text x="${ml}" y="${H - 18}" font-size="11" fill="#71717a">${escapeHtml(config.footer)}</text></svg>`;
+                return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(config.ariaLabel)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="${compact ? 18 : 26}" font-size="${compact ? 12 : 16}" font-weight="700" fill="#d4d4d8">${escapeHtml(title)}</text>${rows}${marker}<text x="${ml}" y="${H - (compact ? 18 : 24)}" font-size="${compact ? 11 : 13}" fill="#71717a">${escapeHtml(config.footer)}</text></svg>`;
             }
-            const W = 760;
-            const H = config.height || 236;
-            const ml = 42;
-            const mr = 24;
-            const mt = config.topMargin || 46;
-            const mb = config.bottomMargin || 58;
-            const axisLabelSize = config.axisLabelSize || 11;
-            const secondaryAxisLabelSize = config.secondaryAxisLabelSize || 10;
-            const pctLabelSize = config.pctLabelSize || 11;
+            const W = config.width || 660;
+            const H = config.height || 300;
+            const ml = 52;
+            const mr = 34;
+            const mt = config.topMargin || 58;
+            const mb = config.bottomMargin || 76;
+            const axisLabelSize = config.axisLabelSize || 15;
+            const secondaryAxisLabelSize = config.secondaryAxisLabelSize || 12;
+            const pctLabelSize = config.pctLabelSize || 13;
             const plotW = W - ml - mr;
             const plotH = H - mt - mb;
             const maxCount = Math.max(...buckets.map(bucket => bucket.count || 0), 1);
-            const barGap = 16;
+            const barGap = config.barGap || 14;
             const barW = (plotW - barGap * Math.max(buckets.length - 1, 0)) / Math.max(buckets.length, 1);
             const grid = [0, 0.5, 1].map(step => {
                 const yy = mt + plotH - plotH * step;
                 const label = Math.round(maxCount * step);
-                return `<line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#27272a"/><text x="${ml - 10}" y="${(yy + 4).toFixed(1)}" text-anchor="end" font-size="11" fill="#71717a">${label}</text>`;
+                return `<line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#27272a"/><text x="${ml - 12}" y="${(yy + 5).toFixed(1)}" text-anchor="end" font-size="13" fill="#71717a">${label}</text>`;
             }).join('');
             const bars = buckets.map((bucket, index) => {
                 const x = ml + index * (barW + barGap);
@@ -604,13 +861,13 @@
                 const label = escapeHtml(primaryText);
                 const secondaryLabel = escapeHtml(secondaryText);
                 const titleLabel = secondaryText ? `${label} · ${secondaryLabel}` : label;
-                const labelY = secondaryText ? H - 45 : H - 31;
-                const pctY = secondaryText ? H - 10 : H - 14;
+                const labelY = secondaryText ? H - 61 : H - 38;
+                const pctY = secondaryText ? H - 16 : H - 18;
                 const secondaryAxisLabel = secondaryText
-                    ? `<text x="${(x + barW / 2).toFixed(1)}" y="${(H - 27).toFixed(1)}" text-anchor="middle" font-size="${secondaryAxisLabelSize}" fill="#71717a">${secondaryLabel}</text>`
+                    ? `<text x="${(x + barW / 2).toFixed(1)}" y="${(H - 38).toFixed(1)}" text-anchor="middle" font-size="${secondaryAxisLabelSize}" fill="#71717a">${secondaryLabel}</text>`
                     : '';
-                const countLabelY = Math.max(y - 8, 34);
-                return `<g><title>${titleLabel}: ${count} IPOs (${fmtWholePct(bucket.pct)})</title><rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${fill}" rx="5"/><text x="${(x + barW / 2).toFixed(1)}" y="${countLabelY.toFixed(1)}" text-anchor="middle" font-size="12" fill="${selected ? '#bfdbfe' : '#d4d4d8'}">${count}</text><text x="${(x + barW / 2).toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-size="${axisLabelSize}" fill="#a1a1aa">${label}</text>${secondaryAxisLabel}<text x="${(x + barW / 2).toFixed(1)}" y="${pctY.toFixed(1)}" text-anchor="middle" font-size="${pctLabelSize}" fill="#71717a">${fmtWholePct(bucket.pct)}</text></g>`;
+                const countLabelY = Math.max(y - 10, 44);
+                return `<g><title>${titleLabel}: ${count} IPOs (${fmtWholePct(bucket.pct)})</title><rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${fill}" rx="6"/><text x="${(x + barW / 2).toFixed(1)}" y="${countLabelY.toFixed(1)}" text-anchor="middle" font-size="15" font-weight="700" fill="${selected ? '#bfdbfe' : '#d4d4d8'}">${count}</text><text x="${(x + barW / 2).toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-size="${axisLabelSize}" font-weight="700" fill="#a1a1aa">${label}</text>${secondaryAxisLabel}<text x="${(x + barW / 2).toFixed(1)}" y="${pctY.toFixed(1)}" text-anchor="middle" font-size="${pctLabelSize}" fill="#71717a">${fmtWholePct(bucket.pct)}</text></g>`;
             }).join('');
             const marker = markerInfo ? (() => {
                 const markerX = ml + markerInfo.index * (barW + barGap) + markerInfo.ratio * barW;
@@ -618,11 +875,11 @@
                 return `<g><title>${label}</title><line x1="${markerX.toFixed(1)}" x2="${markerX.toFixed(1)}" y1="${mt}" y2="${(mt + plotH).toFixed(1)}" stroke="#09090b" stroke-width="5" opacity="0.72"/><line x1="${markerX.toFixed(1)}" x2="${markerX.toFixed(1)}" y1="${mt}" y2="${(mt + plotH).toFixed(1)}" stroke="#f59e0b" stroke-width="2.3" stroke-dasharray="5 4"/><path d="M ${(markerX - 6).toFixed(1)} ${mt} L ${(markerX + 6).toFixed(1)} ${mt} L ${markerX.toFixed(1)} ${(mt + 10).toFixed(1)} Z" fill="#f59e0b"/></g>`;
             })() : '';
             const markerLegend = config.marker ? (() => {
-                const labelWidth = Math.min(220, Math.max(64, markerLabel.length * 6.2));
+                const labelWidth = Math.min(260, Math.max(84, markerLabel.length * 7.4));
                 const lineX = W - mr - labelWidth - 24;
-                return `<g><line x1="${lineX.toFixed(1)}" x2="${(lineX + 18).toFixed(1)}" y1="34" y2="34" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 4"/><text x="${W - mr}" y="38" text-anchor="end" font-size="11" font-weight="700" fill="#fbbf24">${escapeHtml(markerLabel)}</text></g>`;
+                return `<g><line x1="${lineX.toFixed(1)}" x2="${(lineX + 22).toFixed(1)}" y1="42" y2="42" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="5 5"/><text x="${W - mr}" y="47" text-anchor="end" font-size="13" font-weight="700" fill="#fbbf24">${escapeHtml(markerLabel)}</text></g>`;
             })() : '';
-            return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(config.ariaLabel)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="18" font-size="12" font-weight="700" fill="#d4d4d8">${escapeHtml(config.title)}</text>${grid}<line x1="${ml}" x2="${W - mr}" y1="${(mt + plotH).toFixed(1)}" y2="${(mt + plotH).toFixed(1)}" stroke="#3f3f46"/>${bars}${marker}<text x="${W - mr}" y="18" text-anchor="end" font-size="11" fill="#71717a">Count of IPOs</text>${markerLegend}</svg>`;
+            return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(config.ariaLabel)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="26" font-size="16" font-weight="700" fill="#d4d4d8">${escapeHtml(config.title)}</text>${grid}<line x1="${ml}" x2="${W - mr}" y1="${(mt + plotH).toFixed(1)}" y2="${(mt + plotH).toFixed(1)}" stroke="#3f3f46"/>${bars}${marker}<text x="${W - mr}" y="26" text-anchor="end" font-size="13" fill="#71717a">Count of IPOs</text>${markerLegend}</svg>`;
         }
 
         function lowTimingChartSvg(analysis) {
@@ -631,6 +888,7 @@
                 compactTitle: 'From first trade to low',
                 footer: 'Count of IPOs by elapsed time',
                 ariaLabel: 'Distribution of first-day low timing from first trade',
+                height: 310,
                 marker: {
                     value: analysis.medianDeltaMinutes,
                     label: `Median ${formatElapsedPlain(analysis.medianDeltaMinutes)}`,
@@ -644,25 +902,26 @@
         function clockTimingChartSvg(analysis) {
             const medianLowMinute = Number.isFinite(analysis.medianLowMinute) ? Math.round(analysis.medianLowMinute) : null;
             const medianLowTime = analysis.medianLowTime || (medianLowMinute == null ? '—' : minutesToTime(medianLowMinute));
-            const medianLowGerman = analysis.medianLowGermanTime ? ` (${analysis.medianLowGermanTime} DE)` : '';
+            const medianLowGerman = germanSuffixLabel(analysis.medianLowGermanTime);
             return bucketChartSvg(analysis.clockBuckets || [], analysis.topClockBucket, {
                 title: 'Market clock time of first-day low',
                 compactTitle: 'Clock time of low',
                 footer: 'NYC time and German local time (DE), DST-aware',
                 ariaLabel: 'Distribution of first-day low by US Eastern and Central European market clock time',
-                height: 264,
-                bottomMargin: 82,
-                axisLabelSize: 10,
-                secondaryAxisLabelSize: 10,
-                pctLabelSize: 11,
+                height: 330,
+                bottomMargin: 112,
+                axisLabelSize: 13,
+                secondaryAxisLabelSize: 12,
+                pctLabelSize: 13,
+                barGap: 12,
                 marker: {
                     value: analysis.medianLowMinute,
-                    label: `Median ${medianLowTime}${medianLowGerman}`,
+                    label: `Median ${[medianLowTime, medianLowGerman].filter(Boolean).join(' ')}`,
                     startKey: 'startMinute',
                     endKey: 'endMinute'
                 },
                 primaryLabel: bucket => bucket.nycLabel || bucket.label,
-                secondaryLabel: bucket => bucket.germanChartLabel || (bucket.berlinLabel ? `${bucket.berlinLabel} (DE)` : '')
+                secondaryLabel: bucket => clockBucketGermanAxisLabel(bucket)
             });
         }
 
@@ -741,13 +1000,17 @@
 
         function decisionTimelineSvg(analysis) {
             const buckets = analysis.buckets || [];
-            const W = 880;
-            const H = 142;
-            const left = 44;
-            const right = 32;
-            const top = 34;
-            const barY = 58;
-            const barH = 18;
+            const compact = window.matchMedia('(max-width: 640px)').matches;
+            const W = compact ? 420 : 1120;
+            const H = compact ? 182 : 214;
+            const left = compact ? 34 : 58;
+            const right = compact ? 24 : 42;
+            const top = compact ? 42 : 48;
+            const barY = compact ? 66 : 82;
+            const barH = compact ? 18 : 26;
+            const tickY = barY + barH + (compact ? 30 : 34);
+            const dotY = compact ? 138 : 166;
+            const pctY = compact ? 160 : 192;
             const domainMax = 300;
             const plotW = W - left - right;
             const x = minutes => left + Math.max(0, Math.min(domainMax, minutes)) / domainMax * plotW;
@@ -761,10 +1024,10 @@
                 const opacity = selected ? 1 : (0.34 + 0.48 * ((bucket.count || 0) / maxCount));
                 const xx = x(start);
                 const width = Math.max(2, x(end) - xx - 2);
-                const text = width > 82
-                    ? `<text x="${(xx + width / 2).toFixed(1)}" y="${(barY + 13).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="700" fill="${selected ? '#dbeafe' : '#e4e4e7'}">${escapeHtml(bucket.label)} · ${fmtWholePct(bucket.pct)}</text>`
+                const text = width > (compact ? 58 : 108)
+                    ? `<text x="${(xx + width / 2).toFixed(1)}" y="${(barY + (compact ? 13 : 18)).toFixed(1)}" text-anchor="middle" font-size="${compact ? 9 : 14}" font-weight="700" fill="${selected ? '#dbeafe' : '#e4e4e7'}">${escapeHtml(bucket.label)} · ${fmtWholePct(bucket.pct)}</text>`
                     : '';
-                return `<g><title>${escapeHtml(bucket.label)}: ${bucket.count || 0} IPOs (${fmtWholePct(bucket.pct)})</title><rect x="${xx.toFixed(1)}" y="${barY}" width="${width.toFixed(1)}" height="${barH}" rx="5" fill="${fill}" opacity="${opacity.toFixed(2)}"/>${text}</g>`;
+                return `<g><title>${escapeHtml(bucket.label)}: ${bucket.count || 0} IPOs (${fmtWholePct(bucket.pct)})</title><rect x="${xx.toFixed(1)}" y="${barY}" width="${width.toFixed(1)}" height="${barH}" rx="7" fill="${fill}" opacity="${opacity.toFixed(2)}"/>${text}</g>`;
             }).join('');
             const ticks = [
                 [0, 'first trade'],
@@ -776,12 +1039,16 @@
                 [300, '4h+']
             ].map(([minute, label]) => {
                 const xx = x(minute);
-                return `<g><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(barY + barH + 8).toFixed(1)}" y2="${(barY + barH + 14).toFixed(1)}" stroke="#3f3f46"/><text x="${xx.toFixed(1)}" y="${(barY + barH + 30).toFixed(1)}" text-anchor="middle" font-size="10" fill="#a1a1aa">${label}</text></g>`;
+                const text = compact && (minute === 30 || minute === 180 || minute === 240) ? '' : `<text x="${xx.toFixed(1)}" y="${tickY.toFixed(1)}" text-anchor="middle" font-size="${compact ? 10 : 14}" fill="#a1a1aa">${label}</text>`;
+                return `<g><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(barY + barH + 10).toFixed(1)}" y2="${(barY + barH + 18).toFixed(1)}" stroke="#3f3f46"/>${text}</g>`;
             }).join('');
             const medianMinutes = Number(analysis.medianDeltaMinutes);
             const median = Number.isFinite(medianMinutes) ? (() => {
                 const xx = x(medianMinutes);
-                return `<g><title>Median low: ${formatElapsedPlain(medianMinutes)}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${top}" y2="${(barY + barH + 17).toFixed(1)}" stroke="#f59e0b" stroke-width="1.6" stroke-dasharray="4 4"/><path d="M ${(xx - 6).toFixed(1)} ${top} L ${(xx + 6).toFixed(1)} ${top} L ${xx.toFixed(1)} ${(top + 9).toFixed(1)} Z" fill="#f59e0b"/><line x1="${W - right - 86}" x2="${W - right - 68}" y1="42" y2="42" stroke="#f59e0b" stroke-width="1.6" stroke-dasharray="4 4"/><text x="${W - right}" y="46" text-anchor="end" font-size="11" font-weight="700" fill="#fbbf24">median ${formatElapsedPlain(medianMinutes)}</text></g>`;
+                const legend = compact
+                    ? `<text x="${W - right}" y="42" text-anchor="end" font-size="11" font-weight="700" fill="#fbbf24">${formatElapsedPlain(medianMinutes)}</text>`
+                    : `<line x1="${W - right - 114}" x2="${W - right - 88}" y1="52" y2="52" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5 5"/><text x="${W - right}" y="57" text-anchor="end" font-size="14" font-weight="700" fill="#fbbf24">median ${formatElapsedPlain(medianMinutes)}</text>`;
+                return `<g><title>Median low: ${formatElapsedPlain(medianMinutes)}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${top}" y2="${(barY + barH + 22).toFixed(1)}" stroke="#f59e0b" stroke-width="${compact ? 1.6 : 2}" stroke-dasharray="5 5"/><path d="M ${(xx - (compact ? 6 : 8)).toFixed(1)} ${top} L ${(xx + (compact ? 6 : 8)).toFixed(1)} ${top} L ${xx.toFixed(1)} ${(top + (compact ? 9 : 12)).toFixed(1)} Z" fill="#f59e0b"/>${legend}</g>`;
             })() : '';
             const checkpointDots = (analysis.decisionCheckpoints || []).map(checkpoint => {
                 const minute = Number(checkpoint.minutes);
@@ -789,9 +1056,9 @@
                 const xx = x(minute);
                 const pct = Number(checkpoint.stillAheadPct) || 0;
                 const color = pct >= 55 ? '#34d399' : pct >= 35 ? '#60a5fa' : '#fbbf24';
-                return `<g><title>${escapeHtml(checkpoint.label)}: ${fmtWholePct(pct)} still ahead</title><circle cx="${xx.toFixed(1)}" cy="112" r="4" fill="${color}"/><text x="${xx.toFixed(1)}" y="130" text-anchor="middle" font-size="9" fill="#71717a">${fmtWholePct(pct)}</text></g>`;
+                return `<g><title>${escapeHtml(checkpoint.label)}: ${fmtWholePct(pct)} still ahead</title><circle cx="${xx.toFixed(1)}" cy="${dotY}" r="${compact ? 4 : 5}" fill="${color}"/><text x="${xx.toFixed(1)}" y="${pctY}" text-anchor="middle" font-size="${compact ? 9 : 12}" fill="#71717a">${fmtWholePct(pct)}</text></g>`;
             }).join('');
-            return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="IPO first-day low timing decision timeline"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${left}" y="22" font-size="12" font-weight="700" fill="#d4d4d8">Elapsed-time opportunity map</text><text x="${W - right}" y="22" text-anchor="end" font-size="11" fill="#71717a">lower bars show odds low was still ahead</text>${segments}<line x1="${left}" x2="${W - right}" y1="${(barY + barH + 8).toFixed(1)}" y2="${(barY + barH + 8).toFixed(1)}" stroke="#27272a"/>${ticks}${checkpointDots}${median}</svg>`;
+            return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="IPO first-day low timing decision timeline"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${left}" y="${compact ? 24 : 30}" font-size="${compact ? 13 : 17}" font-weight="700" fill="#d4d4d8">Elapsed-time opportunity map</text><text x="${W - right}" y="${compact ? 24 : 30}" text-anchor="end" font-size="${compact ? 10 : 14}" fill="#71717a">${compact ? 'odds low still ahead' : 'lower bars show odds low was still ahead'}</text>${segments}<line x1="${left}" x2="${W - right}" y1="${(barY + barH + 10).toFixed(1)}" y2="${(barY + barH + 10).toFixed(1)}" stroke="#27272a"/>${ticks}${checkpointDots}${median}</svg>`;
         }
 
         function renderAnalysis() {
@@ -804,10 +1071,9 @@
             }
             const analysisLabel = currentAnalysisLabel(analysis);
             const topWindow = analysis.topBucket ? analysis.topBucket.label : '—';
-            const topClockWindow = analysis.topClockBucket ? analysis.topClockBucket.label : '—';
-            const topClockBerlin = analysis.topClockBucket ? analysis.topClockBucket.germanChartLabel || '' : '';
-            const medianClockLabel = `${analysis.medianLowTime || '—'}${analysis.medianLowGermanTime ? ` (${analysis.medianLowGermanTime})` : ''}`;
-            const medianClockMetric = medianClockLabel;
+            const medianClockLabel = dualClockLabel(analysis.medianLowTime || '—', analysis.medianLowGermanTime);
+            const medianClockMetricValue = dualClockMetricValue(analysis.medianLowTime || '—', analysis.medianLowGermanTime);
+            const topClockMetricValue = clockBucketMetricValue(analysis.topClockBucket);
             const insights = analysis.decisionInsights || {};
             const wait30 = checkpointByMinutes(analysis, 30);
             const wait60 = checkpointByMinutes(analysis, 60);
@@ -817,14 +1083,11 @@
             mount.innerHTML = `
                 <div class="p-5 sm:p-6 border-b border-zinc-800 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.20),transparent_34rem)]">
                     <div class="grid xl:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)] gap-5 items-stretch">
-                        <div class="min-w-0 flex flex-col gap-4">
+                        <div class="min-w-0">
                             <div>
                                 <div class="section-header text-blue-400">IPO buying decision dashboard</div>
                                 <h2 class="font-display text-3xl sm:text-4xl mt-1">How patient should the first order be?</h2>
                                 <p class="text-zinc-400 mt-2 leading-7">For ${escapeHtml(analysisLabel)} since ${analysis.cutoffDate}, the median first-day low appeared ${formatElapsedPlain(analysis.medianDeltaMinutes)} after the first public trade, around ${medianClockLabel}. The dashboard below turns those first-day charts into wait-time odds for pacing an entry.</p>
-                            </div>
-                            <div class="bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden">
-                                ${decisionTimelineSvg(analysis)}
                             </div>
                         </div>
                         <div class="grid sm:grid-cols-2 gap-3">
@@ -833,6 +1096,9 @@
                             ${dashboardMetric('After 30m', wait30Text, 'Chance the first-day low was still ahead.', 'text-emerald-400')}
                             ${dashboardMetric('After 1h', wait60Text, 'Chance the first-day low was still ahead.', 'text-blue-400')}
                         </div>
+                    </div>
+                    <div class="mt-5 bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden">
+                        ${decisionTimelineSvg(analysis)}
                     </div>
                 </div>
                 <div class="p-5 sm:p-6 space-y-5">
@@ -851,10 +1117,6 @@
                                     <div class="section-header text-blue-400">Decision odds</div>
                                     <p class="text-zinc-400 mt-2 leading-6 text-sm">Read each row as: after waiting this long, how often was the day-one low still in front of you?</p>
                                 </div>
-                                <div class="hidden sm:block text-right">
-                                    <div class="text-xs text-zinc-500">median clock</div>
-                                    <div class="font-mono text-lg font-semibold text-blue-400">${escapeHtml(medianClockMetric)}</div>
-                                </div>
                             </div>
                             <div class="mt-4 grid sm:grid-cols-2 2xl:grid-cols-3 gap-3">${decisionRows}</div>
                         </div>
@@ -870,8 +1132,8 @@
                         </div>
                     </div>
                     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
-                        ${metric('Median clock', medianClockMetric, 'text-blue-400')}
-                        ${metric('Most common clock', `${topClockWindow}${topClockBerlin ? ` (${topClockBerlin})` : ''}`)}
+                        ${metric('Median clock', medianClockMetricValue, 'text-blue-400')}
+                        ${metric('Most common clock', topClockMetricValue)}
                         ${metric('Low 2h+', fmtWholePct(analysis.afterTwoHoursPct), 'text-amber-400')}
                         ${metric('Current view', analysisLabel)}
                     </div>
@@ -884,6 +1146,11 @@
             const medianQuote = medianTimingQuote(data);
             const dayEndedUp = summary.startPrice != null && summary.endPrice != null && summary.endPrice >= summary.startPrice;
             const searchBlob = `${ipo.ticker} ${ipo.name} ${ipo.exchange} ${ipo.sector || ''}`.toLowerCase();
+            const dealSize = Number(ipo.dealSize);
+            const dealPill = Number.isFinite(dealSize) && dealSize > 0
+                ? `<span class="px-3 h-8 rounded-2xl border border-zinc-700 text-zinc-300 text-xs font-semibold flex items-center">Deal ${fmtDeal(dealSize)}</span>`
+                : '';
+            const quoteUrl = yahooFinanceUrl(ipo.ticker);
             return `<article class="ipo-card bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden modern-shadow" data-search="${escapeHtml(searchBlob)}">
                 <div class="p-5 sm:p-6 border-b border-zinc-800 flex flex-col lg:flex-row gap-4 lg:items-start lg:justify-between">
                     <div class="min-w-0">
@@ -892,32 +1159,32 @@
                             <span>•</span><span>${ipo.date}</span><span>•</span><span>${ipo.exchange}</span><span>•</span><span>${escapeHtml(ipo.sector || 'Unknown')}</span>
                         </div>
                         <h2 class="font-display text-2xl sm:text-3xl tracking-tight flex flex-wrap items-center gap-3">
-                            <span>${escapeHtml(ipo.name)}</span>
+                            <a class="hover:text-blue-300 transition-colors" href="${escapeHtml(quoteUrl)}" target="_blank" rel="noopener noreferrer" title="Open ${escapeHtml(ipo.ticker)} on Yahoo Finance">${escapeHtml(ipo.name)}</a>
                             <span class="font-mono text-sm px-2 py-1 rounded bg-zinc-800 text-blue-400">${ipo.ticker}</span>
                         </h2>
                     </div>
                     <div class="flex flex-wrap gap-2 lg:justify-end">
                         <span class="px-3 h-8 rounded-2xl border border-zinc-700 text-zinc-300 text-xs font-semibold flex items-center">Cap ${fmtCap(ipo.marketCap)}</span>
+                        ${dealPill}
                     </div>
                 </div>
                 <div class="p-4 sm:p-6">
                     <div class="h-[586px] sm:h-[691px] bg-zinc-950 rounded-2xl border border-zinc-800 overflow-hidden">${renderChart(ipo, data)}</div>
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-3 mt-4">
                         ${metric('IPO price', fmtUsd(ipo.ipoPrice))}
-                        ${metric('Current', fmtUsd(ipo.current))}
                         ${metric('Start price', fmtUsd(summary.startPrice), 'text-blue-400')}
-                        ${buyTimingMetric(data)}
+                        ${metric('Low price', fmtUsd(summary.lowPrice), 'text-amber-400')}
+                        ${buyTimingMetric(ipo, data)}
                         ${metric(medianQuote ? `Median ${formatElapsedPlain(medianQuote.medianDeltaMinutes)}` : 'Median price', fmtUsd(medianQuote?.price), 'text-blue-400')}
                         ${metric('End price', fmtUsd(summary.endPrice), dayEndedUp ? 'text-emerald-400' : 'text-red-400')}
-                        ${metric('Market cap', fmtCap(ipo.marketCap), 'text-emerald-400')}
-                        ${metric('Deal size', fmtDeal(ipo.dealSize))}
+                        ${metric('Current', fmtUsd(ipo.current))}
                     </div>
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 mt-3">
-                        ${progressMicroChart('IPO to day-one close', 'IPO', 'Close', ipo.ipoPrice, summary.endPrice)}
-                        ${progressMicroChart('Start price to end price', 'Start', 'End', summary.startPrice, summary.endPrice)}
-                        ${progressMicroChart('Day-one low to end price', 'Low', 'End', summary.lowPrice, summary.endPrice)}
-                        ${progressMicroChart('IPO to today', 'IPO', 'Today', ipo.ipoPrice, ipo.current)}
-                        ${progressMicroChart('Day-one close to today', 'Close', 'Today', summary.endPrice, ipo.current)}
+                        ${progressMicroChart('IPO to day-one close', 'IPO', 'Close', ipo.ipoPrice, summary.endPrice, firstDayClosePath(data, ipo.ipoPrice, 'IPO'))}
+                        ${progressMicroChart('Start price to end price', 'Start', 'End', summary.startPrice, summary.endPrice, firstDayStartEndPath(data))}
+                        ${progressMicroChart('Day-one low to end price', 'Low', 'End', summary.lowPrice, summary.endPrice, lowToEndPath(data))}
+                        ${progressMicroChart('IPO to today', 'IPO', 'Today', ipo.ipoPrice, ipo.current, roughHistoryPath(ipo, ipo.ipoPrice, ipo.current, 'IPO'))}
+                        ${progressMicroChart('Day-one close to today', 'Close', 'Today', summary.endPrice, ipo.current, roughHistoryPath(ipo, summary.endPrice, ipo.current, 'Close'))}
                     </div>
                 </div>
             </article>`;

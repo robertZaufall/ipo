@@ -16,10 +16,14 @@ Path placeholders in this file are intentional. Substitute them with the matchin
 - Styling uses Tailwind from CDN plus local CSS in `index.html`.
 - Candlestick charts are inline SVG generated in browser JavaScript.
 - The top analysis panel is an inline SVG/HTML decision dashboard generated in browser JavaScript from precomputed cap-filtered data in `ipo-analysis.js`.
-- The visible analysis UI starts with a buyer-window summary, key metrics, and an elapsed-time opportunity map; below that it shows two distribution charts followed by balanced side-by-side `Decision odds` and `Timing signals` panels. Do not re-add the removed checkpoint pill or trailing "not a buy signal" note unless explicitly requested.
+- The visible analysis UI starts with a buyer-window summary, key metrics, and a full-width elapsed-time opportunity map; below that it shows two larger distribution charts followed by balanced side-by-side `Decision odds` and `Timing signals` panels. Do not re-add the removed checkpoint pill, the duplicate `median clock` block in the `Decision odds` header, or a trailing "not a buy signal" note unless explicitly requested.
 - Analysis distribution charts include dynamic median reference lines from the currently active cap and trading-place filter.
-- Main candle charts include a blue vertical median timing reference line from the currently active analysis filter. They also show conditional horizontal IPO-price and current-price reference lines only when those prices are inside the visible first-day OHLC range.
-- IPO cards include five micro charts below the metadata: IPO price to first-day close, first-day start price to first-day end price, first-day low to first-day end price, IPO price to current price, and first-day close to current price.
+- Main candle charts include a top elapsed-minutes axis from first public trade, bottom NYC/German clock labels, and a blue vertical median timing reference line from the currently active analysis filter. They also show conditional horizontal IPO-price and current-price reference lines only when those prices are inside the visible first-day OHLC range.
+- Visible chart source labels are compact provider markers: `(Y)` for Yahoo, `(A)` for Alpaca, and `(AV)` for Alpha Vantage. The generated `firstDayBarSources` values keep their full provider labels.
+- IPO card company names link to their Yahoo Finance quote pages.
+- IPO card header pills show market cap and, when available, deal size. Do not render the deal pill when `dealSize` is missing or non-positive.
+- IPO card metric order is: `IPO price`, `Start price`, `Low price`, `Buy timing`, `Median`, `End price`, `Current`. Do not re-add `Market cap` or `Deal size` to the metric row because those values belong in the header pills.
+- IPO cards include five micro charts below the metric row: IPO price to first-day close, first-day start price to first-day end price, first-day low to first-day end price, IPO price to current price, and first-day close to current price. First-day micro-chart paths use exact 5-minute closes. Longer IPO/current paths use sampled rough Yahoo weekly closes from `roughPriceSeries` when available, with endpoint fallback.
 - IPO cards do not render the generated IPO-to-current `dayChange` value. Do not re-add the top return pill or the `IPO return` metric unless explicitly requested.
 - Main candle charts can show multiple low markers. The markers must be selected from the same near-low price range and every pair of selected marker times must be at least one hour apart.
 - The market-cap and trading-place segmented filters sit in the header above the analysis panel so they control both the probability analysis and the card list. The default cap filter is `>$25B`; other cap options are `<$10B`, all (`*`), `>$10B`, and `>$50B`. The default trading-place filter is `All`; other options are `NASDAQ` and `NYSE`.
@@ -36,6 +40,7 @@ The page has three generated JavaScript data files:
 - `ipos` in `ipo-data.js`: one object per IPO candidate/card; the page renders only entries with exact `firstDayBars`.
 - `firstDayBars` in `chart-data.js`: optional real first-trading-day 5-minute OHLCV bars keyed by ticker.
 - `firstDayBarSources` in `chart-data.js`: per-ticker provider labels such as `Yahoo 5m bars`, `Alpaca SIP 5m bars`, or `Alpha Vantage 5m bars`.
+- `roughPriceSeries` in `chart-data.js`: optional sampled Yahoo weekly close rows keyed by ticker for rough long-range micro-chart paths.
 - `ipoAnalysis` in `ipo-analysis.js`: derived 15-year first-day low timing analysis, probability checkpoints, and timing insights precomputed for each cap and trading-place filter.
 
 IPO object fields:
@@ -59,13 +64,19 @@ IPO object fields:
 ["12:55", open, high, low, close, volume]
 ```
 
+`roughPriceSeries` row format:
+
+```js
+["2026-05-26", close]
+```
+
 `ipoAnalysis` includes:
 
 - Top-level `defaultFilter`, `defaultTradingPlaceFilter`, `filters`, `tradingPlaceFilters`, `byCap`, and `byFilter`.
 - `byCap.under10`, `byCap.all`, `byCap.gt10`, `byCap.gt25`, and `byCap.gt50`, each with its own precomputed probability sample for all trading places.
 - `byFilter.<cap>.<tradingPlace>` contains precomputed samples for cap plus trading-place combinations such as `byFilter.gt10.nasdaq` and `byFilter.gt10.nyse`.
 - Inside each cap analysis: `cutoffDate`, `sampleSize`, `sourceCounts`, `medianDeltaMinutes`, `firstHourPct`, `afterTwoHoursPct`, `buckets`, `clockBuckets`, `decisionCheckpoints`, `decisionInsights`, and per-symbol `records`.
-- Clock-time labels use 24-hour format for NYC plus German ` (DE)` labels, for example `09:30`, `13:00`, and `13:00-14:00 (DE)`.
+- Clock-time labels use 24-hour format with German local time in the same label, for example `13:00 (DE 19:00)` or two-line labels `13:00` plus `19:00 (DE)`. The market-clock distribution chart omits the trailing `(DE)` suffix on its lower German axis labels to prevent crowding.
 - Top-level `expertNotes` retains researched source URLs for provenance; they are not currently rendered in the page UI.
 
 ## Data Gathering Method
@@ -88,6 +99,7 @@ Per-ticker detail source:
 - `https://stockanalysis.com/stocks/<ticker>/company/`
 - Pull or verify market cap, IPO price/date, exchange, sector/industry, and related company fields from the StockAnalysis ticker pages when available.
 - Refresh the displayed current/today price from Yahoo Finance latest chart metadata during data generation; if Yahoo is unavailable for a ticker, keep the StockAnalysis fallback value.
+- Fetch sampled Yahoo weekly closes for `roughPriceSeries`; these are only used for small micro-chart shape hints, not for main candle charts or low-timing analysis.
 - For `CBRS`, also checked Cerebras' own IPO pricing release:
   `https://www.cerebras.ai/press-release/cerebras-systems-announces-pricing-of-initial-public-offering`
 
@@ -113,7 +125,7 @@ Analysis source:
 - It analyzes only exact 5-minute bars from `chart-data.js`.
 - It analyzes IPOs in the rolling 15-year window as of the data refresh date.
 - Missing exact bars are counted in `sourceCounts.missingExact5m`; daily-OHLC estimates and synthetic fallback charts are not included.
-- Clock-time buckets are based on US/Eastern market time and should show dual NYC plus German ` (DE)` labels in 24-hour format. Generate German labels in Python with `Europe/Berlin` timezone conversion rather than a hard-coded offset because US/EU daylight-saving changes do not always align.
+- Clock-time buckets are based on US/Eastern market time and should show dual NYC plus German labels in `HH:MM (DE HH:MM)` format, with two-line labels allowed where space is tight as `HH:MM` plus `HH:MM (DE)`. The market-clock distribution axis may omit the trailing `(DE)` suffix on the German line only. Generate German labels in Python with `Europe/Berlin` timezone conversion rather than a hard-coded offset because US/EU daylight-saving changes do not always align.
 - Current expert-note research sources:
   - SEC Investor.gov IPO bulletin: `https://www.sec.gov/files/ipo-investorbulletin.pdf`
   - Schwab IPO basics: `https://www.schwab.com/learn/story/ipo-basics-what-to-know-before-investing`
@@ -258,18 +270,20 @@ Before calling an IPO change done:
 - `ipo-data.js` includes `$5B+` IPO candidates from the cap screener plus all post-2020 `$5B+` IPO archive matches.
 - `ipo-analysis.js` is generated from `build_ipo_analysis.py` and contains precomputed `byCap` plus `byFilter` analyses for all cap and trading-place filters.
 - The header cap and trading-place filters sit above the analysis and change both the rendered probabilities and the rendered card list.
-- The top analysis panel shows both elapsed-time delta and US/Eastern clock-time distributions for exact first-day 5-minute lows.
-- The analysis panel shows `Decision odds` and `Timing signals` as even side-by-side panels below the bar charts, without a checkpoint highlight pill or generic disclaimer row.
+- The top analysis panel shows both elapsed-time delta and US/Eastern clock-time distributions for exact first-day 5-minute lows, with the elapsed-time opportunity map using the full panel width.
+- The analysis panel shows `Decision odds` and `Timing signals` as even side-by-side panels below the bar charts, without a checkpoint highlight pill, duplicate median-clock header block, or generic disclaimer row.
 - Analysis charts show dynamic median reference lines for the active filter.
-- Clock-time chart labels use 24-hour NYC and German ` (DE)` format, not AM/PM labels.
+- Clock-time chart labels use 24-hour NYC and German labels, not AM/PM labels. Two-line labels are allowed, and the market-clock distribution chart omits trailing `(DE)` on German axis labels.
 - No included IPO has a known `firstDay.open` below `$1`.
 - `CBRS` is present and its chart uses real Yahoo 5-minute bars and does not begin at `$185`.
-- Main candle charts show the active-filter median timing line and only show IPO-price/current-price horizontal reference lines when those values are within that chart's first-day OHLC range.
+- Main candle charts show the top elapsed-minutes axis, active-filter median timing line, compact provider marker, and only show IPO-price/current-price horizontal reference lines when those values are within that chart's first-day OHLC range.
 - Low markers on main candle charts are in the same near-low price band and are spaced at least one hour apart.
-- IPO cards do not show `IPO return`, `Return —`, or the generated `dayChange` value.
+- IPO cards link company names to Yahoo Finance quote pages, show cap/deal header pills, and use the metric order `IPO price`, `Start price`, `Low price`, `Buy timing`, `Median`, `End price`, `Current`.
+- IPO cards do not show `IPO return`, `Return —`, generated `dayChange`, `Market cap`, or `Deal size` in the metric row.
 - Missing exact 5-minute bars are suppressed from the card list, not rendered as estimated charts.
 - Search filters cards by ticker/company/exchange/sector.
 - Sort button toggles between IPO date recent-first and market cap biggest-first.
+- Micro-chart lines use rough real paths: exact 5-minute closes for first-day cards and sampled Yahoo weekly closes from `roughPriceSeries` for IPO/current cards when available.
 - Cap filter defaults to `>$25B` and can switch to `<$10B`, all (`*`), `>$10B`, and `>$50B`.
 - Trading-place filter defaults to `All` and can switch to `NASDAQ` or `NYSE`.
 - Inline JavaScript syntax still passes, for example:

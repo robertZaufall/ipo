@@ -184,7 +184,7 @@ def german_chart_label(time_ranges: list[str]) -> str:
         return ""
     start = min(parts[0] for parts in parsed)
     end = max(parts[1] for parts in parsed)
-    return f"{minutes_to_time(start)}-{minutes_to_time(end)} (DE)"
+    return f"(DE {minutes_to_time(start)}-{minutes_to_time(end)})"
 
 
 def chart_data(ipo: dict[str, Any], first_day_bars: dict[str, list[list[Any]]], first_day_bar_sources: dict[str, str] | None = None) -> list[dict[str, Any]]:
@@ -425,7 +425,7 @@ def build_analysis(ipos: list[dict[str, Any]], first_day_bars: dict[str, list[li
         "medianLowTime": minutes_to_time(round(median_low_minute)) if median_low_minute is not None else None,
         "medianLowGermanMinute": round_or_none(median_low_berlin_minute, 1),
         "medianLowGermanTime": median_low_german_time,
-        "medianLowGermanLabel": f"{median_low_german_time} (DE)" if median_low_german_time else None,
+        "medianLowGermanLabel": f"(DE {median_low_german_time})" if median_low_german_time else None,
         "firstHourPct": round_or_none(first_hour / len(records) * 100 if records else None, 1),
         "first30MinutesPct": round_or_none(first_30 / len(records) * 100 if records else None, 1),
         "afterTwoHoursPct": round_or_none(after_two_hours / len(records) * 100 if records else None, 1),

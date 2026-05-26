@@ -70,7 +70,7 @@ window.ipoAnalysis = {
       "medianLowTime": "12:18",
       "medianLowGermanMinute": 1095.0,
       "medianLowGermanTime": "18:15",
-      "medianLowGermanLabel": "18:15 (DE)",
+      "medianLowGermanLabel": "(DE 18:15)",
       "firstHourPct": 66.2,
       "first30MinutesPct": 62.5,
       "afterTwoHoursPct": 25.0,
@@ -168,7 +168,7 @@ window.ipoAnalysis = {
         "nycLabel": "11:00-12:00",
         "berlinLabel": "16:00-17:00 / 17:00-18:00",
         "berlinZoneLabel": "MEZ/MESZ",
-        "germanChartLabel": "16:00-18:00 (DE)",
+        "germanChartLabel": "(DE 16:00-18:00)",
         "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
       },
       "fastestLow": {
@@ -263,7 +263,7 @@ window.ipoAnalysis = {
           "nycLabel": "09:30-11:00",
           "berlinLabel": "15:30-17:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "15:30-17:00 (DE)",
+          "germanChartLabel": "(DE 15:30-17:00)",
           "germanFullLabel": "MEZ/MESZ 15:30-17:00"
         },
         {
@@ -275,7 +275,7 @@ window.ipoAnalysis = {
           "nycLabel": "11:00-12:00",
           "berlinLabel": "16:00-17:00 / 17:00-18:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "16:00-18:00 (DE)",
+          "germanChartLabel": "(DE 16:00-18:00)",
           "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
         },
         {
@@ -287,7 +287,7 @@ window.ipoAnalysis = {
           "nycLabel": "12:00-13:00",
           "berlinLabel": "18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "18:00-19:00 (DE)",
+          "germanChartLabel": "(DE 18:00-19:00)",
           "germanFullLabel": "MEZ/MESZ 18:00-19:00"
         },
         {
@@ -299,7 +299,7 @@ window.ipoAnalysis = {
           "nycLabel": "13:00-14:00",
           "berlinLabel": "18:00-19:00 / 19:00-20:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "18:00-20:00 (DE)",
+          "germanChartLabel": "(DE 18:00-20:00)",
           "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
         },
         {
@@ -311,7 +311,7 @@ window.ipoAnalysis = {
           "nycLabel": "14:00-15:00",
           "berlinLabel": "20:00-21:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "20:00-21:00 (DE)",
+          "germanChartLabel": "(DE 20:00-21:00)",
           "germanFullLabel": "MEZ/MESZ 20:00-21:00"
         },
         {
@@ -323,7 +323,7 @@ window.ipoAnalysis = {
           "nycLabel": "15:00-16:00",
           "berlinLabel": "20:00-21:00 / 21:00-22:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "20:00-22:00 (DE)",
+          "germanChartLabel": "(DE 20:00-22:00)",
           "germanFullLabel": "MEZ/MESZ 20:00-21:00 / 21:00-22:00"
         }
       ],
@@ -1894,7 +1894,7 @@ window.ipoAnalysis = {
       "medianLowTime": "12:35",
       "medianLowGermanMinute": 1115.0,
       "medianLowGermanTime": "18:35",
-      "medianLowGermanLabel": "18:35 (DE)",
+      "medianLowGermanLabel": "(DE 18:35)",
       "firstHourPct": 65.0,
       "first30MinutesPct": 55.4,
       "afterTwoHoursPct": 22.3,
@@ -1999,7 +1999,7 @@ window.ipoAnalysis = {
         "nycLabel": "11:00-12:00",
         "berlinLabel": "16:00-17:00 / 17:00-18:00",
         "berlinZoneLabel": "MEZ/MESZ",
-        "germanChartLabel": "16:00-18:00 (DE)",
+        "germanChartLabel": "(DE 16:00-18:00)",
         "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
       },
       "fastestLow": {
@@ -2094,7 +2094,7 @@ window.ipoAnalysis = {
           "nycLabel": "09:30-11:00",
           "berlinLabel": "14:30-16:00 / 15:30-17:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "14:30-17:00 (DE)",
+          "germanChartLabel": "(DE 14:30-17:00)",
           "germanFullLabel": "MEZ/MESZ 14:30-16:00 / 15:30-17:00"
         },
         {
@@ -2106,7 +2106,7 @@ window.ipoAnalysis = {
           "nycLabel": "11:00-12:00",
           "berlinLabel": "16:00-17:00 / 17:00-18:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "16:00-18:00 (DE)",
+          "germanChartLabel": "(DE 16:00-18:00)",
           "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
         },
         {
@@ -2118,7 +2118,7 @@ window.ipoAnalysis = {
           "nycLabel": "12:00-13:00",
           "berlinLabel": "17:00-18:00 / 18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "17:00-19:00 (DE)",
+          "germanChartLabel": "(DE 17:00-19:00)",
           "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
         },
         {
@@ -2130,7 +2130,7 @@ window.ipoAnalysis = {
           "nycLabel": "13:00-14:00",
           "berlinLabel": "18:00-19:00 / 19:00-20:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "18:00-20:00 (DE)",
+          "germanChartLabel": "(DE 18:00-20:00)",
           "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
         },
         {
@@ -2142,7 +2142,7 @@ window.ipoAnalysis = {
           "nycLabel": "14:00-15:00",
           "berlinLabel": "19:00-20:00 / 20:00-21:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "19:00-21:00 (DE)",
+          "germanChartLabel": "(DE 19:00-21:00)",
           "germanFullLabel": "MEZ/MESZ 19:00-20:00 / 20:00-21:00"
         },
         {
@@ -2154,7 +2154,7 @@ window.ipoAnalysis = {
           "nycLabel": "15:00-16:00",
           "berlinLabel": "20:00-21:00 / 21:00-22:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "20:00-22:00 (DE)",
+          "germanChartLabel": "(DE 20:00-22:00)",
           "germanFullLabel": "MEZ/MESZ 20:00-21:00 / 21:00-22:00"
         }
       ],
@@ -5188,7 +5188,7 @@ window.ipoAnalysis = {
       "medianLowTime": "12:50",
       "medianLowGermanMinute": 1130.0,
       "medianLowGermanTime": "18:50",
-      "medianLowGermanLabel": "18:50 (DE)",
+      "medianLowGermanLabel": "(DE 18:50)",
       "firstHourPct": 63.6,
       "first30MinutesPct": 48.1,
       "afterTwoHoursPct": 19.5,
@@ -5293,7 +5293,7 @@ window.ipoAnalysis = {
         "nycLabel": "11:00-12:00",
         "berlinLabel": "16:00-17:00 / 17:00-18:00",
         "berlinZoneLabel": "MEZ/MESZ",
-        "germanChartLabel": "16:00-18:00 (DE)",
+        "germanChartLabel": "(DE 16:00-18:00)",
         "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
       },
       "fastestLow": {
@@ -5388,7 +5388,7 @@ window.ipoAnalysis = {
           "nycLabel": "09:30-11:00",
           "berlinLabel": "14:30-16:00 / 15:30-17:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "14:30-17:00 (DE)",
+          "germanChartLabel": "(DE 14:30-17:00)",
           "germanFullLabel": "MEZ/MESZ 14:30-16:00 / 15:30-17:00"
         },
         {
@@ -5400,7 +5400,7 @@ window.ipoAnalysis = {
           "nycLabel": "11:00-12:00",
           "berlinLabel": "16:00-17:00 / 17:00-18:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "16:00-18:00 (DE)",
+          "germanChartLabel": "(DE 16:00-18:00)",
           "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
         },
         {
@@ -5412,7 +5412,7 @@ window.ipoAnalysis = {
           "nycLabel": "12:00-13:00",
           "berlinLabel": "17:00-18:00 / 18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "17:00-19:00 (DE)",
+          "germanChartLabel": "(DE 17:00-19:00)",
           "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
         },
         {
@@ -5424,7 +5424,7 @@ window.ipoAnalysis = {
           "nycLabel": "13:00-14:00",
           "berlinLabel": "18:00-19:00 / 19:00-20:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "18:00-20:00 (DE)",
+          "germanChartLabel": "(DE 18:00-20:00)",
           "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
         },
         {
@@ -5436,7 +5436,7 @@ window.ipoAnalysis = {
           "nycLabel": "14:00-15:00",
           "berlinLabel": "19:00-20:00 / 20:00-21:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "19:00-21:00 (DE)",
+          "germanChartLabel": "(DE 19:00-21:00)",
           "germanFullLabel": "MEZ/MESZ 19:00-20:00 / 20:00-21:00"
         },
         {
@@ -5448,7 +5448,7 @@ window.ipoAnalysis = {
           "nycLabel": "15:00-16:00",
           "berlinLabel": "20:00-21:00 / 21:00-22:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "20:00-22:00 (DE)",
+          "germanChartLabel": "(DE 20:00-22:00)",
           "germanFullLabel": "MEZ/MESZ 20:00-21:00 / 21:00-22:00"
         }
       ],
@@ -6962,7 +6962,7 @@ window.ipoAnalysis = {
       "medianLowTime": "12:42",
       "medianLowGermanMinute": 1117.5,
       "medianLowGermanTime": "18:38",
-      "medianLowGermanLabel": "18:38 (DE)",
+      "medianLowGermanLabel": "(DE 18:38)",
       "firstHourPct": 70.6,
       "first30MinutesPct": 47.1,
       "afterTwoHoursPct": 11.8,
@@ -7067,7 +7067,7 @@ window.ipoAnalysis = {
         "nycLabel": "12:00-13:00",
         "berlinLabel": "17:00-18:00 / 18:00-19:00",
         "berlinZoneLabel": "MEZ/MESZ",
-        "germanChartLabel": "17:00-19:00 (DE)",
+        "germanChartLabel": "(DE 17:00-19:00)",
         "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
       },
       "fastestLow": {
@@ -7162,7 +7162,7 @@ window.ipoAnalysis = {
           "nycLabel": "09:30-11:00",
           "berlinLabel": "15:30-17:00",
           "berlinZoneLabel": "MESZ",
-          "germanChartLabel": "15:30-17:00 (DE)",
+          "germanChartLabel": "(DE 15:30-17:00)",
           "germanFullLabel": "MESZ 15:30-17:00"
         },
         {
@@ -7174,7 +7174,7 @@ window.ipoAnalysis = {
           "nycLabel": "11:00-12:00",
           "berlinLabel": "16:00-17:00 / 17:00-18:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "16:00-18:00 (DE)",
+          "germanChartLabel": "(DE 16:00-18:00)",
           "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
         },
         {
@@ -7186,7 +7186,7 @@ window.ipoAnalysis = {
           "nycLabel": "12:00-13:00",
           "berlinLabel": "17:00-18:00 / 18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "17:00-19:00 (DE)",
+          "germanChartLabel": "(DE 17:00-19:00)",
           "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
         },
         {
@@ -7198,7 +7198,7 @@ window.ipoAnalysis = {
           "nycLabel": "13:00-14:00",
           "berlinLabel": "18:00-19:00 / 19:00-20:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "18:00-20:00 (DE)",
+          "germanChartLabel": "(DE 18:00-20:00)",
           "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
         },
         {
@@ -7210,7 +7210,7 @@ window.ipoAnalysis = {
           "nycLabel": "14:00-15:00",
           "berlinLabel": "19:00-20:00 / 20:00-21:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "19:00-21:00 (DE)",
+          "germanChartLabel": "(DE 19:00-21:00)",
           "germanFullLabel": "MEZ/MESZ 19:00-20:00 / 20:00-21:00"
         },
         {
@@ -7222,7 +7222,7 @@ window.ipoAnalysis = {
           "nycLabel": "15:00-16:00",
           "berlinLabel": "21:00-22:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "21:00-22:00 (DE)",
+          "germanChartLabel": "(DE 21:00-22:00)",
           "germanFullLabel": "MEZ/MESZ 21:00-22:00"
         }
       ],
@@ -7919,7 +7919,7 @@ window.ipoAnalysis = {
       "medianLowTime": "12:28",
       "medianLowGermanMinute": 1092.5,
       "medianLowGermanTime": "18:12",
-      "medianLowGermanLabel": "18:12 (DE)",
+      "medianLowGermanLabel": "(DE 18:12)",
       "firstHourPct": 77.8,
       "first30MinutesPct": 50.0,
       "afterTwoHoursPct": 11.1,
@@ -8024,7 +8024,7 @@ window.ipoAnalysis = {
         "nycLabel": "12:00-13:00",
         "berlinLabel": "17:00-18:00 / 18:00-19:00",
         "berlinZoneLabel": "MEZ/MESZ",
-        "germanChartLabel": "17:00-19:00 (DE)",
+        "germanChartLabel": "(DE 17:00-19:00)",
         "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
       },
       "fastestLow": {
@@ -8119,7 +8119,7 @@ window.ipoAnalysis = {
           "nycLabel": "09:30-11:00",
           "berlinLabel": "15:30-17:00",
           "berlinZoneLabel": "MESZ",
-          "germanChartLabel": "15:30-17:00 (DE)",
+          "germanChartLabel": "(DE 15:30-17:00)",
           "germanFullLabel": "MESZ 15:30-17:00"
         },
         {
@@ -8131,7 +8131,7 @@ window.ipoAnalysis = {
           "nycLabel": "11:00-12:00",
           "berlinLabel": "17:00-18:00",
           "berlinZoneLabel": "MESZ",
-          "germanChartLabel": "17:00-18:00 (DE)",
+          "germanChartLabel": "(DE 17:00-18:00)",
           "germanFullLabel": "MESZ 17:00-18:00"
         },
         {
@@ -8143,7 +8143,7 @@ window.ipoAnalysis = {
           "nycLabel": "12:00-13:00",
           "berlinLabel": "17:00-18:00 / 18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "17:00-19:00 (DE)",
+          "germanChartLabel": "(DE 17:00-19:00)",
           "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
         },
         {
@@ -8155,7 +8155,7 @@ window.ipoAnalysis = {
           "nycLabel": "13:00-14:00",
           "berlinLabel": "18:00-19:00 / 19:00-20:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "18:00-20:00 (DE)",
+          "germanChartLabel": "(DE 18:00-20:00)",
           "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
         },
         {
@@ -8167,7 +8167,7 @@ window.ipoAnalysis = {
           "nycLabel": "14:00-15:00",
           "berlinLabel": "20:00-21:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "20:00-21:00 (DE)",
+          "germanChartLabel": "(DE 20:00-21:00)",
           "germanFullLabel": "MEZ/MESZ 20:00-21:00"
         },
         {
@@ -8179,7 +8179,7 @@ window.ipoAnalysis = {
           "nycLabel": "15:00-16:00",
           "berlinLabel": "21:00-22:00",
           "berlinZoneLabel": "MESZ",
-          "germanChartLabel": "21:00-22:00 (DE)",
+          "germanChartLabel": "(DE 21:00-22:00)",
           "germanFullLabel": "MESZ 21:00-22:00"
         }
       ],
@@ -8575,7 +8575,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:18",
         "medianLowGermanMinute": 1095.0,
         "medianLowGermanTime": "18:15",
-        "medianLowGermanLabel": "18:15 (DE)",
+        "medianLowGermanLabel": "(DE 18:15)",
         "firstHourPct": 66.2,
         "first30MinutesPct": 62.5,
         "afterTwoHoursPct": 25.0,
@@ -8673,7 +8673,7 @@ window.ipoAnalysis = {
           "nycLabel": "11:00-12:00",
           "berlinLabel": "16:00-17:00 / 17:00-18:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "16:00-18:00 (DE)",
+          "germanChartLabel": "(DE 16:00-18:00)",
           "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
         },
         "fastestLow": {
@@ -8768,7 +8768,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "15:30-17:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "15:30-17:00 (DE)",
+            "germanChartLabel": "(DE 15:30-17:00)",
             "germanFullLabel": "MEZ/MESZ 15:30-17:00"
           },
           {
@@ -8780,7 +8780,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "16:00-17:00 / 17:00-18:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "16:00-18:00 (DE)",
+            "germanChartLabel": "(DE 16:00-18:00)",
             "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
           },
           {
@@ -8792,7 +8792,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-19:00 (DE)",
+            "germanChartLabel": "(DE 18:00-19:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00"
           },
           {
@@ -8804,7 +8804,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00 / 19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-20:00 (DE)",
+            "germanChartLabel": "(DE 18:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
           },
           {
@@ -8816,7 +8816,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "20:00-21:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "20:00-21:00 (DE)",
+            "germanChartLabel": "(DE 20:00-21:00)",
             "germanFullLabel": "MEZ/MESZ 20:00-21:00"
           },
           {
@@ -8828,7 +8828,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "20:00-21:00 / 21:00-22:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "20:00-22:00 (DE)",
+            "germanChartLabel": "(DE 20:00-22:00)",
             "germanFullLabel": "MEZ/MESZ 20:00-21:00 / 21:00-22:00"
           }
         ],
@@ -10399,7 +10399,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:30",
         "medianLowGermanMinute": 1105.0,
         "medianLowGermanTime": "18:25",
-        "medianLowGermanLabel": "18:25 (DE)",
+        "medianLowGermanLabel": "(DE 18:25)",
         "firstHourPct": 61.9,
         "first30MinutesPct": 59.5,
         "afterTwoHoursPct": 28.6,
@@ -10497,7 +10497,7 @@ window.ipoAnalysis = {
           "nycLabel": "11:00-12:00",
           "berlinLabel": "17:00-18:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "17:00-18:00 (DE)",
+          "germanChartLabel": "(DE 17:00-18:00)",
           "germanFullLabel": "MEZ/MESZ 17:00-18:00"
         },
         "fastestLow": {
@@ -10592,7 +10592,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "15:30-17:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "15:30-17:00 (DE)",
+            "germanChartLabel": "(DE 15:30-17:00)",
             "germanFullLabel": "MEZ/MESZ 15:30-17:00"
           },
           {
@@ -10604,7 +10604,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "17:00-18:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "17:00-18:00 (DE)",
+            "germanChartLabel": "(DE 17:00-18:00)",
             "germanFullLabel": "MEZ/MESZ 17:00-18:00"
           },
           {
@@ -10616,7 +10616,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-19:00 (DE)",
+            "germanChartLabel": "(DE 18:00-19:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00"
           },
           {
@@ -10628,7 +10628,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00 / 19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-20:00 (DE)",
+            "germanChartLabel": "(DE 18:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
           },
           {
@@ -10640,7 +10640,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "20:00-21:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "20:00-21:00 (DE)",
+            "germanChartLabel": "(DE 20:00-21:00)",
             "germanFullLabel": "MESZ 20:00-21:00"
           },
           {
@@ -10652,7 +10652,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "20:00-21:00 / 21:00-22:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "20:00-22:00 (DE)",
+            "germanChartLabel": "(DE 20:00-22:00)",
             "germanFullLabel": "MEZ/MESZ 20:00-21:00 / 21:00-22:00"
           }
         ],
@@ -11501,7 +11501,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:12",
         "medianLowGermanMinute": 1092.5,
         "medianLowGermanTime": "18:12",
-        "medianLowGermanLabel": "18:12 (DE)",
+        "medianLowGermanLabel": "(DE 18:12)",
         "firstHourPct": 71.1,
         "first30MinutesPct": 65.8,
         "afterTwoHoursPct": 21.1,
@@ -11599,7 +11599,7 @@ window.ipoAnalysis = {
           "nycLabel": "12:00-13:00",
           "berlinLabel": "18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "18:00-19:00 (DE)",
+          "germanChartLabel": "(DE 18:00-19:00)",
           "germanFullLabel": "MEZ/MESZ 18:00-19:00"
         },
         "fastestLow": {
@@ -11694,7 +11694,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "15:30-17:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "15:30-17:00 (DE)",
+            "germanChartLabel": "(DE 15:30-17:00)",
             "germanFullLabel": "MEZ/MESZ 15:30-17:00"
           },
           {
@@ -11706,7 +11706,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "16:00-17:00 / 17:00-18:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "16:00-18:00 (DE)",
+            "germanChartLabel": "(DE 16:00-18:00)",
             "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
           },
           {
@@ -11718,7 +11718,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-19:00 (DE)",
+            "germanChartLabel": "(DE 18:00-19:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00"
           },
           {
@@ -11730,7 +11730,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00 / 19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-20:00 (DE)",
+            "germanChartLabel": "(DE 18:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
           },
           {
@@ -11742,7 +11742,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "20:00-21:00",
             "berlinZoneLabel": "MEZ",
-            "germanChartLabel": "20:00-21:00 (DE)",
+            "germanChartLabel": "(DE 20:00-21:00)",
             "germanFullLabel": "MEZ 20:00-21:00"
           },
           {
@@ -11754,7 +11754,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "21:00-22:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "21:00-22:00 (DE)",
+            "germanChartLabel": "(DE 21:00-22:00)",
             "germanFullLabel": "MEZ/MESZ 21:00-22:00"
           }
         ],
@@ -12529,7 +12529,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:35",
         "medianLowGermanMinute": 1115.0,
         "medianLowGermanTime": "18:35",
-        "medianLowGermanLabel": "18:35 (DE)",
+        "medianLowGermanLabel": "(DE 18:35)",
         "firstHourPct": 65.0,
         "first30MinutesPct": 55.4,
         "afterTwoHoursPct": 22.3,
@@ -12634,7 +12634,7 @@ window.ipoAnalysis = {
           "nycLabel": "11:00-12:00",
           "berlinLabel": "16:00-17:00 / 17:00-18:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "16:00-18:00 (DE)",
+          "germanChartLabel": "(DE 16:00-18:00)",
           "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
         },
         "fastestLow": {
@@ -12729,7 +12729,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "14:30-16:00 / 15:30-17:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "14:30-17:00 (DE)",
+            "germanChartLabel": "(DE 14:30-17:00)",
             "germanFullLabel": "MEZ/MESZ 14:30-16:00 / 15:30-17:00"
           },
           {
@@ -12741,7 +12741,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "16:00-17:00 / 17:00-18:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "16:00-18:00 (DE)",
+            "germanChartLabel": "(DE 16:00-18:00)",
             "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
           },
           {
@@ -12753,7 +12753,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "17:00-18:00 / 18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "17:00-19:00 (DE)",
+            "germanChartLabel": "(DE 17:00-19:00)",
             "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
           },
           {
@@ -12765,7 +12765,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00 / 19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-20:00 (DE)",
+            "germanChartLabel": "(DE 18:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
           },
           {
@@ -12777,7 +12777,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "19:00-20:00 / 20:00-21:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "19:00-21:00 (DE)",
+            "germanChartLabel": "(DE 19:00-21:00)",
             "germanFullLabel": "MEZ/MESZ 19:00-20:00 / 20:00-21:00"
           },
           {
@@ -12789,7 +12789,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "20:00-21:00 / 21:00-22:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "20:00-22:00 (DE)",
+            "germanChartLabel": "(DE 20:00-22:00)",
             "germanFullLabel": "MEZ/MESZ 20:00-21:00 / 21:00-22:00"
           }
         ],
@@ -15823,7 +15823,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:35",
         "medianLowGermanMinute": 1110.0,
         "medianLowGermanTime": "18:30",
-        "medianLowGermanLabel": "18:30 (DE)",
+        "medianLowGermanLabel": "(DE 18:30)",
         "firstHourPct": 63.5,
         "first30MinutesPct": 51.8,
         "afterTwoHoursPct": 23.5,
@@ -15928,7 +15928,7 @@ window.ipoAnalysis = {
           "nycLabel": "11:00-12:00",
           "berlinLabel": "16:00-17:00 / 17:00-18:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "16:00-18:00 (DE)",
+          "germanChartLabel": "(DE 16:00-18:00)",
           "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
         },
         "fastestLow": {
@@ -16023,7 +16023,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "15:30-17:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "15:30-17:00 (DE)",
+            "germanChartLabel": "(DE 15:30-17:00)",
             "germanFullLabel": "MEZ/MESZ 15:30-17:00"
           },
           {
@@ -16035,7 +16035,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "16:00-17:00 / 17:00-18:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "16:00-18:00 (DE)",
+            "germanChartLabel": "(DE 16:00-18:00)",
             "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
           },
           {
@@ -16047,7 +16047,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "17:00-18:00 / 18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "17:00-19:00 (DE)",
+            "germanChartLabel": "(DE 17:00-19:00)",
             "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
           },
           {
@@ -16059,7 +16059,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00 / 19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-20:00 (DE)",
+            "germanChartLabel": "(DE 18:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
           },
           {
@@ -16071,7 +16071,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "20:00-21:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "20:00-21:00 (DE)",
+            "germanChartLabel": "(DE 20:00-21:00)",
             "germanFullLabel": "MEZ/MESZ 20:00-21:00"
           },
           {
@@ -16083,7 +16083,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "20:00-21:00 / 21:00-22:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "20:00-22:00 (DE)",
+            "germanChartLabel": "(DE 20:00-22:00)",
             "germanFullLabel": "MEZ/MESZ 20:00-21:00 / 21:00-22:00"
           }
         ],
@@ -17749,7 +17749,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:38",
         "medianLowGermanMinute": 1115.0,
         "medianLowGermanTime": "18:35",
-        "medianLowGermanLabel": "18:35 (DE)",
+        "medianLowGermanLabel": "(DE 18:35)",
         "firstHourPct": 66.7,
         "first30MinutesPct": 59.7,
         "afterTwoHoursPct": 20.8,
@@ -17847,7 +17847,7 @@ window.ipoAnalysis = {
           "nycLabel": "12:00-13:00",
           "berlinLabel": "18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "18:00-19:00 (DE)",
+          "germanChartLabel": "(DE 18:00-19:00)",
           "germanFullLabel": "MEZ/MESZ 18:00-19:00"
         },
         "fastestLow": {
@@ -17942,7 +17942,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "14:30-16:00 / 15:30-17:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "14:30-17:00 (DE)",
+            "germanChartLabel": "(DE 14:30-17:00)",
             "germanFullLabel": "MEZ/MESZ 14:30-16:00 / 15:30-17:00"
           },
           {
@@ -17954,7 +17954,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "16:00-17:00 / 17:00-18:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "16:00-18:00 (DE)",
+            "germanChartLabel": "(DE 16:00-18:00)",
             "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
           },
           {
@@ -17966,7 +17966,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-19:00 (DE)",
+            "germanChartLabel": "(DE 18:00-19:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00"
           },
           {
@@ -17978,7 +17978,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00 / 19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-20:00 (DE)",
+            "germanChartLabel": "(DE 18:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
           },
           {
@@ -17990,7 +17990,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "19:00-20:00 / 20:00-21:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "19:00-21:00 (DE)",
+            "germanChartLabel": "(DE 19:00-21:00)",
             "germanFullLabel": "MEZ/MESZ 19:00-20:00 / 20:00-21:00"
           },
           {
@@ -18002,7 +18002,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "21:00-22:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "21:00-22:00 (DE)",
+            "germanChartLabel": "(DE 21:00-22:00)",
             "germanFullLabel": "MEZ/MESZ 21:00-22:00"
           }
         ],
@@ -19423,7 +19423,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:50",
         "medianLowGermanMinute": 1130.0,
         "medianLowGermanTime": "18:50",
-        "medianLowGermanLabel": "18:50 (DE)",
+        "medianLowGermanLabel": "(DE 18:50)",
         "firstHourPct": 63.6,
         "first30MinutesPct": 48.1,
         "afterTwoHoursPct": 19.5,
@@ -19528,7 +19528,7 @@ window.ipoAnalysis = {
           "nycLabel": "11:00-12:00",
           "berlinLabel": "16:00-17:00 / 17:00-18:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "16:00-18:00 (DE)",
+          "germanChartLabel": "(DE 16:00-18:00)",
           "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
         },
         "fastestLow": {
@@ -19623,7 +19623,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "14:30-16:00 / 15:30-17:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "14:30-17:00 (DE)",
+            "germanChartLabel": "(DE 14:30-17:00)",
             "germanFullLabel": "MEZ/MESZ 14:30-16:00 / 15:30-17:00"
           },
           {
@@ -19635,7 +19635,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "16:00-17:00 / 17:00-18:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "16:00-18:00 (DE)",
+            "germanChartLabel": "(DE 16:00-18:00)",
             "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
           },
           {
@@ -19647,7 +19647,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "17:00-18:00 / 18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "17:00-19:00 (DE)",
+            "germanChartLabel": "(DE 17:00-19:00)",
             "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
           },
           {
@@ -19659,7 +19659,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00 / 19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-20:00 (DE)",
+            "germanChartLabel": "(DE 18:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
           },
           {
@@ -19671,7 +19671,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "19:00-20:00 / 20:00-21:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "19:00-21:00 (DE)",
+            "germanChartLabel": "(DE 19:00-21:00)",
             "germanFullLabel": "MEZ/MESZ 19:00-20:00 / 20:00-21:00"
           },
           {
@@ -19683,7 +19683,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "20:00-21:00 / 21:00-22:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "20:00-22:00 (DE)",
+            "germanChartLabel": "(DE 20:00-22:00)",
             "germanFullLabel": "MEZ/MESZ 20:00-21:00 / 21:00-22:00"
           }
         ],
@@ -21197,7 +21197,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:50",
         "medianLowGermanMinute": 1120.0,
         "medianLowGermanTime": "18:40",
-        "medianLowGermanLabel": "18:40 (DE)",
+        "medianLowGermanLabel": "(DE 18:40)",
         "firstHourPct": 65.1,
         "first30MinutesPct": 44.2,
         "afterTwoHoursPct": 18.6,
@@ -21302,7 +21302,7 @@ window.ipoAnalysis = {
           "nycLabel": "12:00-13:00",
           "berlinLabel": "17:00-18:00 / 18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "17:00-19:00 (DE)",
+          "germanChartLabel": "(DE 17:00-19:00)",
           "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
         },
         "fastestLow": {
@@ -21397,7 +21397,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "15:30-17:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "15:30-17:00 (DE)",
+            "germanChartLabel": "(DE 15:30-17:00)",
             "germanFullLabel": "MESZ 15:30-17:00"
           },
           {
@@ -21409,7 +21409,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "16:00-17:00 / 17:00-18:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "16:00-18:00 (DE)",
+            "germanChartLabel": "(DE 16:00-18:00)",
             "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
           },
           {
@@ -21421,7 +21421,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "17:00-18:00 / 18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "17:00-19:00 (DE)",
+            "germanChartLabel": "(DE 17:00-19:00)",
             "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
           },
           {
@@ -21433,7 +21433,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00 / 19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-20:00 (DE)",
+            "germanChartLabel": "(DE 18:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
           },
           {
@@ -21445,7 +21445,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "20:00-21:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "20:00-21:00 (DE)",
+            "germanChartLabel": "(DE 20:00-21:00)",
             "germanFullLabel": "MEZ/MESZ 20:00-21:00"
           },
           {
@@ -21457,7 +21457,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "20:00-21:00 / 21:00-22:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "20:00-22:00 (DE)",
+            "germanChartLabel": "(DE 20:00-22:00)",
             "germanFullLabel": "MEZ/MESZ 20:00-21:00 / 21:00-22:00"
           }
         ],
@@ -22325,7 +22325,7 @@ window.ipoAnalysis = {
         "medianLowTime": "13:08",
         "medianLowGermanMinute": 1147.5,
         "medianLowGermanTime": "19:08",
-        "medianLowGermanLabel": "19:08 (DE)",
+        "medianLowGermanLabel": "(DE 19:08)",
         "firstHourPct": 61.8,
         "first30MinutesPct": 52.9,
         "afterTwoHoursPct": 20.6,
@@ -22430,7 +22430,7 @@ window.ipoAnalysis = {
           "nycLabel": "13:00-14:00",
           "berlinLabel": "19:00-20:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "19:00-20:00 (DE)",
+          "germanChartLabel": "(DE 19:00-20:00)",
           "germanFullLabel": "MEZ/MESZ 19:00-20:00"
         },
         "fastestLow": {
@@ -22525,7 +22525,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "14:30-16:00 / 15:30-17:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "14:30-17:00 (DE)",
+            "germanChartLabel": "(DE 14:30-17:00)",
             "germanFullLabel": "MEZ/MESZ 14:30-16:00 / 15:30-17:00"
           },
           {
@@ -22537,7 +22537,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "17:00-18:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "17:00-18:00 (DE)",
+            "germanChartLabel": "(DE 17:00-18:00)",
             "germanFullLabel": "MEZ/MESZ 17:00-18:00"
           },
           {
@@ -22549,7 +22549,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "18:00-19:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "18:00-19:00 (DE)",
+            "germanChartLabel": "(DE 18:00-19:00)",
             "germanFullLabel": "MESZ 18:00-19:00"
           },
           {
@@ -22561,7 +22561,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "19:00-20:00 (DE)",
+            "germanChartLabel": "(DE 19:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 19:00-20:00"
           },
           {
@@ -22573,7 +22573,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "19:00-20:00 / 20:00-21:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "19:00-21:00 (DE)",
+            "germanChartLabel": "(DE 19:00-21:00)",
             "germanFullLabel": "MEZ/MESZ 19:00-20:00 / 20:00-21:00"
           },
           {
@@ -22585,7 +22585,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "21:00-22:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "21:00-22:00 (DE)",
+            "germanChartLabel": "(DE 21:00-22:00)",
             "germanFullLabel": "MEZ/MESZ 21:00-22:00"
           }
         ],
@@ -23284,7 +23284,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:42",
         "medianLowGermanMinute": 1117.5,
         "medianLowGermanTime": "18:38",
-        "medianLowGermanLabel": "18:38 (DE)",
+        "medianLowGermanLabel": "(DE 18:38)",
         "firstHourPct": 70.6,
         "first30MinutesPct": 47.1,
         "afterTwoHoursPct": 11.8,
@@ -23389,7 +23389,7 @@ window.ipoAnalysis = {
           "nycLabel": "12:00-13:00",
           "berlinLabel": "17:00-18:00 / 18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "17:00-19:00 (DE)",
+          "germanChartLabel": "(DE 17:00-19:00)",
           "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
         },
         "fastestLow": {
@@ -23484,7 +23484,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "15:30-17:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "15:30-17:00 (DE)",
+            "germanChartLabel": "(DE 15:30-17:00)",
             "germanFullLabel": "MESZ 15:30-17:00"
           },
           {
@@ -23496,7 +23496,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "16:00-17:00 / 17:00-18:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "16:00-18:00 (DE)",
+            "germanChartLabel": "(DE 16:00-18:00)",
             "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
           },
           {
@@ -23508,7 +23508,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "17:00-18:00 / 18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "17:00-19:00 (DE)",
+            "germanChartLabel": "(DE 17:00-19:00)",
             "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
           },
           {
@@ -23520,7 +23520,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00 / 19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-20:00 (DE)",
+            "germanChartLabel": "(DE 18:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
           },
           {
@@ -23532,7 +23532,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "19:00-20:00 / 20:00-21:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "19:00-21:00 (DE)",
+            "germanChartLabel": "(DE 19:00-21:00)",
             "germanFullLabel": "MEZ/MESZ 19:00-20:00 / 20:00-21:00"
           },
           {
@@ -23544,7 +23544,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "21:00-22:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "21:00-22:00 (DE)",
+            "germanChartLabel": "(DE 21:00-22:00)",
             "germanFullLabel": "MEZ/MESZ 21:00-22:00"
           }
         ],
@@ -24241,7 +24241,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:35",
         "medianLowGermanMinute": 1100.0,
         "medianLowGermanTime": "18:20",
-        "medianLowGermanLabel": "18:20 (DE)",
+        "medianLowGermanLabel": "(DE 18:20)",
         "firstHourPct": 78.9,
         "first30MinutesPct": 47.4,
         "afterTwoHoursPct": 5.3,
@@ -24346,7 +24346,7 @@ window.ipoAnalysis = {
           "nycLabel": "12:00-13:00",
           "berlinLabel": "17:00-18:00 / 18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "17:00-19:00 (DE)",
+          "germanChartLabel": "(DE 17:00-19:00)",
           "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
         },
         "fastestLow": {
@@ -24441,7 +24441,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "15:30-17:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "15:30-17:00 (DE)",
+            "germanChartLabel": "(DE 15:30-17:00)",
             "germanFullLabel": "MESZ 15:30-17:00"
           },
           {
@@ -24453,7 +24453,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "16:00-17:00 / 17:00-18:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "16:00-18:00 (DE)",
+            "germanChartLabel": "(DE 16:00-18:00)",
             "germanFullLabel": "MEZ/MESZ 16:00-17:00 / 17:00-18:00"
           },
           {
@@ -24465,7 +24465,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "17:00-18:00 / 18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "17:00-19:00 (DE)",
+            "germanChartLabel": "(DE 17:00-19:00)",
             "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
           },
           {
@@ -24477,7 +24477,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00 / 19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-20:00 (DE)",
+            "germanChartLabel": "(DE 18:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
           },
           {
@@ -24489,7 +24489,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "20:00-21:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "20:00-21:00 (DE)",
+            "germanChartLabel": "(DE 20:00-21:00)",
             "germanFullLabel": "MEZ/MESZ 20:00-21:00"
           },
           {
@@ -24501,7 +24501,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "21:00-22:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "21:00-22:00 (DE)",
+            "germanChartLabel": "(DE 21:00-22:00)",
             "germanFullLabel": "MESZ 21:00-22:00"
           }
         ],
@@ -24913,7 +24913,7 @@ window.ipoAnalysis = {
         "medianLowTime": "13:15",
         "medianLowGermanMinute": 1155.0,
         "medianLowGermanTime": "19:15",
-        "medianLowGermanLabel": "19:15 (DE)",
+        "medianLowGermanLabel": "(DE 19:15)",
         "firstHourPct": 60.0,
         "first30MinutesPct": 46.7,
         "afterTwoHoursPct": 20.0,
@@ -25018,7 +25018,7 @@ window.ipoAnalysis = {
           "nycLabel": "11:00-12:00",
           "berlinLabel": "17:00-18:00",
           "berlinZoneLabel": "MESZ",
-          "germanChartLabel": "17:00-18:00 (DE)",
+          "germanChartLabel": "(DE 17:00-18:00)",
           "germanFullLabel": "MESZ 17:00-18:00"
         },
         "fastestLow": {
@@ -25113,7 +25113,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "15:30-17:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "15:30-17:00 (DE)",
+            "germanChartLabel": "(DE 15:30-17:00)",
             "germanFullLabel": "MESZ 15:30-17:00"
           },
           {
@@ -25125,7 +25125,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "17:00-18:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "17:00-18:00 (DE)",
+            "germanChartLabel": "(DE 17:00-18:00)",
             "germanFullLabel": "MESZ 17:00-18:00"
           },
           {
@@ -25137,7 +25137,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "18:00-19:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "18:00-19:00 (DE)",
+            "germanChartLabel": "(DE 18:00-19:00)",
             "germanFullLabel": "MESZ 18:00-19:00"
           },
           {
@@ -25149,7 +25149,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "19:00-20:00 (DE)",
+            "germanChartLabel": "(DE 19:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 19:00-20:00"
           },
           {
@@ -25161,7 +25161,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "19:00-20:00 / 20:00-21:00",
             "berlinZoneLabel": "MEZ",
-            "germanChartLabel": "19:00-21:00 (DE)",
+            "germanChartLabel": "(DE 19:00-21:00)",
             "germanFullLabel": "MEZ 19:00-20:00 / 20:00-21:00"
           },
           {
@@ -25173,7 +25173,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "21:00-22:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "21:00-22:00 (DE)",
+            "germanChartLabel": "(DE 21:00-22:00)",
             "germanFullLabel": "MEZ/MESZ 21:00-22:00"
           }
         ],
@@ -25511,7 +25511,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:28",
         "medianLowGermanMinute": 1092.5,
         "medianLowGermanTime": "18:12",
-        "medianLowGermanLabel": "18:12 (DE)",
+        "medianLowGermanLabel": "(DE 18:12)",
         "firstHourPct": 77.8,
         "first30MinutesPct": 50.0,
         "afterTwoHoursPct": 11.1,
@@ -25616,7 +25616,7 @@ window.ipoAnalysis = {
           "nycLabel": "12:00-13:00",
           "berlinLabel": "17:00-18:00 / 18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "17:00-19:00 (DE)",
+          "germanChartLabel": "(DE 17:00-19:00)",
           "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
         },
         "fastestLow": {
@@ -25711,7 +25711,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "15:30-17:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "15:30-17:00 (DE)",
+            "germanChartLabel": "(DE 15:30-17:00)",
             "germanFullLabel": "MESZ 15:30-17:00"
           },
           {
@@ -25723,7 +25723,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "17:00-18:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "17:00-18:00 (DE)",
+            "germanChartLabel": "(DE 17:00-18:00)",
             "germanFullLabel": "MESZ 17:00-18:00"
           },
           {
@@ -25735,7 +25735,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "17:00-18:00 / 18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "17:00-19:00 (DE)",
+            "germanChartLabel": "(DE 17:00-19:00)",
             "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
           },
           {
@@ -25747,7 +25747,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00 / 19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "18:00-20:00 (DE)",
+            "germanChartLabel": "(DE 18:00-20:00)",
             "germanFullLabel": "MEZ/MESZ 18:00-19:00 / 19:00-20:00"
           },
           {
@@ -25759,7 +25759,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "20:00-21:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "20:00-21:00 (DE)",
+            "germanChartLabel": "(DE 20:00-21:00)",
             "germanFullLabel": "MEZ/MESZ 20:00-21:00"
           },
           {
@@ -25771,7 +25771,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "21:00-22:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "21:00-22:00 (DE)",
+            "germanChartLabel": "(DE 21:00-22:00)",
             "germanFullLabel": "MESZ 21:00-22:00"
           }
         ],
@@ -26164,7 +26164,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:28",
         "medianLowGermanMinute": 1092.5,
         "medianLowGermanTime": "18:12",
-        "medianLowGermanLabel": "18:12 (DE)",
+        "medianLowGermanLabel": "(DE 18:12)",
         "firstHourPct": 90.0,
         "first30MinutesPct": 60.0,
         "afterTwoHoursPct": 0.0,
@@ -26269,7 +26269,7 @@ window.ipoAnalysis = {
           "nycLabel": "12:00-13:00",
           "berlinLabel": "17:00-18:00 / 18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
-          "germanChartLabel": "17:00-19:00 (DE)",
+          "germanChartLabel": "(DE 17:00-19:00)",
           "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
         },
         "fastestLow": {
@@ -26364,7 +26364,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "15:30-17:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "15:30-17:00 (DE)",
+            "germanChartLabel": "(DE 15:30-17:00)",
             "germanFullLabel": "MESZ 15:30-17:00"
           },
           {
@@ -26376,7 +26376,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "17:00-18:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "17:00-18:00 (DE)",
+            "germanChartLabel": "(DE 17:00-18:00)",
             "germanFullLabel": "MESZ 17:00-18:00"
           },
           {
@@ -26388,7 +26388,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "17:00-18:00 / 18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "17:00-19:00 (DE)",
+            "germanChartLabel": "(DE 17:00-19:00)",
             "germanFullLabel": "MEZ/MESZ 17:00-18:00 / 18:00-19:00"
           },
           {
@@ -26400,7 +26400,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00",
             "berlinZoneLabel": "MEZ",
-            "germanChartLabel": "18:00-19:00 (DE)",
+            "germanChartLabel": "(DE 18:00-19:00)",
             "germanFullLabel": "MEZ 18:00-19:00"
           },
           {
@@ -26412,7 +26412,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "20:00-21:00",
             "berlinZoneLabel": "MEZ/MESZ",
-            "germanChartLabel": "20:00-21:00 (DE)",
+            "germanChartLabel": "(DE 20:00-21:00)",
             "germanFullLabel": "MEZ/MESZ 20:00-21:00"
           },
           {
@@ -26424,7 +26424,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "21:00-22:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "21:00-22:00 (DE)",
+            "germanChartLabel": "(DE 21:00-22:00)",
             "germanFullLabel": "MESZ 21:00-22:00"
           }
         ],
@@ -26665,7 +26665,7 @@ window.ipoAnalysis = {
         "medianLowTime": "12:35",
         "medianLowGermanMinute": 1115.0,
         "medianLowGermanTime": "18:35",
-        "medianLowGermanLabel": "18:35 (DE)",
+        "medianLowGermanLabel": "(DE 18:35)",
         "firstHourPct": 62.5,
         "first30MinutesPct": 37.5,
         "afterTwoHoursPct": 25.0,
@@ -26770,7 +26770,7 @@ window.ipoAnalysis = {
           "nycLabel": "11:00-12:00",
           "berlinLabel": "17:00-18:00",
           "berlinZoneLabel": "MESZ",
-          "germanChartLabel": "17:00-18:00 (DE)",
+          "germanChartLabel": "(DE 17:00-18:00)",
           "germanFullLabel": "MESZ 17:00-18:00"
         },
         "fastestLow": {
@@ -26865,7 +26865,7 @@ window.ipoAnalysis = {
             "nycLabel": "09:30-11:00",
             "berlinLabel": "15:30-17:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "15:30-17:00 (DE)",
+            "germanChartLabel": "(DE 15:30-17:00)",
             "germanFullLabel": "MESZ 15:30-17:00"
           },
           {
@@ -26877,7 +26877,7 @@ window.ipoAnalysis = {
             "nycLabel": "11:00-12:00",
             "berlinLabel": "17:00-18:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "17:00-18:00 (DE)",
+            "germanChartLabel": "(DE 17:00-18:00)",
             "germanFullLabel": "MESZ 17:00-18:00"
           },
           {
@@ -26889,7 +26889,7 @@ window.ipoAnalysis = {
             "nycLabel": "12:00-13:00",
             "berlinLabel": "18:00-19:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "18:00-19:00 (DE)",
+            "germanChartLabel": "(DE 18:00-19:00)",
             "germanFullLabel": "MESZ 18:00-19:00"
           },
           {
@@ -26901,7 +26901,7 @@ window.ipoAnalysis = {
             "nycLabel": "13:00-14:00",
             "berlinLabel": "19:00-20:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "19:00-20:00 (DE)",
+            "germanChartLabel": "(DE 19:00-20:00)",
             "germanFullLabel": "MESZ 19:00-20:00"
           },
           {
@@ -26913,7 +26913,7 @@ window.ipoAnalysis = {
             "nycLabel": "14:00-15:00",
             "berlinLabel": "20:00-21:00",
             "berlinZoneLabel": "MEZ",
-            "germanChartLabel": "20:00-21:00 (DE)",
+            "germanChartLabel": "(DE 20:00-21:00)",
             "germanFullLabel": "MEZ 20:00-21:00"
           },
           {
@@ -26925,7 +26925,7 @@ window.ipoAnalysis = {
             "nycLabel": "15:00-16:00",
             "berlinLabel": "21:00-22:00",
             "berlinZoneLabel": "MESZ",
-            "germanChartLabel": "21:00-22:00 (DE)",
+            "germanChartLabel": "(DE 21:00-22:00)",
             "germanFullLabel": "MESZ 21:00-22:00"
           }
         ],

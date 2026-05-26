@@ -2,7 +2,9 @@
 
 Static first-day IPO chart page for `https://glaubi.net/ipo`.
 
-The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top buying-decision dashboard built from those exact bars. The header market-cap filter defaults to `>$25B`, the trading-place filter defaults to `All`, and both switch the card list plus the precomputed probability analysis. Each card includes five micro charts comparing IPO price, first-day start, first-day low, first-day close, and today's price. Cards intentionally do not show the ambiguous generated IPO-to-today return field.
+The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top buying-decision dashboard built from those exact bars. The header market-cap filter defaults to `>$25B`, the trading-place filter defaults to `All`, and both switch the card list plus the precomputed probability analysis. Each card links the company name to its Yahoo Finance quote page, shows cap plus deal-size pills in the header when available, and keeps the metric strip focused on IPO price, start price, low price, buy timing, median, end price, and current price. Cards intentionally do not show the ambiguous generated IPO-to-today return field.
+
+Each card also includes five micro charts comparing IPO price, first-day start, first-day low, first-day close, and today's price. Micro-chart lines use exact IPO-day 5-minute closes where possible and sampled Yahoo weekly closes for rough longer-term paths.
 
 ## Screenshots
 
@@ -33,13 +35,13 @@ Open `http://localhost:8080`.
 python3 refresh_ipo_data.py --threshold-b 5 --limit 500 --candidate-limit 1000
 ```
 
-The refresh uses StockAnalysis for IPO metadata, Yahoo Finance chart endpoints for latest quote prices and first-day OHLCV data, and Alpaca market data as the main exact intraday fallback when paper/data credentials are available through `APCA_API_KEY_ID` plus `APCA_API_SECRET_KEY` or compatible `ALPACA_*` env vars. Candle charts use only exact 5-minute rows in `chart-data.js`; missing exact bars are suppressed rather than estimated.
+The refresh uses StockAnalysis for IPO metadata, Yahoo Finance chart endpoints for latest quote prices, rough weekly mini-chart history, and first-day OHLCV data, and Alpaca market data as the main exact intraday fallback when paper/data credentials are available through `APCA_API_KEY_ID` plus `APCA_API_SECRET_KEY` or compatible `ALPACA_*` env vars. Candle charts use only exact 5-minute rows in `chart-data.js`; missing exact bars are suppressed rather than estimated.
 
 API keys are read only from the environment and must not be committed. Alpaca credentials are sent only in request headers. Alpha Vantage remains an optional fallback, but historical intraday month requests require a premium-enabled Alpha Vantage key.
 
-Clock-time analysis is shown with dual 24-hour labels: NYC time plus German local time with a ` (DE)` suffix, converted in Python with daylight-saving rules. The visible analysis UI has a buyer-window summary, metric cards, an elapsed-time opportunity map, two distribution charts with dynamic median reference lines, then balanced side-by-side `Decision odds` and `Timing signals` panels. Its numbers come from `ipo-analysis.js` rather than being recalculated in the browser.
+Clock-time analysis is shown with dual 24-hour labels in `HH:MM (DE HH:MM)` format, or as two lines where space is tight, converted with daylight-saving rules. The visible analysis UI has a buyer-window summary, metric cards, a full-width elapsed-time opportunity map, two larger distribution charts with dynamic median reference lines, then balanced side-by-side `Decision odds` and `Timing signals` panels. Its numbers come from `ipo-analysis.js` rather than being recalculated in the browser.
 
-Main candle charts show only real first-day 5-minute bars. They include the active-filter median timing reference line, the first-day low reference, and conditional IPO-price/current-price horizontal reference lines only when those prices fall inside the chart's first-day OHLC range. Low markers are selected from the same near-low price band and are spaced at least one hour apart so late retests are visible without labeling every adjacent candle.
+Main candle charts show only real first-day 5-minute bars. They include a top elapsed-minutes axis from the first public trade, bottom NYC/German clock labels, the active-filter median timing reference line, the first-day low reference, and conditional IPO-price/current-price horizontal reference lines only when those prices fall inside the chart's first-day OHLC range. Low markers are selected from the same near-low price band and are spaced at least one hour apart so late retests are visible without labeling every adjacent candle. Visible candle source labels are compact provider markers such as `(Y)` for Yahoo and `(A)` for Alpaca.
 
 To rebuild only the derived analysis:
 
@@ -54,7 +56,7 @@ python3 -m py_compile refresh_ipo_data.py build_ipo_analysis.py
 perl -0ne 'while(/<script>(.*?)<\/script>/sg){print $1}' index.html > /tmp/ipo-inline.js && node --check /tmp/ipo-inline.js
 ```
 
-For visual QA, serve the page locally and check that the header cap and trading-place filters change the `Sample`, `Decision odds`, median markers, and card count together. Also check the `Decision odds` / `Timing signals` panels, search, sort toggle, the `CBRS` Yahoo chart, and at least one Alpaca-sourced chart such as `ARM`. In main candle charts, verify the blue median timing line and confirm IPO/current price reference lines appear only when in range.
+For visual QA, serve the page locally and check that the header cap and trading-place filters change the `Sample`, `Decision odds`, median markers, and card count together. Also check the `Decision odds` / `Timing signals` panels, search, sort toggle, the `CBRS` Yahoo chart, rough-path micro charts, the Yahoo Finance company-name links, and at least one Alpaca-sourced chart such as `ARM`. In main candle charts, verify the top elapsed-minutes axis, compact provider marker, blue median timing line, and confirm IPO/current price reference lines appear only when in range.
 
 ## Deploy
 
