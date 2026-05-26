@@ -3,7 +3,7 @@
 This repo builds the static `ipo` page published at:
 
 - Public URL: `https://glaubi.net/ipo`
-- GitHub Pages upstream: `https://robertzaufall.github.io/ipo`
+- GitHub Pages upstream/fallback: `https://robertzaufall.github.io/ipo`
 - GitHub repo: `https://github.com/robertZaufall/ipo`
 - Local site repo: `/Users/master/clawd/projects/ipo-site`
 - Cloudflare Worker proxy source: `/Users/master/clawd/projects/ipo-proxy`
@@ -19,6 +19,8 @@ This repo builds the static `ipo` page published at:
 - Analysis distribution charts include dynamic median reference lines from the currently active cap and trading-place filter.
 - Main candle charts include a blue vertical median timing reference line from the currently active analysis filter. They also show conditional horizontal IPO-price and current-price reference lines only when those prices are inside the visible first-day OHLC range.
 - IPO cards include five micro charts below the metadata: IPO price to first-day close, first-day start price to first-day end price, first-day low to first-day end price, IPO price to current price, and first-day close to current price.
+- IPO cards do not render the generated IPO-to-current `dayChange` value. Do not re-add the top return pill or the `IPO return` metric unless Rob asks.
+- Main candle charts can show multiple low markers. The markers must be selected from the same near-low price range and every pair of selected marker times must be at least one hour apart.
 - The market-cap and trading-place segmented filters sit in the header above the analysis panel so they control both the probability analysis and the card list. The default cap filter is `>$25B`; other cap options are `<$10B`, all (`*`), `>$10B`, and `>$50B`. The default trading-place filter is `All`; other options are `NASDAQ` and `NYSE`.
 - The card toolbar below the analysis keeps only search plus the Date/Cap sort toggle.
 - Do not reintroduce charting CDNs unless Rob explicitly asks. Earlier chart-library attempts rendered blank in production.
@@ -47,7 +49,7 @@ IPO object fields:
 - `currentAsOf`, `currentSource`, `currentCurrency` - quote provenance for `current`
 - `marketCap` - billions USD
 - `dealSize` - millions USD raised
-- `dayChange` - percent from IPO price to current price
+- `dayChange` - percent from IPO price to current price; generated for compatibility but intentionally not rendered in card UI
 - `firstDay` - optional Yahoo daily OHLC reference, not used for chart rendering
 
 `firstDayBars` row format:
@@ -166,12 +168,12 @@ python3 build_ipo_analysis.py --input-dir . --output-dir .
 
 ## Deploy Site
 
-The site repo is Git-backed and pushes to GitHub Pages:
+The site repo is Git-backed and pushes to GitHub. The live `https://glaubi.net/ipo` route currently uses the Cloudflare Worker proxy to fetch the latest static files from GitHub raw `main`; GitHub Pages remains configured as an upstream/fallback but has had stuck or failed builds. Treat the Worker-backed public route as the production verification target.
 
 ```sh
 cd /Users/master/clawd/projects/ipo-site
 git status --short
-git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py AGENTS.md README.md LICENSE
+git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py .nojekyll .github/workflows/pages.yml AGENTS.md README.md LICENSE
 git commit -m "Update IPO site"
 git push
 ```
@@ -179,8 +181,9 @@ git push
 After pushing, verify:
 
 ```sh
-curl -I https://robertzaufall.github.io/ipo/
 curl -I https://glaubi.net/ipo
+curl -fsSL 'https://glaubi.net/ipo?v=<commit>' | rg 'LOW_MARKER_MIN_GAP_MINUTES'
+! curl -fsSL 'https://glaubi.net/ipo?v=<commit>' | rg 'IPO return|Return —'
 ```
 
 Use a cache-busting query when visually checking:
@@ -203,14 +206,14 @@ The live `glaubi.net/ipo` route depends on the Worker source in that folder:
   - `glaubi.net/ipo*`
   - `glaubi.net/ipo/*`
 
-The Worker maps hidden-path requests:
+The Worker maps hidden-path requests to GitHub raw `main`:
 
 ```text
-https://glaubi.net/ipo     -> https://robertzaufall.github.io/ipo/
-https://glaubi.net/ipo/... -> https://robertzaufall.github.io/ipo/...
+https://glaubi.net/ipo     -> https://raw.githubusercontent.com/robertZaufall/ipo/main/index.html
+https://glaubi.net/ipo/... -> https://raw.githubusercontent.com/robertZaufall/ipo/main/...
 ```
 
-It also injects:
+It also sets content types for static assets, strips restrictive raw GitHub CSP headers, applies a short public cache, and injects:
 
 ```html
 <base href="/ipo/">
@@ -261,6 +264,8 @@ Before calling an IPO change done:
 - No included IPO has a known `firstDay.open` below `$1`.
 - `CBRS` is present and its chart uses real Yahoo 5-minute bars and does not begin at `$185`.
 - Main candle charts show the active-filter median timing line and only show IPO-price/current-price horizontal reference lines when those values are within that chart's first-day OHLC range.
+- Low markers on main candle charts are in the same near-low price band and are spaced at least one hour apart.
+- IPO cards do not show `IPO return`, `Return —`, or the generated `dayChange` value.
 - Missing exact 5-minute bars are suppressed from the card list, not rendered as estimated charts.
 - Search filters cards by ticker/company/exchange/sector.
 - Sort button toggles between IPO date recent-first and market cap biggest-first.
@@ -271,4 +276,4 @@ Before calling an IPO change done:
 - Python scripts compile:
   `python3 -m py_compile refresh_ipo_data.py build_ipo_analysis.py`
 - `https://glaubi.net/ipo` returns the page, not a 404.
-- `https://glaubi.net/ipo?v=<commit>` visually shows candles.
+- `https://glaubi.net/ipo?v=<commit>` visually shows candles and serves the current GitHub raw `main` content through the Worker.

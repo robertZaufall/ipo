@@ -2,7 +2,7 @@
 
 Static first-day IPO chart page for `https://glaubi.net/ipo`.
 
-The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top buying-decision dashboard built from those exact bars. The header market-cap filter defaults to `>$25B`, the trading-place filter defaults to `All`, and both switch the card list plus the precomputed probability analysis. Each card includes five micro charts comparing IPO price, first-day start, first-day low, first-day close, and today's price.
+The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top buying-decision dashboard built from those exact bars. The header market-cap filter defaults to `>$25B`, the trading-place filter defaults to `All`, and both switch the card list plus the precomputed probability analysis. Each card includes five micro charts comparing IPO price, first-day start, first-day low, first-day close, and today's price. Cards intentionally do not show the ambiguous generated IPO-to-today return field.
 
 ## Screenshots
 
@@ -18,6 +18,8 @@ The site shows large IPO companies as full-width cards only when exact 5-minute 
 - `ipo-analysis.js` - generated 15-year low-timing analysis, decision odds, and timing insights, precomputed per cap and trading-place filter.
 - `refresh_ipo_data.py` - refreshes IPO metadata, chart data, and analysis.
 - `build_ipo_analysis.py` - rebuilds only `ipo-analysis.js` from existing generated data.
+- `.nojekyll` - keeps GitHub Pages from running Jekyll over the static files.
+- `.github/workflows/pages.yml` - explicit GitHub Pages workflow kept for Pages recovery, though the public `glaubi.net/ipo` route currently uses the Worker proxy described below.
 
 ## Run Locally
 
@@ -39,7 +41,7 @@ API keys are read only from the environment and must not be committed. Alpaca cr
 
 Clock-time analysis is shown with dual 24-hour labels: NYC time plus German local time with a ` (DE)` suffix, converted in Python with daylight-saving rules. The visible analysis UI has a buyer-window summary, metric cards, an elapsed-time opportunity map, two distribution charts with dynamic median reference lines, then balanced side-by-side `Decision odds` and `Timing signals` panels. Its numbers come from `ipo-analysis.js` rather than being recalculated in the browser.
 
-Main candle charts show only real first-day 5-minute bars. They include the active-filter median timing reference line, the first-day low reference, and conditional IPO-price/current-price horizontal reference lines only when those prices fall inside the chart's first-day OHLC range.
+Main candle charts show only real first-day 5-minute bars. They include the active-filter median timing reference line, the first-day low reference, and conditional IPO-price/current-price horizontal reference lines only when those prices fall inside the chart's first-day OHLC range. Low markers are selected from the same near-low price band and are spaced at least one hour apart so late retests are visible without labeling every adjacent candle.
 
 To rebuild only the derived analysis:
 
@@ -58,12 +60,20 @@ For visual QA, serve the page locally and check that the header cap and trading-
 
 ## Deploy
 
-This repo is published through GitHub Pages at `https://robertzaufall.github.io/ipo/` and proxied to `https://glaubi.net/ipo`.
+This repo is pushed to GitHub at `https://github.com/robertZaufall/ipo`. The public route `https://glaubi.net/ipo` is served by the Cloudflare Worker in `/Users/master/clawd/projects/ipo-proxy`, which currently fetches the static files from GitHub raw `main` and injects `<base href="/ipo/">`. GitHub Pages at `https://robertzaufall.github.io/ipo/` exists as an upstream/fallback but has had stuck or failed legacy builds, so verify `glaubi.net/ipo` as the live surface.
 
 ```sh
-git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py README.md LICENSE AGENTS.md
+git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py .nojekyll .github/workflows/pages.yml README.md LICENSE AGENTS.md
 git commit -m "Update IPO site"
 git push
+```
+
+After pushing, verify the live Worker route with a cache-busting query:
+
+```sh
+curl -I https://glaubi.net/ipo
+curl -fsSL 'https://glaubi.net/ipo?v=<commit>' | rg 'LOW_MARKER_MIN_GAP_MINUTES'
+! curl -fsSL 'https://glaubi.net/ipo?v=<commit>' | rg 'IPO return|Return —'
 ```
 
 ## License
