@@ -102,7 +102,7 @@
     </main>
 
     <script>
-        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-26-10';
+        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-26-12';
         ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js'].forEach(src => {
             document.write(`<script src="${src}?v=${encodeURIComponent(IPO_ASSET_VERSION)}"><\/script>`);
         });
@@ -222,6 +222,24 @@
             };
         }
 
+        function medianTimingQuote(data) {
+            const firstMinute = data[0]?.minute;
+            const medianDeltaMinutes = Number(currentAnalysis()?.medianDeltaMinutes);
+            if (!Number.isFinite(firstMinute) || !Number.isFinite(medianDeltaMinutes)) return null;
+            const targetMinute = firstMinute + medianDeltaMinutes;
+            const valid = data
+                .filter(bar => Number.isFinite(bar.minute) && Number.isFinite(bar.open))
+                .sort((a, b) => a.minute - b.minute);
+            const bar = valid.find(candidate => candidate.minute >= targetMinute);
+            if (!bar) return null;
+            return {
+                price: bar.open,
+                time: bar.time || minutesToTime(bar.minute),
+                medianDeltaMinutes,
+                deltaMinutes: bar.minute - firstMinute
+            };
+        }
+
         function chartLowPoints(data) {
             const valid = data.filter(bar => Number.isFinite(bar.low) && Number.isFinite(bar.minute));
             const lowPoint = valid.reduce((lowest, bar) => bar.low < lowest.low ? bar : lowest, valid[0]);
@@ -244,6 +262,49 @@
                 lowPoint,
                 markers: clusters.map(cluster => cluster.point)
             };
+        }
+
+        function buyTimingMetric(data) {
+            const empty = `<div class="col-span-2 lg:col-span-2 xl:col-span-2 bg-zinc-950 border border-zinc-800 rounded-2xl p-3">
+                <div class="text-zinc-500 text-xs">Buy timing</div>
+                <div class="font-mono text-base sm:text-lg font-semibold mt-0.5 text-zinc-500">—</div>
+            </div>`;
+            if (!data.length) return empty;
+            const firstMinute = data[0]?.minute;
+            if (!Number.isFinite(firstMinute)) return empty;
+            const { lowPoint, markers } = chartLowPoints(data);
+            const timings = markers
+                .filter(point => Number.isFinite(point.minute) && Number.isFinite(point.low))
+                .sort((a, b) => a.minute - b.minute)
+                .map(point => ({
+                    deltaMinutes: point.minute - firstMinute,
+                    time: point.time || minutesToTime(point.minute),
+                    price: point.low,
+                    exact: point.low === lowPoint.low
+                }));
+            const uniqueTimings = [];
+            timings.forEach(timing => {
+                if (!uniqueTimings.some(existing => existing.deltaMinutes === timing.deltaMinutes && Math.abs(existing.price - timing.price) < 0.005)) {
+                    uniqueTimings.push(timing);
+                }
+            });
+            const visibleTimings = uniqueTimings.slice(0, 3);
+            if (!visibleTimings.length) return empty;
+            const primaryTiming = visibleTimings.find(timing => timing.exact) || visibleTimings[0];
+            const otherTimings = visibleTimings
+                .filter(timing => timing !== primaryTiming)
+                .map(timing => formatElapsedPlain(timing.deltaMinutes));
+            const extraCount = uniqueTimings.length - visibleTimings.length;
+            const secondaryParts = [
+                `${primaryTiming.time} · ${fmtUsd(primaryTiming.price)}`,
+                otherTimings.length ? `Near lows ${otherTimings.join(', ')}` : '',
+                extraCount > 0 ? `+${extraCount} more` : ''
+            ].filter(Boolean);
+            return `<div class="col-span-2 lg:col-span-2 xl:col-span-2 bg-amber-500/[0.06] border border-amber-500/35 rounded-2xl p-3">
+                <div class="text-amber-300 text-xs">Buy timing</div>
+                <div class="font-display text-2xl sm:text-3xl leading-none mt-0.5 text-amber-300">${formatElapsedPlain(primaryTiming.deltaMinutes)}</div>
+                <div class="mt-1 text-xs leading-5 text-zinc-500">${secondaryParts.map(escapeHtml).join(' · ')}</div>
+            </div>`;
         }
 
         function renderChart(ipo, data) {
@@ -808,6 +869,7 @@
             const positive = ipo.dayChange != null && ipo.dayChange >= 0;
             const data = chartData(ipo);
             const summary = chartSummary(data);
+            const medianQuote = medianTimingQuote(data);
             const dayEndedUp = summary.startPrice != null && summary.endPrice != null && summary.endPrice >= summary.startPrice;
             const searchBlob = `${ipo.ticker} ${ipo.name} ${ipo.exchange} ${ipo.sector || ''}`.toLowerCase();
             return `<article class="ipo-card bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden modern-shadow" data-search="${escapeHtml(searchBlob)}">
@@ -829,10 +891,12 @@
                 </div>
                 <div class="p-4 sm:p-6">
                     <div class="h-[586px] sm:h-[691px] bg-zinc-950 rounded-2xl border border-zinc-800 overflow-hidden">${renderChart(ipo, data)}</div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 mt-4">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-10 gap-3 mt-4">
                         ${metric('IPO price', fmtUsd(ipo.ipoPrice))}
                         ${metric('Current', fmtUsd(ipo.current))}
                         ${metric('Start price', fmtUsd(summary.startPrice), 'text-blue-400')}
+                        ${buyTimingMetric(data)}
+                        ${metric(medianQuote ? `Median ${formatElapsedPlain(medianQuote.medianDeltaMinutes)}` : 'Median price', fmtUsd(medianQuote?.price), 'text-blue-400')}
                         ${metric('End price', fmtUsd(summary.endPrice), dayEndedUp ? 'text-emerald-400' : 'text-red-400')}
                         ${metric('Market cap', fmtCap(ipo.marketCap), 'text-emerald-400')}
                         ${metric('Deal size', fmtDeal(ipo.dealSize))}
