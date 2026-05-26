@@ -140,6 +140,7 @@
         const MARKET_OPEN_MINUTES = 9 * 60 + 30;
         const MARKET_CLOSE_MINUTES = 16 * 60;
         const HALF_HOUR_MINUTES = 30;
+        const LOW_MARKER_MIN_GAP_MINUTES = 60;
 
         function timeToMinutes(time) {
             if (!time) return null;
@@ -247,20 +248,16 @@
             const lowBand = Math.max(Math.abs(lowPoint.low) * 0.01, (high - lowPoint.low) * 0.015);
             const lowCandidates = valid
                 .filter(bar => bar.low <= lowPoint.low + lowBand)
-                .sort((a, b) => a.minute - b.minute);
-            const clusters = [];
+                .sort((a, b) => a.low - b.low || a.minute - b.minute);
+            const markers = [];
             for (const point of lowCandidates) {
-                const latest = clusters[clusters.length - 1];
-                if (!latest || point.minute - latest.endMinute > 10) {
-                    clusters.push({ endMinute: point.minute, point });
-                    continue;
+                if (markers.every(marker => Math.abs(point.minute - marker.minute) >= LOW_MARKER_MIN_GAP_MINUTES)) {
+                    markers.push(point);
                 }
-                latest.endMinute = point.minute;
-                if (point.low < latest.point.low) latest.point = point;
             }
             return {
                 lowPoint,
-                markers: clusters.map(cluster => cluster.point)
+                markers: markers.sort((a, b) => a.minute - b.minute)
             };
         }
 
@@ -866,7 +863,6 @@
         }
 
         function cardHtml(ipo, index) {
-            const positive = ipo.dayChange != null && ipo.dayChange >= 0;
             const data = chartData(ipo);
             const summary = chartSummary(data);
             const medianQuote = medianTimingQuote(data);
@@ -885,13 +881,12 @@
                         </h2>
                     </div>
                     <div class="flex flex-wrap gap-2 lg:justify-end">
-                        <span class="px-3 h-8 rounded-2xl border ${positive ? 'border-emerald-900 text-emerald-400' : 'border-red-900 text-red-400'} text-xs font-semibold flex items-center">${ipo.dayChange == null ? 'Return —' : fmtPct(ipo.dayChange)}</span>
                         <span class="px-3 h-8 rounded-2xl border border-zinc-700 text-zinc-300 text-xs font-semibold flex items-center">Cap ${fmtCap(ipo.marketCap)}</span>
                     </div>
                 </div>
                 <div class="p-4 sm:p-6">
                     <div class="h-[586px] sm:h-[691px] bg-zinc-950 rounded-2xl border border-zinc-800 overflow-hidden">${renderChart(ipo, data)}</div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-10 gap-3 mt-4">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-3 mt-4">
                         ${metric('IPO price', fmtUsd(ipo.ipoPrice))}
                         ${metric('Current', fmtUsd(ipo.current))}
                         ${metric('Start price', fmtUsd(summary.startPrice), 'text-blue-400')}
@@ -900,7 +895,6 @@
                         ${metric('End price', fmtUsd(summary.endPrice), dayEndedUp ? 'text-emerald-400' : 'text-red-400')}
                         ${metric('Market cap', fmtCap(ipo.marketCap), 'text-emerald-400')}
                         ${metric('Deal size', fmtDeal(ipo.dealSize))}
-                        ${metric('IPO return', fmtPct(ipo.dayChange), positive ? 'text-emerald-400' : 'text-red-400')}
                     </div>
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 mt-3">
                         ${progressMicroChart('IPO to day-one close', 'IPO', 'Close', ipo.ipoPrice, summary.endPrice)}
