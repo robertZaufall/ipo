@@ -2,11 +2,11 @@
 
 Static first-day IPO chart page for `https://glaubi.net/ipo`.
 
-The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top timing analysis built from those exact bars. The header market-cap filter defaults to `>$25B`, the trading-place filter defaults to `All`, and both switch the card list plus the precomputed probability analysis. Each card includes five micro charts comparing IPO price, first-day start, first-day low, first-day close, and today's price.
+The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top buying-decision dashboard built from those exact bars. The header market-cap filter defaults to `>$25B`, the trading-place filter defaults to `All`, and both switch the card list plus the precomputed probability analysis. Each card includes five micro charts comparing IPO price, first-day start, first-day low, first-day close, and today's price.
 
 ## Files
 
-- `index.html` - static page, styles, chart renderer, search, and sort toggle.
+- `index.html` - static page, styles, decision dashboard, chart renderer, filters, search, and sort toggle.
 - `ipo-data.js` - generated IPO card metadata.
 - `chart-data.js` - generated exact 5-minute first-day bars where available.
 - `ipo-analysis.js` - generated 15-year low-timing analysis, decision odds, and timing insights, precomputed per cap and trading-place filter.
@@ -31,7 +31,9 @@ The refresh uses StockAnalysis for IPO metadata, Yahoo Finance chart endpoints f
 
 API keys are read only from the environment and must not be committed. Alpaca credentials are sent only in request headers. Alpha Vantage remains an optional fallback, but historical intraday month requests require a premium-enabled Alpha Vantage key.
 
-Clock-time analysis is shown with dual 24-hour labels: NYC time plus German local time with a ` (DE)` suffix, converted in Python with daylight-saving rules. The visible analysis UI has two distribution charts, then balanced side-by-side `Decision odds` and `Timing tells` panels. Its numbers come from `ipo-analysis.js` rather than being recalculated in the browser.
+Clock-time analysis is shown with dual 24-hour labels: NYC time plus German local time with a ` (DE)` suffix, converted in Python with daylight-saving rules. The visible analysis UI has a buyer-window summary, metric cards, an elapsed-time opportunity map, two distribution charts with dynamic median reference lines, then balanced side-by-side `Decision odds` and `Timing signals` panels. Its numbers come from `ipo-analysis.js` rather than being recalculated in the browser.
+
+Main candle charts show only real first-day 5-minute bars. They include the active-filter median timing reference line, the first-day low reference, and conditional IPO-price/current-price horizontal reference lines only when those prices fall inside the chart's first-day OHLC range.
 
 To rebuild only the derived analysis:
 
@@ -46,7 +48,7 @@ python3 -m py_compile refresh_ipo_data.py build_ipo_analysis.py
 perl -0ne 'while(/<script>(.*?)<\/script>/sg){print $1}' index.html > /tmp/ipo-inline.js && node --check /tmp/ipo-inline.js
 ```
 
-For visual QA, serve the page locally and check that the header cap and trading-place filters change the `Sample`, `Decision odds`, and card count together. Also check the `Decision odds` / `Timing tells` panels, search, sort toggle, the `CBRS` Yahoo chart, and at least one Alpaca-sourced chart such as `ARM`.
+For visual QA, serve the page locally and check that the header cap and trading-place filters change the `Sample`, `Decision odds`, median markers, and card count together. Also check the `Decision odds` / `Timing signals` panels, search, sort toggle, the `CBRS` Yahoo chart, and at least one Alpaca-sourced chart such as `ARM`. In main candle charts, verify the blue median timing line and confirm IPO/current price reference lines appear only when in range.
 
 ## Deploy
 
