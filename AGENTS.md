@@ -4,8 +4,10 @@ This repo builds the static `ipo` page published at:
 
 - Public URL: `https://glaubi.net/ipo`
 - GitHub repo: `https://github.com/robertZaufall/ipo`
-- Local site repo: `/Users/master/clawd/projects/ipo-site`
-- Cloudflare Worker proxy source: `/Users/master/clawd/projects/ipo-proxy`
+- Local site repo: `<local-ipo-site-repo>`
+- Cloudflare Worker proxy source: `<local-ipo-proxy-repo>`
+
+Path placeholders in this file are intentional. Substitute them with the matching local checkout paths in the active workspace.
 
 ## Current Shape
 
@@ -14,16 +16,16 @@ This repo builds the static `ipo` page published at:
 - Styling uses Tailwind from CDN plus local CSS in `index.html`.
 - Candlestick charts are inline SVG generated in browser JavaScript.
 - The top analysis panel is an inline SVG/HTML decision dashboard generated in browser JavaScript from precomputed cap-filtered data in `ipo-analysis.js`.
-- The visible analysis UI starts with a buyer-window summary, key metrics, and an elapsed-time opportunity map; below that it shows two distribution charts followed by balanced side-by-side `Decision odds` and `Timing signals` panels. Do not re-add the removed checkpoint pill or trailing "not a buy signal" note unless Rob asks.
+- The visible analysis UI starts with a buyer-window summary, key metrics, and an elapsed-time opportunity map; below that it shows two distribution charts followed by balanced side-by-side `Decision odds` and `Timing signals` panels. Do not re-add the removed checkpoint pill or trailing "not a buy signal" note unless explicitly requested.
 - Analysis distribution charts include dynamic median reference lines from the currently active cap and trading-place filter.
 - Main candle charts include a blue vertical median timing reference line from the currently active analysis filter. They also show conditional horizontal IPO-price and current-price reference lines only when those prices are inside the visible first-day OHLC range.
 - IPO cards include five micro charts below the metadata: IPO price to first-day close, first-day start price to first-day end price, first-day low to first-day end price, IPO price to current price, and first-day close to current price.
-- IPO cards do not render the generated IPO-to-current `dayChange` value. Do not re-add the top return pill or the `IPO return` metric unless Rob asks.
+- IPO cards do not render the generated IPO-to-current `dayChange` value. Do not re-add the top return pill or the `IPO return` metric unless explicitly requested.
 - Main candle charts can show multiple low markers. The markers must be selected from the same near-low price range and every pair of selected marker times must be at least one hour apart.
 - The market-cap and trading-place segmented filters sit in the header above the analysis panel so they control both the probability analysis and the card list. The default cap filter is `>$25B`; other cap options are `<$10B`, all (`*`), `>$10B`, and `>$50B`. The default trading-place filter is `All`; other options are `NASDAQ` and `NYSE`.
 - The card toolbar below the analysis keeps only search plus the Date/Cap sort toggle.
-- Do not reintroduce charting CDNs unless Rob explicitly asks. Earlier chart-library attempts rendered blank in production.
-- The chart path only draws real first-trading-day 5-minute OHLCV bars from `chart-data.js`. Suppress cards without exact bars; do not reintroduce daily-OHLC estimates or synthetic fallback charts unless Rob explicitly asks.
+- Do not reintroduce charting CDNs unless explicitly requested. Earlier chart-library attempts rendered blank in production.
+- The chart path only draws real first-trading-day 5-minute OHLCV bars from `chart-data.js`. Suppress cards without exact bars; do not reintroduce daily-OHLC estimates or synthetic fallback charts unless explicitly requested.
 - Use `refresh_ipo_data.py` to refresh the IPO list, first-day intraday bars, and derived timing analysis.
 - Use `build_ipo_analysis.py` only when rebuilding the analysis from existing generated data without re-fetching market data.
 
@@ -77,7 +79,7 @@ Primary candidate source:
 - Also include every IPO after 2020 with current market cap above `$5B`, using StockAnalysis yearly IPO archive pages.
 - Exclude IPOs whose known first-day start/open price is below `$1`; the default script threshold is `--min-start-price 1`.
 - Exclude `VG` / Venture Global by default because Yahoo currently returns missing or wrong first-day prices.
-- `CBRS` is force-added to the candidate set by default and must remain included when it qualifies; Rob may typo it as `CRBS`, but the correct ticker is `CBRS`.
+- `CBRS` is force-added to the candidate set by default and must remain included when it qualifies; `CRBS` is a common typo, but the correct ticker is `CBRS`.
 - `refresh_ipo_data.py` can still scan only yearly IPO archive pages with `--source yearly` or `--year`, but the default source is the combined screener + post-2020 archive set.
 
 Per-ticker detail source:
@@ -139,7 +141,7 @@ Important sanity check:
 Open the site directly or serve it with any static server:
 
 ```sh
-cd /Users/master/clawd/projects/ipo-site
+cd <local-ipo-site-repo>
 python3 -m http.server 8080
 ```
 
@@ -154,14 +156,14 @@ Most layout and behavior edits are made directly in `index.html`; generated IPO 
 Refresh the default combined `$5B+` data set with:
 
 ```sh
-cd /Users/master/clawd/projects/ipo-site
+cd <local-ipo-site-repo>
 python3 refresh_ipo_data.py --threshold-b 5 --limit 500 --candidate-limit 1000
 ```
 
 Rebuild only the derived analysis from existing generated data with:
 
 ```sh
-cd /Users/master/clawd/projects/ipo-site
+cd <local-ipo-site-repo>
 python3 build_ipo_analysis.py --input-dir . --output-dir .
 ```
 
@@ -170,7 +172,7 @@ python3 build_ipo_analysis.py --input-dir . --output-dir .
 The site repo is Git-backed and pushes to GitHub. The live `https://glaubi.net/ipo` route uses the Cloudflare Worker proxy to fetch the latest static files from GitHub raw `main`; GitHub Pages is intentionally disabled and should not be treated as a production target.
 
 ```sh
-cd /Users/master/clawd/projects/ipo-site
+cd <local-ipo-site-repo>
 git status --short
 git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py AGENTS.md README.md LICENSE
 git commit -m "Update IPO site"
@@ -193,13 +195,13 @@ https://glaubi.net/ipo?v=<commit>
 
 ## Cloudflare Worker Proxy
 
-Do not delete `/Users/master/clawd/projects/ipo-proxy` unless the proxy is moved into a real repo or the Cloudflare route is intentionally removed.
+Do not delete `<local-ipo-proxy-repo>` unless the proxy is moved into the site repo or the Cloudflare route is intentionally removed.
 
 The live `glaubi.net/ipo` route depends on the Worker source in that folder:
 
 - Worker name: `ipo-proxy`
-- Config: `/Users/master/clawd/projects/ipo-proxy/wrangler.toml`
-- Worker code: `/Users/master/clawd/projects/ipo-proxy/index.mjs`
+- Config: `<local-ipo-proxy-repo>/wrangler.toml`
+- Worker code: `<local-ipo-proxy-repo>/index.mjs`
 - Routes:
   - `glaubi.net/ipo`
   - `glaubi.net/ipo*`
@@ -223,15 +225,15 @@ into HTML responses when needed.
 Deploy proxy changes with:
 
 ```sh
-cd /Users/master/clawd/projects/ipo-proxy
-HOME=/Users/master npx wrangler deploy
+cd <local-ipo-proxy-repo>
+npx wrangler deploy
 ```
 
 Check deployed Worker history:
 
 ```sh
-cd /Users/master/clawd/projects/ipo-proxy
-HOME=/Users/master npx wrangler deployments list --name ipo-proxy
+cd <local-ipo-proxy-repo>
+npx wrangler deployments list --name ipo-proxy
 ```
 
 ## Glaubinet Index
@@ -239,7 +241,7 @@ HOME=/Users/master npx wrangler deployments list --name ipo-proxy
 The route index card for this page lives in:
 
 ```text
-/Users/master/git/glaubinet/index.html
+<local-glaubinet-repo>/index.html
 ```
 
 Use the `glaubinet` skill/workflow when changing public `glaubi.net` mappings. For this page the index currently points `/ipo` to:

@@ -58,7 +58,7 @@ For visual QA, serve the page locally and check that the header cap and trading-
 
 ## Deploy
 
-This repo is pushed to GitHub at `https://github.com/robertZaufall/ipo`. The public route `https://glaubi.net/ipo` is served by the Cloudflare Worker in `/Users/master/clawd/projects/ipo-proxy`, which fetches the static files from GitHub raw `main` and injects `<base href="/ipo/">`.
+This repo is pushed to GitHub at `https://github.com/robertZaufall/ipo`. The public route `https://glaubi.net/ipo` is served by the Cloudflare Worker in `<local-ipo-proxy-repo>`, which fetches the static files from GitHub raw `main` and injects `<base href="/ipo/">`.
 
 ```sh
 git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py README.md LICENSE AGENTS.md
