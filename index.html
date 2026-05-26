@@ -102,7 +102,7 @@
     </main>
 
     <script>
-        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-26-8';
+        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-26-10';
         ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js'].forEach(src => {
             document.write(`<script src="${src}?v=${encodeURIComponent(IPO_ASSET_VERSION)}"><\/script>`);
         });
@@ -271,7 +271,9 @@
             const domain = chartTimeDomain(data);
             const tickMinutes = chartTimeTicks(domain);
             const prices = data.flatMap(d => [d.open, d.high, d.low, d.close]);
-            let min = Math.min(...prices), max = Math.max(...prices);
+            const rawMin = Math.min(...prices);
+            const rawMax = Math.max(...prices);
+            let min = rawMin, max = rawMax;
             const pad = Math.max((max - min) * 0.08, max * 0.01);
             min -= pad; max += pad;
             const x = minute => ml + ((minute - domain.start) / Math.max(domain.end - domain.start, 1)) * plotW;
@@ -286,6 +288,11 @@
             const lowLabelRows = [];
             const lowLabelMinGap = compact ? 34 : 54;
             const lowLabelMaxRows = 3;
+            const analysisForChart = currentAnalysis();
+            const medianDeltaMinutes = Number(analysisForChart?.medianDeltaMinutes);
+            const medianReferenceMinute = Number.isFinite(firstMinute) && Number.isFinite(medianDeltaMinutes)
+                ? firstMinute + medianDeltaMinutes
+                : null;
             const candleSlots = Math.max(data.length, ((domain.end - domain.start) / 5) + 1);
             const candleW = Math.max(4, Math.min(10, plotW / candleSlots * 0.62));
             const grid = [];
@@ -347,9 +354,38 @@
                 const deltaLabel = formatElapsedMinutes(point.minute - firstMinute);
                 return `<g><title>${ipo.ticker} ${point.time || minutesToTime(point.minute)} low ${fmtUsd(point.low)}</title><circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${isExactLow ? (compact ? 3.5 : 4.5) : (compact ? 2.8 : 3.5)}" fill="#f59e0b" stroke="#09090b" stroke-width="1.5" opacity="${isExactLow ? 1 : 0.78}"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(axisBottomY - 5).toFixed(1)}" y2="${(axisBottomY + 6).toFixed(1)}" stroke="#fbbf24" stroke-width="${isExactLow ? 1.8 : 1.3}" opacity="${isExactLow ? 1 : 0.75}"/><text x="${labelX.toFixed(1)}" y="${(lowLabelBaseY + row * lowLabelRowGap).toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" fill="#fbbf24">${deltaLabel}</text></g>`;
             }).join('');
+            const medianReferenceLine = Number.isFinite(medianReferenceMinute) && medianReferenceMinute >= domain.start && medianReferenceMinute <= domain.end ? (() => {
+                const xx = x(medianReferenceMinute);
+                const label = `Median ${formatElapsedPlain(medianDeltaMinutes)}`;
+                const labelNearRight = xx > W - mr - (compact ? 86 : 118);
+                const labelX = labelNearRight ? xx - 6 : xx + 6;
+                const labelAnchor = labelNearRight ? 'end' : 'start';
+                return `<g><title>${ipo.ticker} selected-sample median low timing: ${label} after first trade</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#09090b" stroke-width="5" opacity="0.72"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#60a5fa" stroke-width="${compact ? 1.8 : 2.2}" stroke-dasharray="7 5"/><text x="${labelX.toFixed(1)}" y="${(mt + 16).toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#93c5fd">${label}</text></g>`;
+            })() : '';
+            const priceReferenceLabels = [];
+            const referenceLabelY = yy => {
+                const minY = mt + 16;
+                const maxY = priceBottomY - 8;
+                let labelY = Math.min(maxY, Math.max(minY, yy - 7));
+                for (let guard = 0; guard < 8 && priceReferenceLabels.some(existing => Math.abs(existing - labelY) < 16); guard += 1) {
+                    labelY = Math.min(maxY, labelY + 16);
+                }
+                priceReferenceLabels.push(labelY);
+                return labelY;
+            };
+            const priceReferenceLines = [
+                { label: 'IPO', price: Number(ipo.ipoPrice), color: '#c084fc', dash: '6 5' },
+                { label: 'Current', price: Number(ipo.current), color: '#22d3ee', dash: '3 5' }
+            ].filter(ref => Number.isFinite(ref.price) && ref.price >= rawMin && ref.price <= rawMax).map(ref => {
+                const yy = y(ref.price);
+                const labelText = `${ref.label} ${fmtUsd(ref.price)}`;
+                const labelY = referenceLabelY(yy);
+                const labelW = Math.min(compact ? 108 : 150, Math.max(compact ? 62 : 78, labelText.length * (compact ? 5.4 : 6.2)));
+                return `<g><title>${ipo.ticker} ${escapeHtml(ref.label)} reference ${fmtUsd(ref.price)}</title><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#09090b" stroke-width="4.5" opacity="0.7"/><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="${ref.color}" stroke-width="${compact ? 1.4 : 1.7}" stroke-dasharray="${ref.dash}" opacity="0.92"/><rect x="${ml + 5}" y="${(labelY - 12).toFixed(1)}" width="${labelW.toFixed(1)}" height="16" rx="4" fill="#09090b" opacity="0.9" stroke="${ref.color}" stroke-opacity="0.28"/><text x="${ml + 10}" y="${labelY.toFixed(1)}" font-size="${axisSize}" font-weight="700" fill="${ref.color}">${escapeHtml(labelText)}</text></g>`;
+            }).join('');
             const lowPriceMarker = `<text x="${W - mr - 4}" y="${Math.max(mt + 14, lowY - 7).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#fbbf24">${lowPriceLabel}</text>`;
             const sourceLabel = data[0]?.source || '5m bars';
-            return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} first-day intraday candle chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${ipo.ticker} first-day intraday candles · ${sourceLabel}</text>${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${volumePanel}${lowGuideLines}${candles}${closeLine}${lowPriceMarker}${lowMarkers}</svg>`;
+            return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} first-day intraday candle chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${ipo.ticker} first-day intraday candles · ${sourceLabel}</text>${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${volumePanel}${lowGuideLines}${candles}${closeLine}${priceReferenceLines}${medianReferenceLine}${lowPriceMarker}${lowMarkers}</svg>`;
         }
 
         function metric(label, value, extra = '') {
@@ -505,7 +541,7 @@
             const marker = markerInfo ? (() => {
                 const markerX = ml + markerInfo.index * (barW + barGap) + markerInfo.ratio * barW;
                 const label = escapeHtml(markerLabel);
-                return `<g><title>${label}</title><line x1="${markerX.toFixed(1)}" x2="${markerX.toFixed(1)}" y1="${mt}" y2="${(mt + plotH).toFixed(1)}" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 4"/><path d="M ${(markerX - 5).toFixed(1)} ${mt} L ${(markerX + 5).toFixed(1)} ${mt} L ${markerX.toFixed(1)} ${(mt + 8).toFixed(1)} Z" fill="#f59e0b"/></g>`;
+                return `<g><title>${label}</title><line x1="${markerX.toFixed(1)}" x2="${markerX.toFixed(1)}" y1="${mt}" y2="${(mt + plotH).toFixed(1)}" stroke="#09090b" stroke-width="5" opacity="0.72"/><line x1="${markerX.toFixed(1)}" x2="${markerX.toFixed(1)}" y1="${mt}" y2="${(mt + plotH).toFixed(1)}" stroke="#f59e0b" stroke-width="2.3" stroke-dasharray="5 4"/><path d="M ${(markerX - 6).toFixed(1)} ${mt} L ${(markerX + 6).toFixed(1)} ${mt} L ${markerX.toFixed(1)} ${(mt + 10).toFixed(1)} Z" fill="#f59e0b"/></g>`;
             })() : '';
             const markerLegend = config.marker ? (() => {
                 const labelWidth = Math.min(220, Math.max(64, markerLabel.length * 6.2));
