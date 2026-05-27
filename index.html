@@ -76,6 +76,21 @@
     <main class="max-w-screen-xl mx-auto px-5 sm:px-8 pb-16">
         <section id="analysis-panel" class="mb-6 bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden modern-shadow"></section>
 
+        <section class="mb-6">
+            <button id="playbook-open" type="button" aria-label="Open Big IPO and Hype Playbook image large" class="group block w-full overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900 text-left modern-shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">
+                <div class="flex items-center justify-between gap-3 border-b border-zinc-800 px-4 py-3 sm:px-5">
+                    <div>
+                        <div class="section-header text-amber-300">Big IPO &amp; Hype Playbook</div>
+                        <div class="mt-1 text-xs text-zinc-500">Click to open the full-size guide.</div>
+                    </div>
+                    <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-zinc-700 bg-zinc-950 text-zinc-400 transition-colors group-hover:border-amber-500/60 group-hover:text-amber-300">
+                        <i class="fa-solid fa-up-right-and-down-left-from-center text-sm"></i>
+                    </span>
+                </div>
+                <img src="docs/ipo-playbook.png" alt="Big IPO and hype playbook infographic" class="block h-auto w-full">
+            </button>
+        </section>
+
         <section class="sticky top-16 z-40 -mx-5 sm:-mx-8 px-5 sm:px-8 py-4 bg-zinc-950/90 backdrop-blur-lg border-y border-zinc-900">
             <div class="flex flex-col md:flex-row gap-3 md:items-center">
                 <label class="relative flex-1">
@@ -104,6 +119,23 @@
             <p class="mt-2 text-center">&copy; <span id="copyright-year"></span> Robert Zaufall &middot; <a class="text-zinc-500 hover:text-zinc-300 transition-colors" href="https://glaubi.net/">glaubi.net</a> &middot; <a class="text-zinc-500 hover:text-zinc-300 transition-colors" href="https://github.com/robertZaufall/ipo">GitHub</a></p>
         </footer>
     </main>
+
+    <div id="playbook-modal" class="fixed inset-0 z-[100] hidden bg-zinc-950/90 p-3 backdrop-blur-xl sm:p-6" role="dialog" aria-modal="true" aria-labelledby="playbook-modal-title">
+        <div class="flex h-full flex-col gap-3">
+            <div class="mx-auto flex w-full max-w-[96rem] items-center justify-between gap-3">
+                <div>
+                    <div id="playbook-modal-title" class="section-header text-amber-300">Big IPO &amp; Hype Playbook</div>
+                    <div class="mt-1 text-xs text-zinc-500">Full-size infographic</div>
+                </div>
+                <button id="playbook-close" type="button" aria-label="Close playbook image" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-700 bg-zinc-900 text-zinc-300 transition-colors hover:border-amber-500/60 hover:text-amber-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="mx-auto min-h-0 w-full max-w-[96rem] flex-1 overflow-auto rounded-2xl border border-zinc-800 bg-black/70 p-2">
+                <img id="playbook-modal-image" src="docs/ipo-playbook.png" alt="Big IPO and hype playbook infographic, full size" class="mx-auto h-auto max-h-none max-w-full cursor-zoom-out rounded-xl">
+            </div>
+        </div>
+    </div>
 
     <script>
         const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-27-extended-alpaca';
@@ -2586,6 +2618,32 @@
             setChartModeToggleState();
             renderCards();
         }
+
+        function setPlaybookModal(open) {
+            const modal = document.getElementById('playbook-modal');
+            const trigger = document.getElementById('playbook-open');
+            const close = document.getElementById('playbook-close');
+            if (!modal) return;
+            modal.classList.toggle('hidden', !open);
+            document.body.classList.toggle('overflow-hidden', open);
+            if (open) {
+                close?.focus();
+            } else {
+                trigger?.focus();
+            }
+        }
+
+        document.getElementById('playbook-open')?.addEventListener('click', () => setPlaybookModal(true));
+        document.getElementById('playbook-close')?.addEventListener('click', () => setPlaybookModal(false));
+        document.getElementById('playbook-modal-image')?.addEventListener('click', () => setPlaybookModal(false));
+        document.getElementById('playbook-modal')?.addEventListener('click', event => {
+            if (event.target.id === 'playbook-modal') setPlaybookModal(false);
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !document.getElementById('playbook-modal')?.classList.contains('hidden')) {
+                setPlaybookModal(false);
+            }
+        });
 
         document.getElementById('search').addEventListener('input', event => {
             searchTerm = event.target.value;
