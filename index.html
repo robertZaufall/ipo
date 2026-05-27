@@ -15,6 +15,11 @@
         .modern-shadow { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
         .section-header { font-size: 0.75rem; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 600; }
         .chart-svg text { user-select: none; }
+        .chart-hover-hit { cursor: crosshair; fill: transparent; pointer-events: all; }
+        .chart-hover-data { opacity: 0; pointer-events: none; transition: opacity 120ms ease; }
+        .chart-hover-hit:hover + .chart-hover-data,
+        .chart-hover-hit:focus + .chart-hover-data,
+        .chart-hover-item.is-active .chart-hover-data { opacity: 1; }
     </style>
 </head>
 <body id="top" class="bg-zinc-950 text-zinc-200">
@@ -186,6 +191,7 @@
         let imageModalTrigger = null;
         let chartModalTrigger = null;
         let chartModalTicker = null;
+        let activeChartHoverItem = null;
 
         const CAP_FILTERS = [
             { id: 'under10', label: '<$10B', buttonId: 'cap-under10' },
@@ -951,8 +957,8 @@
                 .sort((a, b) => a.minute - b.minute)[0] || null;
             return {
                 afterEnd: milestoneFromBar(afterEndBar, 'close', 'afterEnd', 'After End'),
-                preSecond: milestoneFromBar(preSecondBar, 'open', 'preSecond', 'Pre 2nd'),
-                openSecond: milestoneFromBar(openSecondBar, 'open', 'openSecond', 'Open 2nd')
+                preSecond: milestoneFromBar(preSecondBar, 'open', 'preSecond', 'Pre D2'),
+                openSecond: milestoneFromBar(openSecondBar, 'open', 'openSecond', 'Open D2')
             };
         }
 
@@ -1207,6 +1213,43 @@
                 return `<rect x="${(xx - candleW / 2).toFixed(1)}" y="${yy.toFixed(1)}" width="${candleW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${color}" opacity="0.28" rx="1"><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, d)} volume ${volume.toLocaleString('en-US')}</title></rect>`;
             }).join('');
             const volumePanel = `<g><line x1="${ml}" x2="${W - mr}" y1="${volumeTopY.toFixed(1)}" y2="${volumeTopY.toFixed(1)}" stroke="#27272a"/><text x="${ml + 4}" y="${(volumeTopY + 14).toFixed(1)}" font-size="${axisSize}" fill="#71717a">Volume</text>${volumeBars}</g>`;
+            const hoverBoxW = compact ? 142 : 172;
+            const hoverBoxH = compact ? 91 : 96;
+            const hoverTitleSize = compact ? 9 : 10;
+            const hoverValueSize = compact ? 9 : 11;
+            const hoverData = chartPoints.map((d, i) => {
+                const up = d.close >= d.open;
+                const color = up ? '#22c55e' : '#ef4444';
+                const xx = xPlot(d.plot);
+                const prevX = i > 0 ? xPlot(chartPoints[i - 1].plot) : ml;
+                const nextX = i < chartPoints.length - 1 ? xPlot(chartPoints[i + 1].plot) : W - mr;
+                const laneLeft = i > 0 ? (prevX + xx) / 2 : ml;
+                const laneRight = i < chartPoints.length - 1 ? (xx + nextX) / 2 : W - mr;
+                const laneW = Math.max(2, laneRight - laneLeft);
+                const volume = Number(d.volume) || 0;
+                const volumeBarH = Math.max(1, (volume / maxVolume) * (volumeH - 16));
+                const volumeY = axisBottomY - volumeBarH;
+                const boxNearRight = xx > ml + plotW * 0.58;
+                const rawBoxX = boxNearRight ? xx - hoverBoxW - 12 : xx + 12;
+                const boxX = Math.min(W - mr - hoverBoxW - 4, Math.max(ml + 4, rawBoxX));
+                const boxY = mt + (compact ? 22 : 24);
+                const changePct = d.open ? ((d.close - d.open) / d.open) * 100 : 0;
+                const signedChange = `${changePct >= 0 ? '+' : ''}${changePct.toFixed(1)}%`;
+                const timeLabel = chartTooltipTimeLabel(ipo, d);
+                return `<g class="chart-hover-item" data-chart-hover-candle="${escapeHtml(ipo.ticker)}-${i}">
+                    <rect class="chart-hover-hit" x="${laneLeft.toFixed(1)}" y="${mt}" width="${laneW.toFixed(1)}" height="${(axisBottomY - mt).toFixed(1)}" aria-label="${escapeHtml(`${ipo.ticker} ${timeLabel} open ${fmtUsd(d.open)} high ${fmtUsd(d.high)} low ${fmtUsd(d.low)} close ${fmtUsd(d.close)} volume ${volume.toLocaleString('en-US')}`)}"/>
+                    <g class="chart-hover-data">
+                        <line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#bfdbfe" stroke-width="${compact ? 1.2 : 1.4}" opacity="0.95"/>
+                        <circle cx="${xx.toFixed(1)}" cy="${y(d.close).toFixed(1)}" r="${compact ? 3 : 3.6}" fill="${color}" stroke="#e0f2fe" stroke-width="1.2"/>
+                        <rect x="${(xx - candleW / 2).toFixed(1)}" y="${volumeY.toFixed(1)}" width="${candleW.toFixed(1)}" height="${volumeBarH.toFixed(1)}" fill="${color}" opacity="0.82" rx="1"/>
+                        <rect x="${boxX.toFixed(1)}" y="${boxY.toFixed(1)}" width="${hoverBoxW}" height="${hoverBoxH}" rx="8" fill="#09090b" opacity="0.96" stroke="#60a5fa" stroke-opacity="0.72"/>
+                        <text x="${(boxX + 10).toFixed(1)}" y="${(boxY + 18).toFixed(1)}" font-size="${hoverTitleSize}" font-weight="700" fill="#dbeafe">${escapeHtml(ipo.ticker)} · ${escapeHtml(timeLabel)}</text>
+                        <text x="${(boxX + 10).toFixed(1)}" y="${(boxY + 38).toFixed(1)}" font-size="${hoverValueSize}" fill="#a1a1aa">O <tspan fill="#e4e4e7">${fmtUsd(d.open)}</tspan>  H <tspan fill="#e4e4e7">${fmtUsd(d.high)}</tspan></text>
+                        <text x="${(boxX + 10).toFixed(1)}" y="${(boxY + 56).toFixed(1)}" font-size="${hoverValueSize}" fill="#a1a1aa">L <tspan fill="#e4e4e7">${fmtUsd(d.low)}</tspan>  C <tspan fill="${color}" font-weight="700">${fmtUsd(d.close)}</tspan></text>
+                        <text x="${(boxX + 10).toFixed(1)}" y="${(boxY + 74).toFixed(1)}" font-size="${hoverValueSize}" fill="#a1a1aa">Vol <tspan fill="#e4e4e7">${volume.toLocaleString('en-US')}</tspan>  <tspan fill="${color}" font-weight="700">${signedChange}</tspan></text>
+                    </g>
+                </g>`;
+            }).join('');
             const lowGuideLines = `<line x1="${ml}" x2="${W - mr}" y1="${lowY.toFixed(1)}" y2="${lowY.toFixed(1)}" stroke="#f59e0b" stroke-width="0.8" stroke-dasharray="4 5"/>${lowPoints.map(point => {
                 const xx = xPlot(point.plot);
                 const isExactLow = point.low === lowPoint.low;
@@ -1265,7 +1308,7 @@
             const visibleTitle = compact
                 ? `${ipo.ticker} ${isExtended ? 'extended' : 'candles'}${sourceLabel ? ` · ${sourceLabel}` : ''}`
                 : `${ipo.ticker} ${titleLabel}${sourceLabel ? ` · ${sourceLabel}` : ''}`;
-            return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} ${titleLabel} chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${visibleTitle}</text>${extendedSessionBands}${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${gapBreaks}${elapsedAxis}${volumePanel}${lowGuideLines}${candles}${closeLine}${priceReferenceLines}${medianReferenceLine}${lowPriceMarker}${lowMarkers}</svg>`;
+            return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} ${titleLabel} chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${visibleTitle}</text>${extendedSessionBands}${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${gapBreaks}${elapsedAxis}${volumePanel}${lowGuideLines}${candles}${closeLine}${priceReferenceLines}${medianReferenceLine}${lowPriceMarker}${lowMarkers}<g class="chart-hover-layer">${hoverData}</g></svg>`;
         }
 
         function metric(label, value, extra = '') {
@@ -1338,7 +1381,7 @@
             const configs = [
                 ['afterHours', 'AFTER LOW', 5.2],
                 ['premarket', 'PRE LOW', 6.2],
-                ['secondOpen', 'OPEN LOW', 7.2]
+                ['secondOpen', 'OPEN D2 (LOW)', 7.2]
             ];
             return configs.flatMap(([group, label, rankBase]) => {
                 const markers = (groups.get(group) || []).sort((a, b) => a.minute - b.minute);
@@ -1369,6 +1412,13 @@
                 ...[extendedPrices.afterEnd, extendedPrices.preSecond, extendedPrices.openSecond]
                     .map(milestone => Number(milestone?.bar?.minute))
                     .filter(Number.isFinite)
+            );
+            const extendedLowEvents = extendedTimelineLowEvents(ipo, firstMinute, valid);
+            const openSecondMinute = Number(extendedPrices.openSecond?.bar?.minute);
+            const openSecondLowAtOpen = extendedLowEvents.some(event =>
+                event.label === 'OPEN D2 (LOW)'
+                && Number.isFinite(openSecondMinute)
+                && event.minute === openSecondMinute
             );
             const events = [];
             const addEvent = event => {
@@ -1435,8 +1485,8 @@
             });
             [
                 ['afterEnd', 'AFTER END', '#22d3ee', 5],
-                ['preSecond', 'PRE 2ND', '#2dd4bf', 6],
-                ['openSecond', 'OPEN 2ND', '#60a5fa', 7]
+                ['preSecond', 'PRE D2', '#2dd4bf', 6],
+                ['openSecond', openSecondLowAtOpen ? 'OPEN D2 (LOW)' : 'OPEN D2', openSecondLowAtOpen ? '#fbbf24' : '#60a5fa', 7]
             ].forEach(([id, label, color, rank]) => {
                 const milestone = extendedPrices[id];
                 addEvent({
@@ -1451,7 +1501,9 @@
                     color
                 });
             });
-            extendedTimelineLowEvents(ipo, firstMinute, valid).forEach(addEvent);
+            extendedLowEvents
+                .filter(event => !(openSecondLowAtOpen && event.label === 'OPEN D2 (LOW)' && event.minute === openSecondMinute))
+                .forEach(addEvent);
             addEvent({
                 id: 'current',
                 label: 'CURRENT*',
@@ -1517,10 +1569,23 @@
             const min = rawMin - pad;
             const max = rawMax + pad;
             const yPrice = price => chartTop + ((max - price) / Math.max(max - min, 0.01)) * chartH;
-            const pricePoints = events.map((event, index) => `${xForEvent(event, index).toFixed(1)},${yPrice(event.price).toFixed(1)}`);
-            const priceLine = pricePoints.length > 1
-                ? `<polyline points="${pricePoints.join(' ')}" fill="none" stroke="#09090b" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity="0.75"/><polyline points="${pricePoints.join(' ')}" fill="none" stroke="#94a3b8" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>`
+            const pricePointObjects = events.map((event, index) => ({
+                event,
+                point: `${xForEvent(event, index).toFixed(1)},${yPrice(event.price).toFixed(1)}`
+            }));
+            const openSecondIndex = pricePointObjects.findIndex(item => item.event.id === 'openSecond');
+            const currentIndex = pricePointObjects.findIndex(item => item.event.id === 'current');
+            const hasDashedCurrentSpan = openSecondIndex >= 0 && currentIndex > openSecondIndex;
+            const solidPricePoints = hasDashedCurrentSpan
+                ? pricePointObjects.slice(0, openSecondIndex + 1).map(item => item.point)
+                : pricePointObjects.map(item => item.point);
+            const dashedPricePoints = hasDashedCurrentSpan
+                ? pricePointObjects.slice(openSecondIndex, currentIndex + 1).map(item => item.point)
+                : [];
+            const priceLineSegment = (points, dashed = false) => points.length > 1
+                ? `<polyline points="${points.join(' ')}" fill="none" stroke="#09090b" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity="0.75"${dashed ? ' stroke-dasharray="10 7"' : ''}/><polyline points="${points.join(' ')}" fill="none" stroke="#94a3b8" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"${dashed ? ' stroke-dasharray="9 6"' : ''}/>`
                 : '';
+            const priceLine = `${priceLineSegment(solidPricePoints)}${priceLineSegment(dashedPricePoints, true)}`;
             const eventNodes = events.map((event, index) => {
                 const xx = xForEvent(event, index);
                 const yy = yPrice(event.price);
@@ -1582,6 +1647,32 @@
         function firstDayStartEndPath(data) {
             if (!data.length) return [];
             return firstDayClosePath(data, data[0].open, data[0].time || 'Start');
+        }
+
+        function startToDayTwoPath(data, milestones) {
+            if (!data.length) return [];
+            const closes = data
+                .filter(bar => Number.isFinite(bar.minute) && Number.isFinite(bar.close))
+                .sort((a, b) => a.minute - b.minute);
+            const firstMinute = closes[0]?.minute;
+            const lastMinute = closes[closes.length - 1]?.minute;
+            const span = Math.max((lastMinute || 0) - (firstMinute || 0), 1);
+            const points = [microPoint(0, data[0].open, data[0].time || 'Start')];
+            closes.forEach(bar => {
+                const xValue = 0.06 + ((bar.minute - firstMinute) / span) * 0.62;
+                points.push(microPoint(xValue, bar.close, bar.time || minutesToTime(bar.minute)));
+            });
+            const dayTwoEnd = milestones?.openSecond || milestones?.preSecond;
+            [
+                { milestone: milestones?.afterEnd, x: 0.76 },
+                { milestone: milestones?.openSecond ? milestones?.preSecond : null, x: 0.88 },
+                { milestone: dayTwoEnd, x: 1 }
+            ].forEach(item => {
+                if (Number.isFinite(item.milestone?.price)) {
+                    points.push(microPoint(item.x, item.milestone.price, item.milestone.label));
+                }
+            });
+            return points.filter(Boolean);
         }
 
         function lowToEndPath(data) {
@@ -1987,16 +2078,16 @@
                 },
                 {
                     id: 'buyPreSecond',
-                    label: 'Pre 2nd',
-                    shortLabel: 'Pre 2nd',
+                    label: 'Pre D2',
+                    shortLabel: 'Pre D2',
                     detail: 'Uses the first available second-day premarket open from the extended Alpaca feed.',
                     milestoneId: 'preSecond',
                     fillMode: 'extended'
                 },
                 {
                     id: 'buyOpenSecond',
-                    label: 'Open 2nd',
-                    shortLabel: 'Open 2nd',
+                    label: 'Open D2',
+                    shortLabel: 'Open D2',
                     detail: 'Uses the first available second-day regular-session open from the extended Alpaca feed.',
                     milestoneId: 'openSecond',
                     fillMode: 'extended'
@@ -2205,13 +2296,13 @@
                 },
                 {
                     id: 'buyPreSecond',
-                    rowLabel: 'Pre 2nd',
+                    rowLabel: 'Pre D2',
                     milestone: milestones.preSecond,
                     endLabel: 'Vs day end'
                 },
                 {
                     id: 'buyOpenSecond',
-                    rowLabel: 'Open 2nd',
+                    rowLabel: 'Open D2',
                     milestone: milestones.openSecond,
                     endLabel: 'Vs day end'
                 }
@@ -2487,6 +2578,7 @@
                 : '';
             const quoteUrl = yahooFinanceUrl(ipo.ticker);
             const extendedPrices = extendedSessionMilestones(ipo);
+            const dayTwoMilestone = extendedPrices.openSecond || extendedPrices.preSecond;
             return `<article class="ipo-card bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden modern-shadow" data-search="${escapeHtml(searchBlob)}">
                 <div class="p-5 sm:p-6 border-b border-zinc-800 flex flex-col lg:flex-row gap-4 lg:items-start lg:justify-between">
                     <div class="min-w-0">
@@ -2511,7 +2603,7 @@
                         ${progressMicroChart('IPO to day-one close', 'IPO', 'Close', ipo.ipoPrice, summary.endPrice, firstDayClosePath(data, ipo.ipoPrice, 'IPO'))}
                         ${progressMicroChart('Start price to end price', 'Start', 'End', summary.startPrice, summary.endPrice, firstDayStartEndPath(data))}
                         ${progressMicroChart('Day-one low to end price', 'Low', 'End', summary.lowPrice, summary.endPrice, lowToEndPath(data))}
-                        ${progressMicroChart('IPO to current*', 'IPO', 'Current*', ipo.ipoPrice, ipo.current, roughHistoryPath(ipo, ipo.ipoPrice, ipo.current, 'IPO'))}
+                        ${progressMicroChart('Start price to Day-two', 'Start', dayTwoMilestone?.label || 'D2', summary.startPrice, dayTwoMilestone?.price, startToDayTwoPath(data, extendedPrices))}
                         ${progressMicroChart('Day-one close to current*', 'Close', 'Current*', summary.endPrice, ipo.current, roughHistoryPath(ipo, summary.endPrice, ipo.current, 'Close'))}
                     </div>
                     ${cardEntryScenarioTable(ipo, data)}
@@ -2710,6 +2802,34 @@
                 imageModalTrigger?.focus();
             }
         }
+
+        function chartHoverItemFromEvent(event) {
+            return event.target?.closest?.('.chart-hover-hit')?.closest?.('.chart-hover-item') || null;
+        }
+
+        function setActiveChartHoverItem(item) {
+            if (activeChartHoverItem && activeChartHoverItem !== item) {
+                activeChartHoverItem.classList.remove('is-active');
+            }
+            activeChartHoverItem = item || null;
+            activeChartHoverItem?.classList.add('is-active');
+        }
+
+        document.addEventListener('pointermove', event => {
+            const item = chartHoverItemFromEvent(event);
+            if (item) setActiveChartHoverItem(item);
+        });
+
+        document.addEventListener('pointerout', event => {
+            const layer = event.target?.closest?.('.chart-hover-layer');
+            if (!layer || (event.relatedTarget && layer.contains(event.relatedTarget))) return;
+            setActiveChartHoverItem(null);
+        });
+
+        document.addEventListener('click', event => {
+            const item = chartHoverItemFromEvent(event);
+            if (item) setActiveChartHoverItem(item);
+        });
 
         document.addEventListener('click', event => {
             const trigger = event.target.closest('[data-image-modal-src]');
