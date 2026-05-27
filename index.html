@@ -51,7 +51,7 @@
                 </div>
                 <h1 class="font-display text-5xl sm:text-6xl tracking-tighter font-semibold mt-3">First-day moves for market giants</h1>
                 <p class="text-lg sm:text-xl text-zinc-400 mt-2 max-w-3xl">A day-one view of top IPO companies.</p>
-                <div class="mt-5 grid gap-3 lg:grid-cols-[minmax(0,34rem)_minmax(16rem,22rem)]">
+                <div class="mt-5 grid gap-3 lg:grid-cols-[minmax(0,34rem)_minmax(16rem,22rem)_minmax(10rem,14rem)]">
                     <div id="cap-filter" role="group" aria-label="Filter IPO analysis and cards by market cap" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs sm:text-sm font-semibold grid grid-cols-5 gap-1">
                         <button id="cap-under10" type="button" data-cap-filter="under10" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&lt;$10B</button>
                         <button id="cap-all" type="button" data-cap-filter="all" aria-pressed="false" aria-label="All market caps" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">*</button>
@@ -63,6 +63,10 @@
                         <button id="place-all" type="button" data-trading-place-filter="all" aria-pressed="true" class="rounded-xl flex items-center justify-center transition-colors bg-blue-600 text-white">All</button>
                         <button id="place-nasdaq" type="button" data-trading-place-filter="nasdaq" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">NASDAQ</button>
                         <button id="place-nyse" type="button" data-trading-place-filter="nyse" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">NYSE</button>
+                    </div>
+                    <div id="chart-mode-toggle" role="group" aria-label="Set all card charts to day-one or extended data" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs sm:text-sm font-semibold grid grid-cols-2 gap-1 transition-colors">
+                        <button id="chart-mode-day1" type="button" data-chart-mode="day1" aria-pressed="true" class="rounded-xl flex items-center justify-center transition-colors bg-blue-600 text-white">Day 1</button>
+                        <button id="chart-mode-extended" type="button" data-chart-mode="extended" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">Ext</button>
                     </div>
                 </div>
             </div>
@@ -96,13 +100,13 @@
         <div id="empty-state" class="hidden mt-8 bg-zinc-900 border border-zinc-800 rounded-2xl p-8 text-center text-zinc-400">No IPO cards match that search.</div>
 
         <footer class="mt-10 border-t border-zinc-900 pt-5 text-xs text-zinc-500 leading-6">
-            <p><span class="font-semibold text-zinc-400">Data snapshot:</span> IPO dates, prices, current* prices, market caps, and chart data were captured on 2026-05-26. This static page has not been updated since that snapshot; future refreshes may happen only sporadically or not at all. Data can be delayed, incomplete, wrong, or unavailable and is provided without guarantee. Use your own judgment; investment decisions and consequences remain your responsibility.</p>
+            <p><span class="font-semibold text-zinc-400">Data snapshot:</span> IPO dates, prices, current* prices, market caps, and first-day chart data were captured on 2026-05-26; Alpaca extended-hours chart data was added on 2026-05-27. This static page has not been updated since that snapshot; future refreshes may happen only sporadically or not at all. Data can be delayed, incomplete, wrong, or unavailable and is provided without guarantee. Use your own judgment; investment decisions and consequences remain your responsibility.</p>
             <p class="mt-2 text-center">&copy; <span id="copyright-year"></span> Robert Zaufall &middot; <a class="text-zinc-500 hover:text-zinc-300 transition-colors" href="https://glaubi.net/">glaubi.net</a> &middot; <a class="text-zinc-500 hover:text-zinc-300 transition-colors" href="https://github.com/robertZaufall/ipo">GitHub</a></p>
         </footer>
     </main>
 
     <script>
-        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-26-rough-mini';
+        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-27-extended-alpaca';
         ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js'].forEach(src => {
             document.write(`<script src="${src}?v=${encodeURIComponent(IPO_ASSET_VERSION)}"><\/script>`);
         });
@@ -112,6 +116,8 @@
 
         const firstDayBars = window.firstDayBars || {};
         const firstDayBarSources = window.firstDayBarSources || {};
+        const extendedDayBars = window.extendedDayBars || {};
+        const extendedDayBarSources = window.extendedDayBarSources || {};
         const roughPriceSeries = window.roughPriceSeries || {};
         const ipoAnalysis = window.ipoAnalysis || null;
 
@@ -119,6 +125,7 @@
         let searchTerm = '';
         let capFilterMode = ipoAnalysis?.defaultFilter || 'gt25';
         let tradingPlaceFilterMode = ipoAnalysis?.defaultTradingPlaceFilter || 'all';
+        const extendedChartTickers = new Set();
 
         const CAP_FILTERS = [
             { id: 'under10', label: '<$10B', buttonId: 'cap-under10' },
@@ -140,6 +147,8 @@
         const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         const MARKET_OPEN_MINUTES = 9 * 60 + 30;
         const MARKET_CLOSE_MINUTES = 16 * 60;
+        const CHART_INTERVAL_MINUTES = 5;
+        const CHART_VISIBLE_GAP_MINUTES = 15;
         const HALF_HOUR_MINUTES = 30;
         const LOW_MARKER_MIN_GAP_MINUTES = 60;
         const TIME_ZONE_FORMATTERS = {};
@@ -150,10 +159,24 @@
             return Number.isFinite(hours) && Number.isFinite(minutes) ? hours * 60 + minutes : null;
         }
 
+        function dateOffsetMinutes(baseDate, dateString) {
+            if (!baseDate || !dateString) return 0;
+            const base = Date.parse(`${baseDate}T00:00:00Z`);
+            const current = Date.parse(`${dateString}T00:00:00Z`);
+            if (!Number.isFinite(base) || !Number.isFinite(current)) return 0;
+            return Math.round((current - base) / 86400000) * 1440;
+        }
+
         function minutesToTime(minutes) {
             const hours = Math.floor(minutes / 60);
             const mins = String(minutes % 60).padStart(2, '0');
             return `${String(hours).padStart(2, '0')}:${mins}`;
+        }
+
+        function chartClockTime(minutes) {
+            if (!Number.isFinite(minutes)) return '';
+            const normalized = ((Math.round(minutes) % 1440) + 1440) % 1440;
+            return minutesToTime(normalized);
         }
 
         function formatElapsedMinutes(delta) {
@@ -286,25 +309,455 @@
             const minutes = data.map(d => d.minute).filter(Number.isFinite);
             const first = minutes.length ? Math.min(...minutes) : MARKET_OPEN_MINUTES;
             const last = minutes.length ? Math.max(...minutes) : MARKET_CLOSE_MINUTES;
-            let start = Math.max(MARKET_OPEN_MINUTES, Math.floor(first / HALF_HOUR_MINUTES) * HALF_HOUR_MINUTES);
-            let end = Math.min(MARKET_CLOSE_MINUTES, Math.ceil(last / HALF_HOUR_MINUTES) * HALF_HOUR_MINUTES);
-            if (end <= start) end = Math.min(MARKET_CLOSE_MINUTES, start + HALF_HOUR_MINUTES);
+            const hasExtendedRange = first < MARKET_OPEN_MINUTES || last > MARKET_CLOSE_MINUTES;
+            let start = Math.floor(first / HALF_HOUR_MINUTES) * HALF_HOUR_MINUTES;
+            let end = Math.ceil(last / HALF_HOUR_MINUTES) * HALF_HOUR_MINUTES;
+            if (!hasExtendedRange) {
+                start = Math.max(MARKET_OPEN_MINUTES, start);
+                end = Math.min(MARKET_CLOSE_MINUTES, end);
+            }
+            if (end <= start) end = start + HALF_HOUR_MINUTES;
             return { start, end };
         }
 
         function chartTimeTicks(domain) {
-            const ticks = [];
-            for (let minute = domain.start; minute <= domain.end; minute += HALF_HOUR_MINUTES) {
-                ticks.push(minute);
+            const span = Math.max(domain.end - domain.start, HALF_HOUR_MINUTES);
+            const step = span > 720 ? 180 : span > 420 ? 60 : HALF_HOUR_MINUTES;
+            const ticks = [domain.start];
+            const firstTick = Math.ceil(domain.start / step) * step;
+            for (let minute = firstTick; minute <= domain.end; minute += step) {
+                if (minute !== domain.start) ticks.push(minute);
+            }
+            if (ticks[ticks.length - 1] !== domain.end) {
+                ticks.push(domain.end);
             }
             return ticks;
+        }
+
+        function chartElapsedStep(maxDelta, compact) {
+            if (maxDelta > 900) return compact ? 240 : 180;
+            if (maxDelta > 420) return compact ? 120 : 60;
+            return compact ? 60 : HALF_HOUR_MINUTES;
+        }
+
+        function chartAxisDateLabel(ipoDate, minute) {
+            const offsetDays = Math.floor(minute / 1440);
+            if (!offsetDays) return '';
+            const base = Date.parse(`${ipoDate}T00:00:00Z`);
+            if (!Number.isFinite(base)) return '';
+            return new Date(base + offsetDays * 86400000).toISOString().slice(5, 10);
+        }
+
+        function chartTickLabel(ipoDate, minute) {
+            return chartClockTime(minute);
+        }
+
+        function chartTooltipTimeLabel(ipo, point) {
+            const datePrefix = point.date && point.date !== ipo.date ? `${point.date} ` : '';
+            return `${datePrefix}${dualTimeLabel(ipo.date, point.minute, point.time || chartClockTime(point.minute))}`;
+        }
+
+        function chartSourceLabel(data) {
+            const labels = [...new Set(data.map(point => compactBarSourceLabel(point.source)).filter(Boolean))];
+            return labels.length ? labels.join(' + ') : '';
+        }
+
+        function chartTitleLabel(isExtended) {
+            return isExtended ? 'first-day + extended candles' : 'first-day intraday candles';
+        }
+
+        function chartExtendedCount(ipo) {
+            return rawExtendedBars(ipo).length;
+        }
+
+        function extendedChartCapableTickers() {
+            return exactChartIpos()
+                .filter(hasExtendedChartData)
+                .map(ipo => ipo.ticker);
+        }
+
+        function chartModeSummary() {
+            const tickers = extendedChartCapableTickers();
+            const active = tickers.filter(ticker => extendedChartTickers.has(ticker)).length;
+            const state = active === 0 ? 'day1' : (active === tickers.length ? 'extended' : 'mixed');
+            return { tickers, active, total: tickers.length, state };
+        }
+
+        function chartHasExtendedMode(ipo) {
+            return hasExtendedChartData(ipo) && extendedChartTickers.has(ipo.ticker);
+        }
+
+        function chartDataForCard(ipo) {
+            return chartData(ipo, chartHasExtendedMode(ipo));
+        }
+
+        function chartToggleHtml(ipo) {
+            const hasExtended = hasExtendedChartData(ipo);
+            const active = chartHasExtendedMode(ipo);
+            const count = chartExtendedCount(ipo);
+            const title = hasExtended
+                ? `${active ? 'Hide' : 'Show'} ${count} extended Alpaca candles through the next regular-session open`
+                : 'No Alpaca extended candles available';
+            return `<button type="button" role="switch" aria-checked="${active ? 'true' : 'false'}" aria-label="Show extended trading candles for ${escapeHtml(ipo.ticker)}" title="${escapeHtml(title)}" data-chart-extended-toggle="${escapeHtml(ipo.ticker)}" ${hasExtended ? '' : 'disabled'} class="h-9 rounded-xl border border-zinc-700 bg-zinc-950/90 p-1 text-[11px] font-semibold shadow-lg backdrop-blur grid grid-cols-2 gap-1 ${hasExtended ? 'text-zinc-300' : 'text-zinc-600 cursor-not-allowed'}">
+                <span class="rounded-lg px-2 flex items-center justify-center ${active ? 'text-zinc-500' : 'bg-blue-600 text-white'}">Day 1</span>
+                <span class="rounded-lg px-2 flex items-center justify-center ${active ? 'bg-blue-600 text-white' : 'text-zinc-400'}">Ext</span>
+            </button>`;
+        }
+
+        function chartFrameHtml(ipo) {
+            const displayData = chartDataForCard(ipo);
+            const active = chartHasExtendedMode(ipo);
+            return `<div class="bg-zinc-950 rounded-2xl border border-zinc-800 overflow-hidden">
+                <div class="flex items-center justify-end border-b border-zinc-800 bg-zinc-950 px-3 py-2">${chartToggleHtml(ipo)}</div>
+                <div class="h-[586px] sm:h-[691px]">
+                    ${renderChart(ipo, displayData, { extended: active })}
+                </div>
+            </div>`;
+        }
+
+        function formatGapDuration(minutes) {
+            if (!Number.isFinite(minutes) || minutes <= 0) return '0m';
+            const rounded = Math.round(minutes);
+            const hours = Math.floor(rounded / 60);
+            const mins = rounded % 60;
+            if (hours && mins) return `${hours}h ${String(mins).padStart(2, '0')}m`;
+            return hours ? `${hours}h` : `${mins}m`;
+        }
+
+        function isOvernightExtendedGap(previous, point) {
+            const previousMod = minuteOfDay(previous?.minute);
+            const pointMod = minuteOfDay(point?.minute);
+            const crossesDate = previous?.date && point?.date && previous.date !== point.date;
+            if (!crossesDate || previous?.session !== 'extended' || point?.session !== 'extended') return false;
+            return Number.isFinite(previousMod)
+                && Number.isFinite(pointMod)
+                && previousMod >= MARKET_CLOSE_MINUTES
+                && pointMod <= MARKET_OPEN_MINUTES + CHART_INTERVAL_MINUTES;
+        }
+
+        function isVisibleChartGap(previous, point, skippedMinutes) {
+            if (!previous || !point || skippedMinutes < CHART_VISIBLE_GAP_MINUTES) return false;
+            if (previous.session === 'extended' || point.session === 'extended') {
+                return isOvernightExtendedGap(previous, point);
+            }
+            return true;
+        }
+
+        function compressedChartTimeline(data, compact) {
+            const points = [];
+            const gaps = [];
+            let plot = 0;
+            const gapSlotWidth = compact ? 2.35 : 3.4;
+            data.forEach((point, index) => {
+                let visibleGapBefore = false;
+                if (index > 0) {
+                    const previous = data[index - 1];
+                    const delta = Number(point.minute) - Number(previous.minute);
+                    if (delta > CHART_INTERVAL_MINUTES * 1.5) {
+                        const skippedMinutes = Math.max(0, delta - CHART_INTERVAL_MINUTES);
+                        const fromPlot = plot;
+                        visibleGapBefore = isVisibleChartGap(previous, point, skippedMinutes);
+                        plot += visibleGapBefore ? gapSlotWidth : Math.max(delta / CHART_INTERVAL_MINUTES, 1);
+                        if (visibleGapBefore) {
+                            gaps.push({
+                                from: previous,
+                                to: point,
+                                fromIndex: index - 1,
+                                toIndex: index,
+                                fromPlot,
+                                toPlot: plot,
+                                midPlot: (fromPlot + plot) / 2,
+                                skippedMinutes
+                            });
+                        }
+                    } else {
+                        plot += Math.max(delta / CHART_INTERVAL_MINUTES, 1);
+                    }
+                }
+                points.push({ ...point, plot, visibleGapBefore });
+            });
+            return {
+                points,
+                gaps,
+                domain: { start: 0, end: Math.max(plot, 1) }
+            };
+        }
+
+        function chartPlotForMinute(minute, timeline) {
+            const points = timeline.points || [];
+            if (!Number.isFinite(minute) || !points.length) return null;
+            if (minute <= points[0].minute) return points[0].plot;
+            for (let index = 1; index < points.length; index += 1) {
+                const previous = points[index - 1];
+                const current = points[index];
+                if (minute <= current.minute) {
+                    const minuteSpan = Math.max(current.minute - previous.minute, 1);
+                    const plotSpan = current.plot - previous.plot;
+                    return previous.plot + ((minute - previous.minute) / minuteSpan) * plotSpan;
+                }
+            }
+            return points[points.length - 1].plot;
+        }
+
+        function chartSessionGroup(ipo, point) {
+            const mod = minuteOfDay(point.minute);
+            if (!Number.isFinite(mod)) return 'regular';
+            const isLaterDate = point.date && point.date !== ipo.date;
+            if (point.session === 'extended') {
+                if (isLaterDate && mod < MARKET_OPEN_MINUTES) return 'premarket';
+                if (isLaterDate && mod >= MARKET_OPEN_MINUTES) return 'secondOpen';
+                if (mod >= MARKET_CLOSE_MINUTES) return 'afterHours';
+            }
+            return 'regular';
+        }
+
+        function chartTimelineSegments(ipo, timeline) {
+            const points = timeline.points || [];
+            const segments = [];
+            let current = null;
+            points.forEach((point, index) => {
+                const group = chartSessionGroup(ipo, point);
+                const gapFromPrevious = Boolean(point.visibleGapBefore);
+                const groupChanged = current && current.group !== group;
+                if (!current || gapFromPrevious || groupChanged) {
+                    current = { group, points: [] };
+                    segments.push(current);
+                }
+                current.points.push(point);
+            });
+            return segments.filter(segment => segment.points.length);
+        }
+
+        function filterChartAxisTicks(ticks, timeline, plotW, minPixelGap) {
+            const domainSpan = Math.max(timeline.domain.end - timeline.domain.start, 1);
+            const minPlotGap = domainSpan * minPixelGap / Math.max(plotW, 1);
+            const sorted = [...ticks]
+                .filter(tick => Number.isFinite(tick.plot))
+                .sort((a, b) => a.plot - b.plot);
+            const filtered = [];
+            sorted.forEach(tick => {
+                const previous = filtered[filtered.length - 1];
+                const farEnough = !previous || tick.plot - previous.plot >= minPlotGap;
+                if (farEnough) {
+                    filtered.push(tick);
+                } else if ((tick.priority || 0) >= (previous.priority || 0)) {
+                    filtered[filtered.length - 1] = tick;
+                }
+            });
+            return filtered;
+        }
+
+        function chartBottomGridTickPoints(ipo, timeline) {
+            const ticks = new Map();
+            chartTimelineSegments(ipo, timeline).forEach(segment => {
+                const first = segment.points[0];
+                const last = segment.points[segment.points.length - 1];
+                const start = Math.ceil(first.minute / HALF_HOUR_MINUTES) * HALF_HOUR_MINUTES;
+                for (let minute = start; minute <= last.minute + 0.1; minute += HALF_HOUR_MINUTES) {
+                    const mod = minuteOfDay(minute);
+                    if (mod == null || mod % HALF_HOUR_MINUTES !== 0) continue;
+                    const plot = chartPlotForMinute(minute, timeline);
+                    if (!Number.isFinite(plot)) continue;
+                    ticks.set(`${Math.round(minute)}`, {
+                        minute,
+                        plot,
+                        date: first.date,
+                        group: segment.group,
+                        priority: mod % 60 === 0 ? 2 : 1
+                    });
+                }
+            });
+            return [...ticks.values()].sort((a, b) => a.plot - b.plot);
+        }
+
+        function chartBottomTickPoints(ipo, timeline, compact, plotW, gridTicks = null) {
+            const ticks = gridTicks || chartBottomGridTickPoints(ipo, timeline);
+            return filterChartAxisTicks(ticks, timeline, plotW, compact ? 48 : 72);
+        }
+
+        function countdownAxisLabel(minutesUntilOpen) {
+            if (!Number.isFinite(minutesUntilOpen)) return '';
+            const total = Math.max(0, Math.round(minutesUntilOpen));
+            if (total === 0) return '0m';
+            return `-${elapsedAxisLabel(total).replace(/^\+/, '')}`;
+        }
+
+        function chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended) {
+            const group = tick.group || chartSessionGroup(ipo, tick);
+            const mod = minuteOfDay(tick.minute);
+            if (isExtended && group === 'afterHours') {
+                const closeMinute = dateOffsetMinutes(ipo.date, tick.date || ipo.date) + MARKET_CLOSE_MINUTES;
+                const delta = tick.minute - closeMinute;
+                return {
+                    label: elapsedAxisLabel(delta),
+                    color: '#67e8f9',
+                    major: Math.round(delta) === 0 || Math.round(delta) % 60 === 0,
+                    priority: Math.round(delta) === 0 ? 5 : (Math.round(delta) % 60 === 0 ? 3 : 2)
+                };
+            }
+            if (isExtended && (group === 'premarket' || group === 'secondOpen')) {
+                const openMinute = dateOffsetMinutes(ipo.date, tick.date || ipo.date) + MARKET_OPEN_MINUTES;
+                const untilOpen = openMinute - tick.minute;
+                return {
+                    label: countdownAxisLabel(untilOpen),
+                    color: '#93c5fd',
+                    major: Math.round(untilOpen) === 0 || Math.round(untilOpen) % 60 === 0,
+                    priority: Math.round(untilOpen) === 30 ? 6 : (Math.round(untilOpen) === 0 ? 5 : (Math.round(untilOpen) % 60 === 0 ? 3 : 2))
+                };
+            }
+            if (Number.isFinite(firstMinute) && tick.minute >= firstMinute && group === 'regular') {
+                const delta = tick.minute - firstMinute;
+                return {
+                    label: elapsedAxisLabel(delta),
+                    color: Math.round(delta) === 0 || Math.round(delta) % 60 === 0 ? '#d4d4d8' : '#a1a1aa',
+                    major: Math.round(delta) === 0 || Math.round(delta) % 60 === 0,
+                    priority: Math.round(delta) === 0 ? 4 : (Math.round(delta) % 60 === 0 ? 2 : 1)
+                };
+            }
+            return null;
+        }
+
+        function chartTopAxisTickPoints(ipo, timeline, bottomTicks, compact, plotW, isExtended) {
+            const points = timeline.points || [];
+            if (!points.length) return [];
+            const firstMinute = points[0]?.minute;
+            const candidates = new Map();
+            const add = tick => {
+                if (!tick || !Number.isFinite(tick.minute) || !Number.isFinite(tick.plot)) return;
+                const meta = chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended);
+                if (!meta || !meta.label) return;
+                candidates.set(`${Math.round(tick.minute)}:${tick.group || ''}`, { ...tick, ...meta });
+            };
+            bottomTicks.forEach(add);
+            chartTimelineSegments(ipo, timeline).forEach(segment => {
+                const first = segment.points[0];
+                const special = {
+                    minute: first.minute,
+                    plot: first.plot,
+                    date: first.date,
+                    group: segment.group,
+                    priority: 5
+                };
+                if (segment.group === 'regular' || segment.group === 'afterHours') add(special);
+                if (segment.group === 'secondOpen') add(special);
+            });
+            const minPixelGap = compact ? 32 : 42;
+            const grouped = new Map();
+            [...candidates.values()].forEach(tick => {
+                const key = `${tick.group || 'regular'}:${tick.date || ''}`;
+                if (!grouped.has(key)) grouped.set(key, []);
+                grouped.get(key).push(tick);
+            });
+            return [...grouped.values()]
+                .flatMap(group => filterChartAxisTicks(group, timeline, plotW, minPixelGap))
+                .sort((a, b) => a.plot - b.plot);
+        }
+
+        function chartTimelineTickPoints(timeline, compact, plotW) {
+            const points = timeline.points || [];
+            if (!points.length) return [];
+            const domainSpan = Math.max(timeline.domain.end - timeline.domain.start, 1);
+            const minPixelGap = compact ? 54 : 82;
+            const minPlotGap = domainSpan * minPixelGap / Math.max(plotW, 1);
+            const candidates = new Map();
+            const add = point => {
+                if (point && Number.isFinite(point.plot)) candidates.set(point.index, point);
+            };
+            add(points[0]);
+            add(points[points.length - 1]);
+            timeline.gaps.forEach(gap => {
+                add(points[gap.fromIndex]);
+                add(points[gap.toIndex]);
+            });
+            points.forEach(point => {
+                const clockMinute = ((point.minute % 1440) + 1440) % 1440;
+                if (clockMinute % 60 === 0) add(point);
+            });
+            const targetCount = compact ? 5 : 9;
+            const stride = Math.max(1, Math.ceil(points.length / targetCount));
+            for (let index = 0; index < points.length; index += stride) {
+                add(points[index]);
+            }
+            const sorted = [...candidates.values()].sort((a, b) => a.plot - b.plot);
+            const filtered = [];
+            sorted.forEach(point => {
+                const isEdge = point === points[0];
+                const farEnough = !filtered.length || point.plot - filtered[filtered.length - 1].plot >= minPlotGap;
+                if (isEdge || farEnough) {
+                    filtered.push(point);
+                }
+            });
+            const lastPoint = points[points.length - 1];
+            if (filtered[filtered.length - 1] !== lastPoint) {
+                if (filtered.length && lastPoint.plot - filtered[filtered.length - 1].plot < minPlotGap * 0.55) {
+                    filtered[filtered.length - 1] = lastPoint;
+                } else {
+                    filtered.push(lastPoint);
+                }
+            }
+            return filtered;
+        }
+
+        function closeLineSegmentsFromBars(points, xPlot, y) {
+            const segments = [];
+            let current = [];
+            points.forEach((point, index) => {
+                const close = Number(point.close);
+                if (!Number.isFinite(point.plot) || !Number.isFinite(close)) return;
+                if (point.visibleGapBefore) {
+                    if (current.length > 1) segments.push(current);
+                    current = [];
+                }
+                current.push(`${xPlot(point.plot).toFixed(1)},${y(close).toFixed(1)}`);
+            });
+            if (current.length > 1) segments.push(current);
+            return segments;
+        }
+
+        function chartExtendedSessionBandsSvg(timeline, xPlot, mt, axisBottomY) {
+            const points = timeline.points || [];
+            const bands = [];
+            let bandStart = null;
+            let previous = null;
+            points.forEach(point => {
+                const extended = point.session === 'extended';
+                const gapFromPrevious = Boolean(point.visibleGapBefore);
+                if (extended && (bandStart == null || gapFromPrevious)) {
+                    if (bandStart != null && previous) {
+                        bands.push({ start: bandStart, end: previous.plot });
+                    }
+                    bandStart = point.plot;
+                }
+                if (!extended && bandStart != null && previous) {
+                    bands.push({ start: bandStart, end: previous.plot });
+                    bandStart = null;
+                }
+                previous = point;
+            });
+            if (bandStart != null && previous) {
+                bands.push({ start: bandStart, end: previous.plot });
+            }
+            return bands.map(band => {
+                const startPlot = Math.max(timeline.domain.start, band.start - 0.5);
+                const endPlot = Math.min(timeline.domain.end, band.end + 0.5);
+                const x = xPlot(startPlot);
+                const width = Math.max(4, xPlot(endPlot) - x);
+                return `<rect data-extended-session-band="true" x="${x.toFixed(1)}" y="${mt}" width="${width.toFixed(1)}" height="${(axisBottomY - mt).toFixed(1)}" fill="#38bdf8" opacity="0.075"><title>Extended trading hours</title></rect>`;
+            }).join('');
+        }
+
+        function chartGapBreaksSvg(ipo, timeline, xPlot, mt, axisBottomY, compact) {
+            return timeline.gaps.map(gap => {
+                const mid = xPlot(gap.midPlot);
+                return `<g><title>${ipo.ticker} no candle data from ${chartTooltipTimeLabel(ipo, gap.from)} to ${chartTooltipTimeLabel(ipo, gap.to)} (${formatGapDuration(gap.skippedMinutes)} skipped)</title><line data-chart-gap-break="true" x1="${mid.toFixed(1)}" x2="${mid.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#ffffff" stroke-width="${compact ? 1.1 : 1.35}" opacity="0.88"/></g>`;
+            }).join('');
         }
 
         function chartElapsedTicks(firstMinute, domain, compact) {
             if (!Number.isFinite(firstMinute)) return [];
             const maxDelta = domain.end - firstMinute;
             if (maxDelta < 0) return [];
-            const step = compact ? 60 : HALF_HOUR_MINUTES;
+            const step = chartElapsedStep(maxDelta, compact);
             const ticks = [0];
             for (let delta = step; delta <= maxDelta + 0.1; delta += step) {
                 ticks.push(delta);
@@ -340,33 +793,123 @@
             return Array.isArray(rows) ? rows : [];
         }
 
-        function chartData(ipo) {
-            const realBars = rawFiveMinuteBars(ipo);
-            if (realBars.length) {
-                return realBars.map((row, index) => ({
-                    index,
-                    time: row[0],
-                    minute: timeToMinutes(row[0]),
-                    open: row[1],
-                    high: row[2],
-                    low: row[3],
-                    close: row[4],
-                    volume: row[5],
-                    source: firstDayBarSources[ipo.ticker] || '5m bars'
-                }));
-            }
-            return [];
+        function rawExtendedBars(ipo) {
+            const rows = extendedDayBars[ipo.ticker];
+            return Array.isArray(rows) ? rows : [];
         }
 
-        function closeLinePointsFromFiveMinuteRows(ipo, x, y) {
-            return rawFiveMinuteBars(ipo)
-                .map(row => {
-                    const closeValue = row[4];
-                    return {
-                        minute: timeToMinutes(row[0]),
-                        close: closeValue == null || closeValue === '' ? NaN : Number(closeValue)
-                    };
-                })
+        function hasExtendedChartData(ipo) {
+            return rawExtendedBars(ipo).length > 0;
+        }
+
+        function minuteOfDay(minute) {
+            if (!Number.isFinite(minute)) return null;
+            return ((Math.round(minute) % 1440) + 1440) % 1440;
+        }
+
+        function splitChartDateTime(value, fallbackDate) {
+            const raw = String(value || '').trim();
+            const match = raw.match(/^(\d{4}-\d{2}-\d{2})[ T](\d{2}:\d{2})/);
+            if (match) {
+                return { date: match[1], time: match[2] };
+            }
+            return { date: fallbackDate || '', time: raw.slice(0, 5) };
+        }
+
+        function chartPointFromRow(row, index, ipo, source, session) {
+            const parsed = splitChartDateTime(row[0], ipo.date);
+            const minuteOfDay = timeToMinutes(parsed.time);
+            const minute = Number.isFinite(minuteOfDay)
+                ? minuteOfDay + dateOffsetMinutes(ipo.date, parsed.date)
+                : null;
+            return {
+                index,
+                date: parsed.date,
+                time: parsed.time,
+                minute,
+                open: row[1],
+                high: row[2],
+                low: row[3],
+                close: row[4],
+                volume: row[5],
+                source,
+                session
+            };
+        }
+
+        function extendedChartData(ipo) {
+            return rawExtendedBars(ipo)
+                .map((row, index) => chartPointFromRow(row, index, ipo, extendedDayBarSources[ipo.ticker] || 'Alpaca extended 5m bars', 'extended'))
+                .filter(row => Number.isFinite(row.minute))
+                .sort((a, b) => a.minute - b.minute);
+        }
+
+        function milestoneFromBar(bar, field, id, label) {
+            const price = Number(bar?.[field]);
+            if (!bar || !Number.isFinite(price) || price <= 0) return null;
+            return {
+                id,
+                label,
+                bar,
+                price,
+                time: bar.time || chartClockTime(bar.minute)
+            };
+        }
+
+        function extendedSessionMilestones(ipo) {
+            const extended = extendedChartData(ipo);
+            const firstDayAfterHours = extended.filter(bar => {
+                const mod = minuteOfDay(bar.minute);
+                return bar.date === ipo.date && Number.isFinite(mod) && mod >= MARKET_CLOSE_MINUTES;
+            });
+            const laterDayBars = extended.filter(bar => bar.date && bar.date !== ipo.date);
+            const preSecondBars = laterDayBars.filter(bar => {
+                const mod = minuteOfDay(bar.minute);
+                return Number.isFinite(mod) && mod < MARKET_OPEN_MINUTES;
+            });
+            const openSecondBars = laterDayBars.filter(bar => {
+                const mod = minuteOfDay(bar.minute);
+                return Number.isFinite(mod) && mod >= MARKET_OPEN_MINUTES;
+            });
+            const afterEndBar = firstDayAfterHours
+                .filter(bar => Number.isFinite(Number(bar.close)) && Number(bar.close) > 0)
+                .sort((a, b) => b.minute - a.minute)[0] || null;
+            const preSecondBar = preSecondBars
+                .filter(bar => Number.isFinite(Number(bar.open)) && Number(bar.open) > 0)
+                .sort((a, b) => a.minute - b.minute)[0] || null;
+            const openSecondBar = openSecondBars
+                .filter(bar => Number.isFinite(Number(bar.open)) && Number(bar.open) > 0)
+                .sort((a, b) => a.minute - b.minute)[0] || null;
+            return {
+                afterEnd: milestoneFromBar(afterEndBar, 'close', 'afterEnd', 'After End'),
+                preSecond: milestoneFromBar(preSecondBar, 'open', 'preSecond', 'Pre 2nd'),
+                openSecond: milestoneFromBar(openSecondBar, 'open', 'openSecond', 'Open 2nd')
+            };
+        }
+
+        function chartData(ipo, includeExtended = false) {
+            const realBars = rawFiveMinuteBars(ipo);
+            if (!realBars.length) return [];
+            const rows = [
+                ...realBars.map((row, index) => chartPointFromRow(row, index, ipo, firstDayBarSources[ipo.ticker] || '5m bars', 'regular')),
+                ...(includeExtended
+                    ? rawExtendedBars(ipo).map((row, index) => chartPointFromRow(row, realBars.length + index, ipo, extendedDayBarSources[ipo.ticker] || 'Alpaca extended 5m bars', 'extended'))
+                    : [])
+            ];
+            const byTime = new Map();
+            rows.forEach(row => {
+                if (!Number.isFinite(row.minute)) return;
+                byTime.set(`${row.date || ipo.date} ${row.time}`, row);
+            });
+            return [...byTime.values()].sort((a, b) => a.minute - b.minute);
+        }
+
+        function closeLinePointsFromBars(data, x, y) {
+            return data
+                .map(row => ({
+                    minute: row.minute,
+                    close: row.close == null || row.close === '' ? NaN : Number(row.close)
+                }))
                 .filter(point => Number.isFinite(point.minute) && Number.isFinite(point.close))
                 .map(point => `${x(point.minute).toFixed(1)},${y(point.close).toFixed(1)}`);
         }
@@ -395,6 +938,8 @@
             return {
                 price: bar.open,
                 time: bar.time || minutesToTime(bar.minute),
+                date: bar.date,
+                minute: bar.minute,
                 medianDeltaMinutes,
                 deltaMinutes: bar.minute - firstMinute
             };
@@ -421,9 +966,12 @@
         }
 
         function buyTimingMetric(ipo, data) {
-            const empty = `<div class="col-span-2 lg:col-span-2 xl:col-span-2 bg-zinc-950 border border-zinc-800 rounded-2xl p-3 min-h-[88px] flex flex-col justify-center">
-                <div class="text-zinc-500 text-xs">Buy timing</div>
-                <div class="font-mono text-base sm:text-lg font-semibold mt-0.5 text-zinc-500">&mdash;</div>
+            const empty = `<div class="col-span-2 lg:col-span-2 xl:col-span-2 rounded-2xl border border-zinc-800 bg-zinc-950 p-3 min-h-[88px] flex items-center justify-between gap-3">
+                <div>
+                    <div class="text-zinc-500 text-xs">Buy timing</div>
+                    <div class="font-mono text-base sm:text-lg font-semibold mt-0.5 text-zinc-500">&mdash;</div>
+                </div>
+                <div class="h-10 w-16 rounded-xl border border-zinc-800 bg-zinc-900/70"></div>
             </div>`;
             if (!data.length) return empty;
             const firstMinute = data[0]?.minute;
@@ -457,29 +1005,35 @@
                 otherTimings.length ? `Near lows ${otherTimings.join(', ')}` : '',
                 extraCount > 0 ? `+${extraCount} more` : ''
             ].filter(Boolean).join(' · ');
-            return `<div class="col-span-2 lg:col-span-2 xl:col-span-2 bg-amber-500/[0.06] border border-amber-500/35 rounded-2xl p-3 min-h-[88px] flex flex-col justify-center">
-                <div class="grid gap-3 items-center" style="grid-template-columns:minmax(0,1.2fr) minmax(6rem,0.8fr);">
+            return `<div class="col-span-2 lg:col-span-2 xl:col-span-2 rounded-2xl border border-amber-400/45 bg-[linear-gradient(135deg,rgba(245,158,11,0.16),rgba(24,24,27,0.96)_46%,rgba(9,9,11,0.98))] p-3 min-h-[88px] shadow-inner">
+                <div class="flex h-full min-w-0 items-center justify-between gap-3">
                     <div class="min-w-0">
-                        <div class="text-amber-300 text-xs">Buy timing</div>
-                        <div class="font-display leading-none mt-0.5 text-amber-300" style="white-space:nowrap;font-size:1.55rem;">${formatElapsedPlain(primaryTiming.deltaMinutes)}</div>
+                        <div class="flex items-center gap-2 text-xs text-amber-200">
+                            <span class="h-1.5 w-1.5 rounded-full bg-amber-300"></span>
+                            <span>Buy timing</span>
+                        </div>
+                        <div class="mt-1 font-display leading-none text-amber-200" style="white-space:nowrap;font-size:1.45rem;">${formatElapsedPlain(primaryTiming.deltaMinutes)}</div>
+                        ${secondaryText ? `<div class="mt-1 truncate text-[11px] leading-4 text-amber-100/55">${escapeHtml(secondaryText)}</div>` : ''}
                     </div>
-                    <div class="rounded-xl border border-amber-500/25 bg-zinc-950/70 px-3 py-2 text-center shadow-inner min-w-0">
-                        <div class="font-mono text-sm font-semibold leading-none text-zinc-100">${escapeHtml(primaryTiming.time || '--')}</div>
-                        ${germanClockLine ? `<div class="mt-1 font-mono text-xs leading-none text-zinc-400" style="white-space:nowrap;">${escapeHtml(germanClockLine)}</div>` : ''}
+                    <div class="shrink-0 rounded-xl border border-amber-300/25 bg-zinc-950/80 px-3 py-2 text-center shadow-inner min-w-[5.8rem]">
+                        <div class="text-[10px] leading-none text-zinc-500">NYC</div>
+                        <div class="mt-1 font-mono text-sm font-semibold leading-none text-zinc-100">${escapeHtml(primaryTiming.time || '--')}</div>
+                        ${germanClockLine ? `<div class="mt-1 font-mono text-[11px] leading-none text-zinc-400" style="white-space:nowrap;">${escapeHtml(germanClockLine)}</div>` : ''}
                     </div>
                 </div>
-                ${secondaryText ? `<div class="mt-1.5 truncate text-[11px] leading-4 text-zinc-500">${escapeHtml(secondaryText)}</div>` : ''}
             </div>`;
         }
 
-        function renderChart(ipo, data) {
+        function renderChart(ipo, data, options = {}) {
             const compact = window.matchMedia('(max-width: 640px)').matches;
             const W = compact ? 420 : 1040;
             const H = compact ? 820 : 655;
+            const isExtended = Boolean(options.extended);
+            const titleLabel = chartTitleLabel(isExtended);
             if (!data.length) {
                 const titleSize = compact ? 10 : 13;
                 const bodySize = compact ? 12 : 15;
-                return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} first-day intraday candle chart unavailable"><rect width="${W}" height="${H}" fill="#09090b"/><text x="32" y="34" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${ipo.ticker} first-day intraday candles</text><g transform="translate(${W / 2} ${H / 2 - 28})"><circle r="28" fill="#18181b" stroke="#3f3f46"/><path d="M-10 -8 L10 8 M10 -8 L-10 8" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/><text x="0" y="62" text-anchor="middle" font-size="${bodySize}" font-weight="700" fill="#e4e4e7">Real 5-minute IPO-day bars unavailable</text><text x="0" y="88" text-anchor="middle" font-size="${compact ? 10 : 12}" fill="#a1a1aa">No estimated or synthetic chart is shown.</text></g></svg>`;
+                return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} ${titleLabel} unavailable"><rect width="${W}" height="${H}" fill="#09090b"/><text x="32" y="34" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${ipo.ticker} ${titleLabel}</text><g transform="translate(${W / 2} ${H / 2 - 28})"><circle r="28" fill="#18181b" stroke="#3f3f46"/><path d="M-10 -8 L10 8 M10 -8 L-10 8" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/><text x="0" y="62" text-anchor="middle" font-size="${bodySize}" font-weight="700" fill="#e4e4e7">Real 5-minute IPO-day bars unavailable</text><text x="0" y="88" text-anchor="middle" font-size="${compact ? 10 : 12}" fill="#a1a1aa">No estimated or synthetic chart is shown.</text></g></svg>`;
             }
             const ml = compact ? 50 : 64;
             const mr = compact ? 16 : 24;
@@ -494,19 +1048,24 @@
             const volumeTopY = axisBottomY - volumeH;
             const priceBottomY = volumeTopY - volumeGap;
             const pricePlotH = priceBottomY - mt;
-            const domain = chartTimeDomain(data);
-            const tickMinutes = chartTimeTicks(domain);
-            const prices = data.flatMap(d => [d.open, d.high, d.low, d.close]);
+            const timeline = compressedChartTimeline(data, compact);
+            const chartPoints = timeline.points;
+            const bottomGridPoints = chartBottomGridTickPoints(ipo, timeline);
+            const bottomTickPoints = chartBottomTickPoints(ipo, timeline, compact, plotW, bottomGridPoints);
+            const topTickPoints = chartTopAxisTickPoints(ipo, timeline, bottomGridPoints, compact, plotW, isExtended);
+            const prices = chartPoints.flatMap(d => [d.open, d.high, d.low, d.close]);
             const rawMin = Math.min(...prices);
             const rawMax = Math.max(...prices);
             let min = rawMin, max = rawMax;
             const pad = Math.max((max - min) * 0.08, max * 0.01);
             min -= pad; max += pad;
-            const x = minute => ml + ((minute - domain.start) / Math.max(domain.end - domain.start, 1)) * plotW;
+            const xPlot = plot => ml + ((plot - timeline.domain.start) / Math.max(timeline.domain.end - timeline.domain.start, 1)) * plotW;
+            const xMinute = minute => xPlot(chartPlotForMinute(minute, timeline));
             const y = p => mt + ((max - p) / Math.max(max - min, 0.01)) * pricePlotH;
-            const { lowPoint, markers: lowPoints } = chartLowPoints(data);
+            const { lowPoint, markers: lowPoints } = chartLowPoints(chartPoints);
             const lowY = y(lowPoint.low);
-            const firstMinute = data[0]?.minute;
+            const firstMinute = chartPoints[0]?.minute;
+            const lastMinute = chartPoints[chartPoints.length - 1]?.minute;
             const lowPriceLabel = `Low ${fmtUsd(lowPoint.low)}`;
             const tickLabelY = axisBottomY + (compact ? 17 : 17);
             const lowLabelBaseY = mt + (compact ? 33 : 31);
@@ -519,7 +1078,7 @@
             const medianReferenceMinute = Number.isFinite(firstMinute) && Number.isFinite(medianDeltaMinutes)
                 ? firstMinute + medianDeltaMinutes
                 : null;
-            const candleSlots = Math.max(data.length, ((domain.end - domain.start) / 5) + 1);
+            const candleSlots = Math.max(chartPoints.length, (timeline.domain.end - timeline.domain.start) + 1);
             const candleW = Math.max(4, Math.min(10, plotW / candleSlots * 0.62));
             const grid = [];
             for (let i = 0; i <= 4; i++) {
@@ -528,66 +1087,64 @@
                 grid.push(`<line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#27272a"/>`);
                 grid.push(`<text x="${ml - 8}" y="${(yy + 4).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#71717a">${fmtUsd(price)}</text>`);
             }
-            const timeGrid = tickMinutes.map(minute => {
-                const xx = x(minute);
-                const isHour = minute % 60 === 0;
+            const bottomLabelKeys = new Set(bottomTickPoints.map(point => `${Math.round(point.minute)}:${point.group || ''}`));
+            const timeGrid = bottomGridPoints.map(point => {
+                const xx = xPlot(point.plot);
+                const clockMinute = ((point.minute % 1440) + 1440) % 1440;
+                const isHour = clockMinute % 60 === 0;
                 const dash = isHour ? '' : ' stroke-dasharray="3 7"';
-                const marketTime = minutesToTime(minute);
-                const germanLine = germanLineLabel(germanTimeLabel(ipo.date, minute));
-                const label = !compact || isHour || minute === domain.start || minute === domain.end
-                    ? `<text x="${xx.toFixed(1)}" y="${tickLabelY}" text-anchor="middle" font-size="${axisSize}" fill="${isHour ? '#a1a1aa' : '#71717a'}"><tspan x="${xx.toFixed(1)}">${marketTime}</tspan>${germanLine ? `<tspan x="${xx.toFixed(1)}" dy="${compact ? 12 : 13}" font-size="${Math.max(8, axisSize - 1)}" fill="#71717a">${germanLine}</tspan>` : ''}</text>`
-                    : '';
-                return `<line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="${isHour ? '#3f3f46' : '#27272a'}"${dash}/>${label}`;
+                const showLabel = bottomLabelKeys.has(`${Math.round(point.minute)}:${point.group || ''}`);
+                const marketTime = showLabel ? chartTickLabel(ipo.date, point.minute) : '';
+                const germanLine = showLabel ? germanLineLabel(germanTimeLabel(ipo.date, point.minute)) : '';
+                const label = showLabel ? `<text data-chart-time-label="true" x="${xx.toFixed(1)}" y="${tickLabelY}" text-anchor="middle" font-size="${axisSize}" fill="${isHour ? '#a1a1aa' : '#71717a'}"><tspan x="${xx.toFixed(1)}">${marketTime}</tspan>${germanLine ? `<tspan x="${xx.toFixed(1)}" dy="${compact ? 12 : 13}" font-size="${Math.max(8, axisSize - 1)}" fill="#71717a">${germanLine}</tspan>` : ''}</text>` : '';
+                return `<line data-chart-time-grid="true" data-chart-session="${escapeHtml(point.group || '')}" x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="${isHour ? '#3f3f46' : '#27272a'}"${dash}/>${label}`;
             }).join('');
             const elapsedAxis = Number.isFinite(firstMinute) ? (() => {
                 const axisY = mt;
                 const labelY = mt - (compact ? 10 : 11);
-                const ticks = chartElapsedTicks(firstMinute, domain, compact)
-                    .filter(delta => {
-                        const minute = firstMinute + delta;
-                        return minute >= domain.start && minute <= domain.end;
-                    });
-                const tickLabels = ticks.map(delta => {
-                    const minute = firstMinute + delta;
-                    const xx = x(minute);
-                    const major = delta === 0 || delta % 60 === 0;
-                    return `<g><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(axisY - (major ? 8 : 6)).toFixed(1)}" y2="${axisY.toFixed(1)}" stroke="${major ? '#a1a1aa' : '#71717a'}"/><text x="${xx.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-size="${axisSize}" font-weight="${major ? 700 : 500}" fill="${major ? '#d4d4d8' : '#a1a1aa'}">${elapsedAxisLabel(delta)}</text></g>`;
+                const tickLabels = topTickPoints.map(point => {
+                    const xx = xPlot(point.plot);
+                    const color = point.color || '#a1a1aa';
+                    const major = Boolean(point.major);
+                    return `<g><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(axisY - (major ? 8 : 6)).toFixed(1)}" y2="${axisY.toFixed(1)}" stroke="${color}" opacity="${major ? 0.95 : 0.75}"/><text x="${xx.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-size="${axisSize}" font-weight="${major ? 700 : 500}" fill="${color}">${escapeHtml(point.label)}</text></g>`;
                 }).join('');
-                const axisStart = Math.max(firstMinute, domain.start);
-                const legend = compact ? '' : `<text x="${W - mr}" y="${(mt - 30).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#71717a">minutes from first trade</text>`;
-                return `<g><title>${ipo.ticker} elapsed minutes from first trade</title>${legend}<line x1="${x(axisStart).toFixed(1)}" x2="${(W - mr).toFixed(1)}" y1="${axisY.toFixed(1)}" y2="${axisY.toFixed(1)}" stroke="#52525b" stroke-width="1.2"/>${tickLabels}</g>`;
+                const legendText = isExtended ? 'first trade · after-hours · pre-open' : 'minutes from first trade';
+                const legend = compact ? '' : `<text x="${W - mr}" y="${(mt - 30).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#71717a">${legendText}</text>`;
+                return `<g><title>${ipo.ticker} top axis uses first-trade elapsed time, after-hours elapsed time, and premarket countdown where available</title>${legend}<line x1="${xPlot(chartPoints[0].plot).toFixed(1)}" x2="${xPlot(chartPoints[chartPoints.length - 1].plot).toFixed(1)}" y1="${axisY.toFixed(1)}" y2="${axisY.toFixed(1)}" stroke="#52525b" stroke-width="1.2"/>${tickLabels}</g>`;
             })() : '';
-            const candles = data.map((d, i) => {
+            const extendedSessionBands = chartExtendedSessionBandsSvg(timeline, xPlot, mt, axisBottomY);
+            const gapBreaks = chartGapBreaksSvg(ipo, timeline, xPlot, mt, axisBottomY, compact);
+            const candles = chartPoints.map((d, i) => {
                 const up = d.close >= d.open;
                 const color = up ? '#22c55e' : '#ef4444';
-                const xx = x(d.minute);
+                const xx = xPlot(d.plot);
                 const bodyTop = y(Math.max(d.open, d.close));
                 const bodyBottom = y(Math.min(d.open, d.close));
                 const bodyH = Math.max(1.5, bodyBottom - bodyTop);
-                return `<g><title>${ipo.ticker} ${dualTimeLabel(ipo.date, d.minute, d.time || null)} O ${fmtUsd(d.open)} H ${fmtUsd(d.high)} L ${fmtUsd(d.low)} C ${fmtUsd(d.close)}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${y(d.high).toFixed(1)}" y2="${y(d.low).toFixed(1)}" stroke="${color}" stroke-width="1.35"/><rect x="${(xx - candleW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${candleW.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${color}" rx="1"/></g>`;
+                return `<g><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, d)} O ${fmtUsd(d.open)} H ${fmtUsd(d.high)} L ${fmtUsd(d.low)} C ${fmtUsd(d.close)}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${y(d.high).toFixed(1)}" y2="${y(d.low).toFixed(1)}" stroke="${color}" stroke-width="1.35"/><rect x="${(xx - candleW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${candleW.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${color}" rx="1"/></g>`;
             }).join('');
-            const closePoints = closeLinePointsFromFiveMinuteRows(ipo, x, y);
-            const closeLine = closePoints.length > 1
-                ? `<g><title>${ipo.ticker} original 5-minute close line</title><polyline points="${closePoints.join(' ')}" fill="none" stroke="#09090b" stroke-width="${compact ? 2.4 : 2.8}" stroke-linejoin="round" stroke-linecap="round" opacity="0.45"/><polyline points="${closePoints.join(' ')}" fill="none" stroke="#a1a1aa" stroke-width="${compact ? 0.75 : 0.9}" stroke-linejoin="round" stroke-linecap="round" opacity="0.82"/></g>`
+            const closeSegments = closeLineSegmentsFromBars(chartPoints, xPlot, y);
+            const closeLine = closeSegments.length
+                ? `<g><title>${ipo.ticker} 5-minute close line; the extended overnight break is not connected</title>${closeSegments.map(segment => `<polyline points="${segment.join(' ')}" fill="none" stroke="#09090b" stroke-width="${compact ? 2.4 : 2.8}" stroke-linejoin="round" stroke-linecap="round" opacity="0.45"/><polyline points="${segment.join(' ')}" fill="none" stroke="#a1a1aa" stroke-width="${compact ? 0.75 : 0.9}" stroke-linejoin="round" stroke-linecap="round" opacity="0.82"/>`).join('')}</g>`
                 : '';
-            const maxVolume = Math.max(...data.map(d => Number(d.volume) || 0), 1);
-            const volumeBars = data.map(d => {
+            const maxVolume = Math.max(...chartPoints.map(d => Number(d.volume) || 0), 1);
+            const volumeBars = chartPoints.map(d => {
                 const up = d.close >= d.open;
                 const color = up ? '#22c55e' : '#ef4444';
-                const xx = x(d.minute);
+                const xx = xPlot(d.plot);
                 const volume = Number(d.volume) || 0;
                 const barH = Math.max(1, (volume / maxVolume) * (volumeH - 16));
                 const yy = axisBottomY - barH;
-                return `<rect x="${(xx - candleW / 2).toFixed(1)}" y="${yy.toFixed(1)}" width="${candleW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${color}" opacity="0.28" rx="1"><title>${ipo.ticker} ${dualTimeLabel(ipo.date, d.minute, d.time || null)} volume ${volume.toLocaleString('en-US')}</title></rect>`;
+                return `<rect x="${(xx - candleW / 2).toFixed(1)}" y="${yy.toFixed(1)}" width="${candleW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${color}" opacity="0.28" rx="1"><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, d)} volume ${volume.toLocaleString('en-US')}</title></rect>`;
             }).join('');
             const volumePanel = `<g><line x1="${ml}" x2="${W - mr}" y1="${volumeTopY.toFixed(1)}" y2="${volumeTopY.toFixed(1)}" stroke="#27272a"/><text x="${ml + 4}" y="${(volumeTopY + 14).toFixed(1)}" font-size="${axisSize}" fill="#71717a">Volume</text>${volumeBars}</g>`;
             const lowGuideLines = `<line x1="${ml}" x2="${W - mr}" y1="${lowY.toFixed(1)}" y2="${lowY.toFixed(1)}" stroke="#f59e0b" stroke-width="0.8" stroke-dasharray="4 5"/>${lowPoints.map(point => {
-                const xx = x(point.minute);
+                const xx = xPlot(point.plot);
                 const isExactLow = point.low === lowPoint.low;
                 return `<line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#f59e0b" stroke-width="${isExactLow ? 0.9 : 0.7}" stroke-dasharray="4 5" opacity="${isExactLow ? 0.95 : 0.45}"/>`;
             }).join('')}`;
             const lowMarkers = lowPoints.map(point => {
-                const xx = x(point.minute);
+                const xx = xPlot(point.plot);
                 const yy = y(point.low);
                 const isExactLow = point.low === lowPoint.low;
                 let row = lowLabelRows.findIndex(lastX => Math.abs(xx - lastX) >= lowLabelMinGap);
@@ -597,10 +1154,10 @@
                 const labelAnchor = labelX <= ml + 8 ? 'start' : labelX >= W - mr - 8 ? 'end' : 'middle';
                 const deltaLabel = formatElapsedMinutes(point.minute - firstMinute);
                 const labelY = lowLabelBaseY + row * lowLabelRowGap;
-                return `<g><title>${ipo.ticker} ${dualTimeLabel(ipo.date, point.minute, point.time || null)} low ${fmtUsd(point.low)}</title><circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${isExactLow ? (compact ? 3.5 : 4.5) : (compact ? 2.8 : 3.5)}" fill="#f59e0b" stroke="#09090b" stroke-width="1.5" opacity="${isExactLow ? 1 : 0.78}"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#f59e0b" stroke-width="${isExactLow ? 0.95 : 0.7}" stroke-dasharray="4 5" opacity="${isExactLow ? 0.85 : 0.45}"/><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#09090b" stroke="#09090b" stroke-width="3" opacity="0.85">${deltaLabel}</text><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#fbbf24">${deltaLabel}</text></g>`;
+                return `<g><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, point)} low ${fmtUsd(point.low)}</title><circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${isExactLow ? (compact ? 3.5 : 4.5) : (compact ? 2.8 : 3.5)}" fill="#f59e0b" stroke="#09090b" stroke-width="1.5" opacity="${isExactLow ? 1 : 0.78}"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#f59e0b" stroke-width="${isExactLow ? 0.95 : 0.7}" stroke-dasharray="4 5" opacity="${isExactLow ? 0.85 : 0.45}"/><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#09090b" stroke="#09090b" stroke-width="3" opacity="0.85">${deltaLabel}</text><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#fbbf24">${deltaLabel}</text></g>`;
             }).join('');
-            const medianReferenceLine = Number.isFinite(medianReferenceMinute) && medianReferenceMinute >= domain.start && medianReferenceMinute <= domain.end ? (() => {
-                const xx = x(medianReferenceMinute);
+            const medianReferenceLine = Number.isFinite(medianReferenceMinute) && medianReferenceMinute >= firstMinute && medianReferenceMinute <= lastMinute ? (() => {
+                const xx = xMinute(medianReferenceMinute);
                 const label = `Median ${formatElapsedPlain(medianDeltaMinutes)}`;
                 const labelNearRight = xx > W - mr - (compact ? 86 : 118);
                 const labelX = labelNearRight ? xx - 6 : xx + 6;
@@ -635,12 +1192,297 @@
                 return `<g><title>${ipo.ticker} ${escapeHtml(ref.label)} reference ${fmtUsd(ref.price)}</title><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#09090b" stroke-width="${haloWidth}" opacity="0.7"/><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="${ref.color}" stroke-width="${strokeWidth}" stroke-dasharray="${ref.dash}" opacity="0.92"/><rect x="${ml + 5}" y="${(labelY - 12).toFixed(1)}" width="${labelW.toFixed(1)}" height="16" rx="4" fill="#09090b" opacity="0.9" stroke="${ref.color}" stroke-opacity="0.28"/><text x="${ml + 10}" y="${labelY.toFixed(1)}" font-size="${axisSize}" font-weight="700" fill="${ref.color}">${escapeHtml(labelText)}</text></g>`;
             }).join('');
             const lowPriceMarker = `<text x="${W - mr - 4}" y="${Math.max(mt + 14, lowY - 7).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#fbbf24">${lowPriceLabel}</text>`;
-            const sourceLabel = compactBarSourceLabel(data[0]?.source || '5m bars');
-            return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} first-day intraday candle chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${ipo.ticker} first-day intraday candles · ${sourceLabel}</text>${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${elapsedAxis}${volumePanel}${lowGuideLines}${candles}${closeLine}${priceReferenceLines}${medianReferenceLine}${lowPriceMarker}${lowMarkers}</svg>`;
+            const sourceLabel = chartSourceLabel(data);
+            const visibleTitle = compact
+                ? `${ipo.ticker} ${isExtended ? 'extended' : 'candles'}${sourceLabel ? ` · ${sourceLabel}` : ''}`
+                : `${ipo.ticker} ${titleLabel}${sourceLabel ? ` · ${sourceLabel}` : ''}`;
+            return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} ${titleLabel} chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${visibleTitle}</text>${extendedSessionBands}${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${gapBreaks}${elapsedAxis}${volumePanel}${lowGuideLines}${candles}${closeLine}${priceReferenceLines}${medianReferenceLine}${lowPriceMarker}${lowMarkers}</svg>`;
         }
 
         function metric(label, value, extra = '') {
-            return `<div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3 min-h-[88px] flex flex-col justify-center"><div class="text-zinc-500 text-xs">${label}</div><div class="font-mono text-base sm:text-lg font-semibold mt-0.5 ${extra}">${value}</div></div>`;
+            return `<div class="min-w-0 bg-zinc-950 border border-zinc-800 rounded-2xl p-3 min-h-[88px] flex flex-col justify-center"><div class="text-zinc-500 text-xs">${label}</div><div class="font-mono text-sm sm:text-base font-semibold mt-0.5 break-words ${extra}">${value}</div></div>`;
+        }
+
+        function compactTimelineDuration(minutes) {
+            if (!Number.isFinite(minutes)) return '';
+            const sign = minutes < 0 ? '-' : '';
+            const total = Math.abs(Math.round(minutes));
+            const hours = Math.floor(total / 60);
+            const mins = total % 60;
+            if (hours && mins) return `${sign}${hours}h${String(mins).padStart(2, '0')}m`;
+            return hours ? `${sign}${hours}h` : `${sign}${mins}m`;
+        }
+
+        function timelineClockLabel(ipo, date, minute, fallback = '') {
+            const clock = fallback || chartClockTime(minute);
+            if (!clock) return '';
+            return date && date !== ipo.date ? `D2 ${clock}` : clock;
+        }
+
+        function timelineEventTimeLines(ipo, event, firstMinute) {
+            if (event.id === 'ipo') return ['offer'];
+            if (event.id === 'current') return ['snapshot'];
+            const clock = timelineClockLabel(ipo, event.date, event.minute, event.clock);
+            const german = Number.isFinite(event.minute) ? germanLineLabel(germanTimeLabel(ipo.date, event.minute)) : '';
+            if (!Number.isFinite(event.minute) || !Number.isFinite(firstMinute)) return [clock, german].filter(Boolean);
+            if (event.elapsed) {
+                return [
+                    [compactTimelineDuration(event.minute - firstMinute), clock].filter(Boolean).join(' · '),
+                    german
+                ].filter(Boolean);
+            }
+            return [clock, german].filter(Boolean);
+        }
+
+        function timelineLowEventFromMarker(marker, label, firstMinute, rankBase, index, showLabel) {
+            return {
+                id: `${label.replace(/\s+/g, '').toLowerCase()}${index}`,
+                label: showLabel ? label : '',
+                price: marker.low,
+                minute: marker.minute,
+                date: marker.date,
+                clock: marker.time,
+                elapsed: Number.isFinite(firstMinute),
+                sortKey: marker.minute,
+                rank: rankBase + index / 100,
+                color: '#fbbf24',
+                isLowMarker: true,
+                showLabel
+            };
+        }
+
+        function extendedTimelineLowEvents(ipo, firstMinute, regularData) {
+            const extended = extendedChartData(ipo);
+            const combined = [...(regularData || []), ...extended]
+                .filter(bar => Number.isFinite(bar.minute) && Number.isFinite(bar.low) && Number.isFinite(bar.high));
+            if (!extended.length || !combined.length) return [];
+            const chartLowMarkers = chartLowPoints(combined).markers
+                .filter(marker => marker.session === 'extended');
+            if (!chartLowMarkers.length) return [];
+            const groups = new Map();
+            chartLowMarkers.forEach(marker => {
+                const group = chartSessionGroup(ipo, marker);
+                if (!['afterHours', 'premarket', 'secondOpen'].includes(group)) return;
+                if (!groups.has(group)) groups.set(group, []);
+                groups.get(group).push(marker);
+            });
+            const configs = [
+                ['afterHours', 'AFTER LOW', 5.2],
+                ['premarket', 'PRE LOW', 6.2],
+                ['secondOpen', 'OPEN LOW', 7.2]
+            ];
+            return configs.flatMap(([group, label, rankBase]) => {
+                const markers = (groups.get(group) || []).sort((a, b) => a.minute - b.minute);
+                if (!markers.length) return [];
+                const lowest = markers.reduce((best, marker) => marker.low < best.low ? marker : best, markers[0]);
+                return markers.map((marker, index) => timelineLowEventFromMarker(
+                    marker,
+                    label,
+                    firstMinute,
+                    rankBase,
+                    index,
+                    marker.minute === lowest.minute && Math.abs(marker.low - lowest.low) < 0.005
+                ));
+            });
+        }
+
+        function cardPriceTimelineEvents(ipo, data, summary, medianQuote, extendedPrices) {
+            const valid = data
+                .filter(bar => Number.isFinite(bar.minute))
+                .sort((a, b) => a.minute - b.minute);
+            if (!valid.length) return [];
+            const first = valid[0];
+            const last = valid[valid.length - 1];
+            const lowPoint = chartLowPoints(valid).lowPoint;
+            const firstMinute = first.minute;
+            const maxMinute = Math.max(
+                ...valid.map(bar => bar.minute).filter(Number.isFinite),
+                ...[extendedPrices.afterEnd, extendedPrices.preSecond, extendedPrices.openSecond]
+                    .map(milestone => Number(milestone?.bar?.minute))
+                    .filter(Number.isFinite)
+            );
+            const events = [];
+            const addEvent = event => {
+                const price = Number(event.price);
+                if (!Number.isFinite(price) || price <= 0) return;
+                events.push({ ...event, price });
+            };
+            addEvent({
+                id: 'ipo',
+                label: 'IPO',
+                price: ipo.ipoPrice,
+                sortKey: firstMinute - 120,
+                rank: 0,
+                color: '#e4e4e7'
+            });
+            addEvent({
+                id: 'start',
+                label: 'START',
+                price: summary.startPrice,
+                minute: first.minute,
+                date: first.date,
+                clock: first.time,
+                elapsed: true,
+                sortKey: first.minute,
+                rank: 1,
+                color: '#60a5fa'
+            });
+            addEvent({
+                id: 'low',
+                label: 'LOW',
+                price: lowPoint.low,
+                minute: lowPoint.minute,
+                date: lowPoint.date,
+                clock: lowPoint.time,
+                elapsed: true,
+                sortKey: lowPoint.minute,
+                rank: 2,
+                color: '#fbbf24'
+            });
+            if (medianQuote) {
+                addEvent({
+                    id: 'median',
+                    label: `MEDIAN (${compactTimelineDuration(medianQuote.medianDeltaMinutes)})`,
+                    price: medianQuote.price,
+                    minute: medianQuote.minute,
+                    date: medianQuote.date,
+                    clock: medianQuote.time,
+                    elapsed: true,
+                    sortKey: medianQuote.minute,
+                    rank: 3,
+                    color: '#60a5fa'
+                });
+            }
+            addEvent({
+                id: 'end',
+                label: 'END',
+                price: summary.endPrice,
+                minute: last.minute,
+                date: last.date,
+                clock: last.time,
+                sortKey: last.minute,
+                rank: 4,
+                color: Number(summary.endPrice) >= Number(summary.startPrice) ? '#34d399' : '#fb7185'
+            });
+            [
+                ['afterEnd', 'AFTER END', '#22d3ee', 5],
+                ['preSecond', 'PRE 2ND', '#2dd4bf', 6],
+                ['openSecond', 'OPEN 2ND', '#60a5fa', 7]
+            ].forEach(([id, label, color, rank]) => {
+                const milestone = extendedPrices[id];
+                addEvent({
+                    id,
+                    label,
+                    price: milestone?.price,
+                    minute: milestone?.bar?.minute,
+                    date: milestone?.bar?.date,
+                    clock: milestone?.time,
+                    sortKey: Number.isFinite(milestone?.bar?.minute) ? milestone.bar.minute : maxMinute + rank * 30,
+                    rank,
+                    color
+                });
+            });
+            extendedTimelineLowEvents(ipo, firstMinute, valid).forEach(addEvent);
+            addEvent({
+                id: 'current',
+                label: 'CURRENT*',
+                price: ipo.current,
+                sortKey: maxMinute + 240,
+                rank: 8,
+                color: '#e4e4e7'
+            });
+            return events
+                .map(event => ({
+                    ...event,
+                    showLabel: event.showLabel !== false,
+                    timeLines: event.showLabel === false ? [] : timelineEventTimeLines(ipo, event, firstMinute)
+                }))
+                .sort((a, b) => a.sortKey - b.sortKey || a.rank - b.rank);
+        }
+
+        function cardPriceTimelineHtml(ipo, data, summary, medianQuote, extendedPrices) {
+            const events = cardPriceTimelineEvents(ipo, data, summary, medianQuote, extendedPrices);
+            if (events.length < 2) return '';
+            const W = 1180;
+            const H = 196;
+            const left = 36;
+            const right = 36;
+            const chartTop = 92;
+            const chartH = 70;
+            const plotW = W - left - right;
+            const labeledEvents = events.filter(event => event.showLabel);
+            const labeledIndexByEvent = new Map();
+            labeledEvents.forEach((event, index) => labeledIndexByEvent.set(event, index));
+            const xForLabeledIndex = index => left + (labeledEvents.length <= 1 ? 0 : (index / (labeledEvents.length - 1)) * plotW);
+            const xForEvent = (event, eventIndex) => {
+                if (event.showLabel) return xForLabeledIndex(labeledIndexByEvent.get(event));
+                let previousEvent = null;
+                let nextEvent = null;
+                for (let index = eventIndex - 1; index >= 0; index -= 1) {
+                    if (events[index].showLabel) {
+                        previousEvent = events[index];
+                        break;
+                    }
+                }
+                for (let index = eventIndex + 1; index < events.length; index += 1) {
+                    if (events[index].showLabel) {
+                        nextEvent = events[index];
+                        break;
+                    }
+                }
+                if (previousEvent && nextEvent) {
+                    const previousX = xForLabeledIndex(labeledIndexByEvent.get(previousEvent));
+                    const nextX = xForLabeledIndex(labeledIndexByEvent.get(nextEvent));
+                    const span = Math.max(nextEvent.sortKey - previousEvent.sortKey, 1);
+                    const ratio = Math.max(0.18, Math.min(0.82, (event.sortKey - previousEvent.sortKey) / span));
+                    return previousX + (nextX - previousX) * ratio;
+                }
+                if (previousEvent) return xForLabeledIndex(labeledIndexByEvent.get(previousEvent)) + 18;
+                if (nextEvent) return xForLabeledIndex(labeledIndexByEvent.get(nextEvent)) - 18;
+                return left;
+            };
+            const prices = events.map(event => event.price).filter(Number.isFinite);
+            const rawMin = Math.min(...prices);
+            const rawMax = Math.max(...prices);
+            const pad = Math.max((rawMax - rawMin) * 0.12, rawMax * 0.006, 0.01);
+            const min = rawMin - pad;
+            const max = rawMax + pad;
+            const yPrice = price => chartTop + ((max - price) / Math.max(max - min, 0.01)) * chartH;
+            const pricePoints = events.map((event, index) => `${xForEvent(event, index).toFixed(1)},${yPrice(event.price).toFixed(1)}`);
+            const priceLine = pricePoints.length > 1
+                ? `<polyline points="${pricePoints.join(' ')}" fill="none" stroke="#09090b" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity="0.75"/><polyline points="${pricePoints.join(' ')}" fill="none" stroke="#94a3b8" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"/>`
+                : '';
+            const eventNodes = events.map((event, index) => {
+                const xx = xForEvent(event, index);
+                const yy = yPrice(event.price);
+                const label = escapeHtml(event.label);
+                const price = escapeHtml(fmtUsd(event.price));
+                const timeLines = (event.timeLines || []).slice(0, 2).map(escapeHtml);
+                const dotRadius = event.isLowMarker ? 4.8 : 5.4;
+                const labelText = event.showLabel ? `<text x="${xx.toFixed(1)}" y="21" text-anchor="middle" font-size="10" font-weight="800" fill="${event.color}">${label}</text>
+                    <text x="${xx.toFixed(1)}" y="38" text-anchor="middle" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-weight="800" fill="${event.color}">${price}</text>
+                    ${timeLines[0] ? `<text x="${xx.toFixed(1)}" y="54" text-anchor="middle" font-size="9.3" fill="#71717a">${timeLines[0]}</text>` : ''}
+                    ${timeLines[1] ? `<text x="${xx.toFixed(1)}" y="67" text-anchor="middle" font-size="9.3" fill="#71717a">${timeLines[1]}</text>` : ''}` : '';
+                return `<g>
+                    <title>${escapeHtml([event.label || 'Low marker', fmtUsd(event.price), ...(event.timeLines || [])].filter(Boolean).join(' · '))}</title>
+                    ${event.showLabel ? `<line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="74" y2="${yy.toFixed(1)}" stroke="${event.color}" stroke-width="1" opacity="0.28"/>` : ''}
+                    <circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${dotRadius}" fill="${event.color}" stroke="#09090b" stroke-width="2"/>
+                    ${event.isLowMarker ? `<circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${(dotRadius + 2.8).toFixed(1)}" fill="none" stroke="#fbbf24" stroke-width="0.9" opacity="${event.showLabel ? 0.65 : 0.38}"/>` : ''}
+                    ${labelText}
+                </g>`;
+            }).join('');
+            return `<div class="mt-4 rounded-2xl border border-zinc-800 bg-zinc-950 overflow-hidden">
+                <svg class="block h-auto w-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(ipo.ticker)} price event timeline">
+                    <rect width="${W}" height="${H}" fill="#09090b"/>
+                    <rect x="${left}" y="${chartTop - 8}" width="${plotW}" height="${chartH + 18}" rx="10" fill="#0f172a" opacity="0.32" stroke="#27272a"/>
+                    <line x1="${left}" x2="${W - right}" y1="${yPrice(rawMax).toFixed(1)}" y2="${yPrice(rawMax).toFixed(1)}" stroke="#27272a" stroke-dasharray="3 6"/>
+                    <line x1="${left}" x2="${W - right}" y1="${yPrice(rawMin).toFixed(1)}" y2="${yPrice(rawMin).toFixed(1)}" stroke="#27272a" stroke-dasharray="3 6"/>
+                    <text x="${left}" y="${(chartTop + chartH + 28).toFixed(1)}" font-size="10" fill="#52525b">price-level timeline</text>
+                    <text x="${W - right}" y="${(chartTop + chartH + 28).toFixed(1)}" text-anchor="end" font-size="10" fill="#52525b">ordered by event time</text>
+                    ${priceLine}
+                    ${eventNodes}
+                </svg>
+            </div>`;
         }
 
         function microPoint(x, value, label = '') {
@@ -994,16 +1836,6 @@
             </div>`;
         }
 
-        function insightChip(value, label, helper, colorClass) {
-            return `<div class="h-full min-h-[112px] rounded-2xl border border-zinc-800 bg-zinc-950 p-3.5">
-                <div class="flex items-start justify-between gap-3">
-                    <div class="text-sm font-semibold leading-5 text-zinc-200">${escapeHtml(label)}</div>
-                    <div class="font-mono text-base font-semibold ${colorClass}">${fmtWholePct(value)}</div>
-                </div>
-                <div class="text-xs text-zinc-500 mt-1.5 leading-5">${escapeHtml(helper)}</div>
-            </div>`;
-        }
-
         function averageNumber(values) {
             const valid = values.filter(Number.isFinite);
             return valid.length ? valid.reduce((sum, value) => sum + value, 0) / valid.length : null;
@@ -1075,8 +1907,32 @@
                     detail: 'Buys the next 5-minute open two hours after the first public trade.',
                     targetDelta: 120,
                     fillMode: 'timed'
+                },
+                {
+                    id: 'buyAfter',
+                    label: 'After end',
+                    shortLabel: 'After',
+                    detail: 'Uses the last available first-day after-hours close from the extended Alpaca feed.',
+                    milestoneId: 'afterEnd',
+                    fillMode: 'extended'
+                },
+                {
+                    id: 'buyPreSecond',
+                    label: 'Pre 2nd',
+                    shortLabel: 'Pre 2nd',
+                    detail: 'Uses the first available second-day premarket open from the extended Alpaca feed.',
+                    milestoneId: 'preSecond',
+                    fillMode: 'extended'
+                },
+                {
+                    id: 'buyOpenSecond',
+                    label: 'Open 2nd',
+                    shortLabel: 'Open 2nd',
+                    detail: 'Uses the first available second-day regular-session open from the extended Alpaca feed.',
+                    milestoneId: 'openSecond',
+                    fillMode: 'extended'
                 }
-            ].filter(scenario => Number.isFinite(scenario.targetDelta));
+            ].filter(scenario => Number.isFinite(scenario.targetDelta) || scenario.milestoneId);
         }
 
         function entryScenarioStats(analysis, scenario) {
@@ -1086,29 +1942,34 @@
                 const data = chartData(ipo).filter(bar => Number.isFinite(bar.minute));
                 if (!data.length) return;
                 const first = entryBarAtOrAfter(data, data[0].minute);
-                const entry = entryBarAtOrAfter(data, data[0].minute + scenario.targetDelta);
+                const milestone = scenario.milestoneId ? extendedSessionMilestones(ipo)[scenario.milestoneId] : null;
+                const entry = scenario.milestoneId
+                    ? milestone?.bar
+                    : entryBarAtOrAfter(data, data[0].minute + scenario.targetDelta);
+                const entryPrice = scenario.milestoneId ? Number(milestone?.price) : Number(entry?.open);
+                const entryMinute = Number(entry?.minute);
                 const last = data.filter(bar => Number.isFinite(bar.close)).sort((a, b) => b.minute - a.minute)[0] || null;
                 const lowInfo = chartLowPoints(data);
                 const lowPoint = lowInfo?.lowPoint;
-                if (!first || !entry || !last || !lowPoint || !Number.isFinite(lowPoint.low) || !Number.isFinite(last.close) || !Number.isFinite(entry.open) || entry.open <= 0 || lowPoint.low <= 0) {
+                if (!first || !entry || !last || !lowPoint || !Number.isFinite(lowPoint.low) || !Number.isFinite(last.close) || !Number.isFinite(entryPrice) || entryPrice <= 0 || !Number.isFinite(entryMinute) || lowPoint.low <= 0) {
                     unavailable += 1;
                     return;
                 }
-                const dayEndReturn = (last.close / entry.open - 1) * 100;
+                const dayEndReturn = (last.close / entryPrice - 1) * 100;
                 const perfectLowReturn = (last.close / lowPoint.low - 1) * 100;
                 rows.push({
                     ticker: ipo.ticker,
-                    entryMinute: entry.minute,
+                    entryMinute,
                     firstMinute: first.minute,
-                    entryPrice: entry.open,
+                    entryPrice,
                     firstPrice: first.open,
                     lowMinute: lowPoint.minute,
                     lowPrice: lowPoint.low,
                     endPrice: last.close,
                     dayEndReturn,
                     dayLowGap: dayEndReturn - perfectLowReturn,
-                    lowAlreadyPassed: lowPoint.minute < entry.minute,
-                    entryAboveFirst: entry.open > first.open * 1.000001
+                    lowAlreadyPassed: lowPoint.minute < entryMinute,
+                    entryAboveFirst: entryPrice > first.open * 1.000001
                 });
             });
             const sampleSize = rows.length;
@@ -1137,6 +1998,38 @@
                 .filter(scenario => scenario.sampleSize);
         }
 
+        function bestScenarioBy(scenarios, valueFn, tieFn = scenario => scenario.returnStats?.avg) {
+            return scenarios
+                .map(scenario => ({
+                    scenario,
+                    value: Number(valueFn(scenario)),
+                    tie: Number(tieFn(scenario))
+                }))
+                .filter(item => Number.isFinite(item.value))
+                .sort((a, b) => (b.value - a.value) || ((Number.isFinite(b.tie) ? b.tie : -Infinity) - (Number.isFinite(a.tie) ? a.tie : -Infinity)))[0] || null;
+        }
+
+        function scenarioMetricValue(item, statText, colorClass = 'text-blue-400') {
+            if (!item?.scenario) return '—';
+            const label = item.scenario.shortLabel || item.scenario.label;
+            return `<div class="leading-tight"><span class="font-sans text-sm text-zinc-200">${escapeHtml(label)}</span><br><span class="${colorClass}">${escapeHtml(statText)}</span></div>`;
+        }
+
+        function entryScenarioInsightMetrics(scenarios) {
+            const valid = scenarios || [];
+            if (!valid.length) return '';
+            const bestEnd = bestScenarioBy(valid, scenario => scenario.returnStats?.avg);
+            const safest = bestScenarioBy(valid, scenario => scenario.lossUnder5Pct);
+            const closestLow = bestScenarioBy(valid, scenario => scenario.dayLowGapStats?.avg);
+            const bestExtended = bestScenarioBy(valid.filter(scenario => scenario.fillMode === 'extended'), scenario => scenario.returnStats?.avg);
+            return [
+                metric('Best day end', scenarioMetricValue(bestEnd, bestEnd ? fmtPct(bestEnd.value) : '—', pctTone(bestEnd?.value))),
+                metric('Safest entry', scenarioMetricValue(safest, safest ? `${fmtWholePct(safest.value)} loss <5%` : '—', 'text-emerald-400')),
+                metric('Closest to low', scenarioMetricValue(closestLow, closestLow ? fmtPct(closestLow.value) : '—', pctTone(closestLow?.value))),
+                metric('Best extended', scenarioMetricValue(bestExtended, bestExtended ? fmtPct(bestExtended.value) : '—', pctTone(bestExtended?.value)))
+            ].join('');
+        }
+
         function pctTone(value) {
             if (!Number.isFinite(value)) return 'text-zinc-400';
             if (value > 0) return 'text-emerald-400';
@@ -1161,47 +2054,50 @@
             if (scenario.fillMode === 'marketable') {
                 return 'Risk: a high limit should fill, but it can also accept an ugly first print. A lower limit may miss immediately.';
             }
+            if (scenario.fillMode === 'extended') {
+                return 'Risk: extended-hours liquidity can be thin and prints can be jumpy; entries may not be available at useful size.';
+            }
             return `Risk: prob. low already passed was ${fmtWholePct(scenario.missedLowPct)}; a strict lower limit can miss if price never returns.`;
         }
 
         function scenarioRangeBlock(stats) {
             if (!stats || !Number.isFinite(stats.avg)) return '—';
-            return `<div class="font-mono text-lg font-semibold ${pctTone(stats.avg)}">${fmtPct(stats.avg)}</div>
-                <div class="mt-1 text-xs leading-5 text-zinc-500">min ${fmtPct(stats.min)} · max ${fmtPct(stats.max)}</div>`;
+            return `<div class="font-mono text-base font-semibold ${pctTone(stats.avg)}">${fmtPct(stats.avg)}</div>
+                <div class="text-[10px] leading-3 text-zinc-500">min ${fmtPct(stats.min)} · max ${fmtPct(stats.max)}</div>`;
         }
 
         function entryScenarioScoreRow(scenario) {
-            return `<div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-4">
-                <div class="grid gap-4 lg:grid-cols-[minmax(10rem,1.1fr)_minmax(9rem,0.9fr)_minmax(9rem,0.9fr)_minmax(9rem,0.9fr)_minmax(9rem,0.9fr)] lg:items-center">
-                    <div>
+            const riskText = entryScenarioRiskText(scenario);
+            return `<div class="rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2.5">
+                <div class="grid gap-2 sm:grid-cols-[minmax(0,1.2fr)_minmax(0,0.78fr)_minmax(0,0.9fr)_minmax(0,0.78fr)_minmax(0,0.9fr)] sm:items-center">
+                    <div class="min-w-0">
                         <div class="section-header text-blue-400">${escapeHtml(scenario.label)}</div>
-                        <p class="mt-1 text-sm leading-6 text-zinc-400">${escapeHtml(scenario.detail)}</p>
-                        <div class="mt-2 text-xs text-zinc-500">${scenario.sampleSize} samples</div>
+                        <p class="mt-0.5 whitespace-normal break-words text-[11px] leading-4 text-zinc-500">${escapeHtml(scenario.detail)}</p>
                     </div>
-                    <div>
-                        <div class="text-xs font-semibold uppercase text-zinc-500">Day-end result</div>
+                    <div class="min-w-0">
+                        <div class="text-[11px] font-semibold uppercase text-zinc-500">Day end</div>
                         ${scenarioRangeBlock(scenario.returnStats)}
                     </div>
-                    <div>
-                        <div class="text-xs font-semibold uppercase text-zinc-500">Prob. loss contained</div>
-                        <div class="mt-1 grid grid-cols-2 gap-2">
+                    <div class="min-w-0">
+                        <div class="text-[11px] font-semibold uppercase text-zinc-500">Loss contained</div>
+                        <div class="grid grid-cols-2 gap-1.5">
                             <div>
-                                <div class="font-mono text-lg font-semibold text-emerald-400">${fmtWholePct(scenario.lossUnder5Pct)}</div>
-                                <div class="text-xs text-zinc-500">loss &lt;5%</div>
+                                <div class="font-mono text-base font-semibold text-emerald-400">${fmtWholePct(scenario.lossUnder5Pct)}</div>
+                                <div class="text-[11px] leading-4 text-zinc-500">loss &lt;5%</div>
                             </div>
                             <div>
-                                <div class="font-mono text-lg font-semibold text-blue-400">${fmtWholePct(scenario.lossUnder10Pct)}</div>
-                                <div class="text-xs text-zinc-500">loss &lt;10%</div>
+                                <div class="font-mono text-base font-semibold text-blue-400">${fmtWholePct(scenario.lossUnder10Pct)}</div>
+                                <div class="text-[11px] leading-4 text-zinc-500">loss &lt;10%</div>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div class="text-xs font-semibold uppercase text-zinc-500">Vs day low</div>
+                    <div class="min-w-0">
+                        <div class="text-[11px] font-semibold uppercase text-zinc-500">Vs low</div>
                         ${scenarioRangeBlock(scenario.dayLowGapStats)}
                     </div>
-                    <div>
-                        <div class="text-xs font-semibold uppercase text-zinc-500">Main risk</div>
-                        <p class="mt-1 text-xs leading-5 text-zinc-500">${escapeHtml(entryScenarioRiskText(scenario))}</p>
+                    <div class="min-w-0">
+                        <div class="text-[11px] font-semibold uppercase text-zinc-500">Risk</div>
+                        <p class="whitespace-normal break-words text-[11px] leading-4 text-zinc-500">${escapeHtml(riskText)}</p>
                     </div>
                 </div>
             </div>`;
@@ -1209,13 +2105,12 @@
 
         function entryScenarioScoreboard(scenarios) {
             if (!scenarios.length) return '';
-            return `<div class="space-y-3">
+            return `<div class="space-y-2">
                 ${scenarios.map(entryScenarioScoreRow).join('')}
             </div>`;
         }
 
-        function entryScenarioSection(analysis) {
-            const scenarios = entryScenarioAnalysis(analysis);
+        function entryScenarioSection(analysis, scenarios = entryScenarioAnalysis(analysis)) {
             if (!scenarios.length) return '';
             return `<div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 sm:p-5">
                 <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-3">
@@ -1231,7 +2126,30 @@
             </div>`;
         }
 
-        function cardEntryScenarioRows(data) {
+        function extendedEntryScenarioDefinitions(milestones) {
+            return [
+                {
+                    id: 'buyAfter',
+                    rowLabel: 'After',
+                    milestone: milestones.afterEnd,
+                    endLabel: 'Vs day end'
+                },
+                {
+                    id: 'buyPreSecond',
+                    rowLabel: 'Pre 2nd',
+                    milestone: milestones.preSecond,
+                    endLabel: 'Vs day end'
+                },
+                {
+                    id: 'buyOpenSecond',
+                    rowLabel: 'Open 2nd',
+                    milestone: milestones.openSecond,
+                    endLabel: 'Vs day end'
+                }
+            ];
+        }
+
+        function cardEntryScenarioRows(ipo, data) {
             const valid = data
                 .filter(bar => Number.isFinite(bar.minute))
                 .sort((a, b) => a.minute - b.minute);
@@ -1251,30 +2169,55 @@
                 : null;
             const medianEntryPrice = Number(medianEntry?.open);
 
-            return entryScenarioDefinitions(analysis).map(scenario => {
-                const entry = entryBarAtOrAfter(valid, first.minute + scenario.targetDelta);
-                const rowLabel = scenario.id === 'oneHour' ? '60m' : scenario.shortLabel;
-                if (!entry || !Number.isFinite(entry.open) || entry.open <= 0) {
+            const regularRows = entryScenarioDefinitions(analysis)
+                .filter(scenario => Number.isFinite(scenario.targetDelta))
+                .map(scenario => {
+                    const entry = entryBarAtOrAfter(valid, first.minute + scenario.targetDelta);
+                    const rowLabel = scenario.id === 'oneHour' ? '60m' : scenario.shortLabel;
+                    if (!entry || !Number.isFinite(entry.open) || entry.open <= 0) {
+                        return {
+                            ...scenario,
+                            rowLabel,
+                            available: false
+                        };
+                    }
                     return {
                         ...scenario,
                         rowLabel,
+                        available: true,
+                        entryTime: entry.time || minutesToTime(entry.minute),
+                        entryPrice: entry.open,
+                        dayEndReturn: (last.close / entry.open - 1) * 100,
+                        medianGap: Number.isFinite(medianEntryPrice) && medianEntryPrice > 0
+                            ? (medianEntryPrice / entry.open - 1) * 100
+                            : null,
+                        lowReturn: (lowPoint.low / entry.open - 1) * 100,
+                        lowAlreadyPassed: lowPoint.minute < entry.minute
+                    };
+                });
+            const milestones = extendedSessionMilestones(ipo);
+            const extendedRows = extendedEntryScenarioDefinitions(milestones).map(scenario => {
+                const entry = scenario.milestone;
+                if (!entry || !Number.isFinite(entry.price) || entry.price <= 0) {
+                    return {
+                        ...scenario,
                         available: false
                     };
                 }
                 return {
                     ...scenario,
-                    rowLabel,
                     available: true,
-                    entryTime: entry.time || minutesToTime(entry.minute),
-                    entryPrice: entry.open,
-                    dayEndReturn: (last.close / entry.open - 1) * 100,
+                    entryTime: entry.time,
+                    entryPrice: entry.price,
+                    dayEndReturn: (last.close / entry.price - 1) * 100,
                     medianGap: Number.isFinite(medianEntryPrice) && medianEntryPrice > 0
-                        ? (medianEntryPrice / entry.open - 1) * 100
+                        ? (medianEntryPrice / entry.price - 1) * 100
                         : null,
-                    lowReturn: (lowPoint.low / entry.open - 1) * 100,
-                    lowAlreadyPassed: lowPoint.minute < entry.minute
+                    lowReturn: (lowPoint.low / entry.price - 1) * 100,
+                    lowAlreadyPassed: true
                 };
             });
+            return [...regularRows, ...extendedRows].filter(row => row.available);
         }
 
         function scenarioMetricLine(label, value) {
@@ -1286,6 +2229,7 @@
 
         function cardEntryScenarioControl(row) {
             const label = escapeHtml(String(row.rowLabel).toUpperCase());
+            const endLabel = row.endLabel || 'End of day';
             if (!row.available) {
                 return `<div class="min-w-0 rounded-xl border border-zinc-800 bg-zinc-900/70 p-3 shadow-inner">
                     <div class="flex min-w-0 items-center gap-2 whitespace-nowrap">
@@ -1293,7 +2237,7 @@
                         <span class="text-xs font-semibold text-zinc-200">Buy ${label}</span>
                     </div>
                     <div class="mt-3 space-y-1.5">
-                        ${scenarioMetricLine('End of day', null)}
+                        ${scenarioMetricLine(endLabel, null)}
                         ${scenarioMetricLine('Gap to median', null)}
                         ${scenarioMetricLine('Gap to low', null)}
                     </div>
@@ -1306,22 +2250,25 @@
                     <span class="text-xs font-semibold text-zinc-200">Buy ${label}</span>
                 </div>
                 <div class="mt-3 space-y-1.5">
-                    ${scenarioMetricLine('End of day', row.dayEndReturn)}
+                    ${scenarioMetricLine(endLabel, row.dayEndReturn)}
                     ${scenarioMetricLine('Gap to median', row.medianGap)}
                     ${scenarioMetricLine('Gap to low', row.lowReturn)}
                 </div>
             </div>`;
         }
 
-        function cardEntryScenarioTable(data) {
-            const rows = cardEntryScenarioRows(data);
+        function cardEntryScenarioTable(ipo, data) {
+            const rows = cardEntryScenarioRows(ipo, data);
             if (!rows.length) return '';
+            const gridClass = rows.length > 5
+                ? 'sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-8'
+                : 'sm:grid-cols-2 xl:grid-cols-5';
             return `<div class="mt-3 rounded-2xl border border-zinc-800 bg-zinc-950 p-3 sm:p-4">
                 <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-1.5">
                     <div class="section-header text-blue-400">Entry scenarios</div>
-                    <div class="text-xs leading-5 text-zinc-500">Gaps compare each entry with the active median entry and first-day low.</div>
+                    <div class="text-xs leading-5 text-zinc-500">Gaps compare each entry with the active median entry and first-day low; extended entries use Alpaca after/pre/open candles.</div>
                 </div>
-                <div class="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-5">
+                <div class="mt-3 grid gap-2 ${gridClass}">
                     ${rows.map(cardEntryScenarioControl).join('')}
                 </div>
             </div>`;
@@ -1403,10 +2350,11 @@
             const medianClockLabel = dualClockLabel(analysis.medianLowTime || '—', analysis.medianLowGermanTime);
             const medianClockMetricValue = dualClockMetricValue(analysis.medianLowTime || '—', analysis.medianLowGermanTime);
             const topClockMetricValue = clockBucketMetricValue(analysis.topClockBucket);
-            const insights = analysis.decisionInsights || {};
             const wait30 = checkpointByMinutes(analysis, 30);
             const wait60 = checkpointByMinutes(analysis, 60);
             const decisionRows = (analysis.decisionCheckpoints || []).map(checkpoint => decisionOddRow(checkpoint, analysis.sampleSize)).join('');
+            const entryScenarios = entryScenarioAnalysis(analysis);
+            const entryScenarioPills = entryScenarioInsightMetrics(entryScenarios);
             const wait30Text = wait30 ? fmtWholePct(wait30.stillAheadPct) : '—';
             const wait60Text = wait60 ? fmtWholePct(wait60.stillAheadPct) : '—';
             mount.innerHTML = `
@@ -1439,33 +2387,22 @@
                             ${clockTimingChartSvg(analysis)}
                         </div>
                     </div>
-                    <div class="grid xl:grid-cols-2 gap-5 items-stretch">
-                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 h-full">
+                    <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
                             <div class="flex items-start justify-between gap-4">
                                 <div>
                                     <div class="section-header text-blue-400">Decision odds</div>
                                     <p class="text-zinc-400 mt-2 leading-6 text-sm">Read each row as: after waiting this long, how often was the day-one low still in front of you?</p>
                                 </div>
                             </div>
-                            <div class="mt-4 grid sm:grid-cols-2 2xl:grid-cols-3 gap-3">${decisionRows}</div>
-                        </div>
-                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 h-full">
-                            <div class="section-header text-blue-400">Timing signals</div>
-                            <p class="text-zinc-400 mt-2 leading-6 text-sm">Useful patterns from the selected sample, written for order pacing instead of statistics class.</p>
-                            <div class="grid sm:grid-cols-2 gap-3 mt-3">
-                                ${insightChip(insights.openingPrintLow?.pct, 'Very first trade was already the low', 'Waiting missed these, but also avoided blindly buying the opening print.', 'text-red-400')}
-                                ${insightChip(insights.openingRushLow?.pct, 'Low appeared inside the first 30 minutes', 'These were fast opportunities; a long wait would have missed them.', 'text-amber-400')}
-                                ${insightChip(insights.lowAfterNoon?.pct, 'Low was still ahead after noon New York time', 'These IPOs gave buyers more time to watch the first wave settle.', 'text-blue-400')}
-                                ${insightChip(insights.finalHourLow?.pct, 'Low arrived in the final trading hour', 'Less common, but this is where patience mattered the most.', 'text-emerald-400')}
-                            </div>
-                        </div>
+                            <div class="mt-4 grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6 gap-3">${decisionRows}</div>
                     </div>
-                    ${entryScenarioSection(analysis)}
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+                    ${entryScenarioSection(analysis, entryScenarios)}
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-8 gap-3 text-sm">
                         ${metric('Median clock', medianClockMetricValue, 'text-blue-400')}
                         ${metric('Most common clock', topClockMetricValue)}
                         ${metric('Low 2h+', fmtWholePct(analysis.afterTwoHoursPct), 'text-amber-400')}
                         ${metric('Current view', analysisLabel)}
+                        ${entryScenarioPills}
                     </div>
                 </div>`;
         }
@@ -1474,13 +2411,13 @@
             const data = chartData(ipo);
             const summary = chartSummary(data);
             const medianQuote = medianTimingQuote(data);
-            const dayEndedUp = summary.startPrice != null && summary.endPrice != null && summary.endPrice >= summary.startPrice;
             const searchBlob = `${ipo.ticker} ${ipo.name} ${ipo.exchange} ${ipo.sector || ''}`.toLowerCase();
             const dealSize = Number(ipo.dealSize);
             const dealPill = Number.isFinite(dealSize) && dealSize > 0
                 ? `<span class="px-3 h-8 rounded-2xl border border-zinc-700 text-zinc-300 text-xs font-semibold flex items-center">Deal ${fmtDeal(dealSize)}</span>`
                 : '';
             const quoteUrl = yahooFinanceUrl(ipo.ticker);
+            const extendedPrices = extendedSessionMilestones(ipo);
             return `<article class="ipo-card bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden modern-shadow" data-search="${escapeHtml(searchBlob)}">
                 <div class="p-5 sm:p-6 border-b border-zinc-800 flex flex-col lg:flex-row gap-4 lg:items-start lg:justify-between">
                     <div class="min-w-0">
@@ -1499,16 +2436,8 @@
                     </div>
                 </div>
                 <div class="p-4 sm:p-6">
-                    <div class="h-[586px] sm:h-[691px] bg-zinc-950 rounded-2xl border border-zinc-800 overflow-hidden">${renderChart(ipo, data)}</div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-3 mt-4">
-                        ${metric('IPO price', fmtUsd(ipo.ipoPrice))}
-                        ${metric('Start price', fmtUsd(summary.startPrice), 'text-blue-400')}
-                        ${metric('Low price', fmtUsd(summary.lowPrice), 'text-amber-400')}
-                        ${buyTimingMetric(ipo, data)}
-                        ${metric(medianQuote ? `Median ${formatElapsedPlain(medianQuote.medianDeltaMinutes)}` : 'Median price', fmtUsd(medianQuote?.price), 'text-blue-400')}
-                        ${metric('End price', fmtUsd(summary.endPrice), dayEndedUp ? 'text-emerald-400' : 'text-red-400')}
-                        ${metric('Current*', fmtUsd(ipo.current))}
-                    </div>
+                    ${chartFrameHtml(ipo)}
+                    ${cardPriceTimelineHtml(ipo, data, summary, medianQuote, extendedPrices)}
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 mt-3">
                         ${progressMicroChart('IPO to day-one close', 'IPO', 'Close', ipo.ipoPrice, summary.endPrice, firstDayClosePath(data, ipo.ipoPrice, 'IPO'))}
                         ${progressMicroChart('Start price to end price', 'Start', 'End', summary.startPrice, summary.endPrice, firstDayStartEndPath(data))}
@@ -1516,7 +2445,7 @@
                         ${progressMicroChart('IPO to current*', 'IPO', 'Current*', ipo.ipoPrice, ipo.current, roughHistoryPath(ipo, ipo.ipoPrice, ipo.current, 'IPO'))}
                         ${progressMicroChart('Day-one close to current*', 'Close', 'Current*', summary.endPrice, ipo.current, roughHistoryPath(ipo, summary.endPrice, ipo.current, 'Close'))}
                     </div>
-                    ${cardEntryScenarioTable(data)}
+                    ${cardEntryScenarioTable(ipo, data)}
                 </div>
             </article>`;
         }
@@ -1617,6 +2546,47 @@
             });
         }
 
+        function setSegmentButtonState(button, selected, disabled = false) {
+            if (!button) return;
+            button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+            button.disabled = disabled;
+            button.classList.toggle('bg-blue-600', selected);
+            button.classList.toggle('text-white', selected);
+            button.classList.toggle('text-zinc-400', !selected && !disabled);
+            button.classList.toggle('hover:text-zinc-200', !selected && !disabled);
+            button.classList.toggle('text-zinc-600', disabled);
+            button.classList.toggle('cursor-not-allowed', disabled);
+        }
+
+        function setChartModeToggleState() {
+            const toggle = document.getElementById('chart-mode-toggle');
+            const day = document.getElementById('chart-mode-day1');
+            const extended = document.getElementById('chart-mode-extended');
+            if (!toggle || !day || !extended) return;
+            const summary = chartModeSummary();
+            const mixed = summary.state === 'mixed';
+            setSegmentButtonState(day, summary.state === 'day1');
+            setSegmentButtonState(extended, summary.state === 'extended', summary.total === 0);
+            toggle.classList.toggle('border-amber-500/50', mixed);
+            toggle.classList.toggle('border-zinc-800', !mixed);
+            const modeLabel = summary.state === 'extended'
+                ? 'All charts use extended data'
+                : summary.state === 'day1'
+                    ? 'All charts use one-day data'
+                    : `${summary.active} of ${summary.total} charts use extended data`;
+            toggle.setAttribute('aria-label', `${modeLabel}. Set all card charts to day-one or extended data.`);
+            toggle.title = modeLabel;
+        }
+
+        function setAllChartMode(mode) {
+            extendedChartTickers.clear();
+            if (mode === 'extended') {
+                extendedChartCapableTickers().forEach(ticker => extendedChartTickers.add(ticker));
+            }
+            setChartModeToggleState();
+            renderCards();
+        }
+
         document.getElementById('search').addEventListener('input', event => {
             searchTerm = event.target.value;
             renderCards();
@@ -1650,9 +2620,32 @@
             renderCards();
         });
 
+        document.getElementById('chart-mode-toggle')?.addEventListener('click', event => {
+            const button = event.target.closest('button[data-chart-mode]');
+            if (!button || button.disabled) return;
+            const mode = button.dataset.chartMode;
+            if (!['day1', 'extended'].includes(mode)) return;
+            setAllChartMode(mode);
+        });
+
+        document.getElementById('cards')?.addEventListener('click', event => {
+            const button = event.target.closest('button[data-chart-extended-toggle]');
+            if (!button || button.disabled) return;
+            const ticker = button.dataset.chartExtendedToggle;
+            if (!ticker) return;
+            if (extendedChartTickers.has(ticker)) {
+                extendedChartTickers.delete(ticker);
+            } else {
+                extendedChartTickers.add(ticker);
+            }
+            setChartModeToggleState();
+            renderCards();
+        });
+
         setSortToggleState();
         setCapFilterState();
         setTradingPlaceFilterState();
+        setChartModeToggleState();
         document.getElementById('copyright-year').textContent = new Date().getFullYear();
         renderAnalysis();
         renderCards();

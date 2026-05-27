@@ -632,8 +632,23 @@ def alpaca_session_bounds(date_s: str) -> tuple[str, str]:
     return start.isoformat().replace("+00:00", "Z"), end.isoformat().replace("+00:00", "Z")
 
 
-def alpaca_url(ticker: str, date_s: str, interval: str, feed: str, *, page_token: str | None = None) -> str:
-    start, end = alpaca_session_bounds(date_s)
+def alpaca_extended_bounds(date_s: str) -> tuple[str, str]:
+    d = dt.date.fromisoformat(date_s)
+    start = dt.datetime(d.year, d.month, d.day, 16, 0, tzinfo=ET).astimezone(UTC)
+    end_date = d + dt.timedelta(days=7)
+    end = dt.datetime(end_date.year, end_date.month, end_date.day, 10, 0, tzinfo=ET).astimezone(UTC)
+    return start.isoformat().replace("+00:00", "Z"), end.isoformat().replace("+00:00", "Z")
+
+
+def alpaca_bar_url(
+    ticker: str,
+    interval: str,
+    feed: str,
+    start: str,
+    end: str,
+    *,
+    page_token: str | None = None,
+) -> str:
     params = {
         "symbols": alpaca_symbol(ticker),
         "timeframe": alpaca_interval(interval),
@@ -647,6 +662,16 @@ def alpaca_url(ticker: str, date_s: str, interval: str, feed: str, *, page_token
     if page_token:
         params["page_token"] = page_token
     return f"{alpaca_data_base_url()}?{urllib.parse.urlencode(params)}"
+
+
+def alpaca_url(ticker: str, date_s: str, interval: str, feed: str, *, page_token: str | None = None) -> str:
+    start, end = alpaca_session_bounds(date_s)
+    return alpaca_bar_url(ticker, interval, feed, start, end, page_token=page_token)
+
+
+def alpaca_extended_url(ticker: str, date_s: str, interval: str, feed: str, *, page_token: str | None = None) -> str:
+    start, end = alpaca_extended_bounds(date_s)
+    return alpaca_bar_url(ticker, interval, feed, start, end, page_token=page_token)
 
 
 def alpha_vantage_interval(interval: str) -> str:
@@ -780,6 +805,76 @@ def fetch_first_day_bars_alpaca(ipo: dict, interval: str, key_id: str, secret: s
         rows.sort(key=lambda row: row[0])
         if rows:
             return rows, f"Alpaca {feed.upper()} 5m bars"
+    if last_error:
+        raise RuntimeError(last_error)
+    return [], ""
+
+
+def fetch_extended_day_bars_alpaca(ipo: dict, interval: str, key_id: str, secret: str, feeds: list[str]) -> tuple[list[list], str]:
+    headers = {
+        "APCA-API-KEY-ID": key_id,
+        "APCA-API-SECRET-KEY": secret,
+    }
+    target_date = dt.date.fromisoformat(ipo["date"])
+    symbol = alpaca_symbol(ipo["ticker"])
+    market_close_minute = 16 * 60
+    next_open_minute = 9 * 60 + 30
+    last_error = ""
+    for feed in feeds:
+        rows: list[list] = []
+        page_token = None
+        found_next_open = False
+        try:
+            while True:
+                data = fetch_json(alpaca_extended_url(ipo["ticker"], ipo["date"], interval, feed, page_token=page_token), headers=headers)
+                bars = ((data.get("bars") or {}).get(symbol) or [])
+                for bar in bars:
+                    timestamp = bar.get("t")
+                    if not timestamp:
+                        continue
+                    local = dt.datetime.fromisoformat(timestamp.replace("Z", "+00:00")).astimezone(ET)
+                    local_date = local.date()
+                    minute = local.hour * 60 + local.minute
+                    if local_date < target_date:
+                        continue
+                    if local_date == target_date and minute < market_close_minute:
+                        continue
+                    open_ = alpaca_num(bar, "o")
+                    high = alpaca_num(bar, "h")
+                    low = alpaca_num(bar, "l")
+                    close = alpaca_num(bar, "c")
+                    volume = alpaca_num(bar, "v") or 0
+                    price_values = [open_, high, low, close]
+                    if any(value is None for value in price_values):
+                        continue
+                    if is_zero_volume_offer_placeholder(price_values, volume, ipo.get("ipoPrice")):
+                        continue
+                    rows.append([
+                        local.strftime("%Y-%m-%d %H:%M"),
+                        rounded(open_, 4),
+                        rounded(high, 4),
+                        rounded(low, 4),
+                        rounded(close, 4),
+                        int(volume),
+                    ])
+                    if local_date > target_date and minute >= next_open_minute:
+                        found_next_open = True
+                        break
+                if found_next_open:
+                    break
+                page_token = data.get("next_page_token")
+                if not page_token:
+                    break
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", "replace")
+            last_error = f"{feed} HTTP {exc.code}: {body[:240]}"
+            continue
+        except Exception as exc:
+            last_error = f"{feed}: {exc}"
+            continue
+        rows.sort(key=lambda row: row[0])
+        if rows:
+            return rows, f"Alpaca {feed.upper()} extended 5m bars"
     if last_error:
         raise RuntimeError(last_error)
     return [], ""
@@ -925,6 +1020,8 @@ def write_chart_js(
     path: pathlib.Path,
     first_day_bars: dict[str, list[list]],
     bar_sources: dict[str, str],
+    extended_day_bars: dict[str, list[list]],
+    extended_bar_sources: dict[str, str],
     rough_price_series: dict[str, list[list]],
     sources: list[str],
 ) -> None:
@@ -936,6 +1033,8 @@ def write_chart_js(
     ]
     body = "\n".join(header) + json.dumps(first_day_bars, indent=2) + ";\n"
     body += "window.firstDayBarSources = " + json.dumps(bar_sources, indent=2) + ";\n"
+    body += "window.extendedDayBars = " + json.dumps(extended_day_bars, indent=2) + ";\n"
+    body += "window.extendedDayBarSources = " + json.dumps(extended_bar_sources, indent=2) + ";\n"
     body += "window.roughPriceSeries = " + json.dumps(rough_price_series, separators=(",", ":")) + ";\n"
     path.write_text(body, encoding="utf-8")
 
@@ -1125,6 +1224,26 @@ def build(args: argparse.Namespace) -> int:
         selected = [item for item in selected if item["ticker"] not in bar_start_excluded]
     print(f"Exact intraday bars available for {len(first_day_bars)} of {len(selected)} tracked IPO candidates.")
 
+    extended_day_bars = {}
+    extended_bar_sources = {}
+    if alpaca_key_id and alpaca_secret:
+        print("Fetching Alpaca extended trading bars through the next regular-session open.")
+        for item in selected:
+            ticker = item["ticker"]
+            if ticker not in first_day_bars:
+                continue
+            try:
+                rows, source_label = fetch_extended_day_bars_alpaca(item, args.interval, alpaca_key_id, alpaca_secret, alpaca_feed_order)
+                if rows:
+                    extended_day_bars[ticker] = rows
+                    extended_bar_sources[ticker] = source_label
+                    print(f"  {ticker}: {len(rows)} {source_label}")
+            except Exception as exc:
+                print(f"warning: {ticker} Alpaca extended bars failed: {exc}", file=sys.stderr)
+            time.sleep(args.alpaca_delay)
+    else:
+        print("Alpaca extended bars skipped because key/secret env vars are incomplete.")
+
     rough_price_series = {}
     rough_price_series_sources = []
     if not args.no_rough_price_series:
@@ -1157,12 +1276,21 @@ def build(args: argparse.Namespace) -> int:
         for source in [
             yahoo_url(item["ticker"], item["date"], args.interval),
             *( [alpaca_url(item["ticker"], item["date"], args.interval, feed) for feed in alpaca_feed_order] if alpaca_key_id and alpaca_secret else [] ),
+            *( [alpaca_extended_url(item["ticker"], item["date"], args.interval, feed) for feed in alpaca_feed_order] if alpaca_key_id and alpaca_secret else [] ),
             *( [alpha_vantage_url(item["ticker"], item["date"], args.interval)] if alpha_key else [] ),
         ]
     ]
     chart_sources.extend(rough_price_series_sources)
     write_js(output_dir / "ipo-data.js", "ipos", [card_record(item) for item in selected], ipo_sources)
-    write_chart_js(output_dir / "chart-data.js", first_day_bars, bar_sources, rough_price_series, chart_sources)
+    write_chart_js(
+        output_dir / "chart-data.js",
+        first_day_bars,
+        bar_sources,
+        extended_day_bars,
+        extended_bar_sources,
+        rough_price_series,
+        chart_sources,
+    )
     from build_ipo_analysis import build_analysis_file
 
     analysis_path = build_analysis_file(output_dir, output_dir, as_of=dt.date.today().isoformat())
