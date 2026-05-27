@@ -581,10 +581,10 @@
                 return `<rect x="${(xx - candleW / 2).toFixed(1)}" y="${yy.toFixed(1)}" width="${candleW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${color}" opacity="0.28" rx="1"><title>${ipo.ticker} ${dualTimeLabel(ipo.date, d.minute, d.time || null)} volume ${volume.toLocaleString('en-US')}</title></rect>`;
             }).join('');
             const volumePanel = `<g><line x1="${ml}" x2="${W - mr}" y1="${volumeTopY.toFixed(1)}" y2="${volumeTopY.toFixed(1)}" stroke="#27272a"/><text x="${ml + 4}" y="${(volumeTopY + 14).toFixed(1)}" font-size="${axisSize}" fill="#71717a">Volume</text>${volumeBars}</g>`;
-            const lowGuideLines = `<line x1="${ml}" x2="${W - mr}" y1="${lowY.toFixed(1)}" y2="${lowY.toFixed(1)}" stroke="#f59e0b" stroke-dasharray="4 5"/>${lowPoints.map(point => {
+            const lowGuideLines = `<line x1="${ml}" x2="${W - mr}" y1="${lowY.toFixed(1)}" y2="${lowY.toFixed(1)}" stroke="#f59e0b" stroke-width="0.8" stroke-dasharray="4 5"/>${lowPoints.map(point => {
                 const xx = x(point.minute);
                 const isExactLow = point.low === lowPoint.low;
-                return `<line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#f59e0b" stroke-dasharray="4 5" opacity="${isExactLow ? 0.95 : 0.45}"/>`;
+                return `<line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#f59e0b" stroke-width="${isExactLow ? 0.9 : 0.7}" stroke-dasharray="4 5" opacity="${isExactLow ? 0.95 : 0.45}"/>`;
             }).join('')}`;
             const lowMarkers = lowPoints.map(point => {
                 const xx = x(point.minute);
@@ -597,7 +597,7 @@
                 const labelAnchor = labelX <= ml + 8 ? 'start' : labelX >= W - mr - 8 ? 'end' : 'middle';
                 const deltaLabel = formatElapsedMinutes(point.minute - firstMinute);
                 const labelY = lowLabelBaseY + row * lowLabelRowGap;
-                return `<g><title>${ipo.ticker} ${dualTimeLabel(ipo.date, point.minute, point.time || null)} low ${fmtUsd(point.low)}</title><circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${isExactLow ? (compact ? 3.5 : 4.5) : (compact ? 2.8 : 3.5)}" fill="#f59e0b" stroke="#09090b" stroke-width="1.5" opacity="${isExactLow ? 1 : 0.78}"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#f59e0b" stroke-width="${isExactLow ? 1.7 : 1.2}" stroke-dasharray="4 5" opacity="${isExactLow ? 0.85 : 0.45}"/><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#09090b" stroke="#09090b" stroke-width="3" opacity="0.85">${deltaLabel}</text><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#fbbf24">${deltaLabel}</text></g>`;
+                return `<g><title>${ipo.ticker} ${dualTimeLabel(ipo.date, point.minute, point.time || null)} low ${fmtUsd(point.low)}</title><circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${isExactLow ? (compact ? 3.5 : 4.5) : (compact ? 2.8 : 3.5)}" fill="#f59e0b" stroke="#09090b" stroke-width="1.5" opacity="${isExactLow ? 1 : 0.78}"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#f59e0b" stroke-width="${isExactLow ? 0.95 : 0.7}" stroke-dasharray="4 5" opacity="${isExactLow ? 0.85 : 0.45}"/><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#09090b" stroke="#09090b" stroke-width="3" opacity="0.85">${deltaLabel}</text><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#fbbf24">${deltaLabel}</text></g>`;
             }).join('');
             const medianReferenceLine = Number.isFinite(medianReferenceMinute) && medianReferenceMinute >= domain.start && medianReferenceMinute <= domain.end ? (() => {
                 const xx = x(medianReferenceMinute);
@@ -605,7 +605,7 @@
                 const labelNearRight = xx > W - mr - (compact ? 86 : 118);
                 const labelX = labelNearRight ? xx - 6 : xx + 6;
                 const labelAnchor = labelNearRight ? 'end' : 'start';
-                return `<g><title>${ipo.ticker} selected-sample median low timing: ${label} after first trade</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#09090b" stroke-width="5" opacity="0.72"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#60a5fa" stroke-width="${compact ? 1.8 : 2.2}" stroke-dasharray="7 5"/><text x="${labelX.toFixed(1)}" y="${(mt + 16).toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#93c5fd">${label}</text></g>`;
+                return `<g><title>${ipo.ticker} selected-sample median low timing: ${label} after first trade</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#09090b" stroke-width="3" opacity="0.72"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#60a5fa" stroke-width="${compact ? 1 : 1.2}" stroke-dasharray="7 5"/><text x="${labelX.toFixed(1)}" y="${(mt + 16).toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#93c5fd">${label}</text></g>`;
             })() : '';
             const priceReferenceLabels = [];
             const referenceLabelY = yy => {
@@ -619,14 +619,20 @@
                 return labelY;
             };
             const priceReferenceLines = [
-                { label: 'IPO', price: Number(ipo.ipoPrice), color: '#c084fc', dash: '6 5' },
-                { label: 'Current*', price: Number(ipo.current), color: '#22d3ee', dash: '3 5' }
+                { label: 'Open', price: Number(data[0]?.open), color: '#a1a1aa', dash: '8 4', strokeWidth: compact ? 0.75 : 0.9, haloWidth: 2.2, plainLabel: true },
+                { label: 'IPO', price: Number(ipo.ipoPrice), color: '#c084fc', dash: '6 5', strokeWidth: compact ? 0.9 : 1.1, haloWidth: 3 },
+                { label: 'Current*', price: Number(ipo.current), color: '#22d3ee', dash: '3 5', strokeWidth: compact ? 0.9 : 1.1, haloWidth: 3 }
             ].filter(ref => Number.isFinite(ref.price) && ref.price >= rawMin && ref.price <= rawMax).map(ref => {
                 const yy = y(ref.price);
-                const labelText = `${ref.label} ${fmtUsd(ref.price)}`;
+                const labelText = ref.plainLabel ? ref.label : `${ref.label} ${fmtUsd(ref.price)}`;
                 const labelY = referenceLabelY(yy);
                 const labelW = Math.min(compact ? 108 : 150, Math.max(compact ? 62 : 78, labelText.length * (compact ? 5.4 : 6.2)));
-                return `<g><title>${ipo.ticker} ${escapeHtml(ref.label)} reference ${fmtUsd(ref.price)}</title><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#09090b" stroke-width="4.5" opacity="0.7"/><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="${ref.color}" stroke-width="${compact ? 1.4 : 1.7}" stroke-dasharray="${ref.dash}" opacity="0.92"/><rect x="${ml + 5}" y="${(labelY - 12).toFixed(1)}" width="${labelW.toFixed(1)}" height="16" rx="4" fill="#09090b" opacity="0.9" stroke="${ref.color}" stroke-opacity="0.28"/><text x="${ml + 10}" y="${labelY.toFixed(1)}" font-size="${axisSize}" font-weight="700" fill="${ref.color}">${escapeHtml(labelText)}</text></g>`;
+                const strokeWidth = ref.strokeWidth || (compact ? 1.4 : 1.7);
+                const haloWidth = ref.haloWidth || 4.5;
+                if (ref.plainLabel) {
+                    return `<g><title>${ipo.ticker} ${escapeHtml(ref.label)} reference ${fmtUsd(ref.price)}</title><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#09090b" stroke-width="${haloWidth}" opacity="0.7"/><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="${ref.color}" stroke-width="${strokeWidth}" stroke-dasharray="${ref.dash}" opacity="0.92"/><text x="${ml}" y="${labelY.toFixed(1)}" font-size="${axisSize}" font-weight="700" fill="${ref.color}">${escapeHtml(labelText)}</text></g>`;
+                }
+                return `<g><title>${ipo.ticker} ${escapeHtml(ref.label)} reference ${fmtUsd(ref.price)}</title><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="#09090b" stroke-width="${haloWidth}" opacity="0.7"/><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="${ref.color}" stroke-width="${strokeWidth}" stroke-dasharray="${ref.dash}" opacity="0.92"/><rect x="${ml + 5}" y="${(labelY - 12).toFixed(1)}" width="${labelW.toFixed(1)}" height="16" rx="4" fill="#09090b" opacity="0.9" stroke="${ref.color}" stroke-opacity="0.28"/><text x="${ml + 10}" y="${labelY.toFixed(1)}" font-size="${axisSize}" font-weight="700" fill="${ref.color}">${escapeHtml(labelText)}</text></g>`;
             }).join('');
             const lowPriceMarker = `<text x="${W - mr - 4}" y="${Math.max(mt + 14, lowY - 7).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#fbbf24">${lowPriceLabel}</text>`;
             const sourceLabel = compactBarSourceLabel(data[0]?.source || '5m bars');
@@ -998,6 +1004,315 @@
             </div>`;
         }
 
+        function averageNumber(values) {
+            const valid = values.filter(Number.isFinite);
+            return valid.length ? valid.reduce((sum, value) => sum + value, 0) / valid.length : null;
+        }
+
+        function rangeStats(values) {
+            const valid = values.filter(Number.isFinite);
+            return {
+                min: valid.length ? Math.min(...valid) : null,
+                max: valid.length ? Math.max(...valid) : null,
+                avg: averageNumber(valid)
+            };
+        }
+
+        function entryBarAtOrAfter(data, targetMinute) {
+            return data
+                .filter(bar => Number.isFinite(bar.minute) && Number.isFinite(bar.open) && bar.minute >= targetMinute)
+                .sort((a, b) => a.minute - b.minute)[0] || null;
+        }
+
+        function analysisScenarioIpos(analysis) {
+            const tickers = new Set((analysis.records || []).map(record => record.ticker));
+            const filtered = exactChartIpos().filter(ipo => {
+                if (tickers.size) return tickers.has(ipo.ticker);
+                return capFilterMatches(ipo) && tradingPlaceFilterMatches(ipo);
+            });
+            return filtered;
+        }
+
+        function entryScenarioDefinitions(analysis) {
+            const medianMinutes = Number(analysis.medianDeltaMinutes);
+            return [
+                {
+                    id: 'openHighLimit',
+                    label: 'Open with high limit',
+                    shortLabel: 'Open',
+                    detail: 'Assumes the limit is high enough to fill at the first public 5-minute open.',
+                    targetDelta: 0,
+                    fillMode: 'marketable'
+                },
+                {
+                    id: 'medianTiming',
+                    label: 'Median timing',
+                    shortLabel: 'Median',
+                    detail: `Buys the next 5-minute open at the active median low timing (${formatElapsedPlain(medianMinutes)}).`,
+                    targetDelta: medianMinutes,
+                    fillMode: 'timed'
+                },
+                {
+                    id: 'thirtyMinutes',
+                    label: 'Exactly 30m',
+                    shortLabel: '30m',
+                    detail: 'Buys the next 5-minute open 30 minutes after the first public trade.',
+                    targetDelta: 30,
+                    fillMode: 'timed'
+                },
+                {
+                    id: 'oneHour',
+                    label: 'Exactly 1h',
+                    shortLabel: '1h',
+                    detail: 'Buys the next 5-minute open one hour after the first public trade.',
+                    targetDelta: 60,
+                    fillMode: 'timed'
+                }
+            ].filter(scenario => Number.isFinite(scenario.targetDelta));
+        }
+
+        function entryScenarioStats(analysis, scenario) {
+            const rows = [];
+            let unavailable = 0;
+            analysisScenarioIpos(analysis).forEach(ipo => {
+                const data = chartData(ipo).filter(bar => Number.isFinite(bar.minute));
+                if (!data.length) return;
+                const first = entryBarAtOrAfter(data, data[0].minute);
+                const entry = entryBarAtOrAfter(data, data[0].minute + scenario.targetDelta);
+                const last = data.filter(bar => Number.isFinite(bar.close)).sort((a, b) => b.minute - a.minute)[0] || null;
+                const lowInfo = chartLowPoints(data);
+                const lowPoint = lowInfo?.lowPoint;
+                if (!first || !entry || !last || !lowPoint || !Number.isFinite(lowPoint.low) || !Number.isFinite(last.close) || !Number.isFinite(entry.open) || entry.open <= 0 || lowPoint.low <= 0) {
+                    unavailable += 1;
+                    return;
+                }
+                const dayEndReturn = (last.close / entry.open - 1) * 100;
+                const perfectLowReturn = (last.close / lowPoint.low - 1) * 100;
+                rows.push({
+                    ticker: ipo.ticker,
+                    entryMinute: entry.minute,
+                    firstMinute: first.minute,
+                    entryPrice: entry.open,
+                    firstPrice: first.open,
+                    lowMinute: lowPoint.minute,
+                    lowPrice: lowPoint.low,
+                    endPrice: last.close,
+                    dayEndReturn,
+                    dayLowGap: dayEndReturn - perfectLowReturn,
+                    lowAlreadyPassed: lowPoint.minute < entry.minute,
+                    entryAboveFirst: entry.open > first.open * 1.000001
+                });
+            });
+            const sampleSize = rows.length;
+            const totalCandidates = sampleSize + unavailable;
+            const under5Count = rows.filter(row => row.dayEndReturn > -5).length;
+            const under10Count = rows.filter(row => row.dayEndReturn > -10).length;
+            const missedLowCount = rows.filter(row => row.lowAlreadyPassed).length;
+            const entryAboveFirstCount = rows.filter(row => row.entryAboveFirst).length;
+            return {
+                ...scenario,
+                sampleSize,
+                unavailable,
+                totalCandidates,
+                returnStats: rangeStats(rows.map(row => row.dayEndReturn)),
+                dayLowGapStats: rangeStats(rows.map(row => row.dayLowGap)),
+                lossUnder5Pct: sampleSize ? under5Count / sampleSize * 100 : null,
+                lossUnder10Pct: sampleSize ? under10Count / sampleSize * 100 : null,
+                missedLowPct: sampleSize ? missedLowCount / sampleSize * 100 : null,
+                entryAboveFirstPct: sampleSize ? entryAboveFirstCount / sampleSize * 100 : null
+            };
+        }
+
+        function entryScenarioAnalysis(analysis) {
+            return entryScenarioDefinitions(analysis)
+                .map(scenario => entryScenarioStats(analysis, scenario))
+                .filter(scenario => scenario.sampleSize);
+        }
+
+        function pctTone(value) {
+            if (!Number.isFinite(value)) return 'text-zinc-400';
+            if (value > 0) return 'text-emerald-400';
+            if (value < -5) return 'text-red-400';
+            return 'text-amber-400';
+        }
+
+        function pctAccent(value) {
+            if (!Number.isFinite(value)) {
+                return { border: 'border-zinc-800', dot: 'bg-zinc-500' };
+            }
+            if (value > 0) {
+                return { border: 'border-emerald-500/35', dot: 'bg-emerald-400' };
+            }
+            if (value < -5) {
+                return { border: 'border-red-500/35', dot: 'bg-red-400' };
+            }
+            return { border: 'border-amber-500/35', dot: 'bg-amber-400' };
+        }
+
+        function entryScenarioRiskText(scenario) {
+            if (scenario.fillMode === 'marketable') {
+                return 'Risk: a high limit should fill, but it can also accept an ugly first print. A lower limit may miss immediately.';
+            }
+            return `Risk: prob. low already passed was ${fmtWholePct(scenario.missedLowPct)}; a strict lower limit can miss if price never returns.`;
+        }
+
+        function scenarioRangeBlock(stats) {
+            if (!stats || !Number.isFinite(stats.avg)) return '—';
+            return `<div class="font-mono text-lg font-semibold ${pctTone(stats.avg)}">${fmtPct(stats.avg)}</div>
+                <div class="mt-1 text-xs leading-5 text-zinc-500">min ${fmtPct(stats.min)} · max ${fmtPct(stats.max)}</div>`;
+        }
+
+        function entryScenarioScoreRow(scenario) {
+            return `<div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-4">
+                <div class="grid gap-4 lg:grid-cols-[minmax(10rem,1.1fr)_minmax(9rem,0.9fr)_minmax(9rem,0.9fr)_minmax(9rem,0.9fr)_minmax(9rem,0.9fr)] lg:items-center">
+                    <div>
+                        <div class="section-header text-blue-400">${escapeHtml(scenario.label)}</div>
+                        <p class="mt-1 text-sm leading-6 text-zinc-400">${escapeHtml(scenario.detail)}</p>
+                        <div class="mt-2 text-xs text-zinc-500">${scenario.sampleSize} samples</div>
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold uppercase text-zinc-500">Day-end result</div>
+                        ${scenarioRangeBlock(scenario.returnStats)}
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold uppercase text-zinc-500">Prob. loss contained</div>
+                        <div class="mt-1 grid grid-cols-2 gap-2">
+                            <div>
+                                <div class="font-mono text-lg font-semibold text-emerald-400">${fmtWholePct(scenario.lossUnder5Pct)}</div>
+                                <div class="text-xs text-zinc-500">loss &lt;5%</div>
+                            </div>
+                            <div>
+                                <div class="font-mono text-lg font-semibold text-blue-400">${fmtWholePct(scenario.lossUnder10Pct)}</div>
+                                <div class="text-xs text-zinc-500">loss &lt;10%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold uppercase text-zinc-500">Vs day low</div>
+                        ${scenarioRangeBlock(scenario.dayLowGapStats)}
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold uppercase text-zinc-500">Main risk</div>
+                        <p class="mt-1 text-xs leading-5 text-zinc-500">${escapeHtml(entryScenarioRiskText(scenario))}</p>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        function entryScenarioScoreboard(scenarios) {
+            if (!scenarios.length) return '';
+            return `<div class="space-y-3">
+                ${scenarios.map(entryScenarioScoreRow).join('')}
+            </div>`;
+        }
+
+        function entryScenarioSection(analysis) {
+            const scenarios = entryScenarioAnalysis(analysis);
+            if (!scenarios.length) return '';
+            return `<div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 sm:p-5">
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-3">
+                    <div>
+                        <div class="section-header text-blue-400">Entry scenario analysis</div>
+                        <p class="text-zinc-400 mt-2 leading-6 text-sm max-w-4xl">On-the-fly comparison for the active cap and trading-place filter. Timed entries use the next available 5-minute open; the day-low benchmark is a perfect low entry, so its gap is the opportunity cost of each scenario.</p>
+                    </div>
+                    <div class="text-xs text-zinc-500">Prob. means historical share of samples; loss contained means day-end return stayed above the threshold.</div>
+                </div>
+                <div class="mt-4">
+                    ${entryScenarioScoreboard(scenarios)}
+                </div>
+            </div>`;
+        }
+
+        function cardEntryScenarioRows(data) {
+            const valid = data
+                .filter(bar => Number.isFinite(bar.minute))
+                .sort((a, b) => a.minute - b.minute);
+            if (!valid.length) return [];
+            const first = entryBarAtOrAfter(valid, valid[0].minute);
+            const last = valid
+                .filter(bar => Number.isFinite(bar.close))
+                .sort((a, b) => b.minute - a.minute)[0] || null;
+            const lowInfo = chartLowPoints(valid);
+            const lowPoint = lowInfo?.lowPoint;
+            if (!first || !last || !lowPoint || !Number.isFinite(last.close) || !Number.isFinite(lowPoint.low) || lowPoint.low <= 0) return [];
+
+            return entryScenarioDefinitions(currentAnalysis()).map(scenario => {
+                const entry = entryBarAtOrAfter(valid, first.minute + scenario.targetDelta);
+                const rowLabel = scenario.id === 'oneHour' ? '60m' : scenario.shortLabel;
+                if (!entry || !Number.isFinite(entry.open) || entry.open <= 0) {
+                    return {
+                        ...scenario,
+                        rowLabel,
+                        available: false
+                    };
+                }
+                return {
+                    ...scenario,
+                    rowLabel,
+                    available: true,
+                    entryTime: entry.time || minutesToTime(entry.minute),
+                    entryPrice: entry.open,
+                    dayEndReturn: (last.close / entry.open - 1) * 100,
+                    lowReturn: (lowPoint.low / entry.open - 1) * 100,
+                    lowAlreadyPassed: lowPoint.minute < entry.minute
+                };
+            });
+        }
+
+        function scenarioResultBadge(label, value) {
+            return `<span class="inline-flex items-center gap-1 rounded-lg border border-zinc-800 bg-zinc-950/80 px-1.5 py-1">
+                <span class="font-mono text-[11px] font-semibold ${pctTone(value)}">${fmtPct(value)}</span>
+                <span class="text-[10px] font-semibold lowercase tracking-wide text-zinc-500">${escapeHtml(label)}</span>
+            </span>`;
+        }
+
+        function cardEntryScenarioControl(row) {
+            const label = escapeHtml(String(row.rowLabel).toUpperCase());
+            if (!row.available) {
+                return `<div class="min-w-[17rem] flex-1 rounded-xl border border-zinc-800 bg-zinc-900/70 px-2.5 py-2 shadow-inner">
+                    <div class="flex min-w-0 items-center gap-1.5 whitespace-nowrap">
+                        <span class="h-1.5 w-1.5 rounded-full bg-zinc-500"></span>
+                        <span class="text-xs font-semibold text-zinc-200">Buy ${label}</span>
+                        <span class="ml-auto flex items-center gap-1">
+                            <span class="inline-flex items-center gap-1 rounded-lg border border-zinc-800 bg-zinc-950/80 px-1.5 py-1">
+                                <span class="font-mono text-[11px] font-semibold text-zinc-500">—</span>
+                                <span class="text-[10px] font-semibold lowercase tracking-wide text-zinc-500">end</span>
+                            </span>
+                            <span class="inline-flex items-center gap-1 rounded-lg border border-zinc-800 bg-zinc-950/80 px-1.5 py-1">
+                                <span class="font-mono text-[11px] font-semibold text-zinc-500">—</span>
+                                <span class="text-[10px] font-semibold lowercase tracking-wide text-zinc-500">low</span>
+                            </span>
+                        </span>
+                    </div>
+                </div>`;
+            }
+            const accent = pctAccent(row.dayEndReturn);
+            return `<div class="min-w-[17rem] flex-1 rounded-xl border ${accent.border} bg-zinc-900/80 px-2.5 py-2 shadow-inner">
+                <div class="flex min-w-0 items-center gap-1.5 whitespace-nowrap">
+                    <span class="h-1.5 w-1.5 rounded-full ${accent.dot}"></span>
+                    <span class="text-xs font-semibold text-zinc-200">Buy ${label}</span>
+                    <span class="ml-auto flex items-center gap-1">
+                        ${scenarioResultBadge('end', row.dayEndReturn)}
+                        ${scenarioResultBadge('low', row.lowReturn)}
+                    </span>
+                </div>
+            </div>`;
+        }
+
+        function cardEntryScenarioTable(data) {
+            const rows = cardEntryScenarioRows(data);
+            if (!rows.length) return '';
+            return `<div class="mt-3 rounded-2xl border border-zinc-800 bg-zinc-950 p-3 sm:p-4">
+                <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-1.5">
+                    <div class="section-header text-blue-400">Entry scenarios</div>
+                    <div class="text-xs leading-5 text-zinc-500">End = entry to close &middot; Low = entry gap to first-day low</div>
+                </div>
+                <div class="mt-3 flex flex-nowrap gap-1.5 overflow-x-auto pb-1">
+                    ${rows.map(cardEntryScenarioControl).join('')}
+                </div>
+            </div>`;
+        }
+
         function decisionTimelineSvg(analysis) {
             const buckets = analysis.buckets || [];
             const compact = window.matchMedia('(max-width: 640px)').matches;
@@ -1131,6 +1446,7 @@
                             </div>
                         </div>
                     </div>
+                    ${entryScenarioSection(analysis)}
                     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
                         ${metric('Median clock', medianClockMetricValue, 'text-blue-400')}
                         ${metric('Most common clock', topClockMetricValue)}
@@ -1186,6 +1502,7 @@
                         ${progressMicroChart('IPO to current*', 'IPO', 'Current*', ipo.ipoPrice, ipo.current, roughHistoryPath(ipo, ipo.ipoPrice, ipo.current, 'IPO'))}
                         ${progressMicroChart('Day-one close to current*', 'Close', 'Current*', summary.endPrice, ipo.current, roughHistoryPath(ipo, summary.endPrice, ipo.current, 'Close'))}
                     </div>
+                    ${cardEntryScenarioTable(data)}
                 </div>
             </article>`;
         }
