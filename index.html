@@ -1067,6 +1067,14 @@
                     detail: 'Buys the next 5-minute open one hour after the first public trade.',
                     targetDelta: 60,
                     fillMode: 'timed'
+                },
+                {
+                    id: 'twoHours',
+                    label: 'Exactly 2h',
+                    shortLabel: '2h',
+                    detail: 'Buys the next 5-minute open two hours after the first public trade.',
+                    targetDelta: 120,
+                    fillMode: 'timed'
                 }
             ].filter(scenario => Number.isFinite(scenario.targetDelta));
         }
@@ -1236,7 +1244,14 @@
             const lowPoint = lowInfo?.lowPoint;
             if (!first || !last || !lowPoint || !Number.isFinite(last.close) || !Number.isFinite(lowPoint.low) || lowPoint.low <= 0) return [];
 
-            return entryScenarioDefinitions(currentAnalysis()).map(scenario => {
+            const analysis = currentAnalysis();
+            const medianMinutes = Number(analysis?.medianDeltaMinutes);
+            const medianEntry = Number.isFinite(medianMinutes)
+                ? entryBarAtOrAfter(valid, first.minute + medianMinutes)
+                : null;
+            const medianEntryPrice = Number(medianEntry?.open);
+
+            return entryScenarioDefinitions(analysis).map(scenario => {
                 const entry = entryBarAtOrAfter(valid, first.minute + scenario.targetDelta);
                 const rowLabel = scenario.id === 'oneHour' ? '60m' : scenario.shortLabel;
                 if (!entry || !Number.isFinite(entry.open) || entry.open <= 0) {
@@ -1253,48 +1268,47 @@
                     entryTime: entry.time || minutesToTime(entry.minute),
                     entryPrice: entry.open,
                     dayEndReturn: (last.close / entry.open - 1) * 100,
+                    medianGap: Number.isFinite(medianEntryPrice) && medianEntryPrice > 0
+                        ? (medianEntryPrice / entry.open - 1) * 100
+                        : null,
                     lowReturn: (lowPoint.low / entry.open - 1) * 100,
                     lowAlreadyPassed: lowPoint.minute < entry.minute
                 };
             });
         }
 
-        function scenarioResultBadge(label, value) {
-            return `<span class="inline-flex items-center gap-1 rounded-lg border border-zinc-800 bg-zinc-950/80 px-1.5 py-1">
-                <span class="font-mono text-[11px] font-semibold ${pctTone(value)}">${fmtPct(value)}</span>
-                <span class="text-[10px] font-semibold lowercase tracking-wide text-zinc-500">${escapeHtml(label)}</span>
-            </span>`;
+        function scenarioMetricLine(label, value) {
+            return `<div class="flex items-center justify-between gap-3 rounded-lg bg-zinc-950/70 px-2 py-1.5">
+                <span class="text-[11px] font-semibold text-zinc-500">${escapeHtml(label)}</span>
+                <span class="font-mono text-xs font-semibold ${pctTone(value)}">${fmtPct(value)}</span>
+            </div>`;
         }
 
         function cardEntryScenarioControl(row) {
             const label = escapeHtml(String(row.rowLabel).toUpperCase());
             if (!row.available) {
-                return `<div class="min-w-[17rem] flex-1 rounded-xl border border-zinc-800 bg-zinc-900/70 px-2.5 py-2 shadow-inner">
-                    <div class="flex min-w-0 items-center gap-1.5 whitespace-nowrap">
+                return `<div class="min-w-0 rounded-xl border border-zinc-800 bg-zinc-900/70 p-3 shadow-inner">
+                    <div class="flex min-w-0 items-center gap-2 whitespace-nowrap">
                         <span class="h-1.5 w-1.5 rounded-full bg-zinc-500"></span>
                         <span class="text-xs font-semibold text-zinc-200">Buy ${label}</span>
-                        <span class="ml-auto flex items-center gap-1">
-                            <span class="inline-flex items-center gap-1 rounded-lg border border-zinc-800 bg-zinc-950/80 px-1.5 py-1">
-                                <span class="font-mono text-[11px] font-semibold text-zinc-500">—</span>
-                                <span class="text-[10px] font-semibold lowercase tracking-wide text-zinc-500">end</span>
-                            </span>
-                            <span class="inline-flex items-center gap-1 rounded-lg border border-zinc-800 bg-zinc-950/80 px-1.5 py-1">
-                                <span class="font-mono text-[11px] font-semibold text-zinc-500">—</span>
-                                <span class="text-[10px] font-semibold lowercase tracking-wide text-zinc-500">low</span>
-                            </span>
-                        </span>
+                    </div>
+                    <div class="mt-3 space-y-1.5">
+                        ${scenarioMetricLine('End of day', null)}
+                        ${scenarioMetricLine('Gap to median', null)}
+                        ${scenarioMetricLine('Gap to low', null)}
                     </div>
                 </div>`;
             }
             const accent = pctAccent(row.dayEndReturn);
-            return `<div class="min-w-[17rem] flex-1 rounded-xl border ${accent.border} bg-zinc-900/80 px-2.5 py-2 shadow-inner">
-                <div class="flex min-w-0 items-center gap-1.5 whitespace-nowrap">
+            return `<div class="min-w-0 rounded-xl border ${accent.border} bg-zinc-900/80 p-3 shadow-inner">
+                <div class="flex min-w-0 items-center gap-2 whitespace-nowrap">
                     <span class="h-1.5 w-1.5 rounded-full ${accent.dot}"></span>
                     <span class="text-xs font-semibold text-zinc-200">Buy ${label}</span>
-                    <span class="ml-auto flex items-center gap-1">
-                        ${scenarioResultBadge('end', row.dayEndReturn)}
-                        ${scenarioResultBadge('low', row.lowReturn)}
-                    </span>
+                </div>
+                <div class="mt-3 space-y-1.5">
+                    ${scenarioMetricLine('End of day', row.dayEndReturn)}
+                    ${scenarioMetricLine('Gap to median', row.medianGap)}
+                    ${scenarioMetricLine('Gap to low', row.lowReturn)}
                 </div>
             </div>`;
         }
@@ -1305,9 +1319,9 @@
             return `<div class="mt-3 rounded-2xl border border-zinc-800 bg-zinc-950 p-3 sm:p-4">
                 <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-1.5">
                     <div class="section-header text-blue-400">Entry scenarios</div>
-                    <div class="text-xs leading-5 text-zinc-500">End = entry to close &middot; Low = entry gap to first-day low</div>
+                    <div class="text-xs leading-5 text-zinc-500">Gaps compare each entry with the active median entry and first-day low.</div>
                 </div>
-                <div class="mt-3 flex flex-nowrap gap-1.5 overflow-x-auto pb-1">
+                <div class="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-5">
                     ${rows.map(cardEntryScenarioControl).join('')}
                 </div>
             </div>`;
