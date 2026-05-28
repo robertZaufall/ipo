@@ -650,14 +650,7 @@
             return filterChartAxisTicks(ticks, timeline, plotW, compact ? 48 : 72);
         }
 
-        function countdownAxisLabel(minutesUntilOpen) {
-            if (!Number.isFinite(minutesUntilOpen)) return '';
-            const total = Math.max(0, Math.round(minutesUntilOpen));
-            if (total === 0) return '0m';
-            return `-${elapsedAxisLabel(total).replace(/^\+/, '')}`;
-        }
-
-        function chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended) {
+        function chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended, premarketStartByDate = new Map()) {
             const group = tick.group || chartSessionGroup(ipo, tick);
             const mod = minuteOfDay(tick.minute);
             if (isExtended && group === 'afterHours') {
@@ -671,13 +664,13 @@
                 };
             }
             if (isExtended && (group === 'premarket' || group === 'secondOpen')) {
-                const openMinute = dateOffsetMinutes(ipo.date, tick.date || ipo.date) + MARKET_OPEN_MINUTES;
-                const untilOpen = openMinute - tick.minute;
+                const startMinute = premarketStartByDate.get(tick.date || '') ?? tick.minute;
+                const delta = tick.minute - startMinute;
                 return {
-                    label: countdownAxisLabel(untilOpen),
+                    label: elapsedAxisLabel(delta),
                     color: '#93c5fd',
-                    major: Math.round(untilOpen) === 0 || Math.round(untilOpen) % 60 === 0,
-                    priority: Math.round(untilOpen) === 30 ? 6 : (Math.round(untilOpen) === 0 ? 5 : (Math.round(untilOpen) % 60 === 0 ? 3 : 2))
+                    major: Math.round(delta) === 0 || Math.round(delta) % 60 === 0,
+                    priority: Math.round(delta) === 0 ? 6 : (Math.round(delta) % 60 === 0 ? 3 : 2)
                 };
             }
             if (Number.isFinite(firstMinute) && tick.minute >= firstMinute && group === 'regular') {
@@ -697,14 +690,22 @@
             if (!points.length) return [];
             const firstMinute = points[0]?.minute;
             const candidates = new Map();
+            const segments = chartTimelineSegments(ipo, timeline);
+            const premarketStartByDate = new Map();
+            segments.forEach(segment => {
+                if (segment.group !== 'premarket') return;
+                const first = segment.points[0];
+                if (!first || !Number.isFinite(first.minute)) return;
+                premarketStartByDate.set(first.date || '', first.minute);
+            });
             const add = tick => {
                 if (!tick || !Number.isFinite(tick.minute) || !Number.isFinite(tick.plot)) return;
-                const meta = chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended);
+                const meta = chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended, premarketStartByDate);
                 if (!meta || !meta.label) return;
                 candidates.set(`${Math.round(tick.minute)}:${tick.group || ''}`, { ...tick, ...meta });
             };
             bottomTicks.forEach(add);
-            chartTimelineSegments(ipo, timeline).forEach(segment => {
+            segments.forEach(segment => {
                 const first = segment.points[0];
                 const special = {
                     minute: first.minute,
@@ -1183,9 +1184,9 @@
                     const major = Boolean(point.major);
                     return `<g><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(axisY - (major ? 8 : 6)).toFixed(1)}" y2="${axisY.toFixed(1)}" stroke="${color}" opacity="${major ? 0.95 : 0.75}"/><text x="${xx.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-size="${axisSize}" font-weight="${major ? 700 : 500}" fill="${color}">${escapeHtml(point.label)}</text></g>`;
                 }).join('');
-                const legendText = isExtended ? 'first trade · after-hours · pre-open' : 'minutes from first trade';
+                const legendText = isExtended ? 'first trade · after-hours · premarket' : 'minutes from first trade';
                 const legend = compact ? '' : `<text x="${W - mr}" y="${(mt - 30).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#71717a">${legendText}</text>`;
-                return `<g><title>${ipo.ticker} top axis uses first-trade elapsed time, after-hours elapsed time, and premarket countdown where available</title>${legend}<line x1="${xPlot(chartPoints[0].plot).toFixed(1)}" x2="${xPlot(chartPoints[chartPoints.length - 1].plot).toFixed(1)}" y1="${axisY.toFixed(1)}" y2="${axisY.toFixed(1)}" stroke="#52525b" stroke-width="1.2"/>${tickLabels}</g>`;
+                return `<g><title>${ipo.ticker} top axis uses first-trade elapsed time, after-hours elapsed time, and premarket elapsed time where available</title>${legend}<line x1="${xPlot(chartPoints[0].plot).toFixed(1)}" x2="${xPlot(chartPoints[chartPoints.length - 1].plot).toFixed(1)}" y1="${axisY.toFixed(1)}" y2="${axisY.toFixed(1)}" stroke="#52525b" stroke-width="1.2"/>${tickLabels}</g>`;
             })() : '';
             const extendedSessionBands = chartExtendedSessionBandsSvg(timeline, xPlot, mt, axisBottomY);
             const gapBreaks = chartGapBreaksSvg(ipo, timeline, xPlot, mt, axisBottomY, compact);
