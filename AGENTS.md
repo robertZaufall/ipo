@@ -15,9 +15,15 @@ Path placeholders in this file are intentional. Substitute them with the matchin
 - There is no build step.
 - Styling uses Tailwind from CDN plus local CSS in `index.html`.
 - Candlestick charts are inline SVG generated in browser JavaScript.
+- The 3D IPO map is a separate browser ES module in `three-ipo-view.js` and imports local Three.js from `vendor/three.module.min.js`. Keep `vendor/three.LICENSE.txt` with that module. Do not replace this with a remote charting or Three.js CDN unless explicitly requested.
 - The top analysis panel is an inline SVG/HTML decision dashboard generated in browser JavaScript from precomputed cap-filtered data in `ipo-analysis.js`.
 - The visible analysis UI starts with a buyer-window summary, key metrics, and a full-width elapsed-time opportunity map; below that it shows two larger distribution charts followed by a full-width `Decision odds` panel, then an entry-scenario comparison for buying at the open, active median timing, 30 minutes, 60 minutes, 2 hours, after-hours end, second-day premarket, and second-day open. The lower metric row includes median/common clock pills plus entry-scenario insight pills such as best day-end, safest entry, closest-to-low, and best extended entry. Do not re-add the removed `Timing signals` panel, checkpoint highlight pill, duplicate `median clock` block in the `Decision odds` header, or a trailing "not a buy signal" note unless explicitly requested.
 - A compact infographic strip above the search row shows the IPO playbook and IPO buy-timing guides as small thumbnails. Both thumbnails open the full-size image modal when clicked.
+- The header `Forthcoming IPOs` button opens a modal IPO-list of known upcoming listings from the StockAnalysis IPO calendar. This list is info-only and must stay excluded from timing samples, odds, charts, card filtering, and generated analysis. It shows the next 12 months of dated listings with date, symbol, company, exchange, price range, shares, deal, market cap, and revenue, plus `All` and active-cap-filter views.
+- The 3D map is opened from the analysis dashboard `3D Map` button. It supports Day 1 and Ext modes, open aligned / open+close / close aligned scaling, Reset View, Flatten Low, and hideable Symbols, Quick Read, Scale, and Selected panels. Automatic rotation is intentionally disabled.
+- The 3D symbol selector is a hideable year-clustered top strip, newest IPO years on the left and oldest on the right. Each year uses two symbol columns when needed, but a single-symbol year should use one visual row. Symbol text color matches the line's up/down tone and does not use a separate bullet.
+- In regular 3D path view, clicking a symbol pill selects it and overlays full candle bodies/wicks for that IPO; clicking the same selected symbol again isolates it into a one-row close-aligned candle view and hides other rows; clicking it again clears the selection and restores all rows. The isolated one-row view must switch to close aligned while active, restore the previous alignment when leaving, remove empty regular-session time before the first real price, normalize the return y-axis to that one IPO, and show linear 5-minute volume bars from the real bar volume field.
+- In Flatten Low view, IPO lows are placed on a flat timing mesh with symbol labels. It should keep IPO open markers in white, show near-low markers from both regular and extended windows when real lows exist, omit fake extended markers when there is no extended-hours low, support open/open+close/close alignment without rotating the camera, show time labels plus IPO-year scale on the front, and draw the selected symbol arrow only after an explicit symbol-pill click.
 - The entry-scenario comparison is calculated in browser JavaScript from the active cap/trading-place filtered exact 5-minute bars. It reports day-end result ranges, loss-contained rates under 5% and 10%, and the opportunity gap to the perfect first-day low entry.
 - Analysis distribution charts include dynamic median reference lines from the currently active cap and trading-place filter.
 - Main candle charts include a top elapsed-minutes axis from first public trade, bottom NYC/German clock labels, and a blue vertical median timing reference line from the currently active analysis filter. They also show a thin gray horizontal first-public-open reference line with a plain `Open` label, plus conditional horizontal IPO-price and current-price reference lines only when those prices are inside the visible chart OHLC range.
@@ -118,6 +124,15 @@ Per-ticker detail source:
 - For `CBRS`, also checked Cerebras' own IPO pricing release:
   `https://www.cerebras.ai/press-release/cerebras-systems-announces-pricing-of-initial-public-offering`
 
+Upcoming IPO-list source:
+
+- `https://stockanalysis.com/ipos/calendar/`
+- The browser fetches a markdown copy through:
+  `https://r.jina.ai/http://https://stockanalysis.com/ipos/calendar/`
+- Parsed rows are cached in `localStorage` under `ipo-upcoming-calendar-v1` with a 24-hour retry/freshness window.
+- Only dated rows in the next 12 months are shown. The modal can show all upcoming rows or rows matching the active market-cap filter.
+- Upcoming rows must remain informational only. Do not feed them into `ipos`, `ipoAnalysis`, first-day timing samples, chart cards, or decision odds.
+
 Intraday candle source:
 
 - Yahoo Finance chart endpoint, example:
@@ -179,7 +194,7 @@ Then open:
 http://localhost:8080
 ```
 
-Most layout and behavior edits are made directly in `index.html`; generated IPO metadata lives in `ipo-data.js`, real candle rows live in `chart-data.js`, and derived low-timing analysis lives in `ipo-analysis.js`.
+Most page layout, candle chart, dashboard, and IPO-list behavior edits are made directly in `index.html`; the 3D map lives in `three-ipo-view.js`; generated IPO metadata lives in `ipo-data.js`, real candle rows live in `chart-data.js`, and derived low-timing analysis lives in `ipo-analysis.js`.
 
 Refresh the default combined `$5B+` data set with:
 
@@ -202,7 +217,7 @@ The site repo is Git-backed and pushes to GitHub. The live `https://glaubi.net/i
 ```sh
 cd <local-ipo-site-repo>
 git status --short
-git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py AGENTS.md README.md LICENSE docs/*.png
+git add index.html three-ipo-view.js vendor/three.module.min.js vendor/three.LICENSE.txt ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py AGENTS.md README.md LICENSE docs/*.png
 git commit -m "Update IPO site"
 git push
 ```
@@ -299,6 +314,12 @@ Before calling an IPO change done:
 - Each card chart enlarge button opens a full-screen chart modal using the same chart data mode currently active for that card.
 - The global chart-mode switch and card-level chart switches toggle Alpaca extended-hours chart display without changing search/filter behavior or generated analysis; card-level extended price timeline events and extended entry panels use the generated Alpaca data directly.
 - Low markers on main candle charts are in the same near-low price band and are spaced at least one hour apart.
+- The `Forthcoming IPOs` modal opens from the header, renders the StockAnalysis-derived IPO-list or a clear unavailable/empty state, keeps rows info-only, and updates when switching between `All` and the active cap filter.
+- The 3D map opens from the analysis panel, loads local `vendor/three.module.min.js`, and renders without a blank WebGL canvas.
+- The 3D map symbol strip is clustered by IPO year with newest years on the left, compact two-column symbol groups, and all visible symbols reachable without a horizontal scrollbar.
+- In regular 3D path view, symbol selection shows candle bodies/wicks for the selected IPO; a second click isolates that IPO into the one-row candle view; a third click clears isolation and selection.
+- The isolated one-row 3D render is close-aligned while active, restores the prior alignment when leaving, removes empty time before the first real price, uses the selected IPO's own return range, and shows linear 5-minute volume bars.
+- Flatten Low view shows the flat low mesh, time labels, IPO-year scale, white IPO-open markers, real regular and extended near-low markers, no fake extended marker at the start of the extended session, and stable camera orientation when changing Day 1/Ext or alignment.
 - IPO cards link company names to Yahoo Finance quote pages, show cap/deal header pills, and use the price-level timeline for `IPO`, `Start`, `Low`, `Median`, `End`, `After End`, `Pre D2`, `Open D2`, and `Current*` events when available.
 - IPO cards show entry-scenario panels below the five micro charts, with first-day scenarios (`Open`, `Median`, `30m`, `60m`, `2h`) plus extended scenarios (`After`, `Pre D2`, `Open D2`), and without entry time or entry price in those controls.
 - IPO cards do not show `IPO return`, `Return —`, generated `dayChange`, `Market cap`, or `Deal size` in the price timeline or entry controls.
@@ -310,6 +331,8 @@ Before calling an IPO change done:
 - Trading-place filter defaults to `All` and can switch to `NASDAQ` or `NYSE`.
 - Inline JavaScript syntax still passes, for example:
   `perl -0ne 'while(/<script>(.*?)<\/script>/sg){print $1}' index.html > /tmp/ipo-inline.js && node --check /tmp/ipo-inline.js`
+- The 3D map module still parses, for example:
+  `node --input-type=module --check < three-ipo-view.js`
 - Python scripts compile:
   `python3 -m py_compile refresh_ipo_data.py build_ipo_analysis.py`
 - `https://glaubi.net/ipo` returns the page, not a 404.

@@ -6,6 +6,10 @@ The site shows large IPO companies as full-width cards only when exact 5-minute 
 
 Each card also includes five micro charts comparing IPO price, first-day start, first-day low, first-day close, Day-two, and current* snapshot price. Micro-chart lines use exact IPO-day 5-minute closes where possible, extended-session milestones for the Day-two path, and sampled Yahoo weekly closes for rough longer-term current* paths. Entry-scenario panels compare buying at the open, active median timing, 30 minutes, 60 minutes, 2 hours, after-hours end, second-day premarket, and second-day open, with separate day-end, gap-to-median, and gap-to-low results.
 
+The dashboard also opens a Three.js `3D Map` view from the analysis panel. It renders filtered IPO paths, a hideable year-clustered symbol list, Day 1/Ext modes, open/open+close/close alignment modes, hideable Quick Read/Scale/Selected panels, selected-symbol candles, an isolated one-row candle view with normalized return scale and linear 5-minute volume bars, and a `Flatten Low` mesh that places low markers on a comparable timing plane.
+
+The header `Forthcoming IPOs` button opens an info-only IPO-list modal from the StockAnalysis calendar. It shows known listings in the next 12 months with date, symbol, company, exchange, price range, shares, deal, market cap, and revenue, and can switch between all listings and the active cap filter. These upcoming rows are deliberately excluded from timing samples, odds, charts, and card calculations.
+
 ## Screenshots
 
 ![IPO decision dashboard screenshot](docs/ipo-dashboard.png)
@@ -14,14 +18,24 @@ Each card also includes five micro charts comparing IPO price, first-day start, 
 
 ![Extended-hours candle chart screenshot](docs/extended-chart.png)
 
+![3D IPO map normal view screenshot](docs/three-map-normal.png)
+
+![3D IPO map isolated candle view screenshot](docs/three-map-single-candles.png)
+
+![3D IPO map flattened low view screenshot](docs/three-map-flattened.png)
+
+![Forthcoming IPO list screenshot](docs/ipo-list.png)
+
 ## Files
 
 - `index.html` - static page, styles, decision dashboard, chart renderer, filters, search, and sort toggle.
+- `three-ipo-view.js` - Three.js IPO map renderer, symbol selection, isolated candle view, flattened low mesh, and 3D controls.
 - `ipo-data.js` - generated IPO card metadata.
 - `chart-data.js` - generated exact 5-minute first-day bars, optional Alpaca extended-hours bars, and sampled rough weekly close paths where available.
 - `ipo-analysis.js` - generated 15-year low-timing analysis, decision odds, and timing insights, precomputed per cap and trading-place filter.
 - `refresh_ipo_data.py` - refreshes IPO metadata, chart data, and analysis.
 - `build_ipo_analysis.py` - rebuilds only `ipo-analysis.js` from existing generated data.
+- `vendor/three.module.min.js` - local Three.js module used by the 3D map; no charting CDN is required for the map.
 
 ## Run Locally
 
@@ -56,16 +70,17 @@ python3 build_ipo_analysis.py --input-dir . --output-dir .
 ```sh
 python3 -m py_compile refresh_ipo_data.py build_ipo_analysis.py
 perl -0ne 'while(/<script>(.*?)<\/script>/sg){print $1}' index.html > /tmp/ipo-inline.js && node --check /tmp/ipo-inline.js
+node --input-type=module --check < three-ipo-view.js
 ```
 
-For visual QA, serve the page locally and check that the header cap and trading-place filters change the `Sample`, `Decision odds`, median markers, entry-scenario analysis, scenario insight pills, and card count together. Also check the compact timing/playbook infographic thumbnails and modals, search, sort toggle, chart enlarge modal, the `CBRS` Yahoo chart, rough-path micro charts, card entry-scenario controls, the Yahoo Finance company-name links, and at least one Alpaca-sourced chart such as `ARM`. In main candle charts, verify the top elapsed-minutes axis, compact provider marker, blue median timing line, gray open reference line, and confirm IPO/current price reference lines appear only when in range. Toggle the global `Ext` control and one card-level switch to verify extended candles, shaded extended-hours regions, and the white overnight break.
+For visual QA, serve the page locally and check that the header cap and trading-place filters change the `Sample`, `Decision odds`, median markers, entry-scenario analysis, scenario insight pills, and card count together. Also check the compact timing/playbook infographic thumbnails and modals, search, sort toggle, chart enlarge modal, the `CBRS` Yahoo chart, rough-path micro charts, card entry-scenario controls, the Yahoo Finance company-name links, and at least one Alpaca-sourced chart such as `ARM`. In main candle charts, verify the top elapsed-minutes axis, compact provider marker, blue median timing line, gray open reference line, and confirm IPO/current price reference lines appear only when in range. Toggle the global `Ext` control and one card-level switch to verify extended candles, shaded extended-hours regions, and the white overnight break. Open the `3D Map`, check the year-clustered symbol pills, selected-symbol candles, isolated one-row candle/volume view, `Flatten Low` mesh, alignment controls, reset behavior, and hideable info panels. Open `Forthcoming IPOs` and confirm the info-only list renders, links to StockAnalysis, and respects the all/cap-filter toggle.
 
 ## Deploy
 
 This repo is pushed to GitHub at `https://github.com/robertZaufall/ipo`. The public route `https://glaubi.net/ipo` is served by the Cloudflare Worker in `<local-ipo-proxy-repo>`, which fetches the static files from GitHub raw `main` and injects `<base href="/ipo/">`.
 
 ```sh
-git add index.html ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py README.md LICENSE AGENTS.md docs/*.png
+git add index.html three-ipo-view.js vendor/three.module.min.js vendor/three.LICENSE.txt ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py README.md LICENSE AGENTS.md docs/*.png
 git commit -m "Update IPO site"
 git push
 ```

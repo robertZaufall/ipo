@@ -20,6 +20,8 @@
         .chart-hover-hit:hover + .chart-hover-data,
         .chart-hover-hit:focus + .chart-hover-data,
         .chart-hover-item.is-active .chart-hover-data { opacity: 1; }
+        .scrollbar-hidden { scrollbar-width: none; -ms-overflow-style: none; }
+        .scrollbar-hidden::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body id="top" class="bg-zinc-950 text-zinc-200">
@@ -34,14 +36,23 @@
                         <span class="font-display text-2xl font-semibold tracking-tighter">IPO</span>
                         <span class="text-zinc-500 text-sm ml-1">tracker</span>
                     </div>
-                    <div class="hidden sm:flex px-3 py-1 rounded-full bg-zinc-900 text-xs font-medium items-center gap-x-1.5 border border-zinc-800">
+                    <div class="hidden lg:flex px-3 py-1 rounded-full bg-zinc-900 text-xs font-medium items-center gap-x-1.5 border border-zinc-800">
                         <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
                         <span id="nav-count" class="text-zinc-400">$5B+ listings</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-x-2 text-zinc-400 text-xs font-mono shrink-0">
-                    <i class="fa-solid fa-globe fa-fw"></i>
-                    <span>glaubi.net/ipo</span>
+                    <button type="button" data-upcoming-ipo-open aria-label="Open forthcoming IPO list" title="Forthcoming IPOs" class="inline-flex h-9 items-center gap-2 rounded-xl border border-emerald-500/40 bg-emerald-600 px-3 font-sans text-xs font-semibold text-white transition-colors hover:border-emerald-300 hover:bg-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">
+                        <i class="fa-solid fa-list-ul text-xs"></i>
+                        <span>Forthcoming IPOs</span>
+                    </button>
+                    <a href="https://github.com/robertZaufall/ipo" target="_blank" rel="noopener noreferrer" aria-label="Open IPO tracker GitHub repository" title="GitHub repository" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-400 transition-colors hover:border-zinc-600 hover:text-zinc-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                        <i class="fa-brands fa-github text-base"></i>
+                    </a>
+                    <span class="inline-flex items-center gap-x-2">
+                        <i class="fa-solid fa-globe fa-fw"></i>
+                        <span class="hidden sm:inline">glaubi.net/ipo</span>
+                    </span>
                 </div>
             </div>
         </div>
@@ -56,18 +67,31 @@
                 </div>
                 <h1 class="font-display text-5xl sm:text-6xl tracking-tighter font-semibold mt-3">First-day moves for market giants</h1>
                 <p class="text-lg sm:text-xl text-zinc-400 mt-2 max-w-3xl">A day-one view of top IPO companies.</p>
-                <div class="mt-5 grid gap-3 lg:grid-cols-[minmax(0,34rem)_minmax(16rem,22rem)_minmax(10rem,14rem)]">
-                    <div id="cap-filter" role="group" aria-label="Filter IPO analysis and cards by market cap" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs sm:text-sm font-semibold grid grid-cols-5 gap-1">
-                        <button id="cap-under10" type="button" data-cap-filter="under10" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&lt;$10B</button>
-                        <button id="cap-all" type="button" data-cap-filter="all" aria-pressed="false" aria-label="All market caps" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">*</button>
-                        <button id="cap-gt10" type="button" data-cap-filter="gt10" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$10B</button>
-                        <button id="cap-gt25" type="button" data-cap-filter="gt25" aria-pressed="true" class="rounded-xl flex items-center justify-center transition-colors bg-blue-600 text-white">&gt;$25B</button>
-                        <button id="cap-gt50" type="button" data-cap-filter="gt50" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$50B</button>
-                    </div>
-                    <div id="trading-place-filter" role="group" aria-label="Filter IPO analysis and cards by trading place" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs sm:text-sm font-semibold grid grid-cols-3 gap-1">
-                        <button id="place-all" type="button" data-trading-place-filter="all" aria-pressed="true" class="rounded-xl flex items-center justify-center transition-colors bg-blue-600 text-white">All</button>
-                        <button id="place-nasdaq" type="button" data-trading-place-filter="nasdaq" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">NASDAQ</button>
-                        <button id="place-nyse" type="button" data-trading-place-filter="nyse" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">NYSE</button>
+                <div class="mt-5 grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(10rem,14rem)]">
+                    <div class="flex w-full flex-col gap-1 rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs font-semibold sm:text-sm md:h-12 md:flex-row md:items-center">
+                        <div id="cap-filter" role="group" aria-label="Filter IPO analysis and cards by market cap" class="flex min-h-10 w-full min-w-0 items-stretch gap-1 md:h-full md:flex-[1.35]">
+                            <span class="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-950/70 px-2.5 text-[11px] font-semibold text-zinc-300 sm:px-3 sm:text-xs">
+                                <i class="fa-solid fa-filter text-[10px] text-blue-300" aria-hidden="true"></i>
+                                <span>Cap</span>
+                            </span>
+                            <div class="grid min-w-0 flex-1 grid-cols-5 gap-1">
+                                <button id="cap-under10" type="button" data-cap-filter="under10" aria-pressed="false" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&lt;$10B</button>
+                                <button id="cap-all" type="button" data-cap-filter="all" aria-pressed="false" aria-label="All market caps" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">*</button>
+                                <button id="cap-gt10" type="button" data-cap-filter="gt10" aria-pressed="false" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$10B</button>
+                                <button id="cap-gt25" type="button" data-cap-filter="gt25" aria-pressed="true" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors bg-blue-600 text-white">&gt;$25B</button>
+                                <button id="cap-gt50" type="button" data-cap-filter="gt50" aria-pressed="false" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$50B</button>
+                            </div>
+                        </div>
+                        <div aria-hidden="true" class="h-px w-full bg-zinc-800 md:h-7 md:w-px"></div>
+                        <div id="trading-place-filter" role="group" aria-label="Filter IPO analysis and cards by trading place" class="grid min-h-10 w-full min-w-0 grid-cols-[auto_repeat(3,minmax(0,1fr))] gap-1 md:h-full md:w-[22rem] md:shrink-0">
+                            <span class="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-950/70 px-2.5 text-[11px] font-semibold text-zinc-300 sm:px-3 sm:text-xs">
+                                <i class="fa-solid fa-location-dot text-[10px] text-blue-300" aria-hidden="true"></i>
+                                <span>Place</span>
+                            </span>
+                            <button id="place-all" type="button" data-trading-place-filter="all" aria-pressed="true" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors bg-blue-600 text-white">All</button>
+                            <button id="place-nasdaq" type="button" data-trading-place-filter="nasdaq" aria-pressed="false" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">NASDAQ</button>
+                            <button id="place-nyse" type="button" data-trading-place-filter="nyse" aria-pressed="false" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">NYSE</button>
+                        </div>
                     </div>
                     <div id="chart-mode-toggle" role="group" aria-label="Set all card charts to day-one or extended data" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs sm:text-sm font-semibold grid grid-cols-2 gap-1 transition-colors">
                         <button id="chart-mode-day1" type="button" data-chart-mode="day1" aria-pressed="true" class="rounded-xl flex items-center justify-center transition-colors bg-blue-600 text-white">Day 1</button>
@@ -167,6 +191,106 @@
         </div>
     </div>
 
+    <div id="upcoming-ipo-modal" class="fixed inset-0 z-[115] hidden bg-zinc-950/95 p-3 backdrop-blur-xl sm:p-5" role="dialog" aria-modal="true" aria-labelledby="upcoming-ipo-title">
+        <div class="mx-auto flex h-full w-full max-w-[96rem] flex-col gap-3">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div class="min-w-0">
+                    <div class="section-header text-emerald-400">Forthcoming IPOs</div>
+                    <h2 id="upcoming-ipo-title" class="font-display mt-1 text-2xl tracking-tight text-zinc-100">Known upcoming listings</h2>
+                    <div id="upcoming-ipo-status" aria-live="polite" class="mt-1 text-xs leading-5 text-zinc-500">Checking cached calendar...</div>
+                </div>
+                <div class="flex shrink-0 items-center gap-2">
+                    <div id="upcoming-ipo-view-filter" role="group" aria-label="Filter upcoming IPO list by market cap" class="h-10 rounded-xl border border-zinc-800 bg-zinc-900 p-1 text-xs font-semibold grid grid-cols-2 gap-1">
+                        <button id="upcoming-ipo-scope-cap" type="button" data-upcoming-ipo-scope="cap" aria-pressed="false" class="whitespace-nowrap rounded-lg px-3 transition-colors text-zinc-400 hover:text-zinc-200">Cap filter</button>
+                        <button id="upcoming-ipo-scope-all" type="button" data-upcoming-ipo-scope="all" aria-pressed="true" class="whitespace-nowrap rounded-lg px-3 transition-colors bg-emerald-600 text-white">All</button>
+                    </div>
+                    <button id="upcoming-ipo-close" type="button" aria-label="Close upcoming IPO list" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-zinc-700 bg-zinc-900 text-zinc-300 transition-colors hover:border-emerald-500/60 hover:text-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="upcoming-ipo-table" class="min-h-0 flex-1 overflow-auto rounded-2xl border border-zinc-800 bg-zinc-900 p-4 sm:p-5"></div>
+        </div>
+    </div>
+
+    <div id="three-map-modal" class="fixed inset-0 z-[120] hidden bg-zinc-950/95 backdrop-blur-xl" role="dialog" aria-modal="true" aria-labelledby="three-map-title">
+        <div class="flex h-full flex-col">
+            <div class="flex shrink-0 flex-col gap-3 border-b border-zinc-800 bg-zinc-950/90 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+                <div class="min-w-0">
+                    <div id="three-map-title" class="section-header truncate text-blue-400">3D IPO map</div>
+                    <div id="three-map-subtitle" class="hidden">Filtered first-day paths</div>
+                </div>
+                <div class="flex flex-wrap items-center justify-end gap-2">
+                    <div id="three-map-mode-toggle" role="group" aria-label="Choose 3D IPO map data range" class="h-10 rounded-xl border border-zinc-800 bg-zinc-900 p-1 text-xs font-semibold grid grid-cols-2 gap-1">
+                        <button id="three-map-mode-day1" type="button" data-three-map-mode="day1" aria-pressed="true" class="whitespace-nowrap rounded-lg px-3 transition-colors bg-blue-600 text-white">Day 1</button>
+                        <button id="three-map-mode-extended" type="button" data-three-map-mode="extended" aria-pressed="false" class="whitespace-nowrap rounded-lg px-3 transition-colors text-zinc-400 hover:text-zinc-200">Ext</button>
+                    </div>
+                    <div id="three-map-flat-align-toggle" role="group" aria-label="Choose 3D IPO map alignment" class="h-10 rounded-xl border border-zinc-800 bg-zinc-900 p-1 text-xs font-semibold grid grid-cols-3 gap-1">
+                        <button id="three-map-flat-align-open" type="button" data-three-map-flat-align="open" aria-pressed="true" class="whitespace-nowrap rounded-lg px-3 transition-colors bg-blue-600 text-white">Open aligned</button>
+                        <button id="three-map-flat-align-both" type="button" data-three-map-flat-align="openClose" aria-pressed="false" class="whitespace-nowrap rounded-lg px-3 transition-colors text-zinc-400 hover:text-zinc-200">Open+close</button>
+                        <button id="three-map-flat-align-close" type="button" data-three-map-flat-align="close" aria-pressed="false" class="whitespace-nowrap rounded-lg px-3 transition-colors text-zinc-400 hover:text-zinc-200">Close aligned</button>
+                    </div>
+                    <button id="three-map-reset-view" type="button" aria-label="Reset View" title="Reset View" class="inline-flex h-10 items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900 px-3 text-xs font-semibold text-zinc-300 transition-colors hover:border-blue-500/60 hover:text-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                        <i class="fa-solid fa-rotate-left text-xs"></i>
+                        <span>Reset View</span>
+                    </button>
+                    <button id="three-map-flatten-low" type="button" aria-label="Flatten Low" title="Flatten Low" aria-pressed="false" class="inline-flex h-10 items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900 px-3 text-xs font-semibold text-zinc-300 transition-colors hover:border-amber-400/70 hover:text-amber-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300">
+                        <i class="fa-solid fa-layer-group text-xs"></i>
+                        <span>Flatten Low</span>
+                    </button>
+                    <button id="three-map-symbols-toggle" type="button" aria-label="Hide Symbols" title="Hide Symbols" aria-pressed="true" class="inline-flex h-10 items-center gap-2 rounded-xl border border-blue-500/40 bg-blue-500/10 px-3 text-xs font-semibold text-blue-200 transition-colors hover:border-blue-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                        <i class="fa-solid fa-list-ul text-xs"></i>
+                        <span class="hidden sm:inline">Symbols</span>
+                    </button>
+                    <button id="three-map-insights-toggle" type="button" aria-label="Hide Quick Read" title="Hide Quick Read" aria-pressed="true" class="inline-flex h-10 items-center gap-2 rounded-xl border border-blue-500/40 bg-blue-500/10 px-3 text-xs font-semibold text-blue-200 transition-colors hover:border-blue-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                        <i class="fa-solid fa-chart-simple text-xs"></i>
+                        <span class="hidden sm:inline">Quick Read</span>
+                    </button>
+                    <button id="three-map-scale-toggle" type="button" aria-label="Hide Scale" title="Hide Scale" aria-pressed="true" class="inline-flex h-10 items-center gap-2 rounded-xl border border-blue-500/40 bg-blue-500/10 px-3 text-xs font-semibold text-blue-200 transition-colors hover:border-blue-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                        <i class="fa-solid fa-ruler-combined text-xs"></i>
+                        <span class="hidden sm:inline">Scale</span>
+                    </button>
+                    <button id="three-map-selected-toggle" type="button" aria-label="Hide Selected IPO" title="Hide Selected IPO" aria-pressed="true" class="inline-flex h-10 items-center gap-2 rounded-xl border border-blue-500/40 bg-blue-500/10 px-3 text-xs font-semibold text-blue-200 transition-colors hover:border-blue-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                        <i class="fa-solid fa-circle-info text-xs"></i>
+                        <span class="hidden sm:inline">Selected</span>
+                    </button>
+                    <button id="three-map-close" type="button" aria-label="Close 3D IPO map" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-zinc-700 bg-zinc-900 text-zinc-300 transition-colors hover:border-blue-500/60 hover:text-blue-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="three-map-stage" class="relative min-h-0 flex-1 overflow-hidden bg-zinc-950">
+                <div id="three-map-summary-panel" class="pointer-events-none absolute left-4 top-4 z-10 max-w-[calc(100%-2rem)] rounded-2xl border border-zinc-800/80 bg-zinc-950/80 px-4 py-3 backdrop-blur-md sm:max-w-3xl">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div id="three-map-summary" class="text-xs font-semibold text-zinc-300">-</div>
+                    </div>
+                    <div id="three-map-mobile-insights" class="mt-2 grid grid-cols-2 gap-2 text-[11px] xl:hidden"></div>
+                </div>
+                <div id="three-map-symbol-strip" class="absolute left-4 right-4 top-4 z-20 hidden overflow-visible rounded-xl border border-zinc-800/80 bg-zinc-950/78 p-2 text-[10px] backdrop-blur-md xl:right-[24rem]" aria-label="Select IPO line"></div>
+                <div id="three-map-insights" class="pointer-events-none absolute right-4 top-4 z-10 hidden w-[17rem] max-w-[calc(100%-2rem)] rounded-xl border border-zinc-800/80 bg-zinc-950/85 p-3 backdrop-blur-md xl:block"></div>
+                <div id="three-map-scale" class="pointer-events-none absolute bottom-4 right-4 z-10 hidden w-[12rem] rounded-xl border border-zinc-800/80 bg-zinc-950/80 p-3 text-[11px] backdrop-blur-md md:block">
+                    <div class="section-header text-zinc-500">Return scale</div>
+                    <div class="mt-3 space-y-2 text-zinc-400">
+                        <div class="flex items-center justify-between gap-3"><span>High grid</span><span id="three-map-scale-high" class="font-semibold text-emerald-400">-</span></div>
+                        <div class="flex items-center justify-between gap-3"><span>First open</span><span class="font-semibold text-blue-300">0%</span></div>
+                        <div class="flex items-center justify-between gap-3"><span>Low grid</span><span id="three-map-scale-low" class="font-semibold text-orange-400">-</span></div>
+                    </div>
+                    <div class="mt-3 grid grid-cols-2 gap-2 text-[11px]">
+                        <div class="rounded-lg border border-emerald-500/25 bg-emerald-500/10 px-2 py-1 text-emerald-300">Close above open</div>
+                        <div class="rounded-lg border border-orange-500/25 bg-orange-500/10 px-2 py-1 text-orange-300">Close below open</div>
+                    </div>
+                </div>
+                <div id="three-map-hover" class="pointer-events-none absolute bottom-4 left-4 z-10 w-[min(19rem,calc(100%-2rem))] rounded-xl border border-zinc-800/80 bg-zinc-950/85 p-3 backdrop-blur-md">
+                    <div class="section-header text-zinc-500">Selected IPO</div>
+                    <div class="mt-1 text-sm text-zinc-400">-</div>
+                </div>
+                <div id="three-map-empty" class="pointer-events-none absolute inset-0 z-10 grid hidden place-items-center text-center text-sm text-zinc-400">
+                    <div class="rounded-2xl border border-zinc-800 bg-zinc-950/85 px-5 py-4 backdrop-blur-md">No exact 5-minute charts are available in this view.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-27-extended-alpaca';
         ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js'].forEach(src => {
@@ -187,10 +311,12 @@
         let searchTerm = '';
         let capFilterMode = ipoAnalysis?.defaultFilter || 'gt25';
         let tradingPlaceFilterMode = ipoAnalysis?.defaultTradingPlaceFilter || 'all';
+        let upcomingIpoScopeMode = 'all';
         const extendedChartTickers = new Set();
         let imageModalTrigger = null;
         let chartModalTrigger = null;
         let chartModalTicker = null;
+        let upcomingIpoModalTrigger = null;
         let activeChartHoverItem = null;
 
         const CAP_FILTERS = [
@@ -218,6 +344,18 @@
         const HALF_HOUR_MINUTES = 30;
         const LOW_MARKER_MIN_GAP_MINUTES = 60;
         const TIME_ZONE_FORMATTERS = {};
+        const UPCOMING_IPO_SOURCE_URL = 'https://stockanalysis.com/ipos/calendar/';
+        const UPCOMING_IPO_FETCH_URL = `https://r.jina.ai/http://${UPCOMING_IPO_SOURCE_URL}`;
+        const UPCOMING_IPO_CACHE_KEY = 'ipo-upcoming-calendar-v1';
+        const UPCOMING_IPO_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+        let upcomingIpos = [];
+        let upcomingIpoCacheMeta = {
+            state: 'loading',
+            fetchedAt: null,
+            lastAttemptAt: null,
+            error: '',
+            stale: false
+        };
 
         function timeToMinutes(time) {
             if (!time) return null;
@@ -265,6 +403,388 @@
 
         function fmtWholePct(value) {
             return Number.isFinite(value) ? `${Math.round(value)}%` : '—';
+        }
+
+        function decodeHtmlEntities(value) {
+            const textarea = document.createElement('textarea');
+            textarea.innerHTML = String(value || '');
+            return textarea.value;
+        }
+
+        function markdownCellText(value) {
+            return decodeHtmlEntities(String(value || '')
+                .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+                .replace(/<[^>]*>/g, '')
+                .replace(/\\\|/g, '|')
+                .replace(/\s+/g, ' ')
+                .trim());
+        }
+
+        function cleanUpcomingCell(value) {
+            const text = markdownCellText(value);
+            return text === '-' ? '' : text;
+        }
+
+        function markdownLinkHref(value) {
+            const match = String(value || '').match(/\[[^\]]+\]\(([^)]+)\)/);
+            if (!match) return '';
+            try {
+                return new URL(match[1], UPCOMING_IPO_SOURCE_URL).href;
+            } catch {
+                return '';
+            }
+        }
+
+        function splitMarkdownTableLine(line) {
+            return String(line || '')
+                .replace(/^\|/, '')
+                .replace(/\|$/, '')
+                .split('|')
+                .map(cell => cell.trim());
+        }
+
+        function parseUpcomingMagnitude(value) {
+            const text = cleanUpcomingCell(value).replace(/[$,\s]/g, '');
+            if (!text) return null;
+            const match = text.match(/^(-?\d+(?:\.\d+)?)([KMBT])?$/i);
+            if (!match) return null;
+            return {
+                value: Number(match[1]),
+                unit: (match[2] || '').toUpperCase()
+            };
+        }
+
+        function parseUpcomingMoneyToBillions(value) {
+            const parsed = parseUpcomingMagnitude(value);
+            if (!parsed || !Number.isFinite(parsed.value)) return null;
+            if (parsed.unit === 'T') return parsed.value * 1000;
+            if (parsed.unit === 'B') return parsed.value;
+            if (parsed.unit === 'M') return parsed.value / 1000;
+            if (parsed.unit === 'K') return parsed.value / 1000000;
+            return parsed.value >= 1000000 ? parsed.value / 1000000000 : parsed.value;
+        }
+
+        function parseUpcomingMoneyToMillions(value) {
+            const parsed = parseUpcomingMagnitude(value);
+            if (!parsed || !Number.isFinite(parsed.value)) return null;
+            if (parsed.unit === 'T') return parsed.value * 1000000;
+            if (parsed.unit === 'B') return parsed.value * 1000;
+            if (parsed.unit === 'M') return parsed.value;
+            if (parsed.unit === 'K') return parsed.value / 1000;
+            return parsed.value >= 100000 ? parsed.value / 1000000 : parsed.value;
+        }
+
+        const UPCOMING_IPO_MONTHS = {
+            jan: 0, january: 0,
+            feb: 1, february: 1,
+            mar: 2, march: 2,
+            apr: 3, april: 3,
+            may: 4,
+            jun: 5, june: 5,
+            jul: 6, july: 6,
+            aug: 7, august: 7,
+            sep: 8, sept: 8, september: 8,
+            oct: 9, october: 9,
+            nov: 10, november: 10,
+            dec: 11, december: 11
+        };
+
+        function parseUpcomingIpoDate(value) {
+            const label = cleanUpcomingCell(value).replace(',', '');
+            const parts = label.split(/\s+/);
+            if (parts.length < 3) return null;
+            const month = UPCOMING_IPO_MONTHS[parts[0].toLowerCase()];
+            const day = Number(parts[1]);
+            const year = Number(parts[2]);
+            if (!Number.isInteger(month) || !Number.isInteger(day) || !Number.isInteger(year)) return null;
+            const timestamp = Date.UTC(year, month, day);
+            if (!Number.isFinite(timestamp)) return null;
+            return {
+                label: cleanUpcomingCell(value),
+                timestamp,
+                iso: new Date(timestamp).toISOString().slice(0, 10)
+            };
+        }
+
+        function parseUpcomingIpoMarkdown(markdown) {
+            const rows = [];
+            const seen = new Set();
+            String(markdown || '').split('\n').forEach(rawLine => {
+                const line = rawLine.trim();
+                if (!line.startsWith('|')) return;
+                const cells = splitMarkdownTableLine(line);
+                if (cells.length < 9) return;
+                const firstCell = markdownCellText(cells[0]);
+                if (/^IPO Date$/i.test(firstCell) || /^-+$/.test(firstCell.replace(/\s/g, ''))) return;
+                const parsedDate = parseUpcomingIpoDate(cells[0]);
+                if (!parsedDate) return;
+                const ticker = cleanUpcomingCell(cells[1]).toUpperCase();
+                const company = cleanUpcomingCell(cells[2]);
+                const exchange = cleanUpcomingCell(cells[3]).toUpperCase();
+                if (!ticker && !company) return;
+                const key = `${parsedDate.iso}:${ticker}:${company.toLowerCase()}`;
+                if (seen.has(key)) return;
+                seen.add(key);
+                const priceRange = cleanUpcomingCell(cells[4]);
+                const sharesOffered = cleanUpcomingCell(cells[5]);
+                const dealSize = cleanUpcomingCell(cells[6]);
+                const marketCap = cleanUpcomingCell(cells[7]);
+                const revenue = cleanUpcomingCell(cells[8]);
+                rows.push({
+                    date: parsedDate.iso,
+                    dateTs: parsedDate.timestamp,
+                    dateLabel: parsedDate.label,
+                    ticker,
+                    company,
+                    exchange,
+                    priceRange,
+                    sharesOffered,
+                    dealSize,
+                    dealSizeM: parseUpcomingMoneyToMillions(dealSize),
+                    marketCap,
+                    marketCapB: parseUpcomingMoneyToBillions(marketCap),
+                    revenue,
+                    sourceUrl: markdownLinkHref(cells[1])
+                });
+            });
+            return rows.sort((a, b) => a.date.localeCompare(b.date) || (b.marketCapB || -1) - (a.marketCapB || -1));
+        }
+
+        function todayUtcDateStamp() {
+            const now = new Date();
+            return Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+        }
+
+        function addMonthsToUtcStamp(timestamp, months) {
+            const date = new Date(timestamp);
+            return Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + months, date.getUTCDate());
+        }
+
+        function upcomingIpoInWindow(ipo) {
+            const start = todayUtcDateStamp();
+            const end = addMonthsToUtcStamp(start, 12);
+            return Number.isFinite(ipo.dateTs) && ipo.dateTs >= start && ipo.dateTs <= end;
+        }
+
+        function readUpcomingIpoCache() {
+            try {
+                const raw = localStorage.getItem(UPCOMING_IPO_CACHE_KEY);
+                if (!raw) return null;
+                const cache = JSON.parse(raw);
+                if (!cache || cache.version !== 1 || !Array.isArray(cache.items)) return null;
+                return cache;
+            } catch {
+                return null;
+            }
+        }
+
+        function writeUpcomingIpoCache(cache) {
+            try {
+                localStorage.setItem(UPCOMING_IPO_CACHE_KEY, JSON.stringify(cache));
+            } catch {
+                // localStorage can be unavailable in private contexts; the table still works for this load.
+            }
+        }
+
+        function applyUpcomingIpoCache(cache, options = {}) {
+            upcomingIpos = Array.isArray(cache?.items) ? cache.items : [];
+            upcomingIpoCacheMeta = {
+                state: options.state || (cache?.error && !upcomingIpos.length ? 'error' : 'ready'),
+                fetchedAt: cache?.fetchedAt || null,
+                lastAttemptAt: cache?.lastAttemptAt || cache?.fetchedAt || null,
+                error: cache?.error || '',
+                stale: Boolean(options.stale)
+            };
+        }
+
+        async function refreshUpcomingIpos(previousCache = null) {
+            const attemptedAt = Date.now();
+            try {
+                const response = await fetch(UPCOMING_IPO_FETCH_URL, { mode: 'cors', cache: 'no-store' });
+                if (!response.ok) throw new Error(`Calendar request failed (${response.status})`);
+                const markdown = await response.text();
+                const items = parseUpcomingIpoMarkdown(markdown);
+                const cache = {
+                    version: 1,
+                    sourceUrl: UPCOMING_IPO_SOURCE_URL,
+                    fetchUrl: UPCOMING_IPO_FETCH_URL,
+                    fetchedAt: attemptedAt,
+                    lastAttemptAt: attemptedAt,
+                    error: '',
+                    items
+                };
+                writeUpcomingIpoCache(cache);
+                applyUpcomingIpoCache(cache);
+            } catch (error) {
+                const cache = {
+                    version: 1,
+                    sourceUrl: UPCOMING_IPO_SOURCE_URL,
+                    fetchUrl: UPCOMING_IPO_FETCH_URL,
+                    fetchedAt: previousCache?.fetchedAt || null,
+                    lastAttemptAt: attemptedAt,
+                    errorAt: attemptedAt,
+                    error: error?.message || 'Calendar request failed',
+                    items: Array.isArray(previousCache?.items) ? previousCache.items : upcomingIpos
+                };
+                writeUpcomingIpoCache(cache);
+                applyUpcomingIpoCache(cache, {
+                    state: cache.items.length ? 'ready' : 'error',
+                    stale: cache.items.length > 0
+                });
+            }
+            renderUpcomingIpos();
+        }
+
+        function initUpcomingIpos() {
+            const cache = readUpcomingIpoCache();
+            const now = Date.now();
+            const lastAttemptAt = cache?.lastAttemptAt || cache?.fetchedAt || 0;
+            const cacheIsFresh = Boolean(cache && now - lastAttemptAt < UPCOMING_IPO_CACHE_TTL_MS);
+            if (cache) {
+                applyUpcomingIpoCache(cache, { stale: !cacheIsFresh });
+                renderUpcomingIpos();
+            }
+            if (cacheIsFresh) return;
+            if (cache?.items?.length) {
+                applyUpcomingIpoCache(cache, { state: 'loading', stale: true });
+            } else {
+                upcomingIpoCacheMeta = {
+                    state: 'loading',
+                    fetchedAt: null,
+                    lastAttemptAt: null,
+                    error: '',
+                    stale: false
+                };
+            }
+            renderUpcomingIpos();
+            refreshUpcomingIpos(cache);
+        }
+
+        function upcomingIpoCacheAgeText(timestamp) {
+            if (!timestamp) return '';
+            const date = new Date(timestamp);
+            if (!Number.isFinite(date.getTime())) return '';
+            return date.toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function upcomingIpoWindowRows() {
+            return upcomingIpos.filter(upcomingIpoInWindow);
+        }
+
+        function visibleUpcomingIpos() {
+            const rows = upcomingIpoWindowRows();
+            return (upcomingIpoScopeMode === 'cap'
+                ? rows.filter(ipo => capFilterMatches({ marketCap: ipo.marketCapB }))
+                : rows
+            ).sort((a, b) => a.date.localeCompare(b.date) || (b.marketCapB || -1) - (a.marketCapB || -1));
+        }
+
+        function setUpcomingIpoScopeState() {
+            document.querySelectorAll('button[data-upcoming-ipo-scope]').forEach(button => {
+                const selected = button.dataset.upcomingIpoScope === upcomingIpoScopeMode;
+                button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+                button.classList.toggle('bg-emerald-600', selected);
+                button.classList.toggle('text-white', selected);
+                button.classList.toggle('text-zinc-400', !selected);
+                button.classList.toggle('hover:text-zinc-200', !selected);
+            });
+        }
+
+        function upcomingDisplayValue(value) {
+            return value ? escapeHtml(value) : '<span class="text-zinc-600">—</span>';
+        }
+
+        function upcomingIpoRowHtml(ipo) {
+            const sourceUrl = ipo.sourceUrl || `${UPCOMING_IPO_SOURCE_URL}`;
+            const ticker = ipo.ticker || '—';
+            const tickerHtml = ipo.ticker
+                ? `<a class="font-mono text-blue-300 hover:text-blue-200" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(ticker)}</a>`
+                : '<span class="font-mono text-zinc-500">—</span>';
+            return `<tr class="border-t border-zinc-800/80 align-top">
+                <td class="whitespace-nowrap px-4 py-3 text-zinc-300">${escapeHtml(ipo.dateLabel || ipo.date)}</td>
+                <td class="whitespace-nowrap px-4 py-3">${tickerHtml}</td>
+                <td class="min-w-[15rem] px-4 py-3">
+                    <div class="font-semibold text-zinc-200">${escapeHtml(ipo.company || 'Unknown company')}</div>
+                </td>
+                <td class="whitespace-nowrap px-4 py-3 text-zinc-400">${upcomingDisplayValue(ipo.exchange)}</td>
+                <td class="whitespace-nowrap px-4 py-3 text-zinc-300">${upcomingDisplayValue(ipo.priceRange)}</td>
+                <td class="whitespace-nowrap px-4 py-3 text-zinc-400">${upcomingDisplayValue(ipo.sharesOffered)}</td>
+                <td class="whitespace-nowrap px-4 py-3 text-zinc-300">${upcomingDisplayValue(ipo.dealSize)}</td>
+                <td class="whitespace-nowrap px-4 py-3 text-zinc-300">${upcomingDisplayValue(ipo.marketCap)}</td>
+                <td class="whitespace-nowrap px-4 py-3 text-zinc-400">${upcomingDisplayValue(ipo.revenue)}</td>
+            </tr>`;
+        }
+
+        function renderUpcomingIpos() {
+            const tableMount = document.getElementById('upcoming-ipo-table');
+            const statusMount = document.getElementById('upcoming-ipo-status');
+            if (!tableMount || !statusMount) return;
+            const rowsInWindow = upcomingIpoWindowRows();
+            const visibleRows = visibleUpcomingIpos();
+            const capLabel = CAP_FILTERS.find(filter => filter.id === capFilterMode)?.label || '*';
+            const scopeLabel = upcomingIpoScopeMode === 'all'
+                ? 'all caps'
+                : capFilterMode === 'all'
+                    ? 'cap filter: all caps'
+                    : `${capLabel} cap filter`;
+            const fetchedLabel = upcomingIpoCacheAgeText(upcomingIpoCacheMeta.fetchedAt);
+            const sourceLink = `<a class="text-zinc-400 underline decoration-zinc-700 underline-offset-4 hover:text-zinc-200" href="${UPCOMING_IPO_SOURCE_URL}" target="_blank" rel="noopener noreferrer">StockAnalysis</a>`;
+            setUpcomingIpoScopeState();
+            if (upcomingIpoCacheMeta.state === 'loading' && !upcomingIpos.length) {
+                statusMount.innerHTML = `Loading from ${sourceLink}...`;
+                tableMount.innerHTML = `<div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 text-sm text-zinc-400">Loading upcoming IPO calendar...</div>`;
+                return;
+            }
+            if (upcomingIpoCacheMeta.state === 'error' && !upcomingIpos.length) {
+                statusMount.innerHTML = `Calendar unavailable; retry cached for 24h.`;
+                tableMount.innerHTML = `<div class="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-5 text-sm leading-6 text-amber-100">Upcoming IPO data could not be loaded from the cached daily calendar request.</div>`;
+                return;
+            }
+            const statusParts = [
+                `${visibleRows.length} shown`,
+                `${rowsInWindow.length} known in next 12 months`,
+                scopeLabel,
+                fetchedLabel ? `cached ${fetchedLabel}` : '',
+                upcomingIpoCacheMeta.state === 'loading' ? 'refreshing' : '',
+                upcomingIpoCacheMeta.stale ? 'stale fallback' : ''
+            ].filter(Boolean);
+            statusMount.innerHTML = `${statusParts.join(' · ')} · Source: ${sourceLink}`;
+            if (!rowsInWindow.length) {
+                tableMount.innerHTML = `<div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 text-sm text-zinc-400">No known upcoming IPOs with calendar dates are available for the next 12 months.</div>`;
+                return;
+            }
+            if (!visibleRows.length) {
+                tableMount.innerHTML = `<div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 text-sm text-zinc-400">No upcoming IPOs match the active cap filter. Switch to All to show every known upcoming listing.</div>`;
+                return;
+            }
+            tableMount.innerHTML = `
+                <div class="mb-3 flex flex-wrap items-center gap-2 text-xs text-zinc-500">
+                    <span class="rounded-full border border-zinc-800 bg-zinc-950 px-3 py-1 font-semibold text-zinc-400">Info only</span>
+                    <span>Excluded from timing samples, odds, charts, and card calculations.</span>
+                </div>
+                <div class="overflow-x-auto rounded-2xl border border-zinc-800 bg-zinc-950">
+                    <table class="min-w-full text-left text-sm">
+                        <thead class="bg-zinc-900/80 text-xs uppercase text-zinc-500">
+                            <tr>
+                                <th class="whitespace-nowrap px-4 py-3 font-semibold">IPO Date</th>
+                                <th class="whitespace-nowrap px-4 py-3 font-semibold">Symbol</th>
+                                <th class="min-w-[15rem] px-4 py-3 font-semibold">Company</th>
+                                <th class="whitespace-nowrap px-4 py-3 font-semibold">Exchange</th>
+                                <th class="whitespace-nowrap px-4 py-3 font-semibold">Price Range</th>
+                                <th class="whitespace-nowrap px-4 py-3 font-semibold">Shares</th>
+                                <th class="whitespace-nowrap px-4 py-3 font-semibold">Deal</th>
+                                <th class="whitespace-nowrap px-4 py-3 font-semibold">Market Cap</th>
+                                <th class="whitespace-nowrap px-4 py-3 font-semibold">Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>${visibleRows.map(upcomingIpoRowHtml).join('')}</tbody>
+                    </table>
+                </div>`;
         }
 
         function timeZoneFormatter(timeZone, includeDate = true) {
@@ -2526,6 +3046,12 @@
                                 <div class="section-header text-blue-400">IPO buying decision dashboard</div>
                                 <h2 class="font-display text-3xl sm:text-4xl mt-1">How patient should the first order be?</h2>
                                 <p class="text-zinc-400 mt-2 leading-7">For ${escapeHtml(analysisLabel)} since ${analysis.cutoffDate}, the median first-day low appeared ${formatElapsedPlain(analysis.medianDeltaMinutes)} after the first public trade, around ${medianClockLabel}. The dashboard below turns those first-day charts into wait-time odds for pacing an entry.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    <button type="button" data-three-map-open aria-label="Open 3D IPO path map" class="inline-flex h-11 items-center gap-2 rounded-2xl border border-blue-500/40 bg-blue-600 px-4 text-sm font-semibold text-white transition-colors hover:border-blue-300 hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                                        <i class="fa-solid fa-cubes text-xs"></i>
+                                        <span>3D Map</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="grid sm:grid-cols-2 gap-3">
@@ -2804,6 +3330,20 @@
             }
         }
 
+        function setUpcomingIpoModal(open) {
+            const modal = document.getElementById('upcoming-ipo-modal');
+            const close = document.getElementById('upcoming-ipo-close');
+            if (!modal) return;
+            modal.classList.toggle('hidden', !open);
+            document.body.classList.toggle('overflow-hidden', open);
+            if (open) {
+                renderUpcomingIpos();
+                close?.focus();
+            } else {
+                upcomingIpoModalTrigger?.focus();
+            }
+        }
+
         function chartHoverItemFromEvent(event) {
             return event.target?.closest?.('.chart-hover-hit')?.closest?.('.chart-hover-item') || null;
         }
@@ -2849,6 +3389,12 @@
             chartModalTrigger = trigger;
             setChartModal(true, trigger.dataset.chartEnlarge);
         });
+        document.addEventListener('click', event => {
+            const trigger = event.target.closest('button[data-upcoming-ipo-open]');
+            if (!trigger) return;
+            upcomingIpoModalTrigger = trigger;
+            setUpcomingIpoModal(true);
+        });
         document.getElementById('image-modal-close')?.addEventListener('click', () => setImageModal(false));
         document.getElementById('image-modal-image')?.addEventListener('click', () => setImageModal(false));
         document.getElementById('image-modal')?.addEventListener('click', event => {
@@ -2858,12 +3404,27 @@
         document.getElementById('chart-modal')?.addEventListener('click', event => {
             if (event.target.id === 'chart-modal') setChartModal(false);
         });
+        document.getElementById('upcoming-ipo-close')?.addEventListener('click', () => setUpcomingIpoModal(false));
+        document.getElementById('upcoming-ipo-modal')?.addEventListener('click', event => {
+            if (event.target.id === 'upcoming-ipo-modal') setUpcomingIpoModal(false);
+        });
+        document.getElementById('upcoming-ipo-view-filter')?.addEventListener('click', event => {
+            const button = event.target.closest('button[data-upcoming-ipo-scope]');
+            if (!button) return;
+            const nextScope = button.dataset.upcomingIpoScope;
+            if (!['cap', 'all'].includes(nextScope)) return;
+            upcomingIpoScopeMode = nextScope;
+            renderUpcomingIpos();
+        });
         document.addEventListener('keydown', event => {
             if (event.key === 'Escape' && !document.getElementById('image-modal')?.classList.contains('hidden')) {
                 setImageModal(false);
             }
             if (event.key === 'Escape' && !document.getElementById('chart-modal')?.classList.contains('hidden')) {
                 setChartModal(false);
+            }
+            if (event.key === 'Escape' && !document.getElementById('upcoming-ipo-modal')?.classList.contains('hidden')) {
+                setUpcomingIpoModal(false);
             }
         });
 
@@ -2886,6 +3447,7 @@
             capFilterMode = nextMode;
             setCapFilterState();
             renderAnalysis();
+            renderUpcomingIpos();
             renderCards();
         });
 
@@ -2922,13 +3484,34 @@
             renderCards();
         });
 
+        window.ipoThreeSceneApi = {
+            getVisibleIpos: () => visibleIpos(),
+            getChartData: (ticker, includeExtended = false) => {
+                const ipo = findIpoByTicker(ticker);
+                return ipo ? chartData(ipo, includeExtended) : [];
+            },
+            hasExtendedChartData: ticker => {
+                const ipo = findIpoByTicker(ticker);
+                return ipo ? hasExtendedChartData(ipo) : false;
+            },
+            getCurrentAnalysis: () => currentAnalysis(),
+            getCurrentAnalysisLabel: () => currentAnalysisLabel(currentAnalysis())
+        };
+
         setSortToggleState();
         setCapFilterState();
         setTradingPlaceFilterState();
         setChartModeToggleState();
         document.getElementById('copyright-year').textContent = new Date().getFullYear();
         renderAnalysis();
+        initUpcomingIpos();
         renderCards();
+    </script>
+    <script>
+        const ipoThreeScript = document.createElement('script');
+        ipoThreeScript.type = 'module';
+        ipoThreeScript.src = `three-ipo-view.js?v=${encodeURIComponent(IPO_ASSET_VERSION)}`;
+        document.body.appendChild(ipoThreeScript);
     </script>
 </body>
 </html>
