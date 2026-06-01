@@ -22,6 +22,12 @@
         .chart-hover-item.is-active .chart-hover-data { opacity: 1; }
         .scrollbar-hidden { scrollbar-width: none; -ms-overflow-style: none; }
         .scrollbar-hidden::-webkit-scrollbar { display: none; }
+        .dark-scrollbar { scrollbar-color: #3f3f46 #09090b; scrollbar-width: thin; }
+        .dark-scrollbar::-webkit-scrollbar { width: 10px; height: 10px; }
+        .dark-scrollbar::-webkit-scrollbar-track { background: #09090b; border-radius: 999px; }
+        .dark-scrollbar::-webkit-scrollbar-thumb { background: #3f3f46; border: 2px solid #09090b; border-radius: 999px; }
+        .dark-scrollbar::-webkit-scrollbar-thumb:hover { background: #52525b; }
+        .dark-scrollbar::-webkit-scrollbar-corner { background: #09090b; }
     </style>
 </head>
 <body id="top" class="bg-zinc-950 text-zinc-200">
@@ -232,7 +238,7 @@
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
-            <div id="entry-symbol-table" class="min-h-0 flex-1 overflow-auto rounded-2xl border border-zinc-800 bg-zinc-900 p-3 sm:p-4"></div>
+            <div id="entry-symbol-table" class="dark-scrollbar min-h-0 flex-1 overflow-auto rounded-2xl border border-zinc-800 bg-zinc-900 p-3 sm:p-4"></div>
         </div>
     </div>
 
@@ -4289,7 +4295,7 @@
             if (!symbolRows.length) return '';
             const columns = entryScenarioBySymbolColumns(symbolRows);
             if (!columns.length) return '';
-            return `<div class="overflow-auto rounded-xl border border-zinc-800" data-entry-scenario-by-symbol>
+            return `<div class="dark-scrollbar overflow-auto rounded-xl border border-zinc-800" data-entry-scenario-by-symbol>
                 <table class="w-full min-w-[58rem] table-fixed border-separate border-spacing-0 text-xs">
                     <thead>
                         <tr>
