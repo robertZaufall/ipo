@@ -4412,6 +4412,8 @@
         function cardEntryScenarioTable(ipo, data) {
             const rows = cardEntryScenarioRows(ipo, data);
             if (!rows.length) return '';
+            const quoteUrl = escapeHtml(yahooFinanceUrl(ipo.ticker));
+            const tickerLabel = escapeHtml(ipo.ticker);
             const metricRows = [
                 ['Vs End D1', 'vsEndD1', endpointTone],
                 ['Gap to median', 'medianGap', gapTone],
@@ -4420,8 +4422,11 @@
                 ['Vs Current', 'vsCurrent', endpointTone]
             ];
             return `<div class="mt-3 rounded-2xl border border-zinc-800 bg-zinc-950 p-3 sm:p-4">
-                <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-1.5">
-                    <div class="section-header text-blue-400">Entry scenarios</div>
+                <div class="flex flex-col gap-1.5 lg:flex-row lg:items-end lg:justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="section-header whitespace-nowrap text-blue-400">Entry scenarios</div>
+                        <a class="inline-flex h-6 shrink-0 items-center gap-1 rounded-full border border-blue-500/40 bg-blue-500/10 px-2.5 font-mono text-[11px] font-semibold text-blue-200 transition-colors hover:border-blue-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400" href="${quoteUrl}" target="_blank" rel="noopener noreferrer" title="Open ${tickerLabel} on Yahoo Finance" aria-label="Open ${tickerLabel} on Yahoo Finance">${tickerLabel}<span aria-hidden="true">&#8599;</span></a>
+                    </div>
                     <div class="text-xs leading-5 text-zinc-500">Each entry is compared with End D1, the active median entry, the absolute low across available Day 1/Ext/D2 candles, End D2, and Current.</div>
                 </div>
                 <div class="mt-3 overflow-x-auto rounded-xl border border-zinc-800" data-entry-scenario-table="${escapeHtml(ipo.ticker)}">
