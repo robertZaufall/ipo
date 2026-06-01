@@ -357,6 +357,7 @@
         let upcomingIpoModalTrigger = null;
         let entrySymbolModalTrigger = null;
         let activeChartHoverItem = null;
+        let entrySymbolSort = { key: 'ticker', direction: 'asc' };
 
         const CAP_FILTERS = [
             { id: 'under10', label: '<$10B', buttonId: 'cap-under10' },
@@ -375,6 +376,7 @@
         const fmtCap = b => b == null || !isFinite(b) ? '—' : b >= 1000 ? '$' + (b / 1000).toFixed(2) + 'T' : '$' + b.toFixed(b >= 10 ? 1 : 2) + 'B';
         const fmtDeal = m => m == null || !isFinite(m) ? '—' : m >= 1000 ? '$' + (m / 1000).toFixed(2) + 'B' : '$' + Math.round(m) + 'M';
         const fmtPct = v => v == null || !isFinite(v) ? '—' : (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
+        const fmtRoundedPct = v => v == null || !isFinite(v) ? '—' : (v >= 0 ? '+' : '') + Math.round(v).toLocaleString('en-US') + '%';
         const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         const MARKET_OPEN_MINUTES = 9 * 60 + 30;
         const MARKET_CLOSE_MINUTES = 16 * 60;
@@ -4262,6 +4264,8 @@
                     return {
                         ipo,
                         ticker: normalizedTicker(ipo.ticker),
+                        year: Number.parseInt(String(ipo.date || '').slice(0, 4), 10),
+                        marketCap: Number(ipo.marketCap),
                         rows,
                         byId: new Map(rows.map(row => [row.id, row]))
                     };
@@ -4287,23 +4291,71 @@
         function entryScenarioBySymbolValue(row) {
             const value = Number(row?.vsCurrent);
             if (!Number.isFinite(value)) return '<span class="font-mono text-xs font-semibold text-zinc-500">-</span>';
-            return `<span class="font-mono text-xs font-semibold ${endpointTone(value)}">${fmtPct(value)}</span>`;
+            return `<span class="font-mono text-xs font-semibold ${endpointTone(value)}">${fmtRoundedPct(value)}</span>`;
+        }
+
+        function entrySymbolSortValue(symbolRow, key) {
+            if (key === 'ticker') return symbolRow.ticker;
+            if (key === 'year') return Number(symbolRow.year);
+            if (key === 'cap') return Number(symbolRow.marketCap);
+            const scenarioId = String(key || '').replace(/^scenario:/, '');
+            return Number(symbolRow.byId.get(scenarioId)?.vsCurrent);
+        }
+
+        function sortedEntryScenarioBySymbolRows(analysis) {
+            const rows = entryScenarioBySymbolRows(analysis);
+            const key = entrySymbolSort?.key || 'ticker';
+            const direction = entrySymbolSort?.direction === 'desc' ? 'desc' : 'asc';
+            const sign = direction === 'asc' ? 1 : -1;
+            return rows.sort((a, b) => {
+                const aValue = entrySymbolSortValue(a, key);
+                const bValue = entrySymbolSortValue(b, key);
+                const aFinite = Number.isFinite(Number(aValue));
+                const bFinite = Number.isFinite(Number(bValue));
+                if (typeof aValue === 'string' || typeof bValue === 'string') {
+                    const result = String(aValue || '').localeCompare(String(bValue || ''));
+                    return result ? result * sign : a.ticker.localeCompare(b.ticker);
+                }
+                if (!aFinite && !bFinite) return a.ticker.localeCompare(b.ticker);
+                if (!aFinite) return 1;
+                if (!bFinite) return -1;
+                const result = Number(aValue) - Number(bValue);
+                return result ? result * sign : a.ticker.localeCompare(b.ticker);
+            });
+        }
+
+        function entrySymbolSortButton(label, key, align = 'center') {
+            const active = entrySymbolSort?.key === key;
+            const nextDirection = active && entrySymbolSort.direction === 'asc' ? 'desc' : 'asc';
+            const icon = active ? (entrySymbolSort.direction === 'asc' ? '&#8593;' : '&#8595;') : '&#8597;';
+            const justify = align === 'left' ? 'justify-start' : 'justify-center';
+            return `<button type="button" data-entry-symbol-sort="${escapeHtml(key)}" aria-label="Sort by ${escapeHtml(label)}" aria-sort="${active ? (entrySymbolSort.direction === 'asc' ? 'ascending' : 'descending') : 'none'}" data-next-direction="${nextDirection}" class="inline-flex w-full items-center ${justify} gap-1 whitespace-nowrap text-[10px] font-semibold uppercase leading-none text-zinc-200 transition-colors hover:text-blue-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                <span>${escapeHtml(label)}</span>
+                <span class="font-mono text-[10px] text-blue-300">${icon}</span>
+            </button>`;
         }
 
         function entryScenarioBySymbolTable(analysis) {
-            const symbolRows = entryScenarioBySymbolRows(analysis);
+            const symbolRows = sortedEntryScenarioBySymbolRows(analysis);
             if (!symbolRows.length) return '';
             const columns = entryScenarioBySymbolColumns(symbolRows);
             if (!columns.length) return '';
             return `<div class="dark-scrollbar overflow-auto rounded-xl border border-zinc-800" data-entry-scenario-by-symbol>
-                <table class="w-full min-w-[58rem] table-fixed border-separate border-spacing-0 text-xs">
+                <table class="w-full min-w-[64rem] table-fixed border-separate border-spacing-0 text-xs">
                     <thead>
                         <tr>
-                            <th scope="col" class="sticky left-0 top-0 z-30 w-[6.25rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2 py-2 text-left text-[11px] font-semibold uppercase text-zinc-500">Symbol</th>
+                            <th scope="col" rowspan="2" class="sticky left-0 top-0 z-30 w-[6.25rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2 py-2 text-left align-middle">${entrySymbolSortButton('Symbol', 'ticker', 'left')}</th>
+                            <th scope="col" rowspan="2" class="sticky top-0 z-20 w-[4.25rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-1.5 py-2 text-center align-middle">${entrySymbolSortButton('Year', 'year')}</th>
+                            <th scope="col" rowspan="2" class="sticky top-0 z-20 w-[5.75rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-1.5 py-2 text-center align-middle">${entrySymbolSortButton('Cap', 'cap')}</th>
+                            <th scope="col" colspan="${columns.length}" class="sticky top-0 z-20 border border-zinc-800 bg-zinc-950 px-4 py-2 text-left align-middle">
+                                <span class="section-header text-blue-400">Buy at</span>
+                            </th>
+                        </tr>
+                        <tr>
                             ${columns.map(row => {
                                 const label = escapeHtml(String(row.rowLabel || row.shortLabel || row.label).toUpperCase());
-                                return `<th scope="col" title="Buy ${label} · Vs Current" class="sticky top-0 z-20 border border-zinc-800 bg-zinc-900 px-1.5 py-2 text-center align-middle">
-                                    <span class="whitespace-nowrap text-[10px] font-semibold uppercase leading-none text-zinc-200">${label}</span>
+                                return `<th scope="col" title="Buy ${label} · Vs Current" class="sticky top-[2.25rem] z-20 border border-zinc-800 bg-zinc-900 px-1.5 py-2 text-center align-middle">
+                                    ${entrySymbolSortButton(label, `scenario:${row.id}`)}
                                 </th>`;
                             }).join('')}
                         </tr>
@@ -4311,11 +4363,15 @@
                     <tbody>
                         ${symbolRows.map(symbolRow => {
                             const ticker = escapeHtml(symbolRow.ticker);
+                            const companyName = escapeHtml(symbolRow.ipo?.name || symbolRow.ticker);
                             const quoteUrl = escapeHtml(yahooFinanceUrl(symbolRow.ticker));
+                            const year = Number.isFinite(symbolRow.year) ? String(symbolRow.year) : '-';
                             return `<tr>
                                 <th scope="row" class="sticky left-0 z-10 w-[6.25rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2 py-1.5 text-left align-middle">
-                                    <a href="${quoteUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex h-6 items-center gap-1 rounded-full border border-blue-500/40 bg-blue-500/10 px-2 font-mono text-[11px] font-semibold text-blue-200 transition-colors hover:border-blue-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400" title="Open ${ticker} on Yahoo Finance" aria-label="Open ${ticker} on Yahoo Finance">${ticker}<span aria-hidden="true">&#8599;</span></a>
+                                    <a href="${quoteUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex h-6 items-center gap-1 rounded-full border border-blue-500/40 bg-blue-500/10 px-2 font-mono text-[11px] font-semibold text-blue-200 transition-colors hover:border-blue-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400" title="${companyName} · Open ${ticker} on Yahoo Finance" aria-label="Open ${ticker} (${companyName}) on Yahoo Finance">${ticker}<span aria-hidden="true">&#8599;</span></a>
                                 </th>
+                                <td class="border border-zinc-800 bg-zinc-950/70 px-1.5 py-1.5 text-center align-middle font-mono text-xs text-zinc-300">${escapeHtml(year)}</td>
+                                <td class="border border-zinc-800 bg-zinc-950/70 px-1.5 py-1.5 text-center align-middle font-mono text-xs text-zinc-300">${escapeHtml(fmtCap(symbolRow.marketCap))}</td>
                                 ${columns.map(column => `<td class="border border-zinc-800 bg-zinc-950/70 px-1.5 py-1.5 text-center align-middle whitespace-nowrap">${entryScenarioBySymbolValue(symbolRow.byId.get(column.id))}</td>`).join('')}
                             </tr>`;
                         }).join('')}
@@ -4952,19 +5008,25 @@
             }
         }
 
+        function renderEntrySymbolModalTable() {
+            const table = document.getElementById('entry-symbol-table');
+            const status = document.getElementById('entry-symbol-status');
+            if (!table) return;
+            const analysis = currentAnalysis();
+            const symbolRows = analysis ? entryScenarioBySymbolRows(analysis) : [];
+            table.innerHTML = analysis && symbolRows.length
+                ? entryScenarioBySymbolTable(analysis)
+                : '<div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 text-sm text-zinc-400">No symbol-level entry scenario data is available for this filter.</div>';
+            if (status) status.textContent = `${symbolRows.length} symbols · runtime Yahoo current quote`;
+        }
+
         function setEntrySymbolModal(open) {
             const modal = document.getElementById('entry-symbol-modal');
             const table = document.getElementById('entry-symbol-table');
-            const status = document.getElementById('entry-symbol-status');
             const close = document.getElementById('entry-symbol-close');
             if (!modal || !table) return;
             if (open) {
-                const analysis = currentAnalysis();
-                const symbolRows = analysis ? entryScenarioBySymbolRows(analysis) : [];
-                table.innerHTML = analysis && symbolRows.length
-                    ? entryScenarioBySymbolTable(analysis)
-                    : '<div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 text-sm text-zinc-400">No symbol-level entry scenario data is available for this filter.</div>';
-                if (status) status.textContent = `${symbolRows.length} symbols · runtime Yahoo current quote`;
+                renderEntrySymbolModalTable();
             }
             modal.classList.toggle('hidden', !open);
             document.body.classList.toggle('overflow-hidden', open);
@@ -5049,6 +5111,18 @@
         document.getElementById('entry-symbol-close')?.addEventListener('click', () => setEntrySymbolModal(false));
         document.getElementById('entry-symbol-modal')?.addEventListener('click', event => {
             if (event.target.id === 'entry-symbol-modal') setEntrySymbolModal(false);
+        });
+        document.getElementById('entry-symbol-table')?.addEventListener('click', event => {
+            const button = event.target.closest('button[data-entry-symbol-sort]');
+            if (!button) return;
+            const key = button.dataset.entrySymbolSort;
+            if (!key) return;
+            const currentDirection = entrySymbolSort.key === key ? entrySymbolSort.direction : 'asc';
+            entrySymbolSort = {
+                key,
+                direction: currentDirection === 'asc' ? 'desc' : 'asc'
+            };
+            renderEntrySymbolModalTable();
         });
         document.getElementById('upcoming-ipo-view-filter')?.addEventListener('click', event => {
             const button = event.target.closest('button[data-upcoming-ipo-scope]');
