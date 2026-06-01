@@ -17,28 +17,28 @@ Path placeholders in this file are intentional. Substitute them with the matchin
 - Candlestick charts are inline SVG generated in browser JavaScript.
 - The 3D IPO map is a separate browser ES module in `three-ipo-view.js` and imports local Three.js from `vendor/three.module.min.js`. Keep `vendor/three.LICENSE.txt` with that module. Do not replace this with a remote charting or Three.js CDN unless explicitly requested.
 - The top analysis panel is an inline SVG/HTML decision dashboard generated in browser JavaScript from precomputed cap-filtered data in `ipo-analysis.js`.
-- The visible analysis UI starts with a buyer-window summary, key metrics, and a full-width elapsed-time opportunity map; below that it shows two larger distribution charts followed by a full-width `Decision odds` panel, then an entry-scenario comparison for buying at the open, active median timing, 30 minutes, 60 minutes, 2 hours, after-hours end, second-day premarket, and second-day open. The lower metric row includes median/common clock pills plus entry-scenario insight pills such as best day-end, safest entry, closest-to-low, and best extended entry. Do not re-add the removed `Timing signals` panel, checkpoint highlight pill, duplicate `median clock` block in the `Decision odds` header, or a trailing "not a buy signal" note unless explicitly requested.
+- The visible analysis UI starts with a buyer-window summary, decision-oriented KPI cards (`Sample`, `Typical low time`, `Buy bias`, and `Entry plan`), and a full-width elapsed-time opportunity map; below that it shows two larger distribution charts, a `Buy-plan questions` section, then an entry-scenario comparison table. The buy-plan section answers D1/D2 bias, staged buy count, allocation percentages, day-trade/swing suitability, open-chase suitability, dry-powder share, and best single fill. Do not re-add the removed `Timing signals` panel, old `Decision odds` panel, checkpoint highlight pill, duplicate `median clock` block, lower summary-pill row, or a trailing "not a buy signal" note unless explicitly requested.
 - A compact infographic strip above the search row shows the IPO playbook and IPO buy-timing guides as small thumbnails. Both thumbnails open the full-size image modal when clicked.
 - The header `Forthcoming IPOs` button opens a modal IPO-list of known upcoming listings from the StockAnalysis IPO calendar. This list is info-only and must stay excluded from timing samples, odds, charts, card filtering, and generated analysis. It shows the next 12 months of dated listings with date, symbol, company, exchange, price range, shares, deal, market cap, and revenue, plus `All` and active-cap-filter views.
 - The 3D map is opened from the analysis dashboard `3D Map` button. It supports Day 1 and Ext modes, open aligned / open+close / close aligned scaling, Reset View, Flatten Low, and hideable Symbols, Quick Read, Scale, and Selected panels. Automatic rotation is intentionally disabled.
 - The 3D symbol selector is a hideable year-clustered top strip, newest IPO years on the left and oldest on the right. Each year uses two symbol columns when needed, but a single-symbol year should use one visual row. Symbol text color matches the line's up/down tone and does not use a separate bullet.
 - In regular 3D path view, clicking a symbol pill selects it and overlays full candle bodies/wicks for that IPO; clicking the same selected symbol again isolates it into a one-row close-aligned candle view and hides other rows; clicking it again clears the selection and restores all rows. The isolated one-row view must switch to close aligned while active, restore the previous alignment when leaving, remove empty regular-session time before the first real price, normalize the return y-axis to that one IPO, and show linear 5-minute volume bars from the real bar volume field.
 - In Flatten Low view, IPO lows are placed on a flat timing mesh with symbol labels. It should keep IPO open markers in white, show near-low markers from both regular and extended windows when real lows exist, omit fake extended markers when there is no extended-hours low, support open/open+close/close alignment without rotating the camera, show time labels plus IPO-year scale on the front, and draw the selected symbol arrow only after an explicit symbol-pill click.
-- The entry-scenario comparison is calculated in browser JavaScript from the active cap/trading-place filtered exact 5-minute bars. It reports day-end result ranges, loss-contained rates under 5% and 10%, and the opportunity gap to the perfect first-day low entry.
+- The entry-scenario comparison is calculated in browser JavaScript from the active cap/trading-place filtered exact 5-minute bars plus available extended/Day 2 bars. It reports average/min/max comparisons against End D1, median entry, absolute low, End D2, and, on card-local tables, runtime Current.
 - Analysis distribution charts include dynamic median reference lines from the currently active cap and trading-place filter.
 - Main candle charts include a top elapsed-minutes axis from first public trade, bottom NYC/German clock labels, and a blue vertical median timing reference line from the currently active analysis filter. They also show a thin gray horizontal first-public-open reference line with a plain `Open` label, plus conditional horizontal IPO-price and current-price reference lines only when those prices are inside the visible chart OHLC range.
-- Each card chart has an enlarge button that opens the current Day 1 or Ext chart in a full-screen modal.
-- The header includes a top-level `Day 1` / `Ext` switch near the market and trading-place filters that changes all chart cards between first-day-only and extended chart data. Each main candle chart also has its own top switch that can show Alpaca extended-hours candles from the first-day 16:00 ET candle through the first available regular-session open candle on the second trading day, inclusive. These switches must not change card filtering or `ipo-analysis.js`; those remain based on exact first-day regular-session bars. Extended-derived card price timeline events and entry scenarios are visible independently of the chart switch when Alpaca data is available.
-- Candle charts compress spans with no candle data instead of drawing empty time across the x-axis. Visible break markers should be plain white solid vertical lines without text labels. Bottom x-axis labels stay clock-only, use only half-hour and full-hour times, and never show calendar dates. The top axis uses first-trade elapsed time during the IPO day, resets to `0m` for after-hours, and resets again to `0m` at the start of second-day premarket. Extended trading-hour candle regions should have a subtle background shade.
+- Each card chart has an enlarge button that opens the current per-card chart mode in a full-screen modal.
+- The header includes a top-level analysis-range switch near the market and trading-place filters: `Day 1`, `Ext`, and `Day 1-Day 2`. It changes the global analysis only, not per-card chart drawings. Each main candle chart has its own top switch: `D1`, `D1 Ext`, `D1 Ext D2`, `D1 D2`, and `D2`. The default card chart mode is `D1 Ext D2`.
+- Stitched candle charts must not draw empty overnight gaps across the x-axis. Bottom x-axis labels stay clock-only, use half-hour/full-hour times where space allows, and never show calendar dates. The top axis uses first-trade elapsed time during the IPO day, resets to `0m` for after-hours, resets again at the start of second-day premarket, and resets again at D2 regular open. Extended trading-hour candle regions should have a subtle background shade.
 - Visible chart source labels are compact provider markers: `(Y)` for Yahoo, `(A)` for Alpaca, and `(AV)` for Alpha Vantage. The generated `firstDayBarSources` and `extendedDayBarSources` values keep their full provider labels.
 - IPO card company names link to their Yahoo Finance quote pages.
 - IPO card header pills show market cap and, when available, deal size. Do not render the deal pill when `dealSize` is missing or non-positive.
-- IPO cards use a price-level timeline instead of the old metric pill strip. Timeline events include `IPO`, `Start`, `Low`, `Median`, `End`, `After End`, `Pre D2`, `Open D2`, and `Current*` when available, in true event-time order. `After End` is the last first-day after-hours close, `Pre D2` is the first second-trading-day premarket open, and `Open D2` is the first regular-session opening print on the second trading day. Do not re-add `Market cap` or `Deal size` to the price row because those values belong in the header pills.
-- IPO cards include five micro charts below the price timeline: IPO price to first-day close, first-day start price to first-day end price, first-day low to first-day end price, first-day start price to Day-two, and first-day close to current* snapshot price. First-day micro-chart paths use exact 5-minute closes. The Day-two micro chart extends the exact first-day path with generated extended-session milestones when available. Longer current* paths use sampled rough Yahoo weekly closes from `roughPriceSeries` when available, with endpoint fallback.
-- IPO cards show entry-scenario panels below the five micro charts for open, median, 30m, 60m, 2h, after-hours end, second-day premarket, and second-day open entries when available. First-day panels use `End of day`; extended-entry panels use `Vs day end` because those entries occur after the first-day close. All panels keep separate `Gap to median` and `Gap to low` lines. Omit unavailable scenario cards instead of rendering empty dash-only blocks. Do not add entry time or entry price to these controls unless explicitly requested.
+- IPO cards use a price-level timeline instead of the old metric pill strip. Timeline events include `IPO`, `Start`, `Low`, `Median`, `End`, `After End`, `Pre D2`, `Open D2`, `End D2`, and `Current` when available, in true event-time order. `After End` is the last first-day after-hours close, `Pre D2` is the first second-trading-day premarket open, `Open D2` is the first regular-session opening print on the second trading day, and `End D2` is the final available second-day regular-session close. Do not re-add `Market cap` or `Deal size` to the price row because those values belong in the header pills.
+- IPO cards include six micro charts below the price timeline: IPO to D1 close, D1 start to D1 close, D1 low to D1 close, start price to open D2, D1 close to Current, and D2 close to Current. First-day micro-chart paths use exact 5-minute closes. The Day-two micro chart extends the exact first-day path with generated extended-session and second-day milestones when available. Longer Current paths use sampled rough Yahoo weekly closes from `roughPriceSeries` when available, with endpoint fallback.
+- IPO cards show an entry-scenario table below the micro charts for open, median, 30m, 60m, after-hours end, second-day premarket, second-day open, and second-day end entries when available. The table rows are `Vs End D1`, `Gap to median`, `Gap to low`, `Vs End D2`, and card-local `Vs Current`. `Gap to low` uses the absolute low over available D1/Ext/D2 candles. The `End D2` column shows `-` in the `Vs End D2` row. Omit unavailable scenario columns instead of rendering empty dash-only blocks. Do not add entry time or entry price to these controls unless explicitly requested.
 - IPO cards do not render the generated IPO-to-current `dayChange` value. Do not re-add the top return pill or the `IPO return` metric unless explicitly requested.
 - Main candle charts can show multiple low markers. The markers must be selected from the same near-low price range and every pair of selected marker times must be at least one hour apart.
-- The market-cap and trading-place segmented filters sit in the header above the analysis panel so they control both the probability analysis and the card list. The default cap filter is `>$25B`; other cap options are `<$10B`, all (`*`), `>$10B`, and `>$50B`. The default trading-place filter is `All`; other options are `NASDAQ` and `NYSE`.
+- The market-cap and trading-place segmented filters sit in the header above the analysis panel so they control both the analysis and the card list. The default cap filter is `>$50B`; other cap options are `<$10B`, all (`*`), `>$10B`, and `>$25B`. The default trading-place filter is `All`; other options are `NASDAQ` and `NYSE`.
 - The card toolbar below the analysis keeps only search plus the Date/Cap sort toggle.
 - Do not reintroduce charting CDNs unless explicitly requested. Earlier chart-library attempts rendered blank in production.
 - The chart path only draws real first-trading-day 5-minute OHLCV bars from `chart-data.js`. Suppress cards without exact bars; do not reintroduce daily-OHLC estimates or synthetic fallback charts unless explicitly requested.
@@ -47,14 +47,17 @@ Path placeholders in this file are intentional. Substitute them with the matchin
 
 ## Data Model
 
-The page has three generated JavaScript data files:
+The page has three generated JavaScript data files plus one runtime quote cache:
 
 - `ipos` in `ipo-data.js`: one object per IPO candidate/card; the page renders only entries with exact `firstDayBars`.
 - `firstDayBars` in `chart-data.js`: optional real first-trading-day 5-minute OHLCV bars keyed by ticker.
 - `firstDayBarSources` in `chart-data.js`: per-ticker provider labels such as `Yahoo 5m bars`, `Alpaca SIP 5m bars`, or `Alpha Vantage 5m bars`.
-- `extendedDayBars` in `chart-data.js`: optional Alpaca 5-minute OHLCV bars after the first-day close through the first regular-session opening candle on the next trading day, keyed by ticker.
+- `extendedDayBars` in `chart-data.js`: optional Alpaca 5-minute OHLCV bars for first-day after-hours and next-day premarket/open handoff rows, keyed by ticker.
 - `extendedDayBarSources` in `chart-data.js`: per-ticker provider labels such as `Alpaca SIP extended 5m bars`.
+- `secondDayBars` in `chart-data.js`: optional Alpaca 5-minute OHLCV bars for the second regular trading day, keyed by ticker.
+- `secondDayBarSources` in `chart-data.js`: per-ticker provider labels such as `Alpaca SIP second-day 5m bars`.
 - `roughPriceSeries` in `chart-data.js`: optional sampled Yahoo weekly close rows keyed by ticker for rough long-range micro-chart paths.
+- `current-price-cache.json`: bundled Yahoo current-price cache used as a browser runtime seed before fresh Yahoo proxy quotes arrive.
 - `ipoAnalysis` in `ipo-analysis.js`: derived 15-year first-day low timing analysis, probability checkpoints, and timing insights precomputed for each cap and trading-place filter.
 
 IPO object fields:
@@ -65,7 +68,7 @@ IPO object fields:
 - `exchange`
 - `sector`
 - `ipoPrice` - offer price in USD
-- `current` - latest quote price refreshed from Yahoo Finance chart metadata when available; StockAnalysis price remains the fallback. Visible UI labels this as `Current*` because the static page shows a snapshot, not a live quote.
+- `current` - latest quote price refreshed from Yahoo Finance chart metadata when available; StockAnalysis price remains the fallback. Browser JavaScript refreshes this again at runtime through the Yahoo proxy and labels it as `Current`.
 - `currentAsOf`, `currentSource`, `currentCurrency` - quote provenance for `current`
 - `marketCap` - billions USD
 - `dealSize` - millions USD raised
@@ -82,6 +85,12 @@ IPO object fields:
 
 ```js
 ["2026-05-15 16:05", open, high, low, close, volume]
+```
+
+`secondDayBars` row format:
+
+```js
+["2026-05-16 09:30", open, high, low, close, volume]
 ```
 
 `roughPriceSeries` row format:
@@ -101,7 +110,7 @@ IPO object fields:
 
 ## Data Gathering Method
 
-The last full refresh was done on 2026-05-26. Alpaca extended-hours candle data was added on 2026-05-27.
+The last full refresh was done on 2026-05-31. Alpaca extended-hours and second-day candle data were added by the 2026-05-31 refresh. Runtime current-price refreshes are handled in browser JavaScript through the Yahoo proxy.
 
 Primary candidate source:
 
@@ -118,7 +127,7 @@ Per-ticker detail source:
 - `https://stockanalysis.com/stocks/<ticker>/`
 - `https://stockanalysis.com/stocks/<ticker>/company/`
 - Pull or verify market cap, IPO price/date, exchange, sector/industry, and related company fields from the StockAnalysis ticker pages when available.
-- Refresh the displayed current* snapshot price from Yahoo Finance latest chart metadata during data generation; if Yahoo is unavailable for a ticker, keep the StockAnalysis fallback value.
+- Refresh the generated current snapshot price from Yahoo Finance latest chart metadata during data generation; if Yahoo is unavailable for a ticker, keep the StockAnalysis fallback value. Browser runtime code refreshes Current again through the Yahoo proxy and caches results in `localStorage`.
 - When adding a new symbol or refreshing symbol data, update the public data snapshot date in the footer of `index.html` so the visible freshness term matches the data actually shown.
 - Fetch sampled Yahoo weekly closes for `roughPriceSeries`; these are only used for small micro-chart shape hints, not for main candle charts or low-timing analysis.
 - For `CBRS`, also checked Cerebras' own IPO pricing release:
@@ -131,7 +140,7 @@ Upcoming IPO-list source:
   `https://r.jina.ai/http://https://stockanalysis.com/ipos/calendar/`
 - Parsed rows are cached in `localStorage` under `ipo-upcoming-calendar-v1` with a 24-hour retry/freshness window.
 - Only dated rows in the next 12 months are shown. The modal can show all upcoming rows or rows matching the active market-cap filter.
-- Upcoming rows must remain informational only. Do not feed them into `ipos`, `ipoAnalysis`, first-day timing samples, chart cards, or decision odds.
+- Upcoming rows must remain informational only. Do not feed them into `ipos`, `ipoAnalysis`, timing samples, chart cards, buy-plan questions, or entry-scenario analysis.
 
 Intraday candle source:
 
@@ -140,7 +149,8 @@ Intraday candle source:
 - Alpaca market data historical stock bars are used as the primary fallback when paper/data credentials are available from `APCA_API_KEY_ID` plus `APCA_API_SECRET_KEY`, or compatible `ALPACA_*` names.
 - Alpaca bars endpoint example:
   `https://data.alpaca.markets/v2/stocks/bars?symbols=ARM&timeframe=5Min&start=<rfc3339>&end=<rfc3339>&adjustment=raw&feed=sip`
-- Alpaca is also used for optional extended-hours chart data. Fetch from the first trading date at 16:00 ET through the first regular-session opening candle on the next trading day, inclusive, and store those rows in `extendedDayBars` with `YYYY-MM-DD HH:MM` New York timestamps.
+- Alpaca is also used for optional extended-hours and second-day chart data. Fetch extended bars from the first trading date at 16:00 ET through the next premarket/open handoff as available and store those rows in `extendedDayBars` with `YYYY-MM-DD HH:MM` New York timestamps. Fetch the second regular trading day into `secondDayBars`, including the regular-session close when available.
+- One-minute candle experiments live in the ignored local `1m/` folder. Keep both the gathering script and generated 1-minute JSON there unless the user explicitly asks to publish them.
 - Never commit Alpaca or Alpha Vantage keys. Alpaca keys are sent only as request headers; generated source comments must not include credentials. Alpha Vantage generated source comments must keep the `apikey` redacted.
 - Alpha Vantage `TIME_SERIES_INTRADAY` remains an optional fallback when a key is available from `ALPHAVANTAGE_KEY`, `ALPHAVANTAGE_API_KEY`, `ALPHA_VANTAGE_API_KEY`, or `AV_API_KEY`.
 - Historical Alpha Vantage intraday month data requires a premium-enabled key; if the current key returns a premium-endpoint message, the script disables the fallback for the rest of that refresh.
@@ -217,7 +227,7 @@ The site repo is Git-backed and pushes to GitHub. The live `https://glaubi.net/i
 ```sh
 cd <local-ipo-site-repo>
 git status --short
-git add index.html three-ipo-view.js vendor/three.module.min.js vendor/three.LICENSE.txt ipo-data.js chart-data.js ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py AGENTS.md README.md LICENSE docs/*.png
+git add .gitignore index.html three-ipo-view.js vendor/three.module.min.js vendor/three.LICENSE.txt ipo-data.js chart-data.js current-price-cache.json ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py AGENTS.md README.md LICENSE docs/*.png
 git commit -m "Update IPO site"
 git push
 ```
@@ -300,19 +310,18 @@ Before calling an IPO change done:
 - `index.html` still renders without a build step.
 - `ipo-data.js` includes `$5B+` IPO candidates from the cap screener plus all post-2020 `$5B+` IPO archive matches.
 - `ipo-analysis.js` is generated from `build_ipo_analysis.py` and contains precomputed `byCap` plus `byFilter` analyses for all cap and trading-place filters.
-- The header cap and trading-place filters sit above the analysis and change both the rendered probabilities and the rendered card list.
-- The top analysis panel shows both elapsed-time delta and US/Eastern clock-time distributions for exact first-day 5-minute lows, with the elapsed-time opportunity map using the full panel width.
+- The header cap, trading-place, and analysis-range filters sit above the analysis and change the rendered analysis and card list appropriately.
+- The top analysis panel shows decision-oriented KPI cards, elapsed-time/candle-time distribution, and US/Eastern plus German clock/session distribution for the active analysis range, with the elapsed-time opportunity map using the full panel width.
 - The compact infographic strip above search shows both the IPO playbook and buy-timing thumbnails, and both open the full-size image modal.
-- The analysis panel shows a full-width `Decision odds` panel below the bar charts, without the removed `Timing signals` panel, checkpoint highlight pill, duplicate median-clock header block, or generic disclaimer row.
-- The analysis panel shows the entry-scenario comparison after `Decision odds`, including open, median, 30m, 60m, 2h, after-hours end, second-day premarket, and second-day open scenarios with wrapping text that is not clipped.
-- The lower analysis metric row shows median clock, most common clock, late-low, current-view, and entry-scenario insight pills.
+- The analysis panel shows `Buy-plan questions` below the bar charts, without the removed `Decision odds`, `Timing signals`, checkpoint highlight pill, duplicate median-clock header block, lower summary-pill row, or generic disclaimer row.
+- The analysis panel shows the global entry-scenario comparison after `Buy-plan questions`, including open, median, 30m, 60m, after-hours end, second-day premarket, second-day open, and second-day end scenarios with wrapping text that is not clipped. The global table omits `Vs Current`.
 - Analysis charts show dynamic median reference lines for the active filter.
 - Clock-time chart labels use 24-hour NYC and German labels, not AM/PM labels. Two-line labels are allowed, and the market-clock distribution chart omits trailing `(DE)` on German axis labels.
 - No included IPO has a known `firstDay.open` below `$1`.
 - `CBRS` is present and its chart uses real Yahoo 5-minute bars and does not begin at `$185`.
 - Main candle charts show the top elapsed-minutes axis, active-filter median timing line, compact provider marker, thin gray open-price reference line, compressed no-candle gap markers when needed, and only show IPO-price/current-price horizontal reference lines when those values are within that chart's visible OHLC range.
 - Each card chart enlarge button opens a full-screen chart modal using the same chart data mode currently active for that card.
-- The global chart-mode switch and card-level chart switches toggle Alpaca extended-hours chart display without changing search/filter behavior or generated analysis; card-level extended price timeline events and extended entry panels use the generated Alpaca data directly.
+- The global `Day 1` / `Ext` / `Day 1-Day 2` switch changes the analysis range. Card-level `D1` / `D1 Ext` / `D1 Ext D2` / `D1 D2` / `D2` switches change chart drawings without changing search/filter behavior. Card-level extended and Day 2 price timeline events and entry scenario columns use generated Alpaca data directly.
 - Low markers on main candle charts are in the same near-low price band and are spaced at least one hour apart.
 - The `Forthcoming IPOs` modal opens from the header, renders the StockAnalysis-derived IPO-list or a clear unavailable/empty state, keeps rows info-only, and updates when switching between `All` and the active cap filter.
 - The 3D map opens from the analysis panel, loads local `vendor/three.module.min.js`, and renders without a blank WebGL canvas.
@@ -320,14 +329,14 @@ Before calling an IPO change done:
 - In regular 3D path view, symbol selection shows candle bodies/wicks for the selected IPO; a second click isolates that IPO into the one-row candle view; a third click clears isolation and selection.
 - The isolated one-row 3D render is close-aligned while active, restores the prior alignment when leaving, removes empty time before the first real price, uses the selected IPO's own return range, and shows linear 5-minute volume bars.
 - Flatten Low view shows the flat low mesh, time labels, IPO-year scale, white IPO-open markers, real regular and extended near-low markers, no fake extended marker at the start of the extended session, and stable camera orientation when changing Day 1/Ext or alignment.
-- IPO cards link company names to Yahoo Finance quote pages, show cap/deal header pills, and use the price-level timeline for `IPO`, `Start`, `Low`, `Median`, `End`, `After End`, `Pre D2`, `Open D2`, and `Current*` events when available.
-- IPO cards show entry-scenario panels below the five micro charts, with first-day scenarios (`Open`, `Median`, `30m`, `60m`, `2h`) plus extended scenarios (`After`, `Pre D2`, `Open D2`), and without entry time or entry price in those controls.
+- IPO cards link company names to Yahoo Finance quote pages, show cap/deal header pills, and use the price-level timeline for `IPO`, `Start`, `Low`, `Median`, `End`, `After End`, `Pre D2`, `Open D2`, `End D2`, and `Current` events when available.
+- IPO cards show an entry-scenario table below the six micro charts, with first-day scenarios (`Open`, `Median`, `30m`, `60m`) plus extended/Day 2 scenarios (`After`, `Pre D2`, `Open D2`, `End D2`). `Vs Current` is present only in card-local tables, separated with a dashed row line.
 - IPO cards do not show `IPO return`, `Return —`, generated `dayChange`, `Market cap`, or `Deal size` in the price timeline or entry controls.
 - Missing exact 5-minute bars are suppressed from the card list, not rendered as estimated charts.
 - Search filters cards by ticker/company/exchange/sector.
 - Sort button toggles between IPO date recent-first and market cap biggest-first.
-- Micro-chart lines use rough real paths: exact 5-minute closes for first-day cards, exact first-day closes plus extended-session milestones for the Start-to-Day-two card, and sampled Yahoo weekly closes from `roughPriceSeries` for current* cards when available.
-- Cap filter defaults to `>$25B` and can switch to `<$10B`, all (`*`), `>$10B`, and `>$50B`.
+- Micro-chart lines use rough real paths: exact 5-minute closes for first-day cards, exact first-day closes plus extended/Day 2 milestones for the Start-to-open-D2 card, and sampled Yahoo weekly closes from `roughPriceSeries` for Current cards when available.
+- Cap filter defaults to `>$50B` and can switch to `<$10B`, all (`*`), `>$10B`, and `>$25B`.
 - Trading-place filter defaults to `All` and can switch to `NASDAQ` or `NYSE`.
 - Inline JavaScript syntax still passes, for example:
   `perl -0ne 'while(/<script>(.*?)<\/script>/sg){print $1}' index.html > /tmp/ipo-inline.js && node --check /tmp/ipo-inline.js`
