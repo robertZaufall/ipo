@@ -364,7 +364,7 @@
         const UPCOMING_IPO_FETCH_URL = `https://r.jina.ai/http://${UPCOMING_IPO_SOURCE_URL}`;
         const UPCOMING_IPO_CACHE_KEY = 'ipo-upcoming-calendar-v1';
         const UPCOMING_IPO_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
-        const CURRENT_QUOTE_CACHE_KEY = 'ipo-yahoo-current-quotes-v1';
+        const CURRENT_QUOTE_CACHE_KEY = 'ipo-yahoo-current-quotes-v2';
         const CURRENT_QUOTE_CACHE_TTL_MS = 2 * 60 * 1000;
         const CURRENT_QUOTE_BATCH_SIZE = 5;
         const CURRENT_QUOTE_BATCH_DELAY_MS = 175;
@@ -425,6 +425,11 @@
             const seconds = Number(timestamp);
             if (!Number.isFinite(seconds) || seconds <= 0) return null;
             return new Date(seconds * 1000).toISOString();
+        }
+
+        function finitePositiveNumber(value) {
+            const number = Number(value);
+            return Number.isFinite(number) && number > 0 ? number : null;
         }
 
         function parseIsoDate(value) {
@@ -540,20 +545,81 @@
             const data = await response.json();
             const result = data?.chart?.result?.[0];
             if (!result) throw new Error(data?.chart?.error?.description || 'Yahoo chart returned no result');
+            const selected = selectYahooCurrentQuote(result);
+            if (!selected) return null;
+            return selected;
+        }
+
+        function latestYahooClosePoint(result) {
+            const quote = result?.indicators?.quote?.[0] || {};
+            const closes = quote.close || [];
+            const timestamps = result?.timestamp || [];
+            for (let index = closes.length - 1; index >= 0; index -= 1) {
+                const price = finitePositiveNumber(closes[index]);
+                const timestamp = Number(timestamps[index]);
+                if (price != null && Number.isFinite(timestamp) && timestamp > 0) {
+                    return { price, timestamp };
+                }
+            }
+            return null;
+        }
+
+        function extendedSessionFromLatestPoint(meta, latestPoint) {
+            const regularTimestamp = Number(meta?.regularMarketTime);
+            if (!latestPoint || !Number.isFinite(regularTimestamp) || regularTimestamp <= 0) return null;
+            const deltaHours = (Number(latestPoint.timestamp) - regularTimestamp) / 3600;
+            if (deltaHours <= 0) return null;
+            return deltaHours < 8 ? 'post' : 'pre';
+        }
+
+        function selectYahooCurrentQuote(result) {
             const meta = result.meta || {};
-            const quote = result.indicators?.quote?.[0] || {};
-            const closes = (quote.close || []).filter(value => Number.isFinite(Number(value)));
-            const timestamps = result.timestamp || [];
-            const fallbackPrice = closes.length ? Number(closes[closes.length - 1]) : null;
-            const fallbackTime = closes.length ? timestamps[timestamps.length - 1] : null;
-            const price = Number(meta.regularMarketPrice ?? fallbackPrice);
-            const latestPrice = Number.isFinite(Number(fallbackPrice)) && fallbackPrice > 0 ? Number(fallbackPrice) : price;
-            const latestTime = fallbackPrice ? fallbackTime : meta.regularMarketTime;
-            if (!Number.isFinite(price) || price <= 0) return null;
+            const latestPoint = latestYahooClosePoint(result);
+            const marketState = String(meta.marketState || '').toUpperCase();
+            const regularPrice = finitePositiveNumber(meta.regularMarketPrice);
+            const preMarketPrice = finitePositiveNumber(meta.preMarketPrice);
+            const postMarketPrice = finitePositiveNumber(meta.postMarketPrice);
+            let selected = null;
+            if (marketState === 'PRE' && (preMarketPrice != null || latestPoint?.price != null)) {
+                selected = {
+                    price: preMarketPrice ?? latestPoint?.price,
+                    timestamp: Number(meta.preMarketTime) || latestPoint?.timestamp || meta.regularMarketTime,
+                    source: preMarketPrice != null ? 'Yahoo preMarketPrice' : 'Yahoo chart premarket'
+                };
+            } else if ((marketState === 'POST' || marketState === 'POSTPOST') && (postMarketPrice != null || latestPoint?.price != null)) {
+                selected = {
+                    price: postMarketPrice ?? latestPoint?.price,
+                    timestamp: Number(meta.postMarketTime) || latestPoint?.timestamp || meta.regularMarketTime,
+                    source: postMarketPrice != null ? 'Yahoo postMarketPrice' : 'Yahoo chart after-hours'
+                };
+            } else {
+                const inferredExtendedSession = extendedSessionFromLatestPoint(meta, latestPoint);
+                if (inferredExtendedSession === 'pre') {
+                    selected = {
+                        price: preMarketPrice ?? latestPoint?.price,
+                        timestamp: Number(meta.preMarketTime) || latestPoint?.timestamp || meta.regularMarketTime,
+                        source: preMarketPrice != null ? 'Yahoo preMarketPrice' : 'Yahoo chart premarket'
+                    };
+                } else if (inferredExtendedSession === 'post') {
+                    selected = {
+                        price: postMarketPrice ?? latestPoint?.price,
+                        timestamp: Number(meta.postMarketTime) || latestPoint?.timestamp || meta.regularMarketTime,
+                        source: postMarketPrice != null ? 'Yahoo postMarketPrice' : 'Yahoo chart after-hours'
+                    };
+                }
+            }
+            if (!selected && regularPrice != null) {
+                selected = { price: regularPrice, timestamp: meta.regularMarketTime, source: 'Yahoo regularMarketPrice' };
+            }
+            if (!selected && latestPoint?.price != null) {
+                selected = { price: latestPoint.price, timestamp: latestPoint.timestamp, source: 'Yahoo chart latest' };
+            }
+            const price = finitePositiveNumber(selected?.price);
+            if (price == null) return null;
             return {
-                price: latestPrice,
-                asOf: isoFromUnixSeconds(latestTime),
-                source: 'Yahoo chart latest',
+                price,
+                asOf: isoFromUnixSeconds(selected.timestamp),
+                source: selected.source,
                 currency: meta.currency || 'USD'
             };
         }
@@ -4232,6 +4298,22 @@
                 dayEndReturn: endD1Price / entryPrice * 100 - 100
             });
 
+            const ipoPrice = Number(ipo.ipoPrice);
+            const ipoRow = Number.isFinite(ipoPrice) && ipoPrice > 0
+                ? {
+                    id: 'buyIpo',
+                    label: 'IPO offer price',
+                    shortLabel: 'IPO',
+                    rowLabel: 'IPO',
+                    detail: 'Reference fill at the IPO offer price.',
+                    fillMode: 'reference',
+                    isReference: true,
+                    available: true,
+                    entryTime: 'IPO',
+                    entryPrice: ipoPrice,
+                    ...comparisonMetrics(ipoPrice, first.minute)
+                }
+                : null;
             const regularRows = entryScenarioDefinitions(analysis)
                 .filter(scenario => Number.isFinite(scenario.targetDelta))
                 .map(scenario => {
@@ -4282,7 +4364,7 @@
                     ...comparisonMetrics(entry.price, entry.bar?.minute)
                 };
             });
-            return [...regularRows, lowRow, ...extendedRows].filter(row => row.available);
+            return [ipoRow, ...regularRows, lowRow, ...extendedRows].filter(row => row?.available);
         }
 
         function entryScenarioTableValue(value, toneFn) {

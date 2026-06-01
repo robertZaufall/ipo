@@ -502,7 +502,7 @@ def yahoo_latest_quote_url(ticker: str) -> str:
         {
             "range": "1d",
             "interval": "1m",
-            "includePrePost": "false",
+            "includePrePost": "true",
         }
     )
     return f"{YAHOO_CHART_BASE}/{urllib.parse.quote(yahoo_symbol(ticker))}?{params}"
@@ -539,6 +539,13 @@ def parse_iso_datetime(value: str | None) -> dt.datetime | None:
         return dt.datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(UTC)
     except ValueError:
         return None
+
+
+def finite_positive_number(value) -> float | None:
+    if not isinstance(value, (int, float)):
+        return None
+    number = float(value)
+    return number if math.isfinite(number) and number > 0 else None
 
 
 def normalize_quote(quote: dict | None) -> dict | None:
@@ -607,6 +614,85 @@ def write_current_price_cache(path: pathlib.Path | None, cache: dict) -> None:
     path.write_text(json.dumps(serializable, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def latest_yahoo_close_point(result: dict) -> dict | None:
+    quote = (((result.get("indicators") or {}).get("quote") or [{}])[0])
+    closes = quote.get("close") or []
+    timestamps = result.get("timestamp") or []
+    for index in range(len(closes) - 1, -1, -1):
+        price = finite_positive_number(closes[index])
+        timestamp = timestamps[index] if index < len(timestamps) else None
+        if price is not None and isinstance(timestamp, (int, float)) and math.isfinite(timestamp) and timestamp > 0:
+            return {"price": price, "timestamp": timestamp}
+    return None
+
+
+def inferred_extended_session(meta: dict, latest_point: dict | None) -> str | None:
+    regular_time = meta.get("regularMarketTime")
+    if not latest_point or not isinstance(regular_time, (int, float)) or not math.isfinite(regular_time) or regular_time <= 0:
+        return None
+    delta_hours = (float(latest_point["timestamp"]) - float(regular_time)) / 3600
+    if delta_hours <= 0:
+        return None
+    return "post" if delta_hours < 8 else "pre"
+
+
+def select_yahoo_current_quote(result: dict) -> dict | None:
+    meta = result.get("meta") or {}
+    latest_point = latest_yahoo_close_point(result)
+    market_state = str(meta.get("marketState") or "").upper()
+    regular_price = finite_positive_number(meta.get("regularMarketPrice"))
+    pre_market_price = finite_positive_number(meta.get("preMarketPrice"))
+    post_market_price = finite_positive_number(meta.get("postMarketPrice"))
+    selected = None
+    if market_state == "PRE" and (pre_market_price is not None or latest_point):
+        selected = {
+            "price": pre_market_price if pre_market_price is not None else (latest_point or {}).get("price"),
+            "timestamp": meta.get("preMarketTime") or (latest_point or {}).get("timestamp") or meta.get("regularMarketTime"),
+            "source": "Yahoo preMarketPrice" if pre_market_price is not None else "Yahoo chart premarket",
+        }
+    elif market_state in {"POST", "POSTPOST"} and (post_market_price is not None or latest_point):
+        selected = {
+            "price": post_market_price if post_market_price is not None else (latest_point or {}).get("price"),
+            "timestamp": meta.get("postMarketTime") or (latest_point or {}).get("timestamp") or meta.get("regularMarketTime"),
+            "source": "Yahoo postMarketPrice" if post_market_price is not None else "Yahoo chart after-hours",
+        }
+    else:
+        session = inferred_extended_session(meta, latest_point)
+        if session == "pre":
+            selected = {
+                "price": pre_market_price if pre_market_price is not None else (latest_point or {}).get("price"),
+                "timestamp": meta.get("preMarketTime") or (latest_point or {}).get("timestamp") or meta.get("regularMarketTime"),
+                "source": "Yahoo preMarketPrice" if pre_market_price is not None else "Yahoo chart premarket",
+            }
+        elif session == "post":
+            selected = {
+                "price": post_market_price if post_market_price is not None else (latest_point or {}).get("price"),
+                "timestamp": meta.get("postMarketTime") or (latest_point or {}).get("timestamp") or meta.get("regularMarketTime"),
+                "source": "Yahoo postMarketPrice" if post_market_price is not None else "Yahoo chart after-hours",
+            }
+    if not selected and regular_price is not None:
+        selected = {
+            "price": regular_price,
+            "timestamp": meta.get("regularMarketTime"),
+            "source": "Yahoo regularMarketPrice",
+        }
+    if not selected and latest_point:
+        selected = {
+            "price": latest_point["price"],
+            "timestamp": latest_point["timestamp"],
+            "source": "Yahoo chart latest",
+        }
+    price = finite_positive_number((selected or {}).get("price"))
+    if price is None:
+        return None
+    return {
+        "price": rounded(price, 4),
+        "asOf": iso_from_epoch((selected or {}).get("timestamp")),
+        "source": selected.get("source"),
+        "currency": meta.get("currency") or "USD",
+    }
+
+
 def fetch_latest_quote_yahoo(ticker: str) -> dict | None:
     data = fetch_json(yahoo_latest_quote_url(ticker))
     result = ((data.get("chart") or {}).get("result") or [None])[0]
@@ -614,26 +700,7 @@ def fetch_latest_quote_yahoo(ticker: str) -> dict | None:
         error = (data.get("chart") or {}).get("error") or {}
         raise RuntimeError(error.get("description") or error.get("code") or "No chart result")
 
-    meta = result.get("meta") or {}
-    price = meta.get("regularMarketPrice")
-    timestamp = meta.get("regularMarketTime")
-    quote = (((result.get("indicators") or {}).get("quote") or [{}])[0])
-    close_values = [value for value in quote.get("close") or [] if isinstance(value, (int, float)) and math.isfinite(value)]
-    if price is None and close_values:
-        price = close_values[-1]
-        timestamps = result.get("timestamp") or []
-        timestamp = timestamps[-1] if timestamps else timestamp
-    if price is None:
-        return None
-    price = float(price)
-    if not math.isfinite(price):
-        return None
-    return {
-        "price": rounded(price, 4),
-        "asOf": iso_from_epoch(timestamp),
-        "source": "Yahoo regularMarketPrice",
-        "currency": meta.get("currency") or "USD",
-    }
+    return select_yahoo_current_quote(result)
 
 
 def sampled_price_rows(rows: list[list], max_points: int) -> list[list]:
