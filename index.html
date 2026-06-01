@@ -220,6 +220,22 @@
         </div>
     </div>
 
+    <div id="entry-symbol-modal" class="fixed inset-0 z-[116] hidden bg-zinc-950/95 p-3 backdrop-blur-xl sm:p-5" role="dialog" aria-modal="true" aria-labelledby="entry-symbol-title">
+        <div class="mx-auto flex h-full w-full max-w-[96rem] flex-col gap-3">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div class="min-w-0">
+                    <div class="section-header text-blue-400">Entry scenario by symbol</div>
+                    <h2 id="entry-symbol-title" class="font-display mt-1 text-2xl tracking-tight text-zinc-100">Vs Current by ticker</h2>
+                    <div id="entry-symbol-status" class="mt-1 text-xs leading-5 text-zinc-500">Runtime Yahoo current quote</div>
+                </div>
+                <button id="entry-symbol-close" type="button" aria-label="Close entry scenario by symbol table" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-zinc-700 bg-zinc-900 text-zinc-300 transition-colors hover:border-blue-500/60 hover:text-blue-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div id="entry-symbol-table" class="min-h-0 flex-1 overflow-auto rounded-2xl border border-zinc-800 bg-zinc-900 p-3 sm:p-4"></div>
+        </div>
+    </div>
+
     <div id="three-map-modal" class="fixed inset-0 z-[120] hidden bg-zinc-950/95 backdrop-blur-xl" role="dialog" aria-modal="true" aria-labelledby="three-map-title">
         <div class="flex h-full flex-col">
             <div class="flex shrink-0 flex-col gap-3 border-b border-zinc-800 bg-zinc-950/90 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5">
@@ -333,6 +349,7 @@
         let chartModalTrigger = null;
         let chartModalTicker = null;
         let upcomingIpoModalTrigger = null;
+        let entrySymbolModalTrigger = null;
         let activeChartHoverItem = null;
 
         const CAP_FILTERS = [
@@ -4231,6 +4248,94 @@
             </div>`;
         }
 
+        function entryScenarioBySymbolRows(analysis) {
+            return analysisScenarioIpos(analysis)
+                .map(ipo => {
+                    const rows = cardEntryScenarioRows(ipo, chartData(ipo));
+                    if (!rows.length) return null;
+                    return {
+                        ipo,
+                        ticker: normalizedTicker(ipo.ticker),
+                        rows,
+                        byId: new Map(rows.map(row => [row.id, row]))
+                    };
+                })
+                .filter(Boolean)
+                .sort((a, b) => a.ticker.localeCompare(b.ticker));
+        }
+
+        function entryScenarioBySymbolColumns(symbolRows) {
+            const preferredOrder = ['buyIpo', 'openHighLimit', 'medianTiming', 'thirtyMinutes', 'oneHour', 'buyLow', 'buyAfter', 'buyPreSecond', 'buyOpenDayTwo', 'buyEndDayTwo'];
+            const byId = new Map();
+            symbolRows.forEach(symbolRow => {
+                symbolRow.rows.forEach(row => {
+                    if (!byId.has(row.id)) byId.set(row.id, row);
+                });
+            });
+            return [
+                ...preferredOrder.filter(id => byId.has(id)).map(id => byId.get(id)),
+                ...[...byId.entries()].filter(([id]) => !preferredOrder.includes(id)).map(([, row]) => row)
+            ];
+        }
+
+        function entryScenarioBySymbolValue(row) {
+            const value = Number(row?.vsCurrent);
+            if (!Number.isFinite(value)) return '<span class="font-mono text-xs font-semibold text-zinc-500">-</span>';
+            return `<span class="font-mono text-xs font-semibold ${endpointTone(value)}">${fmtPct(value)}</span>`;
+        }
+
+        function entryScenarioBySymbolTable(analysis) {
+            const symbolRows = entryScenarioBySymbolRows(analysis);
+            if (!symbolRows.length) return '';
+            const columns = entryScenarioBySymbolColumns(symbolRows);
+            if (!columns.length) return '';
+            return `<div class="overflow-auto rounded-xl border border-zinc-800" data-entry-scenario-by-symbol>
+                <table class="w-full min-w-[58rem] table-fixed border-separate border-spacing-0 text-xs">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="sticky left-0 top-0 z-30 w-[6.25rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2 py-2 text-left text-[11px] font-semibold uppercase text-zinc-500">Symbol</th>
+                            ${columns.map(row => {
+                                const label = escapeHtml(String(row.rowLabel || row.shortLabel || row.label).toUpperCase());
+                                return `<th scope="col" title="Buy ${label} · Vs Current" class="sticky top-0 z-20 border border-zinc-800 bg-zinc-900 px-1.5 py-2 text-center align-middle">
+                                    <span class="whitespace-nowrap text-[10px] font-semibold uppercase leading-none text-zinc-200">${label}</span>
+                                </th>`;
+                            }).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${symbolRows.map(symbolRow => {
+                            const ticker = escapeHtml(symbolRow.ticker);
+                            const quoteUrl = escapeHtml(yahooFinanceUrl(symbolRow.ticker));
+                            return `<tr>
+                                <th scope="row" class="sticky left-0 z-10 w-[6.25rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2 py-1.5 text-left align-middle">
+                                    <a href="${quoteUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex h-6 items-center gap-1 rounded-full border border-blue-500/40 bg-blue-500/10 px-2 font-mono text-[11px] font-semibold text-blue-200 transition-colors hover:border-blue-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400" title="Open ${ticker} on Yahoo Finance" aria-label="Open ${ticker} on Yahoo Finance">${ticker}<span aria-hidden="true">&#8599;</span></a>
+                                </th>
+                                ${columns.map(column => `<td class="border border-zinc-800 bg-zinc-950/70 px-1.5 py-1.5 text-center align-middle whitespace-nowrap">${entryScenarioBySymbolValue(symbolRow.byId.get(column.id))}</td>`).join('')}
+                            </tr>`;
+                        }).join('')}
+                    </tbody>
+                </table>
+            </div>`;
+        }
+
+        function entryScenarioBySymbolSection(analysis) {
+            const symbolRows = entryScenarioBySymbolRows(analysis);
+            if (!symbolRows.length) return '';
+            return `<div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 sm:p-5">
+                <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                    <div>
+                        <div class="section-header text-blue-400">Entry scenario by symbol</div>
+                        <p class="text-zinc-400 mt-2 leading-6 text-sm max-w-4xl">Vs Current only, using the same chart-card entry scenarios.</p>
+                        <div class="mt-1 text-xs text-zinc-500">${symbolRows.length} symbols · runtime Yahoo current quote</div>
+                    </div>
+                    <button type="button" data-entry-symbol-open class="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-2xl border border-blue-500/40 bg-blue-600 px-4 text-sm font-semibold text-white transition-colors hover:border-blue-300 hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                        <i class="fa-solid fa-table text-xs" aria-hidden="true"></i>
+                        <span>Open symbol table</span>
+                    </button>
+                </div>
+            </div>`;
+        }
+
         function extendedEntryScenarioDefinitions(milestones) {
             return [
                 {
@@ -4579,7 +4684,8 @@
                         </div>
                     </div>
                     ${entryStrategyPlaybook(analysis, entryScenarios)}
-	                    ${entryScenarioSection(analysis, entryScenarios)}
+                    ${entryScenarioSection(analysis, entryScenarios)}
+                    ${entryScenarioBySymbolSection(analysis)}
 	                </div>`;
         }
 
@@ -4840,6 +4946,30 @@
             }
         }
 
+        function setEntrySymbolModal(open) {
+            const modal = document.getElementById('entry-symbol-modal');
+            const table = document.getElementById('entry-symbol-table');
+            const status = document.getElementById('entry-symbol-status');
+            const close = document.getElementById('entry-symbol-close');
+            if (!modal || !table) return;
+            if (open) {
+                const analysis = currentAnalysis();
+                const symbolRows = analysis ? entryScenarioBySymbolRows(analysis) : [];
+                table.innerHTML = analysis && symbolRows.length
+                    ? entryScenarioBySymbolTable(analysis)
+                    : '<div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 text-sm text-zinc-400">No symbol-level entry scenario data is available for this filter.</div>';
+                if (status) status.textContent = `${symbolRows.length} symbols · runtime Yahoo current quote`;
+            }
+            modal.classList.toggle('hidden', !open);
+            document.body.classList.toggle('overflow-hidden', open);
+            if (open) {
+                close?.focus();
+            } else {
+                table.innerHTML = '';
+                entrySymbolModalTrigger?.focus();
+            }
+        }
+
         function chartHoverItemFromEvent(event) {
             return event.target?.closest?.('.chart-hover-hit')?.closest?.('.chart-hover-item') || null;
         }
@@ -4891,6 +5021,12 @@
             upcomingIpoModalTrigger = trigger;
             setUpcomingIpoModal(true);
         });
+        document.addEventListener('click', event => {
+            const trigger = event.target.closest('button[data-entry-symbol-open]');
+            if (!trigger) return;
+            entrySymbolModalTrigger = trigger;
+            setEntrySymbolModal(true);
+        });
         document.getElementById('image-modal-close')?.addEventListener('click', () => setImageModal(false));
         document.getElementById('image-modal-image')?.addEventListener('click', () => setImageModal(false));
         document.getElementById('image-modal')?.addEventListener('click', event => {
@@ -4903,6 +5039,10 @@
         document.getElementById('upcoming-ipo-close')?.addEventListener('click', () => setUpcomingIpoModal(false));
         document.getElementById('upcoming-ipo-modal')?.addEventListener('click', event => {
             if (event.target.id === 'upcoming-ipo-modal') setUpcomingIpoModal(false);
+        });
+        document.getElementById('entry-symbol-close')?.addEventListener('click', () => setEntrySymbolModal(false));
+        document.getElementById('entry-symbol-modal')?.addEventListener('click', event => {
+            if (event.target.id === 'entry-symbol-modal') setEntrySymbolModal(false);
         });
         document.getElementById('upcoming-ipo-view-filter')?.addEventListener('click', event => {
             const button = event.target.closest('button[data-upcoming-ipo-scope]');
@@ -4921,6 +5061,9 @@
             }
             if (event.key === 'Escape' && !document.getElementById('upcoming-ipo-modal')?.classList.contains('hidden')) {
                 setUpcomingIpoModal(false);
+            }
+            if (event.key === 'Escape' && !document.getElementById('entry-symbol-modal')?.classList.contains('hidden')) {
+                setEntrySymbolModal(false);
             }
         });
 
