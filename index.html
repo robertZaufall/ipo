@@ -3307,7 +3307,21 @@
             return 'D1';
         }
 
+        function medianLowUsesElapsedStart(analysis) {
+            if (!Number.isFinite(Number(analysis?.medianDeltaMinutes))) return false;
+            const session = analysis?.rangeMode === 'day1'
+                ? 'D1'
+                : (analysis?.medianLowSessionLabel || analysisRangeShortLabel(analysis));
+            return session === 'D1';
+        }
+
+        function medianLowStartMinutes(analysis) {
+            const minutes = Math.max(0, Math.round(Number(analysis?.medianDeltaMinutes)));
+            return `${minutes}m`;
+        }
+
         function medianLowMarketMoment(analysis) {
+            if (medianLowUsesElapsedStart(analysis)) return medianLowStartMinutes(analysis);
             const session = analysis?.rangeMode === 'day1'
                 ? 'D1'
                 : (analysis?.medianLowSessionLabel || analysisRangeShortLabel(analysis));
@@ -3315,8 +3329,17 @@
             return `${session} ${time}`.trim();
         }
 
+        function medianLowNarrativeMoment(analysis) {
+            if (medianLowUsesElapsedStart(analysis)) return `${medianLowStartMinutes(analysis)} after first trade`;
+            const germanTime = analysis?.medianLowGermanTime ? ` (${analysis.medianLowGermanTime} DE)` : '';
+            return `${medianLowMarketMoment(analysis)} ET${germanTime}`;
+        }
+
         function medianLowMetricHelper(analysis) {
             const range = analysisRangeShortLabel(analysis);
+            if (medianLowUsesElapsedStart(analysis)) {
+                return `Median low point after the first public trade in the selected ${range} candles.`;
+            }
             const germanTime = analysis?.medianLowGermanTime ? ` (${analysis.medianLowGermanTime} DE)` : '';
             return `Median low point in the selected ${range} candles${germanTime}.`;
         }
@@ -4390,8 +4413,7 @@
             const lowLabel = analysis.lowLabel || 'first-day low';
             const entryScenarios = entryScenarioAnalysis(analysis);
             const strategyKpis = entryStrategyKpis(analysis, entryScenarios);
-            const medianLowMoment = medianLowMarketMoment(analysis);
-            const medianLowGerman = analysis.medianLowGermanTime ? ` (${analysis.medianLowGermanTime} DE)` : '';
+            const medianLowMoment = medianLowNarrativeMoment(analysis);
             mount.innerHTML = `
                 <div class="p-5 sm:p-6 border-b border-zinc-800 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.20),transparent_34rem)]">
                     <div class="grid xl:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)] gap-5 items-stretch">
@@ -4399,7 +4421,7 @@
                             <div>
                                 <div class="section-header text-blue-400">IPO buying decision dashboard</div>
                                 <h2 class="font-display text-3xl sm:text-4xl mt-1">How patient should the first order be?</h2>
-                                <p class="text-zinc-400 mt-2 leading-7">For ${escapeHtml(analysisLabel)} since ${analysis.cutoffDate}, the median ${escapeHtml(lowLabel)} in the selected chart range was ${escapeHtml(medianLowMoment)} ET${escapeHtml(medianLowGerman)}. The dashboard below turns those candles into an entry plan.</p>
+                                <p class="text-zinc-400 mt-2 leading-7">For ${escapeHtml(analysisLabel)} since ${analysis.cutoffDate}, the median ${escapeHtml(lowLabel)} in the selected chart range was ${escapeHtml(medianLowMoment)}. The dashboard below turns those candles into an entry plan.</p>
                                 <div class="mt-4 flex flex-wrap gap-2">
                                     <button type="button" data-three-map-open aria-label="Open 3D IPO path map" class="inline-flex h-11 items-center gap-2 rounded-2xl border border-blue-500/40 bg-blue-600 px-4 text-sm font-semibold text-white transition-colors hover:border-blue-300 hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
                                         <i class="fa-solid fa-cubes text-xs"></i>
