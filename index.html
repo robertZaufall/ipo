@@ -3701,8 +3701,14 @@
         }
 
         function entryScenarioAccent(row, rows = []) {
+            if (row?.id === 'buyIpo') {
+                return { border: 'border-blue-500/55', dot: 'bg-blue-400', label: 'IPO offer reference' };
+            }
             const score = entryScenarioCurrentScore(row);
-            const scores = rows.map(entryScenarioCurrentScore).filter(Number.isFinite);
+            const scores = rows
+                .filter(candidate => candidate?.id !== 'buyIpo')
+                .map(entryScenarioCurrentScore)
+                .filter(Number.isFinite);
             if (!Number.isFinite(score) || !scores.length) {
                 return { border: 'border-zinc-700', dot: 'bg-zinc-500', label: 'No current comparison' };
             }
