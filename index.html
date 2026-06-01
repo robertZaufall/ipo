@@ -63,23 +63,23 @@
             <div>
                 <div class="inline-flex items-center gap-x-2 px-4 h-8 rounded-2xl bg-zinc-900 border border-zinc-800 text-xs font-medium tracking-[0.5px]">
                     <span class="text-emerald-400">●</span>
-                    <span>$5B+ IPO COMPANIES</span>
+                    <span>&gt;$50B IPO COMPANIES</span>
                 </div>
                 <h1 class="font-display text-5xl sm:text-6xl tracking-tighter font-semibold mt-3">First-day moves for market giants</h1>
                 <p class="text-lg sm:text-xl text-zinc-400 mt-2 max-w-3xl">A day-one view of top IPO companies.</p>
-                <div class="mt-5 grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(10rem,14rem)]">
-                    <div class="flex w-full flex-col gap-1 rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs font-semibold sm:text-sm md:h-12 md:flex-row md:items-center">
-                        <div id="cap-filter" role="group" aria-label="Filter IPO analysis and cards by market cap" class="flex min-h-10 w-full min-w-0 items-stretch gap-1 md:h-full md:flex-[1.35]">
-                            <span class="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-950/70 px-2.5 text-[11px] font-semibold text-zinc-300 sm:px-3 sm:text-xs">
+                <div class="mt-5 grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(15rem,17rem)]">
+                    <div class="flex w-full flex-col gap-1 rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-[11px] font-semibold sm:text-xs md:h-12 md:flex-row md:items-center">
+                        <div id="cap-filter" role="group" aria-label="Filter IPO analysis and cards by market cap" class="flex min-h-10 w-full min-w-0 items-stretch gap-1 md:h-full md:flex-[1.08]">
+                            <span class="inline-flex shrink-0 items-center gap-1 rounded-xl border border-zinc-800 bg-zinc-950/70 px-2 text-[10px] font-semibold text-zinc-300 sm:text-[11px]">
                                 <i class="fa-solid fa-filter text-[10px] text-blue-300" aria-hidden="true"></i>
                                 <span>Cap</span>
                             </span>
                             <div class="grid min-w-0 flex-1 grid-cols-5 gap-1">
-                                <button id="cap-under10" type="button" data-cap-filter="under10" aria-pressed="false" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&lt;$10B</button>
-                                <button id="cap-all" type="button" data-cap-filter="all" aria-pressed="false" aria-label="All market caps" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">*</button>
-                                <button id="cap-gt10" type="button" data-cap-filter="gt10" aria-pressed="false" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$10B</button>
-                                <button id="cap-gt25" type="button" data-cap-filter="gt25" aria-pressed="true" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors bg-blue-600 text-white">&gt;$25B</button>
-                                <button id="cap-gt50" type="button" data-cap-filter="gt50" aria-pressed="false" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$50B</button>
+                                <button id="cap-under10" type="button" data-cap-filter="under10" aria-pressed="false" class="min-w-0 rounded-xl px-0.5 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&lt;$10B</button>
+                                <button id="cap-all" type="button" data-cap-filter="all" aria-pressed="false" aria-label="All market caps" class="min-w-0 rounded-xl px-0.5 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">*</button>
+                                <button id="cap-gt10" type="button" data-cap-filter="gt10" aria-pressed="false" class="min-w-0 rounded-xl px-0.5 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$10B</button>
+                                <button id="cap-gt25" type="button" data-cap-filter="gt25" aria-pressed="false" class="min-w-0 rounded-xl px-0.5 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$25B</button>
+                                <button id="cap-gt50" type="button" data-cap-filter="gt50" aria-pressed="true" class="min-w-0 rounded-xl px-0.5 flex items-center justify-center transition-colors bg-blue-600 text-white">&gt;$50B</button>
                             </div>
                         </div>
                         <div aria-hidden="true" class="h-px w-full bg-zinc-800 md:h-7 md:w-px"></div>
@@ -93,9 +93,10 @@
                             <button id="place-nyse" type="button" data-trading-place-filter="nyse" aria-pressed="false" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">NYSE</button>
                         </div>
                     </div>
-                    <div id="chart-mode-toggle" role="group" aria-label="Set all card charts to day-one or extended data" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-xs sm:text-sm font-semibold grid grid-cols-2 gap-1 transition-colors">
-                        <button id="chart-mode-day1" type="button" data-chart-mode="day1" aria-pressed="true" class="rounded-xl flex items-center justify-center transition-colors bg-blue-600 text-white">Day 1</button>
-                        <button id="chart-mode-extended" type="button" data-chart-mode="extended" aria-pressed="false" class="rounded-xl flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">Ext</button>
+                    <div id="chart-mode-toggle" role="group" aria-label="Set analysis range" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-[11px] sm:text-xs font-semibold grid grid-cols-3 gap-1 transition-colors">
+                        <button id="chart-mode-day1" type="button" data-analysis-range="day1" aria-pressed="false" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors text-zinc-400 hover:text-zinc-200">Day 1</button>
+                        <button id="chart-mode-extended" type="button" data-analysis-range="d1Ext" aria-pressed="false" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors text-zinc-400 hover:text-zinc-200">Ext</button>
+                        <button id="chart-mode-day2" type="button" data-analysis-range="d1ExtD2" aria-pressed="true" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors bg-blue-600 text-white">Day 1-Day 2</button>
                     </div>
                 </div>
             </div>
@@ -152,9 +153,15 @@
 
         <section id="cards" class="mt-6 space-y-6"></section>
         <div id="empty-state" class="hidden mt-8 bg-zinc-900 border border-zinc-800 rounded-2xl p-8 text-center text-zinc-400">No IPO cards match that search.</div>
+        <div id="load-more-wrap" class="mt-6 hidden justify-center">
+            <button id="load-more-cards" type="button" class="inline-flex h-12 items-center gap-2 rounded-2xl border border-zinc-700 bg-zinc-900 px-5 text-sm font-semibold text-zinc-200 transition-colors hover:border-blue-500/60 hover:text-blue-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                <i class="fa-solid fa-chevron-down text-xs" aria-hidden="true"></i>
+                <span>Load more</span>
+            </button>
+        </div>
 
         <footer class="mt-10 border-t border-zinc-900 pt-5 text-xs text-zinc-500 leading-6">
-            <p><span class="font-semibold text-zinc-400">Data snapshot:</span> IPO dates, prices, current* prices, market caps, and first-day chart data were captured on 2026-05-26; Alpaca extended-hours chart data was added on 2026-05-27. This static page has not been updated since that snapshot; future refreshes may happen only sporadically or not at all. Data can be delayed, incomplete, wrong, or unavailable and is provided without guarantee. Use your own judgment; investment decisions and consequences remain your responsibility.</p>
+            <p><span class="font-semibold text-zinc-400">Data:</span> IPO/candle snapshot through 2026-05-31; Current refreshes from Yahoo at runtime. Data may be delayed or wrong.</p>
             <p class="mt-2 text-center">&copy; <span id="copyright-year"></span> Robert Zaufall &middot; <a class="text-zinc-500 hover:text-zinc-300 transition-colors" href="https://glaubi.net/">glaubi.net</a> &middot; <a class="text-zinc-500 hover:text-zinc-300 transition-colors" href="https://github.com/robertZaufall/ipo">GitHub</a></p>
         </footer>
     </main>
@@ -292,7 +299,7 @@
     </div>
 
     <script>
-        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-27-extended-alpaca';
+        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-31-day2-alpaca';
         ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js'].forEach(src => {
             document.write(`<script src="${src}?v=${encodeURIComponent(IPO_ASSET_VERSION)}"><\/script>`);
         });
@@ -304,15 +311,24 @@
         const firstDayBarSources = window.firstDayBarSources || {};
         const extendedDayBars = window.extendedDayBars || {};
         const extendedDayBarSources = window.extendedDayBarSources || {};
+        const secondDayBars = window.secondDayBars || {};
+        const secondDayBarSources = window.secondDayBarSources || {};
         const roughPriceSeries = window.roughPriceSeries || {};
         const ipoAnalysis = window.ipoAnalysis || null;
 
         let sortMode = 'date';
         let searchTerm = '';
-        let capFilterMode = ipoAnalysis?.defaultFilter || 'gt25';
+        const DEFAULT_CAP_FILTER = 'gt50';
+        const DEFAULT_ANALYSIS_RANGE_MODE = 'd1ExtD2';
+        const DEFAULT_CARD_CHART_MODE = 'd1ExtD2';
+        const CARD_PAGE_SIZE = 10;
+
+        let capFilterMode = DEFAULT_CAP_FILTER;
         let tradingPlaceFilterMode = ipoAnalysis?.defaultTradingPlaceFilter || 'all';
         let upcomingIpoScopeMode = 'all';
-        const extendedChartTickers = new Set();
+        let analysisRangeMode = DEFAULT_ANALYSIS_RANGE_MODE;
+        let visibleCardLimit = CARD_PAGE_SIZE;
+        const chartModeByTicker = new Map();
         let imageModalTrigger = null;
         let chartModalTrigger = null;
         let chartModalTicker = null;
@@ -348,6 +364,12 @@
         const UPCOMING_IPO_FETCH_URL = `https://r.jina.ai/http://${UPCOMING_IPO_SOURCE_URL}`;
         const UPCOMING_IPO_CACHE_KEY = 'ipo-upcoming-calendar-v1';
         const UPCOMING_IPO_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+        const CURRENT_QUOTE_CACHE_KEY = 'ipo-yahoo-current-quotes-v1';
+        const CURRENT_QUOTE_CACHE_TTL_MS = 2 * 60 * 1000;
+        const CURRENT_QUOTE_BATCH_SIZE = 5;
+        const CURRENT_QUOTE_BATCH_DELAY_MS = 175;
+        const YAHOO_REQUEST_RETRY_DELAYS_MS = [900, 2200];
+        const YAHOO_RETRYABLE_STATUS_CODES = new Set([403, 408, 425, 429, 500, 502, 503, 504, 999]);
         let upcomingIpos = [];
         let upcomingIpoCacheMeta = {
             state: 'loading',
@@ -356,6 +378,294 @@
             error: '',
             stale: false
         };
+        let currentQuoteRefreshTimer = null;
+        const currentQuoteRefreshState = {
+            running: false,
+            refreshed: 0,
+            cached: 0,
+            failed: 0,
+            lastError: '',
+            updatedAt: null
+        };
+        window.ipoCurrentQuoteRefreshState = currentQuoteRefreshState;
+
+        function normalizedTicker(ticker) {
+            return String(ticker || '').trim().toUpperCase();
+        }
+
+        function yahooSymbol(ticker) {
+            return normalizedTicker(ticker).replace(/-/g, '.');
+        }
+
+        function ipoBasePath() {
+            const baseHref = document.querySelector('base')?.getAttribute('href');
+            if (baseHref) return new URL(baseHref, window.location.origin).pathname.replace(/\/?$/, '/');
+            return window.location.pathname.startsWith('/ipo') ? '/ipo/' : '/';
+        }
+
+        function yahooProxyBaseUrl() {
+            if (window.IPO_YAHOO_PROXY_BASE) return String(window.IPO_YAHOO_PROXY_BASE).replace(/\/$/, '');
+            const localHost = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+            if (localHost) return 'http://localhost:8787/ipo/api/yahoo';
+            return `${window.location.origin}${ipoBasePath()}api/yahoo`.replace(/\/$/, '');
+        }
+
+        function yahooChartQuoteUrl(ticker) {
+            const params = new URLSearchParams({
+                interval: '1m',
+                range: '1d',
+                includePrePost: 'true',
+                _t: String(Date.now()),
+                _r: Math.random().toString(36).slice(2)
+            });
+            return `${yahooProxyBaseUrl()}/v8/finance/chart/${encodeURIComponent(yahooSymbol(ticker))}?${params.toString()}`;
+        }
+
+        function isoFromUnixSeconds(timestamp) {
+            const seconds = Number(timestamp);
+            if (!Number.isFinite(seconds) || seconds <= 0) return null;
+            return new Date(seconds * 1000).toISOString();
+        }
+
+        function parseIsoDate(value) {
+            if (!value) return null;
+            const time = Date.parse(value);
+            return Number.isFinite(time) ? time : null;
+        }
+
+        function normalizeRuntimeQuote(quote) {
+            if (!quote || typeof quote !== 'object') return null;
+            const price = Number(quote.price);
+            if (!Number.isFinite(price) || price <= 0) return null;
+            return {
+                price: Math.round(price * 10000) / 10000,
+                asOf: quote.asOf || null,
+                source: quote.source || 'Yahoo regularMarketPrice',
+                currency: quote.currency || 'USD'
+            };
+        }
+
+        function loadRuntimeCurrentQuoteCache() {
+            try {
+                const parsed = JSON.parse(localStorage.getItem(CURRENT_QUOTE_CACHE_KEY) || '{}');
+                return {
+                    version: 1,
+                    bundledLoadedAt: parsed.bundledLoadedAt || null,
+                    quotes: parsed && typeof parsed.quotes === 'object' && parsed.quotes ? parsed.quotes : {}
+                };
+            } catch {
+                return { version: 1, bundledLoadedAt: null, quotes: {} };
+            }
+        }
+
+        function saveRuntimeCurrentQuoteCache(cache) {
+            try {
+                localStorage.setItem(CURRENT_QUOTE_CACHE_KEY, JSON.stringify({
+                    version: 1,
+                    bundledLoadedAt: cache.bundledLoadedAt || null,
+                    quotes: cache.quotes || {}
+                }));
+            } catch {
+                // Local storage can be unavailable in strict privacy modes; the page still works from generated data.
+            }
+        }
+
+        function runtimeCachedQuote(cache, ticker, maxAgeMs = CURRENT_QUOTE_CACHE_TTL_MS) {
+            const entry = cache?.quotes?.[normalizedTicker(ticker)];
+            const quote = normalizeRuntimeQuote(entry);
+            if (!quote) return null;
+            if (maxAgeMs == null) return quote;
+            const fetchedAt = parseIsoDate(entry?.fetchedAt);
+            if (!Number.isFinite(fetchedAt)) return null;
+            return Date.now() - fetchedAt <= maxAgeMs ? quote : null;
+        }
+
+        function rememberRuntimeCurrentQuote(cache, ticker, quote) {
+            const normalized = normalizeRuntimeQuote(quote);
+            if (!normalized) return false;
+            cache.quotes[normalizedTicker(ticker)] = {
+                ...normalized,
+                fetchedAt: new Date().toISOString()
+            };
+            return true;
+        }
+
+        function applyRuntimeCurrentQuote(ipo, quote) {
+            const normalized = normalizeRuntimeQuote(quote);
+            if (!ipo || !normalized) return false;
+            const previous = Number(ipo.current);
+            ipo.current = normalized.price;
+            ipo.currentAsOf = normalized.asOf;
+            ipo.currentSource = normalized.source;
+            ipo.currentCurrency = normalized.currency;
+            const ipoPrice = Number(ipo.ipoPrice);
+            if (Number.isFinite(ipoPrice) && ipoPrice > 0) {
+                ipo.dayChange = (normalized.price - ipoPrice) / ipoPrice * 100;
+            }
+            return !Number.isFinite(previous) || Math.abs(previous - normalized.price) > 0.0001;
+        }
+
+        async function seedRuntimeCurrentQuoteCache(cache) {
+            if (cache.bundledLoadedAt === IPO_ASSET_VERSION) return false;
+            try {
+                const response = await fetch(`current-price-cache.json?v=${encodeURIComponent(IPO_ASSET_VERSION)}`, { cache: 'force-cache' });
+                if (!response.ok) return false;
+                const data = await response.json();
+                const quotes = data?.quotes && typeof data.quotes === 'object' ? data.quotes : {};
+                let changed = false;
+                Object.entries(quotes).forEach(([ticker, quote]) => {
+                    const key = normalizedTicker(ticker);
+                    const existingTime = parseIsoDate(cache.quotes[key]?.fetchedAt) || 0;
+                    const quoteTime = parseIsoDate(quote?.fetchedAt) || 0;
+                    if (!cache.quotes[key] || quoteTime > existingTime) {
+                        cache.quotes[key] = quote;
+                        changed = true;
+                    }
+                });
+                cache.bundledLoadedAt = IPO_ASSET_VERSION;
+                if (changed) saveRuntimeCurrentQuoteCache(cache);
+                return changed;
+            } catch {
+                return false;
+            }
+        }
+
+        async function fetchYahooCurrentQuoteChart(ticker) {
+            const response = await fetch(yahooChartQuoteUrl(ticker), { cache: 'no-store', mode: 'cors' });
+            if (!response.ok) {
+                const error = new Error(`Yahoo chart HTTP ${response.status}`);
+                error.status = response.status;
+                throw error;
+            }
+            const data = await response.json();
+            const result = data?.chart?.result?.[0];
+            if (!result) throw new Error(data?.chart?.error?.description || 'Yahoo chart returned no result');
+            const meta = result.meta || {};
+            const quote = result.indicators?.quote?.[0] || {};
+            const closes = (quote.close || []).filter(value => Number.isFinite(Number(value)));
+            const timestamps = result.timestamp || [];
+            const fallbackPrice = closes.length ? Number(closes[closes.length - 1]) : null;
+            const fallbackTime = closes.length ? timestamps[timestamps.length - 1] : null;
+            const price = Number(meta.regularMarketPrice ?? fallbackPrice);
+            const latestPrice = Number.isFinite(Number(fallbackPrice)) && fallbackPrice > 0 ? Number(fallbackPrice) : price;
+            const latestTime = fallbackPrice ? fallbackTime : meta.regularMarketTime;
+            if (!Number.isFinite(price) || price <= 0) return null;
+            return {
+                price: latestPrice,
+                asOf: isoFromUnixSeconds(latestTime),
+                source: 'Yahoo chart latest',
+                currency: meta.currency || 'USD'
+            };
+        }
+
+        function yahooFetchRetryable(error) {
+            return YAHOO_RETRYABLE_STATUS_CODES.has(Number(error?.status)) || /rate|429|999|timeout|failed/i.test(String(error?.message || error));
+        }
+
+        function yahooRetryDelayMs(attempt) {
+            const base = YAHOO_REQUEST_RETRY_DELAYS_MS[Math.min(attempt, YAHOO_REQUEST_RETRY_DELAYS_MS.length - 1)] || 0;
+            return base + Math.round(Math.random() * 250);
+        }
+
+        async function fetchYahooCurrentQuoteWithRetry(ticker) {
+            for (let attempt = 0; attempt <= YAHOO_REQUEST_RETRY_DELAYS_MS.length; attempt += 1) {
+                try {
+                    return await fetchYahooCurrentQuoteChart(ticker);
+                } catch (error) {
+                    if (!yahooFetchRetryable(error) || attempt >= YAHOO_REQUEST_RETRY_DELAYS_MS.length) throw error;
+                    await new Promise(resolve => window.setTimeout(resolve, yahooRetryDelayMs(attempt)));
+                }
+            }
+            return null;
+        }
+
+        async function fetchYahooCurrentQuotes(tickers) {
+            const entries = await Promise.allSettled(tickers.map(async ticker => [normalizedTicker(ticker), await fetchYahooCurrentQuoteWithRetry(ticker)]));
+            const quotes = new Map();
+            entries.forEach(entry => {
+                if (entry.status === 'fulfilled' && entry.value[1]) quotes.set(entry.value[0], entry.value[1]);
+            });
+            return quotes;
+        }
+
+        function uniqueCurrentQuoteIpos() {
+            const seen = new Set();
+            return [
+                ...visibleIpos().slice(0, visibleCardLimit),
+                ...exactChartIpos()
+            ].filter(ipo => {
+                const key = normalizedTicker(ipo.ticker);
+                if (!key || seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+        }
+
+        function changedCurrentQuoteTouchesView(tickers) {
+            if (!tickers?.length) return false;
+            const changed = new Set(tickers.map(normalizedTicker));
+            const analysis = currentAnalysis();
+            const analysisTickers = new Set((analysis?.records || []).map(record => normalizedTicker(record.ticker)));
+            if ([...changed].some(ticker => analysisTickers.has(ticker))) return true;
+            if (chartModalTicker && changed.has(normalizedTicker(chartModalTicker))) return true;
+            return visibleIpos().slice(0, visibleCardLimit).some(ipo => changed.has(normalizedTicker(ipo.ticker)));
+        }
+
+        function scheduleCurrentQuoteRender(changedTickers) {
+            if (!changedCurrentQuoteTouchesView(changedTickers)) return;
+            if (currentQuoteRefreshTimer) return;
+            currentQuoteRefreshTimer = window.setTimeout(() => {
+                currentQuoteRefreshTimer = null;
+                renderAnalysis();
+                renderCards();
+                if (chartModalTicker) setChartModal(true, chartModalTicker);
+            }, 120);
+        }
+
+        async function refreshRuntimeCurrentQuotes() {
+            if (currentQuoteRefreshState.running) return;
+            currentQuoteRefreshState.running = true;
+            currentQuoteRefreshState.lastError = '';
+            const cache = loadRuntimeCurrentQuoteCache();
+            await seedRuntimeCurrentQuoteCache(cache);
+            const targets = uniqueCurrentQuoteIpos();
+            const cachedChanged = [];
+            targets.forEach(ipo => {
+                const quote = runtimeCachedQuote(cache, ipo.ticker, CURRENT_QUOTE_CACHE_TTL_MS);
+                if (quote && applyRuntimeCurrentQuote(ipo, quote)) cachedChanged.push(ipo.ticker);
+            });
+            currentQuoteRefreshState.cached = cachedChanged.length;
+            scheduleCurrentQuoteRender(cachedChanged);
+
+            const staleTargets = targets.filter(ipo => !runtimeCachedQuote(cache, ipo.ticker, CURRENT_QUOTE_CACHE_TTL_MS));
+            for (let index = 0; index < staleTargets.length; index += CURRENT_QUOTE_BATCH_SIZE) {
+                const batch = staleTargets.slice(index, index + CURRENT_QUOTE_BATCH_SIZE);
+                try {
+                    const quotes = await fetchYahooCurrentQuotes(batch.map(ipo => ipo.ticker));
+                    const changed = [];
+                    batch.forEach(ipo => {
+                        const quote = quotes.get(normalizedTicker(ipo.ticker)) || quotes.get(yahooSymbol(ipo.ticker));
+                        if (!quote) return;
+                        rememberRuntimeCurrentQuote(cache, ipo.ticker, quote);
+                        if (applyRuntimeCurrentQuote(ipo, quote)) changed.push(ipo.ticker);
+                    });
+                    if (changed.length) {
+                        currentQuoteRefreshState.refreshed += changed.length;
+                        currentQuoteRefreshState.updatedAt = new Date().toISOString();
+                        saveRuntimeCurrentQuoteCache(cache);
+                        scheduleCurrentQuoteRender(changed);
+                    }
+                } catch (error) {
+                    currentQuoteRefreshState.failed += batch.length;
+                    currentQuoteRefreshState.lastError = String(error?.message || error);
+                    break;
+                }
+                if (index + CURRENT_QUOTE_BATCH_SIZE < staleTargets.length) {
+                    await new Promise(resolve => window.setTimeout(resolve, CURRENT_QUOTE_BATCH_DELAY_MS));
+                }
+            }
+            currentQuoteRefreshState.running = false;
+        }
 
         function timeToMinutes(time) {
             if (!time) return null;
@@ -948,46 +1258,106 @@
             return labels.length ? labels.join(' + ') : '';
         }
 
-        function chartTitleLabel(isExtended) {
-            return isExtended ? 'first-day + extended candles' : 'first-day intraday candles';
+        function normalizeChartMode(mode = 'day1') {
+            if (mode === true || mode === 'extended') return 'd1Ext';
+            if (mode === 'day2') return 'd1ExtD2';
+            if (['day1', 'd1Ext', 'd1ExtD2', 'd1D2', 'd2'].includes(mode)) return mode;
+            return 'day1';
+        }
+
+        function chartTitleLabel(mode = 'day1') {
+            const chartMode = normalizeChartMode(mode);
+            if (chartMode === 'd2') return 'day-two candles';
+            if (chartMode === 'd1D2') return 'day-one + day-two candles';
+            if (chartMode === 'd1ExtD2') return 'day-one + extended + day-two candles';
+            if (chartMode === 'd1Ext') return 'day-one + extended candles';
+            return 'first-day intraday candles';
+        }
+
+        function chartModeShortLabel(mode = 'day1') {
+            const chartMode = normalizeChartMode(mode);
+            if (chartMode === 'd2') return 'D2';
+            if (chartMode === 'd1D2') return 'D1 D2';
+            if (chartMode === 'd1ExtD2') return 'D1 Ext D2';
+            if (chartMode === 'd1Ext') return 'D1 Ext';
+            return 'D1';
         }
 
         function chartExtendedCount(ipo) {
             return rawExtendedBars(ipo).length;
         }
 
-        function extendedChartCapableTickers() {
-            return exactChartIpos()
-                .filter(hasExtendedChartData)
-                .map(ipo => ipo.ticker);
+        function chartSecondDayCount(ipo) {
+            return rawSecondDayBars(ipo).length;
         }
 
-        function chartModeSummary() {
-            const tickers = extendedChartCapableTickers();
-            const active = tickers.filter(ticker => extendedChartTickers.has(ticker)).length;
-            const state = active === 0 ? 'day1' : (active === tickers.length ? 'extended' : 'mixed');
-            return { tickers, active, total: tickers.length, state };
+        function chartModeCapable(ipo, mode) {
+            const chartMode = normalizeChartMode(mode);
+            if (chartMode === 'd2' || chartMode === 'd1D2') return hasSecondDayChartData(ipo);
+            if (chartMode === 'd1ExtD2') return hasExtendedChartData(ipo) && hasSecondDayChartData(ipo);
+            if (chartMode === 'd1Ext') return hasExtendedChartData(ipo);
+            return hasExactChartData(ipo);
         }
 
-        function chartHasExtendedMode(ipo) {
-            return hasExtendedChartData(ipo) && extendedChartTickers.has(ipo.ticker);
+        function chartModeForCard(ipo) {
+            const requested = normalizeChartMode(chartModeByTicker.has(ipo.ticker)
+                ? chartModeByTicker.get(ipo.ticker)
+                : DEFAULT_CARD_CHART_MODE);
+            return chartModeCapable(ipo, requested) ? requested : 'day1';
         }
 
         function chartDataForCard(ipo) {
-            return chartData(ipo, chartHasExtendedMode(ipo));
+            return chartData(ipo, chartModeForCard(ipo));
         }
 
         function chartToggleHtml(ipo) {
-            const hasExtended = hasExtendedChartData(ipo);
-            const active = chartHasExtendedMode(ipo);
-            const count = chartExtendedCount(ipo);
-            const title = hasExtended
-                ? `${active ? 'Hide' : 'Show'} ${count} extended Alpaca candles through the next regular-session open`
-                : 'No Alpaca extended candles available';
-            return `<button type="button" role="switch" aria-checked="${active ? 'true' : 'false'}" aria-label="Show extended trading candles for ${escapeHtml(ipo.ticker)}" title="${escapeHtml(title)}" data-chart-extended-toggle="${escapeHtml(ipo.ticker)}" ${hasExtended ? '' : 'disabled'} class="h-9 rounded-xl border border-zinc-700 bg-zinc-950/90 p-1 text-[11px] font-semibold shadow-lg backdrop-blur grid grid-cols-2 gap-1 ${hasExtended ? 'text-zinc-300' : 'text-zinc-600 cursor-not-allowed'}">
-                <span class="rounded-lg px-2 flex items-center justify-center ${active ? 'text-zinc-500' : 'bg-blue-600 text-white'}">Day 1</span>
-                <span class="rounded-lg px-2 flex items-center justify-center ${active ? 'bg-blue-600 text-white' : 'text-zinc-400'}">Ext</span>
-            </button>`;
+            const activeMode = chartModeForCard(ipo);
+            const configs = [
+                {
+                    mode: 'day1',
+                    label: 'D1',
+                    title: `${ipo.ticker} first public trading day candles`,
+                    disabled: false
+                },
+                {
+                    mode: 'd1Ext',
+                    label: 'D1 Ext',
+                    title: hasExtendedChartData(ipo)
+                        ? `${ipo.ticker} Day 1 plus ${chartExtendedCount(ipo)} extended Alpaca candles through the next regular-session open`
+                        : `No extended Alpaca candles available for ${ipo.ticker}`,
+                    disabled: !hasExtendedChartData(ipo)
+                },
+                {
+                    mode: 'd1ExtD2',
+                    label: 'D1 Ext D2',
+                    title: hasExtendedChartData(ipo) && hasSecondDayChartData(ipo)
+                        ? `${ipo.ticker} Day 1 start through Day 2 end, including extended-session and ${chartSecondDayCount(ipo)} second-day Alpaca candles`
+                        : `No complete Day 1 + extended + Day 2 Alpaca candles available for ${ipo.ticker}`,
+                    disabled: !(hasExtendedChartData(ipo) && hasSecondDayChartData(ipo))
+                },
+                {
+                    mode: 'd1D2',
+                    label: 'D1 D2',
+                    title: hasSecondDayChartData(ipo)
+                        ? `${ipo.ticker} Day 1 and Day 2 regular-session candles, without extended-session candles`
+                        : `No second-day Alpaca candles available for ${ipo.ticker}`,
+                    disabled: !hasSecondDayChartData(ipo)
+                },
+                {
+                    mode: 'd2',
+                    label: 'D2',
+                    title: hasSecondDayChartData(ipo)
+                        ? `${ipo.ticker} Day 2 regular-session candles only`
+                        : `No second-day Alpaca candles available for ${ipo.ticker}`,
+                    disabled: !hasSecondDayChartData(ipo)
+                }
+            ];
+            return `<div role="group" aria-label="Chart data mode for ${escapeHtml(ipo.ticker)}" class="h-10 rounded-xl border border-zinc-700 bg-zinc-950/90 p-1 text-[10px] font-semibold shadow-lg backdrop-blur grid grid-cols-5 gap-1 text-zinc-300">
+                ${configs.map(config => {
+                    const active = config.mode === activeMode;
+                    return `<button type="button" aria-pressed="${active ? 'true' : 'false'}" title="${escapeHtml(config.title)}" data-chart-card-mode="${config.mode}" data-chart-ticker="${escapeHtml(ipo.ticker)}" ${config.disabled ? 'disabled' : ''} class="min-w-0 rounded-lg px-1 flex items-center justify-center text-center leading-3 transition-colors ${active ? 'bg-blue-600 text-white' : config.disabled ? 'text-zinc-600 cursor-not-allowed' : 'text-zinc-400 hover:text-zinc-200'}">${escapeHtml(config.label)}</button>`;
+                }).join('')}
+            </div>`;
         }
 
         function chartEnlargeButtonHtml(ipo) {
@@ -998,14 +1368,14 @@
 
         function chartFrameHtml(ipo) {
             const displayData = chartDataForCard(ipo);
-            const active = chartHasExtendedMode(ipo);
+            const activeMode = chartModeForCard(ipo);
             return `<div class="bg-zinc-950 rounded-2xl border border-zinc-800 overflow-hidden">
                 <div class="flex items-center justify-between gap-3 border-b border-zinc-800 bg-zinc-950 px-3 py-2">
                     ${chartEnlargeButtonHtml(ipo)}
                     ${chartToggleHtml(ipo)}
                 </div>
                 <div class="h-[586px] sm:h-[691px]">
-                    ${renderChart(ipo, displayData, { extended: active })}
+                    ${renderChart(ipo, displayData, { mode: activeMode })}
                 </div>
             </div>`;
         }
@@ -1035,20 +1405,26 @@
             if (previous.session === 'extended' || point.session === 'extended') {
                 return isOvernightExtendedGap(previous, point);
             }
+            if (previous.session === 'secondDay' || point.session === 'secondDay') {
+                return previous.date !== point.date;
+            }
             return true;
         }
 
-        function compressedChartTimeline(data, compact) {
+        function compressedChartTimeline(data, compact, options = {}) {
             const points = [];
             const gaps = [];
             let plot = 0;
             const gapSlotWidth = compact ? 2.35 : 3.4;
+            const noGaps = Boolean(options.noGaps);
             data.forEach((point, index) => {
                 let visibleGapBefore = false;
                 if (index > 0) {
                     const previous = data[index - 1];
                     const delta = Number(point.minute) - Number(previous.minute);
-                    if (delta > CHART_INTERVAL_MINUTES * 1.5) {
+                    if (noGaps) {
+                        plot += 1;
+                    } else if (delta > CHART_INTERVAL_MINUTES * 1.5) {
                         const skippedMinutes = Math.max(0, delta - CHART_INTERVAL_MINUTES);
                         const fromPlot = plot;
                         visibleGapBefore = isVisibleChartGap(previous, point, skippedMinutes);
@@ -1098,6 +1474,7 @@
             const mod = minuteOfDay(point.minute);
             if (!Number.isFinite(mod)) return 'regular';
             const isLaterDate = point.date && point.date !== ipo.date;
+            if (point.session === 'secondDay') return 'secondDay';
             if (point.session === 'extended') {
                 if (isLaterDate && mod < MARKET_OPEN_MINUTES) return 'premarket';
                 if (isLaterDate && mod >= MARKET_OPEN_MINUTES) return 'secondOpen';
@@ -1135,7 +1512,7 @@
                 const farEnough = !previous || tick.plot - previous.plot >= minPlotGap;
                 if (farEnough) {
                     filtered.push(tick);
-                } else if ((tick.priority || 0) >= (previous.priority || 0)) {
+                } else if ((tick.priority || 0) > (previous.priority || 0)) {
                     filtered[filtered.length - 1] = tick;
                 }
             });
@@ -1170,7 +1547,7 @@
             return filterChartAxisTicks(ticks, timeline, plotW, compact ? 48 : 72);
         }
 
-        function chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended, premarketStartByDate = new Map()) {
+        function chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended, sessionStartByKey = new Map()) {
             const group = tick.group || chartSessionGroup(ipo, tick);
             const mod = minuteOfDay(tick.minute);
             if (isExtended && group === 'afterHours') {
@@ -1184,11 +1561,21 @@
                 };
             }
             if (isExtended && (group === 'premarket' || group === 'secondOpen')) {
-                const startMinute = premarketStartByDate.get(tick.date || '') ?? tick.minute;
+                const startMinute = sessionStartByKey.get(`premarket:${tick.date || ''}`) ?? tick.minute;
                 const delta = tick.minute - startMinute;
                 return {
                     label: elapsedAxisLabel(delta),
                     color: '#93c5fd',
+                    major: Math.round(delta) === 0 || Math.round(delta) % 60 === 0,
+                    priority: Math.round(delta) === 0 ? 6 : (Math.round(delta) % 60 === 0 ? 3 : 2)
+                };
+            }
+            if (isExtended && group === 'secondDay') {
+                const startMinute = sessionStartByKey.get(`secondDay:${tick.date || ''}`) ?? tick.minute;
+                const delta = tick.minute - startMinute;
+                return {
+                    label: elapsedAxisLabel(delta),
+                    color: '#bfdbfe',
                     major: Math.round(delta) === 0 || Math.round(delta) % 60 === 0,
                     priority: Math.round(delta) === 0 ? 6 : (Math.round(delta) % 60 === 0 ? 3 : 2)
                 };
@@ -1211,16 +1598,16 @@
             const firstMinute = points[0]?.minute;
             const candidates = new Map();
             const segments = chartTimelineSegments(ipo, timeline);
-            const premarketStartByDate = new Map();
+            const sessionStartByKey = new Map();
             segments.forEach(segment => {
-                if (segment.group !== 'premarket') return;
+                if (!['premarket', 'secondDay'].includes(segment.group)) return;
                 const first = segment.points[0];
                 if (!first || !Number.isFinite(first.minute)) return;
-                premarketStartByDate.set(first.date || '', first.minute);
+                sessionStartByKey.set(`${segment.group}:${first.date || ''}`, first.minute);
             });
             const add = tick => {
                 if (!tick || !Number.isFinite(tick.minute) || !Number.isFinite(tick.plot)) return;
-                const meta = chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended, premarketStartByDate);
+                const meta = chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended, sessionStartByKey);
                 if (!meta || !meta.label) return;
                 candidates.set(`${Math.round(tick.minute)}:${tick.group || ''}`, { ...tick, ...meta });
             };
@@ -1235,7 +1622,7 @@
                     priority: 5
                 };
                 if (segment.group === 'regular' || segment.group === 'afterHours') add(special);
-                if (segment.group === 'secondOpen') add(special);
+                if (segment.group === 'secondOpen' || segment.group === 'secondDay') add(special);
             });
             const minPixelGap = compact ? 32 : 42;
             const grouped = new Map();
@@ -1394,8 +1781,17 @@
             return Array.isArray(rows) ? rows : [];
         }
 
+        function rawSecondDayBars(ipo) {
+            const rows = secondDayBars[ipo.ticker];
+            return Array.isArray(rows) ? rows : [];
+        }
+
         function hasExtendedChartData(ipo) {
             return rawExtendedBars(ipo).length > 0;
+        }
+
+        function hasSecondDayChartData(ipo) {
+            return rawSecondDayBars(ipo).length > 0;
         }
 
         function minuteOfDay(minute) {
@@ -1440,6 +1836,13 @@
                 .sort((a, b) => a.minute - b.minute);
         }
 
+        function secondDayChartData(ipo) {
+            return rawSecondDayBars(ipo)
+                .map((row, index) => chartPointFromRow(row, index, ipo, secondDayBarSources[ipo.ticker] || 'Alpaca second-day 5m bars', 'secondDay'))
+                .filter(row => Number.isFinite(row.minute))
+                .sort((a, b) => a.minute - b.minute);
+        }
+
         function milestoneFromBar(bar, field, id, label) {
             const price = Number(bar?.[field]);
             if (!bar || !Number.isFinite(price) || price <= 0) return null;
@@ -1479,17 +1882,53 @@
             return {
                 afterEnd: milestoneFromBar(afterEndBar, 'close', 'afterEnd', 'After End'),
                 preSecond: milestoneFromBar(preSecondBar, 'open', 'preSecond', 'Pre D2'),
-                openSecond: milestoneFromBar(openSecondBar, 'open', 'openSecond', 'Open D2')
+                openSecond: milestoneFromBar(openSecondBar, 'open', 'openSecond', 'D2')
             };
         }
 
-        function chartData(ipo, includeExtended = false) {
+        function secondDaySessionMilestones(ipo) {
+            const dayTwo = secondDayChartData(ipo);
+            const openSecondBar = dayTwo
+                .filter(bar => Number.isFinite(Number(bar.open)) && Number(bar.open) > 0)
+                .sort((a, b) => a.minute - b.minute)[0] || null;
+            const endSecondBar = dayTwo
+                .filter(bar => Number.isFinite(Number(bar.close)) && Number(bar.close) > 0)
+                .sort((a, b) => b.minute - a.minute)[0] || null;
+            return {
+                openSecond: milestoneFromBar(openSecondBar, 'open', 'openSecond', 'D2'),
+                endSecond: milestoneFromBar(endSecondBar, 'close', 'endSecond', 'End D2')
+            };
+        }
+
+        function combinedSessionMilestones(ipo) {
+            const extended = extendedSessionMilestones(ipo);
+            const secondDay = secondDaySessionMilestones(ipo);
+            return {
+                ...extended,
+                openSecond: secondDay.openSecond || extended.openSecond,
+                endSecond: secondDay.endSecond
+            };
+        }
+
+        function chartData(ipo, mode = 'day1') {
+            const chartMode = normalizeChartMode(mode);
             const realBars = rawFiveMinuteBars(ipo);
-            if (!realBars.length) return [];
+            const extendedBars = rawExtendedBars(ipo);
+            const secondBars = rawSecondDayBars(ipo);
+            const includeFirstDay = chartMode !== 'd2';
+            const includeExtended = chartMode === 'd1Ext' || chartMode === 'd1ExtD2';
+            const includeSecondDay = chartMode === 'd1ExtD2' || chartMode === 'd1D2' || chartMode === 'd2';
+            if (includeFirstDay && !realBars.length) return [];
+            if (!includeFirstDay && !secondBars.length) return [];
             const rows = [
-                ...realBars.map((row, index) => chartPointFromRow(row, index, ipo, firstDayBarSources[ipo.ticker] || '5m bars', 'regular')),
+                ...(includeFirstDay
+                    ? realBars.map((row, index) => chartPointFromRow(row, index, ipo, firstDayBarSources[ipo.ticker] || '5m bars', 'regular'))
+                    : []),
                 ...(includeExtended
-                    ? rawExtendedBars(ipo).map((row, index) => chartPointFromRow(row, realBars.length + index, ipo, extendedDayBarSources[ipo.ticker] || 'Alpaca extended 5m bars', 'extended'))
+                    ? extendedBars.map((row, index) => chartPointFromRow(row, realBars.length + index, ipo, extendedDayBarSources[ipo.ticker] || 'Alpaca extended 5m bars', 'extended'))
+                    : []),
+                ...(includeSecondDay
+                    ? secondBars.map((row, index) => chartPointFromRow(row, realBars.length + extendedBars.length + index, ipo, secondDayBarSources[ipo.ticker] || 'Alpaca second-day 5m bars', 'secondDay'))
                     : [])
             ];
             const byTime = new Map();
@@ -1523,7 +1962,7 @@
 
         function medianTimingQuote(data) {
             const firstMinute = data[0]?.minute;
-            const medianDeltaMinutes = Number(currentAnalysis()?.medianDeltaMinutes);
+            const medianDeltaMinutes = Number(baseAnalysisForFilter()?.medianDeltaMinutes);
             if (!Number.isFinite(firstMinute) || !Number.isFinite(medianDeltaMinutes)) return null;
             const targetMinute = firstMinute + medianDeltaMinutes;
             const valid = data
@@ -1559,6 +1998,24 @@
                 lowPoint,
                 markers: markers.sort((a, b) => a.minute - b.minute)
             };
+        }
+
+        function secondDayOpenMinuteForChart(ipo, data) {
+            const secondDayPoints = (data || [])
+                .filter(point => {
+                    const group = chartSessionGroup(ipo, point);
+                    return (group === 'secondDay' || group === 'secondOpen') && Number.isFinite(point.minute);
+                })
+                .sort((a, b) => a.minute - b.minute);
+            return secondDayPoints[0]?.minute ?? null;
+        }
+
+        function chartLowMarkerElapsedLabel(ipo, point, firstMinute, secondDayOpenMinute) {
+            const group = chartSessionGroup(ipo, point);
+            const referenceMinute = (group === 'secondDay' || group === 'secondOpen') && Number.isFinite(secondDayOpenMinute)
+                ? secondDayOpenMinute
+                : firstMinute;
+            return formatElapsedMinutes(point.minute - referenceMinute);
         }
 
         function buyTimingMetric(ipo, data) {
@@ -1624,8 +2081,11 @@
             const compact = window.matchMedia('(max-width: 640px)').matches;
             const W = compact ? 420 : 1040;
             const H = compact ? 820 : 655;
-            const isExtended = Boolean(options.extended);
-            const titleLabel = chartTitleLabel(isExtended);
+            const chartMode = normalizeChartMode(options.mode || (options.extended ? 'extended' : 'day1'));
+            const isExtended = chartMode !== 'day1';
+            const hasDayTwo = chartMode === 'd1ExtD2' || chartMode === 'd1D2' || chartMode === 'd2';
+            const noGaps = chartMode !== 'day1' && chartMode !== 'd2';
+            const titleLabel = chartTitleLabel(chartMode);
             if (!data.length) {
                 const titleSize = compact ? 10 : 13;
                 const bodySize = compact ? 12 : 15;
@@ -1644,7 +2104,7 @@
             const volumeTopY = axisBottomY - volumeH;
             const priceBottomY = volumeTopY - volumeGap;
             const pricePlotH = priceBottomY - mt;
-            const timeline = compressedChartTimeline(data, compact);
+            const timeline = compressedChartTimeline(data, compact, { noGaps });
             const chartPoints = timeline.points;
             const bottomGridPoints = chartBottomGridTickPoints(ipo, timeline);
             const bottomTickPoints = chartBottomTickPoints(ipo, timeline, compact, plotW, bottomGridPoints);
@@ -1662,6 +2122,7 @@
             const lowY = y(lowPoint.low);
             const firstMinute = chartPoints[0]?.minute;
             const lastMinute = chartPoints[chartPoints.length - 1]?.minute;
+            const secondDayOpenMinute = secondDayOpenMinuteForChart(ipo, chartPoints);
             const lowPriceLabel = `Low ${fmtUsd(lowPoint.low)}`;
             const tickLabelY = axisBottomY + (compact ? 17 : 17);
             const lowLabelBaseY = mt + (compact ? 33 : 31);
@@ -1669,7 +2130,7 @@
             const lowLabelRows = [];
             const lowLabelMinGap = compact ? 34 : 54;
             const lowLabelMaxRows = 2;
-            const analysisForChart = currentAnalysis();
+            const analysisForChart = baseAnalysisForFilter();
             const medianDeltaMinutes = Number(analysisForChart?.medianDeltaMinutes);
             const medianReferenceMinute = Number.isFinite(firstMinute) && Number.isFinite(medianDeltaMinutes)
                 ? firstMinute + medianDeltaMinutes
@@ -1704,7 +2165,9 @@
                     const major = Boolean(point.major);
                     return `<g><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(axisY - (major ? 8 : 6)).toFixed(1)}" y2="${axisY.toFixed(1)}" stroke="${color}" opacity="${major ? 0.95 : 0.75}"/><text x="${xx.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-size="${axisSize}" font-weight="${major ? 700 : 500}" fill="${color}">${escapeHtml(point.label)}</text></g>`;
                 }).join('');
-                const legendText = isExtended ? 'first trade · after-hours · premarket' : 'minutes from first trade';
+                const legendText = hasDayTwo
+                    ? (chartMode === 'd1D2' ? 'stitched D1 · D2 candles' : (chartMode === 'd2' ? 'D2 elapsed from open' : 'stitched D1 · extended · D2 candles'))
+                    : (isExtended ? 'first trade · after-hours · premarket' : 'minutes from first trade');
                 const legend = compact ? '' : `<text x="${W - mr}" y="${(mt - 30).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#71717a">${legendText}</text>`;
                 return `<g><title>${ipo.ticker} top axis uses first-trade elapsed time, after-hours elapsed time, and premarket elapsed time where available</title>${legend}<line x1="${xPlot(chartPoints[0].plot).toFixed(1)}" x2="${xPlot(chartPoints[chartPoints.length - 1].plot).toFixed(1)}" y1="${axisY.toFixed(1)}" y2="${axisY.toFixed(1)}" stroke="#52525b" stroke-width="1.2"/>${tickLabels}</g>`;
             })() : '';
@@ -1721,7 +2184,7 @@
             }).join('');
             const closeSegments = closeLineSegmentsFromBars(chartPoints, xPlot, y);
             const closeLine = closeSegments.length
-                ? `<g><title>${ipo.ticker} 5-minute close line; the extended overnight break is not connected</title>${closeSegments.map(segment => `<polyline points="${segment.join(' ')}" fill="none" stroke="#09090b" stroke-width="${compact ? 2.4 : 2.8}" stroke-linejoin="round" stroke-linecap="round" opacity="0.45"/><polyline points="${segment.join(' ')}" fill="none" stroke="#a1a1aa" stroke-width="${compact ? 0.75 : 0.9}" stroke-linejoin="round" stroke-linecap="round" opacity="0.82"/>`).join('')}</g>`
+                ? `<g><title>${ipo.ticker} 5-minute close line</title>${closeSegments.map(segment => `<polyline points="${segment.join(' ')}" fill="none" stroke="#09090b" stroke-width="${compact ? 2.4 : 2.8}" stroke-linejoin="round" stroke-linecap="round" opacity="0.45"/><polyline points="${segment.join(' ')}" fill="none" stroke="#a1a1aa" stroke-width="${compact ? 0.75 : 0.9}" stroke-linejoin="round" stroke-linecap="round" opacity="0.82"/>`).join('')}</g>`
                 : '';
             const maxVolume = Math.max(...chartPoints.map(d => Number(d.volume) || 0), 1);
             const volumeBars = chartPoints.map(d => {
@@ -1785,11 +2248,12 @@
                 lowLabelRows[row] = xx;
                 const labelX = Math.min(W - mr - 6, Math.max(ml + 6, xx));
                 const labelAnchor = labelX <= ml + 8 ? 'start' : labelX >= W - mr - 8 ? 'end' : 'middle';
-                const deltaLabel = formatElapsedMinutes(point.minute - firstMinute);
+                const deltaLabel = chartLowMarkerElapsedLabel(ipo, point, firstMinute, secondDayOpenMinute);
                 const labelY = lowLabelBaseY + row * lowLabelRowGap;
                 return `<g><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, point)} low ${fmtUsd(point.low)}</title><circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${isExactLow ? (compact ? 3.5 : 4.5) : (compact ? 2.8 : 3.5)}" fill="#f59e0b" stroke="#09090b" stroke-width="1.5" opacity="${isExactLow ? 1 : 0.78}"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#f59e0b" stroke-width="${isExactLow ? 0.95 : 0.7}" stroke-dasharray="4 5" opacity="${isExactLow ? 0.85 : 0.45}"/><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#09090b" stroke="#09090b" stroke-width="3" opacity="0.85">${deltaLabel}</text><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#fbbf24">${deltaLabel}</text></g>`;
             }).join('');
-            const medianReferenceLine = Number.isFinite(medianReferenceMinute) && medianReferenceMinute >= firstMinute && medianReferenceMinute <= lastMinute ? (() => {
+            const showMedianReferenceLine = chartMode !== 'd2';
+            const medianReferenceLine = showMedianReferenceLine && Number.isFinite(medianReferenceMinute) && medianReferenceMinute >= firstMinute && medianReferenceMinute <= lastMinute ? (() => {
                 const xx = xMinute(medianReferenceMinute);
                 const label = `Median ${formatElapsedPlain(medianDeltaMinutes)}`;
                 const labelNearRight = xx > W - mr - (compact ? 86 : 118);
@@ -1811,7 +2275,7 @@
             const priceReferenceLines = [
                 { label: 'Open', price: Number(data[0]?.open), color: '#a1a1aa', dash: '8 4', strokeWidth: compact ? 0.75 : 0.9, haloWidth: 2.2, plainLabel: true },
                 { label: 'IPO', price: Number(ipo.ipoPrice), color: '#c084fc', dash: '6 5', strokeWidth: compact ? 0.9 : 1.1, haloWidth: 3 },
-                { label: 'Current*', price: Number(ipo.current), color: '#22d3ee', dash: '3 5', strokeWidth: compact ? 0.9 : 1.1, haloWidth: 3 }
+                { label: 'Current', price: Number(ipo.current), color: '#22d3ee', dash: '3 5', strokeWidth: compact ? 0.9 : 1.1, haloWidth: 3 }
             ].filter(ref => Number.isFinite(ref.price) && ref.price >= rawMin && ref.price <= rawMax).map(ref => {
                 const yy = y(ref.price);
                 const labelText = ref.plainLabel ? ref.label : `${ref.label} ${fmtUsd(ref.price)}`;
@@ -1827,7 +2291,7 @@
             const lowPriceMarker = `<text x="${W - mr - 4}" y="${Math.max(mt + 14, lowY - 7).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#fbbf24">${lowPriceLabel}</text>`;
             const sourceLabel = chartSourceLabel(data);
             const visibleTitle = compact
-                ? `${ipo.ticker} ${isExtended ? 'extended' : 'candles'}${sourceLabel ? ` · ${sourceLabel}` : ''}`
+                ? `${ipo.ticker} ${chartModeShortLabel(chartMode)}${sourceLabel ? ` · ${sourceLabel}` : ''}`
                 : `${ipo.ticker} ${titleLabel}${sourceLabel ? ` · ${sourceLabel}` : ''}`;
             return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} ${titleLabel} chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${visibleTitle}</text>${extendedSessionBands}${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${gapBreaks}${elapsedAxis}${volumePanel}${lowGuideLines}${candles}${closeLine}${priceReferenceLines}${medianReferenceLine}${lowPriceMarker}${lowMarkers}<g class="chart-hover-layer">${hoverData}</g></svg>`;
         }
@@ -1859,15 +2323,17 @@
             const german = Number.isFinite(event.minute) ? germanLineLabel(germanTimeLabel(ipo.date, event.minute)) : '';
             if (!Number.isFinite(event.minute) || !Number.isFinite(firstMinute)) return [clock, german].filter(Boolean);
             if (event.elapsed) {
+                const referenceMinute = Number.isFinite(event.elapsedFromMinute) ? event.elapsedFromMinute : firstMinute;
                 return [
-                    [compactTimelineDuration(event.minute - firstMinute), clock].filter(Boolean).join(' · '),
+                    [compactTimelineDuration(event.minute - referenceMinute), clock].filter(Boolean).join(' · '),
                     german
                 ].filter(Boolean);
             }
             return [clock, german].filter(Boolean);
         }
 
-        function timelineLowEventFromMarker(marker, label, firstMinute, rankBase, index, showLabel) {
+        function timelineLowEventFromMarker(marker, label, firstMinute, rankBase, index, showLabel, elapsedFromMinute = null) {
+            const elapsedReference = Number.isFinite(elapsedFromMinute) ? elapsedFromMinute : firstMinute;
             return {
                 id: `${label.replace(/\s+/g, '').toLowerCase()}${index}`,
                 label: showLabel ? label : '',
@@ -1875,7 +2341,8 @@
                 minute: marker.minute,
                 date: marker.date,
                 clock: marker.time,
-                elapsed: Number.isFinite(firstMinute),
+                elapsed: Number.isFinite(elapsedReference),
+                elapsedFromMinute: Number.isFinite(elapsedReference) ? elapsedReference : null,
                 sortKey: marker.minute,
                 rank: rankBase + index / 100,
                 color: '#fbbf24',
@@ -1902,21 +2369,42 @@
             const configs = [
                 ['afterHours', 'AFTER LOW', 5.2],
                 ['premarket', 'PRE LOW', 6.2],
-                ['secondOpen', 'OPEN D2 (LOW)', 7.2]
+                ['secondOpen', 'D2 (LOW)', 7.2]
             ];
             return configs.flatMap(([group, label, rankBase]) => {
                 const markers = (groups.get(group) || []).sort((a, b) => a.minute - b.minute);
                 if (!markers.length) return [];
                 const lowest = markers.reduce((best, marker) => marker.low < best.low ? marker : best, markers[0]);
+                const elapsedFromMinute = group === 'secondOpen' ? markers[0].minute : firstMinute;
                 return markers.map((marker, index) => timelineLowEventFromMarker(
                     marker,
                     label,
                     firstMinute,
                     rankBase,
                     index,
-                    marker.minute === lowest.minute && Math.abs(marker.low - lowest.low) < 0.005
+                    marker.minute === lowest.minute && Math.abs(marker.low - lowest.low) < 0.005,
+                    elapsedFromMinute
                 ));
             });
+        }
+
+        function secondDayTimelineLowEvents(ipo, firstMinute) {
+            const dayTwo = secondDayChartData(ipo)
+                .filter(bar => Number.isFinite(bar.minute) && Number.isFinite(bar.low) && Number.isFinite(bar.high));
+            if (!dayTwo.length) return [];
+            const markers = chartLowPoints(dayTwo).markers.sort((a, b) => a.minute - b.minute);
+            if (!markers.length) return [];
+            const lowest = markers.reduce((best, marker) => marker.low < best.low ? marker : best, markers[0]);
+            const secondDayOpenMinute = secondDayOpenMinuteForChart(ipo, dayTwo);
+            return markers.map((marker, index) => timelineLowEventFromMarker(
+                marker,
+                'D2 LOW',
+                firstMinute,
+                7.6,
+                index,
+                marker.minute === lowest.minute && Math.abs(marker.low - lowest.low) < 0.005,
+                secondDayOpenMinute
+            ));
         }
 
         function cardPriceTimelineEvents(ipo, data, summary, medianQuote, extendedPrices) {
@@ -1930,14 +2418,19 @@
             const firstMinute = first.minute;
             const maxMinute = Math.max(
                 ...valid.map(bar => bar.minute).filter(Number.isFinite),
-                ...[extendedPrices.afterEnd, extendedPrices.preSecond, extendedPrices.openSecond]
+                ...[extendedPrices.afterEnd, extendedPrices.preSecond, extendedPrices.openSecond, extendedPrices.endSecond]
                     .map(milestone => Number(milestone?.bar?.minute))
                     .filter(Number.isFinite)
             );
             const extendedLowEvents = extendedTimelineLowEvents(ipo, firstMinute, valid);
+            const secondDayLowEvents = secondDayTimelineLowEvents(ipo, firstMinute);
             const openSecondMinute = Number(extendedPrices.openSecond?.bar?.minute);
             const openSecondLowAtOpen = extendedLowEvents.some(event =>
-                event.label === 'OPEN D2 (LOW)'
+                event.label === 'D2 (LOW)'
+                && Number.isFinite(openSecondMinute)
+                && event.minute === openSecondMinute
+            ) || secondDayLowEvents.some(event =>
+                event.label === 'D2 LOW'
                 && Number.isFinite(openSecondMinute)
                 && event.minute === openSecondMinute
             );
@@ -2007,9 +2500,11 @@
             [
                 ['afterEnd', 'AFTER END', '#22d3ee', 5],
                 ['preSecond', 'PRE D2', '#2dd4bf', 6],
-                ['openSecond', openSecondLowAtOpen ? 'OPEN D2 (LOW)' : 'OPEN D2', openSecondLowAtOpen ? '#fbbf24' : '#60a5fa', 7]
+                ['openSecond', openSecondLowAtOpen ? 'D2 (LOW)' : 'D2', openSecondLowAtOpen ? '#fbbf24' : '#60a5fa', 7],
+                ['endSecond', 'END D2', '#34d399', 8]
             ].forEach(([id, label, color, rank]) => {
                 const milestone = extendedPrices[id];
+                const isOpenSecondLowEvent = id === 'openSecond' && openSecondLowAtOpen && Number.isFinite(milestone?.bar?.minute);
                 addEvent({
                     id,
                     label,
@@ -2017,20 +2512,24 @@
                     minute: milestone?.bar?.minute,
                     date: milestone?.bar?.date,
                     clock: milestone?.time,
+                    ...(isOpenSecondLowEvent ? { elapsed: true, elapsedFromMinute: milestone.bar.minute } : {}),
                     sortKey: Number.isFinite(milestone?.bar?.minute) ? milestone.bar.minute : maxMinute + rank * 30,
                     rank,
                     color
                 });
             });
             extendedLowEvents
-                .filter(event => !(openSecondLowAtOpen && event.label === 'OPEN D2 (LOW)' && event.minute === openSecondMinute))
+                .filter(event => !(openSecondLowAtOpen && event.label === 'D2 (LOW)' && event.minute === openSecondMinute))
+                .forEach(addEvent);
+            secondDayLowEvents
+                .filter(event => !(openSecondLowAtOpen && event.minute === openSecondMinute))
                 .forEach(addEvent);
             addEvent({
                 id: 'current',
-                label: 'CURRENT*',
+                label: 'CURRENT',
                 price: ipo.current,
                 sortKey: maxMinute + 240,
-                rank: 8,
+                rank: 9,
                 color: '#e4e4e7'
             });
             return events
@@ -2094,19 +2593,14 @@
                 event,
                 point: `${xForEvent(event, index).toFixed(1)},${yPrice(event.price).toFixed(1)}`
             }));
-            const openSecondIndex = pricePointObjects.findIndex(item => item.event.id === 'openSecond');
-            const currentIndex = pricePointObjects.findIndex(item => item.event.id === 'current');
-            const hasDashedCurrentSpan = openSecondIndex >= 0 && currentIndex > openSecondIndex;
-            const solidPricePoints = hasDashedCurrentSpan
-                ? pricePointObjects.slice(0, openSecondIndex + 1).map(item => item.point)
-                : pricePointObjects.map(item => item.point);
-            const dashedPricePoints = hasDashedCurrentSpan
-                ? pricePointObjects.slice(openSecondIndex, currentIndex + 1).map(item => item.point)
-                : [];
             const priceLineSegment = (points, dashed = false) => points.length > 1
                 ? `<polyline points="${points.join(' ')}" fill="none" stroke="#09090b" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity="0.75"${dashed ? ' stroke-dasharray="10 7"' : ''}/><polyline points="${points.join(' ')}" fill="none" stroke="#94a3b8" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" opacity="0.95"${dashed ? ' stroke-dasharray="9 6"' : ''}/>`
                 : '';
-            const priceLine = `${priceLineSegment(solidPricePoints)}${priceLineSegment(dashedPricePoints, true)}`;
+            const priceLine = pricePointObjects.slice(1).map((item, index) => {
+                const previous = pricePointObjects[index];
+                const dashed = (previous.event.id === 'ipo' && item.event.id === 'start') || item.event.id === 'current';
+                return priceLineSegment([previous.point, item.point], dashed);
+            }).join('');
             const eventNodes = events.map((event, index) => {
                 const xx = xForEvent(event, index);
                 const yy = yPrice(event.price);
@@ -2170,7 +2664,7 @@
             return firstDayClosePath(data, data[0].open, data[0].time || 'Start');
         }
 
-        function startToDayTwoPath(data, milestones) {
+        function startToOpenDayTwoPath(data, milestones) {
             if (!data.length) return [];
             const closes = data
                 .filter(bar => Number.isFinite(bar.minute) && Number.isFinite(bar.close))
@@ -2183,16 +2677,34 @@
                 const xValue = 0.06 + ((bar.minute - firstMinute) / span) * 0.62;
                 points.push(microPoint(xValue, bar.close, bar.time || minutesToTime(bar.minute)));
             });
-            const dayTwoEnd = milestones?.openSecond || milestones?.preSecond;
             [
                 { milestone: milestones?.afterEnd, x: 0.76 },
                 { milestone: milestones?.openSecond ? milestones?.preSecond : null, x: 0.88 },
-                { milestone: dayTwoEnd, x: 1 }
+                { milestone: milestones?.openSecond, x: 1 }
             ].forEach(item => {
                 if (Number.isFinite(item.milestone?.price)) {
                     points.push(microPoint(item.x, item.milestone.price, item.milestone.label));
                 }
             });
+            return points.filter(Boolean);
+        }
+
+        function roughHistoryPathFromDate(ipo, startValue, endValue, startLabel = '', startDate = '') {
+            const rows = Array.isArray(roughPriceSeries[ipo.ticker]) ? roughPriceSeries[ipo.ticker] : [];
+            const points = [];
+            if (Number.isFinite(startValue)) {
+                points.push(microPoint(0, startValue, startLabel));
+            }
+            const validRows = rows
+                .map(row => ({ date: row[0], close: Number(row[1]) }))
+                .filter(row => row.date && Number.isFinite(row.close) && (!startDate || row.date >= startDate));
+            validRows.forEach((row, index) => {
+                const xValue = validRows.length > 1 ? 0.04 + (index / (validRows.length - 1)) * 0.9 : 0.5;
+                points.push(microPoint(xValue, row.close, row.date));
+            });
+            if (Number.isFinite(endValue)) {
+                points.push(microPoint(1, endValue, 'Current'));
+            }
             return points.filter(Boolean);
         }
 
@@ -2226,7 +2738,7 @@
                 points.push(microPoint(xValue, row.close, row.date));
             });
             if (Number.isFinite(endValue)) {
-                points.push(microPoint(1, endValue, 'Current*'));
+                points.push(microPoint(1, endValue, 'Current'));
             }
             return points.filter(Boolean);
         }
@@ -2412,49 +2924,58 @@
         }
 
         function lowTimingChartSvg(analysis) {
+            const lowLabel = analysis.lowLabel || 'first-day low';
+            const multiSession = analysis.rangeMode && analysis.rangeMode !== 'day1';
             return bucketChartSvg(analysis.buckets || [], analysis.topBucket, {
-                title: 'Time from first trade to first-day low',
-                compactTitle: 'From first trade to low',
-                footer: 'Count of IPOs by elapsed time',
-                ariaLabel: 'Distribution of first-day low timing from first trade',
+                title: `${multiSession ? 'Active candle time' : 'Time from first trade'} to ${lowLabel}`,
+                compactTitle: multiSession ? 'Candle time to low' : 'From first trade to low',
+                footer: multiSession ? 'Count of IPOs by active candle time; gaps without candles excluded' : 'Count of IPOs by elapsed time',
+                ariaLabel: `Distribution of ${lowLabel} timing from first trade`,
                 height: 310,
                 marker: {
                     value: analysis.medianDeltaMinutes,
                     label: `Median ${formatElapsedPlain(analysis.medianDeltaMinutes)}`,
                     startKey: 'minMinutes',
                     endKey: 'maxMinutes',
-                    fallbackEnd: 300
+                    fallbackEnd: analysis.elapsedFallbackEnd || 300
                 }
             });
         }
 
         function clockTimingChartSvg(analysis) {
+            const lowLabel = analysis.lowLabel || 'first-day low';
+            const multiSession = analysis.rangeMode && analysis.rangeMode !== 'day1';
             const medianLowMinute = Number.isFinite(analysis.medianLowMinute) ? Math.round(analysis.medianLowMinute) : null;
             const medianLowTime = analysis.medianLowTime || (medianLowMinute == null ? '—' : minutesToTime(medianLowMinute));
             const medianLowGerman = germanSuffixLabel(analysis.medianLowGermanTime);
+            const medianSessionLabel = multiSession ? (analysis.medianLowSessionLabel || '') : '';
+            const medianMarkerLabel = multiSession
+                ? `Median ${[medianSessionLabel, medianLowTime].filter(Boolean).join(' ')}`
+                : `Median ${[medianLowTime, medianLowGerman].filter(Boolean).join(' ')}`;
             return bucketChartSvg(analysis.clockBuckets || [], analysis.topClockBucket, {
-                title: 'Market clock time of first-day low',
-                compactTitle: 'Clock time of low',
-                footer: 'NYC time and German local time (DE), DST-aware',
-                ariaLabel: 'Distribution of first-day low by US Eastern and Central European market clock time',
-                height: 330,
+                title: `${multiSession ? 'Market session/time' : 'Market clock time'} of ${lowLabel}`,
+                compactTitle: multiSession ? 'Session/time of low' : 'Clock time of low',
+                footer: multiSession ? 'Session plus NYC/German start time; DST-aware' : 'NYC time and German local time (DE), DST-aware',
+                ariaLabel: `Distribution of ${lowLabel} by US Eastern and Central European market clock time`,
+                height: multiSession ? 360 : 340,
+                topMargin: multiSession ? 78 : 64,
                 bottomMargin: 112,
-                axisLabelSize: 13,
-                secondaryAxisLabelSize: 12,
-                pctLabelSize: 13,
-                barGap: 12,
+                axisLabelSize: multiSession ? 11 : 13,
+                secondaryAxisLabelSize: multiSession ? 10 : 12,
+                pctLabelSize: multiSession ? 11 : 13,
+                barGap: multiSession ? 8 : 12,
                 marker: {
-                    value: analysis.medianLowMinute,
-                    label: `Median ${[medianLowTime, medianLowGerman].filter(Boolean).join(' ')}`,
-                    startKey: 'startMinute',
-                    endKey: 'endMinute'
+                    value: multiSession ? analysis.medianClockBucketIndex : analysis.medianLowMinute,
+                    label: medianMarkerLabel,
+                    startKey: multiSession ? 'bucketIndex' : 'startMinute',
+                    endKey: multiSession ? 'bucketEndIndex' : 'endMinute'
                 },
                 primaryLabel: bucket => bucket.nycLabel || bucket.label,
                 secondaryLabel: bucket => clockBucketGermanAxisLabel(bucket)
             });
         }
 
-        function currentAnalysis() {
+        function baseAnalysisForFilter() {
             if (ipoAnalysis?.byFilter) {
                 return ipoAnalysis.byFilter[capFilterMode]?.[tradingPlaceFilterMode]
                     || ipoAnalysis.byFilter[capFilterMode]?.[ipoAnalysis.defaultTradingPlaceFilter]
@@ -2471,7 +2992,7 @@
             return ipoAnalysis;
         }
 
-        function currentAnalysisLabel(analysis) {
+        function baseAnalysisLabel(analysis) {
             if (analysis?.analysisLabel) return analysis.analysisLabel;
             if (analysis?.capFilter?.analysisLabel) return analysis.capFilter.analysisLabel;
             if (capFilterMode === 'under10') return '<$10B IPOs';
@@ -2479,6 +3000,297 @@
             if (capFilterMode === 'gt25') return '>$25B IPOs';
             if (capFilterMode === 'gt50') return '>$50B IPOs';
             return '$5B+ IPOs';
+        }
+
+        function currentAnalysisLabel(analysis) {
+            if (analysis?.analysisLabel) return analysis.analysisLabel;
+            return baseAnalysisLabel(analysis);
+        }
+
+        function analysisRangeConfig(mode = analysisRangeMode) {
+            if (mode === 'd1Ext') {
+                return {
+                    id: 'd1Ext',
+                    label: 'Ext',
+                    chartMode: 'd1Ext',
+                    lowLabel: 'Day 1 + Ext low',
+                    sampleHelper: 'Exact Day 1 charts with Alpaca extended candles.',
+                    requiresExtended: true,
+                    requiresSecond: false
+                };
+            }
+            if (mode === 'd1ExtD2') {
+                return {
+                    id: 'd1ExtD2',
+                    label: 'Day 1-Day 2',
+                    chartMode: 'd1ExtD2',
+                    lowLabel: 'Day 1 through Day 2 low',
+                    sampleHelper: 'Exact Day 1 charts with Alpaca extended and Day 2 candles.',
+                    requiresExtended: true,
+                    requiresSecond: true
+                };
+            }
+            return {
+                id: 'day1',
+                label: 'Day 1',
+                chartMode: 'day1',
+                lowLabel: 'first-day low',
+                sampleHelper: 'Exact 5-minute first-day charts in this filter.',
+                requiresExtended: false,
+                requiresSecond: false
+            };
+        }
+
+        function medianValue(values) {
+            const sorted = values.filter(Number.isFinite).sort((a, b) => a - b);
+            if (!sorted.length) return null;
+            const middle = Math.floor(sorted.length / 2);
+            return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2;
+        }
+
+        function rangeBucketDefinitions(config) {
+            if (config.id === 'day1') {
+                return [
+                    { label: '0-30m', minMinutes: 0, maxMinutes: 30 },
+                    { label: '30-60m', minMinutes: 30, maxMinutes: 60 },
+                    { label: '1-2h', minMinutes: 60, maxMinutes: 120 },
+                    { label: '2-3h', minMinutes: 120, maxMinutes: 180 },
+                    { label: '3-4h', minMinutes: 180, maxMinutes: 240 },
+                    { label: '4h+', minMinutes: 240, maxMinutes: null }
+                ];
+            }
+            return [
+                { label: '0-30m', minMinutes: 0, maxMinutes: 30 },
+                { label: '30-60m', minMinutes: 30, maxMinutes: 60 },
+                { label: '1-2h', minMinutes: 60, maxMinutes: 120 },
+                { label: '2-4h', minMinutes: 120, maxMinutes: 240 },
+                { label: '4-8h', minMinutes: 240, maxMinutes: 480 },
+                { label: '8-12h', minMinutes: 480, maxMinutes: 720 },
+                { label: '12-16h', minMinutes: 720, maxMinutes: 960 },
+                { label: '16h+', minMinutes: 960, maxMinutes: null }
+            ];
+        }
+
+        function analysisElapsedMinutes(data, lowPoint, config) {
+            if (!Array.isArray(data) || !data.length || !lowPoint) return null;
+            if (config.id === 'day1') {
+                return lowPoint.minute - data[0].minute;
+            }
+            const index = data.findIndex(bar =>
+                bar === lowPoint
+                || (bar.date === lowPoint.date && bar.time === lowPoint.time && Math.abs(Number(bar.low) - Number(lowPoint.low)) < 0.005)
+            );
+            return Math.max(0, (index >= 0 ? index : data.findIndex(bar => bar.minute >= lowPoint.minute)) * CHART_INTERVAL_MINUTES);
+        }
+
+        function analysisLowSessionLabel(group) {
+            if (group === 'afterHours') return 'D1 Ext';
+            if (group === 'premarket') return 'Pre D2';
+            if (group === 'secondOpen' || group === 'secondDay') return 'D2';
+            return 'D1';
+        }
+
+        function buildElapsedBuckets(records, config) {
+            const total = records.length || 1;
+            const buckets = rangeBucketDefinitions(config).map(bucket => {
+                const start = Number(bucket.minMinutes);
+                const end = bucket.maxMinutes == null ? null : Number(bucket.maxMinutes);
+                const count = records.filter(record => record.lowDeltaMinutes >= start && (end == null || record.lowDeltaMinutes < end)).length;
+                return {
+                    ...bucket,
+                    count,
+                    pct: count / total * 100
+                };
+            });
+            const topBucket = [...buckets].sort((a, b) => (b.count || 0) - (a.count || 0))[0] || null;
+            return { buckets, topBucket };
+        }
+
+        function multiSessionClockDefinitions() {
+            const regularD2 = record => record.lowSessionGroup === 'secondOpen' || record.lowSessionGroup === 'secondDay';
+            return [
+                { key: 'd1-midday', label: 'D1 09:30-12:00', nycLabel: 'D1 09:30', startMinute: MARKET_OPEN_MINUTES, endMinute: 720, matches: record => record.lowSessionGroup === 'regular' && record.lowDayOffset === 0 && record.lowMinuteOfDay < 720 },
+                { key: 'd1-afternoon', label: 'D1 12:00-14:00', nycLabel: 'D1 12:00', startMinute: 720, endMinute: 840, matches: record => record.lowSessionGroup === 'regular' && record.lowDayOffset === 0 && record.lowMinuteOfDay >= 720 && record.lowMinuteOfDay < 840 },
+                { key: 'd1-late', label: 'D1 14:00-16:00', nycLabel: 'D1 14:00', startMinute: 840, endMinute: MARKET_CLOSE_MINUTES, matches: record => record.lowSessionGroup === 'regular' && record.lowDayOffset === 0 && record.lowMinuteOfDay >= 840 },
+                { key: 'd1-ext', label: 'D1 Ext 16:00-20:00', nycLabel: 'D1 Ext', startMinute: MARKET_CLOSE_MINUTES, endMinute: 1200, matches: record => record.lowSessionGroup === 'afterHours' },
+                { key: 'd2-pre', label: 'Pre D2 04:00-09:30', nycLabel: 'Pre D2', startMinute: 240, endMinute: MARKET_OPEN_MINUTES, matches: record => record.lowSessionGroup === 'premarket' },
+                { key: 'd2-open', label: 'D2 09:30-12:00', nycLabel: 'D2 09:30', startMinute: MARKET_OPEN_MINUTES, endMinute: 720, matches: record => regularD2(record) && record.lowMinuteOfDay < 720 },
+                { key: 'd2-midday', label: 'D2 12:00-14:00', nycLabel: 'D2 12:00', startMinute: 720, endMinute: 840, matches: record => regularD2(record) && record.lowMinuteOfDay >= 720 && record.lowMinuteOfDay < 840 },
+                { key: 'd2-late', label: 'D2 14:00-16:00', nycLabel: 'D2 14:00', startMinute: 840, endMinute: MARKET_CLOSE_MINUTES, matches: record => regularD2(record) && record.lowMinuteOfDay >= 840 }
+            ];
+        }
+
+        function buildClockBuckets(records, config = {}) {
+            const total = records.length || 1;
+            if (config.id !== 'day1') {
+                const definitions = multiSessionClockDefinitions();
+                const buckets = definitions.map((definition, index) => {
+                    const matchingRecords = records.filter(definition.matches);
+                    const sampleRecord = matchingRecords[0] || records[0] || null;
+                    const count = matchingRecords.length;
+                    return {
+                        ...definition,
+                        bucketIndex: index,
+                        bucketEndIndex: index + 1,
+                        count,
+                        pct: count / total * 100,
+                        germanChartLabel: sampleRecord ? germanTimeLabel(sampleRecord.lowDate || sampleRecord.date, definition.startMinute) : ''
+                    };
+                });
+                const topClockBucket = [...buckets].sort((a, b) => (b.count || 0) - (a.count || 0))[0] || null;
+                return { clockBuckets: buckets, topClockBucket };
+            }
+            const definitions = [
+                [240, 360],
+                [360, 480],
+                [480, 600],
+                [600, 720],
+                [720, 840],
+                [840, 960],
+                [960, 1080],
+                [1080, 1201]
+            ];
+            const buckets = definitions.map(([startMinute, endMinute]) => {
+                const sampleRecord = records.find(record => record.lowMinuteOfDay >= startMinute && record.lowMinuteOfDay < endMinute) || records[0] || null;
+                const count = records.filter(record => record.lowMinuteOfDay >= startMinute && record.lowMinuteOfDay < endMinute).length;
+                const endLabel = endMinute > 1200 ? '20:00' : chartClockTime(endMinute);
+                return {
+                    label: `${chartClockTime(startMinute)}-${endLabel}`,
+                    nycLabel: chartClockTime(startMinute),
+                    startMinute,
+                    endMinute,
+                    count,
+                    pct: count / total * 100,
+                    germanChartLabel: sampleRecord ? germanTimeLabel(sampleRecord.lowDate || sampleRecord.date, startMinute) : ''
+                };
+            });
+            const topClockBucket = [...buckets].sort((a, b) => (b.count || 0) - (a.count || 0))[0] || null;
+            return { clockBuckets: buckets, topClockBucket };
+        }
+
+        function rangeDecisionCheckpoints(records, config = {}) {
+            const sampleSize = records.length || 1;
+            const checkpointMinutes = config.id === 'day1' ? [15, 30, 45, 60, 90, 120] : [60, 120, 240, 480, 720, 960];
+            return checkpointMinutes.map(minutes => {
+                const stillAheadCount = records.filter(record => record.lowDeltaMinutes > minutes).length;
+                const missedCount = records.length - stillAheadCount;
+                const labelDuration = minutes >= 60 ? formatElapsedPlain(minutes).replace(' 00m', '').replace(/\s+/g, '') : `${minutes}m`;
+                const label = `wait ${labelDuration}`;
+                return {
+                    minutes,
+                    label,
+                    stillAheadCount,
+                    missedCount,
+                    stillAheadPct: stillAheadCount / sampleSize * 100,
+                    missedPct: missedCount / sampleSize * 100
+                };
+            });
+        }
+
+        function analysisRangeChartData(ipo, config) {
+            if (config.requiresExtended && !hasExtendedChartData(ipo)) return [];
+            if (config.requiresSecond && !hasSecondDayChartData(ipo)) return [];
+            return chartData(ipo, config.chartMode).filter(bar => Number.isFinite(bar.minute));
+        }
+
+        function buildRangeAnalysis(base, config) {
+            const tickers = new Set((base.records || []).map(record => record.ticker));
+            const candidates = exactChartIpos().filter(ipo => {
+                if (tickers.size) return tickers.has(ipo.ticker);
+                return capFilterMatches(ipo) && tradingPlaceFilterMatches(ipo);
+            });
+            const records = candidates.map(ipo => {
+                const data = analysisRangeChartData(ipo, config);
+                if (!data.length) return null;
+                const first = data[0];
+                const { lowPoint } = chartLowPoints(data);
+                if (!first || !lowPoint || !Number.isFinite(first.minute) || !Number.isFinite(lowPoint.minute) || !Number.isFinite(lowPoint.low)) return null;
+                const lowMinuteOfDay = minuteOfDay(lowPoint.minute);
+                if (!Number.isFinite(lowMinuteOfDay)) return null;
+                const lowDeltaMinutes = analysisElapsedMinutes(data, lowPoint, config);
+                if (!Number.isFinite(lowDeltaMinutes)) return null;
+                const lowSessionGroup = chartSessionGroup(ipo, lowPoint);
+                const lowDayOffset = Math.round(dateOffsetMinutes(ipo.date, lowPoint.date || ipo.date) / 1440);
+                return {
+                    ticker: ipo.ticker,
+                    date: ipo.date,
+                    lowDate: lowPoint.date || ipo.date,
+                    lowDayOffset,
+                    lowSessionGroup,
+                    lowSessionLabel: analysisLowSessionLabel(lowSessionGroup),
+                    lowDeltaMinutes,
+                    lowMinute: lowPoint.minute,
+                    lowMinuteOfDay,
+                    lowTime: lowPoint.time || chartClockTime(lowPoint.minute),
+                    lowGermanTime: germanTimeLabel(ipo.date, lowPoint.minute),
+                    lowPrice: lowPoint.low
+                };
+            }).filter(Boolean);
+            if (!records.length) return null;
+            const medianDeltaMinutes = medianValue(records.map(record => record.lowDeltaMinutes));
+            const recordsByDelta = [...records].sort((a, b) => a.lowDeltaMinutes - b.lowDeltaMinutes);
+            const medianRecord = recordsByDelta[Math.floor(recordsByDelta.length / 2)] || recordsByDelta[0] || records[0];
+            const { buckets, topBucket } = buildElapsedBuckets(records, config);
+            const { clockBuckets, topClockBucket } = buildClockBuckets(records, config);
+            const medianClockBucket = config.id === 'day1'
+                ? null
+                : clockBuckets.find(bucket => bucket.matches?.(medianRecord)) || null;
+            const firstHourCount = records.filter(record => record.lowDeltaMinutes <= 60).length;
+            const afterTwoHoursCount = records.filter(record => record.lowDeltaMinutes >= 120).length;
+            const maxDeltaMinutes = Math.max(...records.map(record => record.lowDeltaMinutes).filter(Number.isFinite), 300);
+            const timelineMaxMinutes = Math.max(300, Math.ceil(maxDeltaMinutes / 60) * 60);
+            return {
+                ...base,
+                analysisLabel: `${baseAnalysisLabel(base)} · ${config.label}`,
+                rangeMode: config.id,
+                rangeLabel: config.label,
+                lowLabel: config.lowLabel,
+                chartMode: config.chartMode,
+                sampleHelper: config.sampleHelper,
+                sampleSize: records.length,
+                records,
+                medianDeltaMinutes,
+                medianLowMinute: medianRecord.lowMinuteOfDay,
+                medianLowTime: chartClockTime(medianRecord.lowMinute),
+                medianLowGermanTime: medianRecord.lowGermanTime,
+                medianLowSessionLabel: medianRecord.lowSessionLabel,
+                medianClockBucketIndex: medianClockBucket ? medianClockBucket.bucketIndex + 0.5 : null,
+                firstHourPct: firstHourCount / records.length * 100,
+                afterTwoHoursPct: afterTwoHoursCount / records.length * 100,
+                buckets,
+                topBucket,
+                clockBuckets,
+                topClockBucket,
+                decisionCheckpoints: rangeDecisionCheckpoints(records, config),
+                elapsedFallbackEnd: timelineMaxMinutes,
+                timelineMaxMinutes
+            };
+        }
+
+        function currentAnalysis() {
+            const base = baseAnalysisForFilter();
+            if (!base) return null;
+            const config = analysisRangeConfig();
+            if (config.id === 'day1') {
+                return {
+                    ...base,
+                    analysisLabel: `${baseAnalysisLabel(base)} · ${config.label}`,
+                    rangeMode: config.id,
+                    rangeLabel: config.label,
+                    lowLabel: config.lowLabel,
+                    chartMode: config.chartMode,
+                    sampleHelper: config.sampleHelper
+                };
+            }
+            return buildRangeAnalysis(base, config) || {
+                ...base,
+                analysisLabel: `${baseAnalysisLabel(base)} · ${config.label}`,
+                rangeMode: config.id,
+                rangeLabel: config.label,
+                lowLabel: config.lowLabel,
+                chartMode: config.chartMode,
+                sampleHelper: 'No complete candle set is available for this range; showing the first-day baseline.'
+            };
         }
 
         function dashboardMetric(label, value, helper, colorClass = 'text-zinc-100') {
@@ -2489,32 +3301,28 @@
             </div>`;
         }
 
+        function analysisRangeShortLabel(analysis) {
+            if (analysis?.rangeMode === 'd1ExtD2') return 'D1 Ext D2';
+            if (analysis?.rangeMode === 'd1Ext') return 'D1 Ext';
+            return 'D1';
+        }
+
+        function medianLowMarketMoment(analysis) {
+            const session = analysis?.rangeMode === 'day1'
+                ? 'D1'
+                : (analysis?.medianLowSessionLabel || analysisRangeShortLabel(analysis));
+            const time = analysis?.medianLowTime || '—';
+            return `${session} ${time}`.trim();
+        }
+
+        function medianLowMetricHelper(analysis) {
+            const range = analysisRangeShortLabel(analysis);
+            const germanTime = analysis?.medianLowGermanTime ? ` (${analysis.medianLowGermanTime} DE)` : '';
+            return `Median low point in the selected ${range} candles${germanTime}.`;
+        }
+
         function checkpointByMinutes(analysis, minutes) {
             return (analysis.decisionCheckpoints || []).find(checkpoint => Number(checkpoint.minutes) === minutes) || null;
-        }
-
-        function decisionTone(pct) {
-            if (pct >= 55) return ['text-emerald-400', 'bg-emerald-500'];
-            if (pct >= 35) return ['text-blue-400', 'bg-blue-500'];
-            return ['text-amber-400', 'bg-amber-500'];
-        }
-
-        function decisionOddRow(checkpoint, sampleSize) {
-            const pct = Number(checkpoint?.stillAheadPct) || 0;
-            const count = Number(checkpoint?.stillAheadCount) || 0;
-            const label = checkpoint?.label || 'Wait';
-            const missedPct = Number(checkpoint?.missedPct) || 0;
-            const [colorClass, barClass] = decisionTone(pct);
-            return `<div class="h-full min-h-[104px] rounded-2xl border border-zinc-800 bg-zinc-950 p-3.5">
-                <div class="flex items-baseline justify-between gap-3">
-                    <span class="text-sm font-semibold text-zinc-200">If you ${escapeHtml(label.toLowerCase())}</span>
-                    <span class="font-mono text-base font-semibold ${colorClass}">${fmtWholePct(pct)}</span>
-                </div>
-                <div class="mt-2 h-1.5 rounded-full bg-zinc-800 overflow-hidden">
-                    <div class="h-full rounded-full ${barClass}" style="width:${Math.max(0, Math.min(100, pct)).toFixed(1)}%"></div>
-                </div>
-                <div class="mt-1.5 text-xs leading-5 text-zinc-500">${count}/${sampleSize} lows were still ahead · ${fmtWholePct(missedPct)} had already happened</div>
-            </div>`;
         }
 
         function averageNumber(values) {
@@ -2553,6 +3361,7 @@
                     id: 'openHighLimit',
                     label: 'Open with high limit',
                     shortLabel: 'Open',
+                    rowLabel: 'Open',
                     detail: 'Assumes the limit is high enough to fill at the first public 5-minute open.',
                     targetDelta: 0,
                     fillMode: 'marketable'
@@ -2561,6 +3370,7 @@
                     id: 'medianTiming',
                     label: 'Median timing',
                     shortLabel: 'Median',
+                    rowLabel: 'Median',
                     detail: `Buys the next 5-minute open at the active median low timing (${formatElapsedPlain(medianMinutes)}).`,
                     targetDelta: medianMinutes,
                     fillMode: 'timed'
@@ -2569,30 +3379,25 @@
                     id: 'thirtyMinutes',
                     label: 'Exactly 30m',
                     shortLabel: '30m',
+                    rowLabel: '30m',
                     detail: 'Buys the next 5-minute open 30 minutes after the first public trade.',
                     targetDelta: 30,
                     fillMode: 'timed'
                 },
                 {
                     id: 'oneHour',
-                    label: 'Exactly 1h',
-                    shortLabel: '1h',
+                    label: 'Exactly 60m',
+                    shortLabel: '60m',
+                    rowLabel: '60m',
                     detail: 'Buys the next 5-minute open one hour after the first public trade.',
                     targetDelta: 60,
-                    fillMode: 'timed'
-                },
-                {
-                    id: 'twoHours',
-                    label: 'Exactly 2h',
-                    shortLabel: '2h',
-                    detail: 'Buys the next 5-minute open two hours after the first public trade.',
-                    targetDelta: 120,
                     fillMode: 'timed'
                 },
                 {
                     id: 'buyAfter',
                     label: 'After end',
                     shortLabel: 'After',
+                    rowLabel: 'After',
                     detail: 'Uses the last available first-day after-hours close from the extended Alpaca feed.',
                     milestoneId: 'afterEnd',
                     fillMode: 'extended'
@@ -2601,17 +3406,32 @@
                     id: 'buyPreSecond',
                     label: 'Pre D2',
                     shortLabel: 'Pre D2',
+                    rowLabel: 'Pre D2',
                     detail: 'Uses the first available second-day premarket open from the extended Alpaca feed.',
                     milestoneId: 'preSecond',
                     fillMode: 'extended'
                 },
                 {
-                    id: 'buyOpenSecond',
+                    id: 'buyOpenDayTwo',
                     label: 'Open D2',
                     shortLabel: 'Open D2',
-                    detail: 'Uses the first available second-day regular-session open from the extended Alpaca feed.',
+                    rowLabel: 'Open D2',
+                    detail: 'Uses the first available second-day regular-session open from the Alpaca day-two feed.',
                     milestoneId: 'openSecond',
-                    fillMode: 'extended'
+                    exitMilestoneId: 'endSecond',
+                    fillMode: 'secondDay',
+                    returnLabel: 'D2 end'
+                },
+                {
+                    id: 'buyEndDayTwo',
+                    label: 'End D2',
+                    shortLabel: 'End D2',
+                    rowLabel: 'End D2',
+                    detail: 'Uses the final available second-day regular-session close from the Alpaca day-two feed.',
+                    milestoneId: 'endSecond',
+                    exitMilestoneId: 'endSecond',
+                    fillMode: 'secondDay',
+                    returnLabel: 'D2 end'
                 }
             ].filter(scenario => Number.isFinite(scenario.targetDelta) || scenario.milestoneId);
         }
@@ -2619,25 +3439,48 @@
         function entryScenarioStats(analysis, scenario) {
             const rows = [];
             let unavailable = 0;
+            const analysisChartMode = analysis?.chartMode || 'day1';
             analysisScenarioIpos(analysis).forEach(ipo => {
-                const data = chartData(ipo).filter(bar => Number.isFinite(bar.minute));
+                const data = chartData(ipo, analysisChartMode).filter(bar => Number.isFinite(bar.minute));
                 if (!data.length) return;
                 const first = entryBarAtOrAfter(data, data[0].minute);
-                const milestone = scenario.milestoneId ? extendedSessionMilestones(ipo)[scenario.milestoneId] : null;
+                const firstDayData = chartData(ipo, 'day1').filter(bar => Number.isFinite(bar.minute));
+                const firstDayEnd = firstDayData
+                    .filter(bar => Number.isFinite(bar.close))
+                    .sort((a, b) => b.minute - a.minute)[0] || null;
+                const milestones = scenario.milestoneId || scenario.exitMilestoneId ? combinedSessionMilestones(ipo) : {};
+                const allMilestones = combinedSessionMilestones(ipo);
+                const milestone = scenario.milestoneId ? milestones[scenario.milestoneId] : null;
+                const exitMilestone = scenario.exitMilestoneId ? milestones[scenario.exitMilestoneId] : null;
                 const entry = scenario.milestoneId
                     ? milestone?.bar
                     : entryBarAtOrAfter(data, data[0].minute + scenario.targetDelta);
                 const entryPrice = scenario.milestoneId ? Number(milestone?.price) : Number(entry?.open);
                 const entryMinute = Number(entry?.minute);
                 const last = data.filter(bar => Number.isFinite(bar.close)).sort((a, b) => b.minute - a.minute)[0] || null;
+                const exitPrice = scenario.exitMilestoneId ? Number(exitMilestone?.price) : Number(last?.close);
                 const lowInfo = chartLowPoints(data);
                 const lowPoint = lowInfo?.lowPoint;
-                if (!first || !entry || !last || !lowPoint || !Number.isFinite(lowPoint.low) || !Number.isFinite(last.close) || !Number.isFinite(entryPrice) || entryPrice <= 0 || !Number.isFinite(entryMinute) || lowPoint.low <= 0) {
+                const endD1Price = Number(firstDayEnd?.close);
+                const endD2Price = Number(allMilestones.endSecond?.price);
+                const currentPrice = Number(ipo.current);
+                const medianEntry = Number.isFinite(Number(analysis.medianDeltaMinutes))
+                    ? entryBarAtOrAfter(data, data[0].minute + Number(analysis.medianDeltaMinutes))
+                    : null;
+                const medianEntryPrice = Number(medianEntry?.open);
+                const wholePeriodData = chartData(ipo, 'd1ExtD2')
+                    .filter(bar => Number.isFinite(bar.minute))
+                    .sort((a, b) => a.minute - b.minute);
+                const wholeLowPoint = chartLowPoints(wholePeriodData.length ? wholePeriodData : data)?.lowPoint;
+                if (!first || !entry || !last || !lowPoint || !Number.isFinite(lowPoint.low) || !Number.isFinite(exitPrice) || !Number.isFinite(entryPrice) || entryPrice <= 0 || !Number.isFinite(entryMinute) || lowPoint.low <= 0) {
                     unavailable += 1;
                     return;
                 }
-                const dayEndReturn = (last.close / entryPrice - 1) * 100;
-                const perfectLowReturn = (last.close / lowPoint.low - 1) * 100;
+                const dayEndReturn = (exitPrice / entryPrice - 1) * 100;
+                const perfectLowReturn = (exitPrice / lowPoint.low - 1) * 100;
+                const lowReturn = Number.isFinite(wholeLowPoint?.low) && wholeLowPoint.low > 0
+                    ? wholeLowPoint.low / entryPrice * 100 - 100
+                    : null;
                 rows.push({
                     ticker: ipo.ticker,
                     entryMinute,
@@ -2646,9 +3489,14 @@
                     firstPrice: first.open,
                     lowMinute: lowPoint.minute,
                     lowPrice: lowPoint.low,
-                    endPrice: last.close,
+                    endPrice: exitPrice,
                     dayEndReturn,
                     dayLowGap: dayEndReturn - perfectLowReturn,
+                    vsEndD1: Number.isFinite(endD1Price) && endD1Price > 0 ? endD1Price / entryPrice * 100 - 100 : null,
+                    medianGap: Number.isFinite(medianEntryPrice) && medianEntryPrice > 0 ? medianEntryPrice / entryPrice * 100 - 100 : null,
+                    lowReturn,
+                    vsEndD2: Number.isFinite(endD2Price) && endD2Price > 0 ? endD2Price / entryPrice * 100 - 100 : null,
+                    vsCurrent: Number.isFinite(currentPrice) && currentPrice > 0 ? currentPrice / entryPrice * 100 - 100 : null,
                     lowAlreadyPassed: lowPoint.minute < entryMinute,
                     entryAboveFirst: entryPrice > first.open * 1.000001
                 });
@@ -2661,11 +3509,20 @@
             const entryAboveFirstCount = rows.filter(row => row.entryAboveFirst).length;
             return {
                 ...scenario,
+                rowLabel: scenario.rowLabel || scenario.shortLabel || scenario.label,
                 sampleSize,
                 unavailable,
                 totalCandidates,
                 returnStats: rangeStats(rows.map(row => row.dayEndReturn)),
                 dayLowGapStats: rangeStats(rows.map(row => row.dayLowGap)),
+                vsEndD1Stats: rangeStats(rows.map(row => row.vsEndD1)),
+                medianGapStats: rangeStats(rows.map(row => row.medianGap)),
+                lowReturnStats: rangeStats(rows.map(row => row.lowReturn)),
+                vsEndD2Stats: rangeStats(rows.map(row => row.vsEndD2)),
+                vsCurrentStats: rangeStats(rows.map(row => row.vsCurrent)),
+                vsEndD2: averageNumber(rows.map(row => row.vsEndD2)),
+                vsCurrent: averageNumber(rows.map(row => row.vsCurrent)),
+                lowReturn: averageNumber(rows.map(row => row.lowReturn)),
                 lossUnder5Pct: sampleSize ? under5Count / sampleSize * 100 : null,
                 lossUnder10Pct: sampleSize ? under10Count / sampleSize * 100 : null,
                 missedLowPct: sampleSize ? missedLowCount / sampleSize * 100 : null,
@@ -2702,12 +3559,12 @@
             const bestEnd = bestScenarioBy(valid, scenario => scenario.returnStats?.avg);
             const safest = bestScenarioBy(valid, scenario => scenario.lossUnder5Pct);
             const closestLow = bestScenarioBy(valid, scenario => scenario.dayLowGapStats?.avg);
-            const bestExtended = bestScenarioBy(valid.filter(scenario => scenario.fillMode === 'extended'), scenario => scenario.returnStats?.avg);
+            const bestLater = bestScenarioBy(valid.filter(scenario => ['extended', 'secondDay'].includes(scenario.fillMode)), scenario => scenario.returnStats?.avg);
             return [
                 metric('Best day end', scenarioMetricValue(bestEnd, bestEnd ? fmtPct(bestEnd.value) : '—', pctTone(bestEnd?.value))),
                 metric('Safest entry', scenarioMetricValue(safest, safest ? `${fmtWholePct(safest.value)} loss <5%` : '—', 'text-emerald-400')),
                 metric('Closest to low', scenarioMetricValue(closestLow, closestLow ? fmtPct(closestLow.value) : '—', pctTone(closestLow?.value))),
-                metric('Best extended', scenarioMetricValue(bestExtended, bestExtended ? fmtPct(bestExtended.value) : '—', pctTone(bestExtended?.value)))
+                metric('Best later', scenarioMetricValue(bestLater, bestLater ? fmtPct(bestLater.value) : '—', pctTone(bestLater?.value)))
             ].join('');
         }
 
@@ -2718,17 +3575,50 @@
             return 'text-amber-400';
         }
 
-        function pctAccent(value) {
-            if (!Number.isFinite(value)) {
-                return { border: 'border-zinc-800', dot: 'bg-zinc-500' };
+        function endpointTone(value) {
+            if (!Number.isFinite(value)) return 'text-zinc-400';
+            if (Math.abs(value) < 0.05) return 'text-blue-300';
+            return pctTone(value);
+        }
+
+        function gapTone(value) {
+            if (!Number.isFinite(value)) return 'text-zinc-400';
+            if (value >= 0) return 'text-emerald-400';
+            if (value >= -2) return 'text-blue-300';
+            if (value >= -8) return 'text-amber-400';
+            return 'text-red-400';
+        }
+
+        function entryScenarioCurrentScore(row) {
+            const direct = Number(row?.vsCurrent);
+            if (Number.isFinite(direct)) return direct;
+            const average = Number(row?.vsCurrentStats?.avg);
+            return Number.isFinite(average) ? average : null;
+        }
+
+        function entryScenarioAccent(row, rows = []) {
+            const score = entryScenarioCurrentScore(row);
+            const scores = rows.map(entryScenarioCurrentScore).filter(Number.isFinite);
+            if (!Number.isFinite(score) || !scores.length) {
+                return { border: 'border-zinc-700', dot: 'bg-zinc-500', label: 'No current comparison' };
             }
-            if (value > 0) {
-                return { border: 'border-emerald-500/35', dot: 'bg-emerald-400' };
+            const best = Math.max(...scores);
+            const worst = Math.min(...scores);
+            const span = best - worst;
+            if (span <= 0.05) {
+                return { border: 'border-emerald-500/55', dot: 'bg-emerald-400', label: 'Near best vs current' };
             }
-            if (value < -5) {
-                return { border: 'border-red-500/35', dot: 'bg-red-400' };
+            const rank = (score - worst) / span;
+            if (rank >= 0.75) {
+                return { border: 'border-emerald-500/55', dot: 'bg-emerald-400', label: 'Best or near-best buy vs current' };
             }
-            return { border: 'border-amber-500/35', dot: 'bg-amber-400' };
+            if (rank >= 0.45) {
+                return { border: 'border-yellow-400/55', dot: 'bg-yellow-300', label: 'Middle buy vs current' };
+            }
+            if (rank >= 0.20) {
+                return { border: 'border-orange-500/55', dot: 'bg-orange-400', label: 'Below-middle buy vs current' };
+            }
+            return { border: 'border-red-500/55', dot: 'bg-red-400', label: 'Worst or near-worst buy vs current' };
         }
 
         function entryScenarioRiskText(scenario) {
@@ -2737,6 +3627,9 @@
             }
             if (scenario.fillMode === 'extended') {
                 return 'Risk: extended-hours liquidity can be thin and prints can be jumpy; entries may not be available at useful size.';
+            }
+            if (scenario.fillMode === 'secondDay') {
+                return 'Risk: the first day is already over, so the first-day low may be gone and the next session can gap sharply.';
             }
             return `Risk: prob. low already passed was ${fmtWholePct(scenario.missedLowPct)}; a strict lower limit can miss if price never returns.`;
         }
@@ -2756,7 +3649,7 @@
                         <p class="mt-0.5 whitespace-normal break-words text-[11px] leading-4 text-zinc-500">${escapeHtml(scenario.detail)}</p>
                     </div>
                     <div class="min-w-0">
-                        <div class="text-[11px] font-semibold uppercase text-zinc-500">Day end</div>
+                        <div class="text-[11px] font-semibold uppercase text-zinc-500">${escapeHtml(scenario.returnLabel || 'Day end')}</div>
                         ${scenarioRangeBlock(scenario.returnStats)}
                     </div>
                     <div class="min-w-0">
@@ -2784,10 +3677,428 @@
             </div>`;
         }
 
+        function entryScenarioStatsTableValue(stats, toneFn) {
+            if (!stats || !Number.isFinite(stats.avg)) return '<span class="font-mono text-[10px] font-semibold text-zinc-500">—</span>';
+            return `<div class="font-mono text-[10px] font-semibold ${toneFn(stats.avg)}">${fmtPct(stats.avg)}</div>
+                <div class="mt-0.5 break-words text-[9px] leading-3 text-zinc-500">${fmtPct(stats.min)} .. ${fmtPct(stats.max)}</div>`;
+        }
+
+        function entryScenarioStatsMetricRow(label, key, toneFn, scenarios) {
+            return `<tr>
+                <th scope="row" class="sticky left-0 z-10 w-[6.75rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2 py-2 text-left text-[10px] font-semibold text-zinc-500">${escapeHtml(label)}</th>
+                ${scenarios.map(scenario => {
+                    const value = key === 'vsEndD2Stats' && scenario.id === 'buyEndDayTwo'
+                        ? '<span class="font-mono text-[10px] font-semibold text-zinc-500">-</span>'
+                        : entryScenarioStatsTableValue(scenario[key], toneFn);
+                    return `<td class="min-w-0 border border-zinc-800 bg-zinc-950/70 px-1 py-2 text-center align-middle">${value}</td>`;
+                }).join('')}
+            </tr>`;
+        }
+
         function entryScenarioScoreboard(scenarios) {
             if (!scenarios.length) return '';
+            const metricRows = [
+                ['Vs End D1', 'vsEndD1Stats', endpointTone],
+                ['Gap to median', 'medianGapStats', gapTone],
+                ['Gap to low', 'lowReturnStats', gapTone],
+                ['Vs End D2', 'vsEndD2Stats', endpointTone]
+            ];
+            return `<div class="overflow-x-auto rounded-xl border border-zinc-800" data-entry-scenario-table="global">
+                <table class="w-full min-w-[35rem] table-fixed border-separate border-spacing-0 text-xs">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="sticky left-0 z-20 w-[6.75rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2 py-2 text-right text-[10px] font-semibold uppercase text-zinc-500">Buy At</th>
+                            ${scenarios.map(scenario => entryScenarioColumnHeader(scenario, scenarios)).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${metricRows.map(([label, key, toneFn]) => entryScenarioStatsMetricRow(label, key, toneFn, scenarios)).join('')}
+                    </tbody>
+                </table>
+            </div>`;
+        }
+
+        function statAverage(stats) {
+            const value = Number(stats?.avg);
+            return Number.isFinite(value) ? value : null;
+        }
+
+        function scenarioDisplayLabel(scenario) {
+            return scenario?.rowLabel || scenario?.shortLabel || scenario?.label || 'Entry';
+        }
+
+        function scenarioMetricAverage(scenario, key) {
+            if (!scenario) return null;
+            const direct = Number(scenario[key]);
+            if (Number.isFinite(direct)) return direct;
+            return statAverage(scenario[`${key}Stats`]);
+        }
+
+        function normalizeStrategyValue(value, values) {
+            const valid = values.filter(Number.isFinite);
+            if (!Number.isFinite(value) || !valid.length) return null;
+            const minValue = Math.min(...valid);
+            const maxValue = Math.max(...valid);
+            const span = maxValue - minValue;
+            return span <= 0.0001 ? 50 : (value - minValue) / span * 100;
+        }
+
+        function scenarioStrategyRows(scenarios) {
+            const source = scenarios || [];
+            const currentValues = source.map(entryScenarioCurrentScore).filter(Number.isFinite);
+            const lowValues = source.map(scenario => statAverage(scenario.lowReturnStats)).filter(Number.isFinite);
+            const safetyValues = source.map(scenario => Number(scenario.lossUnder5Pct)).filter(Number.isFinite);
+            return source.map(scenario => {
+                const current = entryScenarioCurrentScore(scenario);
+                const lowGap = statAverage(scenario.lowReturnStats);
+                const safety = Number(scenario.lossUnder5Pct);
+                const parts = [
+                    { value: normalizeStrategyValue(current, currentValues), weight: 0.60 },
+                    { value: normalizeStrategyValue(lowGap, lowValues), weight: 0.25 },
+                    { value: normalizeStrategyValue(safety, safetyValues), weight: 0.15 }
+                ].filter(part => Number.isFinite(part.value));
+                const totalWeight = parts.reduce((sum, part) => sum + part.weight, 0);
+                const score = totalWeight
+                    ? parts.reduce((sum, part) => sum + part.value * part.weight, 0) / totalWeight
+                    : null;
+                return {
+                    scenario,
+                    id: scenario.id,
+                    label: scenarioDisplayLabel(scenario),
+                    current,
+                    lowGap,
+                    safety,
+                    score,
+                    d1Exit: statAverage(scenario.vsEndD1Stats),
+                    d2Exit: statAverage(scenario.vsEndD2Stats)
+                };
+            }).filter(item => Number.isFinite(item.score));
+        }
+
+        const ENTRY_STRATEGY_GROUPS = [
+            { id: 'd1', label: 'Day 1', ids: ['openHighLimit', 'medianTiming', 'thirtyMinutes', 'oneHour'] },
+            { id: 'bridge', label: 'Ext / Pre D2', ids: ['buyAfter', 'buyPreSecond'] },
+            { id: 'd2', label: 'Day 2', ids: ['buyOpenDayTwo', 'buyEndDayTwo'] }
+        ];
+
+        function bestStrategyItem(items, scoreKey = 'score') {
+            return (items || [])
+                .filter(item => Number.isFinite(Number(item?.[scoreKey])))
+                .sort((a, b) => Number(b[scoreKey]) - Number(a[scoreKey]))[0] || null;
+        }
+
+        function entryStrategyGroups(items) {
+            return ENTRY_STRATEGY_GROUPS.map(group => {
+                const groupItems = items.filter(item => group.ids.includes(item.id));
+                const best = bestStrategyItem(groupItems);
+                return {
+                    ...group,
+                    items: groupItems,
+                    best,
+                    score: Number(best?.score)
+                };
+            }).filter(group => group.items.length);
+        }
+
+        function strategyToneClasses(tone) {
+            const tones = {
+                emerald: { border: 'border-emerald-500/35', value: 'text-emerald-300', bg: 'bg-emerald-400' },
+                blue: { border: 'border-blue-500/35', value: 'text-blue-300', bg: 'bg-blue-400' },
+                amber: { border: 'border-amber-500/35', value: 'text-amber-300', bg: 'bg-amber-400' },
+                orange: { border: 'border-orange-500/35', value: 'text-orange-300', bg: 'bg-orange-400' },
+                red: { border: 'border-red-500/35', value: 'text-red-300', bg: 'bg-red-400' },
+                zinc: { border: 'border-zinc-700', value: 'text-zinc-200', bg: 'bg-zinc-400' }
+            };
+            return tones[tone] || tones.blue;
+        }
+
+        function strategyToneTextClass(tone) {
+            const tones = {
+                emerald: 'text-emerald-400',
+                blue: 'text-blue-400',
+                amber: 'text-amber-400',
+                orange: 'text-orange-400',
+                red: 'text-red-400',
+                zinc: 'text-zinc-100'
+            };
+            return tones[tone] || tones.blue;
+        }
+
+        function strategyQuestionCard({ label, value, body, tone = 'blue', visual = '', footer = '', wide = false }) {
+            const colors = strategyToneClasses(tone);
+            return `<div class="${wide ? 'xl:col-span-2' : ''} rounded-2xl border ${colors.border} bg-zinc-950 p-4 min-h-[168px]">
+                <div class="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-500">${escapeHtml(label)}</div>
+                <div class="mt-2 font-display text-2xl leading-none ${colors.value}">${escapeHtml(value)}</div>
+                <p class="mt-2 text-sm leading-6 text-zinc-400">${escapeHtml(body)}</p>
+                ${visual ? `<div class="mt-3">${visual}</div>` : ''}
+                ${footer ? `<div class="mt-3 text-[11px] leading-4 text-zinc-500">${escapeHtml(footer)}</div>` : ''}
+            </div>`;
+        }
+
+        function groupScoreBars(groups) {
+            const maxScore = Math.max(...groups.map(group => Number(group.score)).filter(Number.isFinite), 1);
             return `<div class="space-y-2">
-                ${scenarios.map(entryScenarioScoreRow).join('')}
+                ${groups.map(group => {
+                    const score = Number(group.score);
+                    const width = Number.isFinite(score) ? Math.max(6, score / maxScore * 100) : 0;
+                    const tone = group.id === 'd1' ? 'bg-blue-400' : (group.id === 'd2' ? 'bg-emerald-400' : 'bg-teal-300');
+                    const bestLabel = group.best ? scenarioDisplayLabel(group.best.scenario) : 'n/a';
+                    return `<div>
+                        <div class="flex items-center justify-between gap-2 text-[11px]">
+                            <span class="font-semibold text-zinc-300">${escapeHtml(group.label)}</span>
+                            <span class="font-mono text-zinc-500">${escapeHtml(bestLabel)}</span>
+                        </div>
+                        <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-zinc-800">
+                            <div class="h-full rounded-full ${tone}" style="width:${width.toFixed(1)}%"></div>
+                        </div>
+                    </div>`;
+                }).join('')}
+            </div>`;
+        }
+
+        function addUniqueStrategyItem(list, item) {
+            if (!item || list.some(existing => existing.id === item.id)) return;
+            list.push(item);
+        }
+
+        function strategyAllocation(items, groups) {
+            const ranked = [...items].sort((a, b) => b.score - a.score);
+            if (!ranked.length) return [];
+            const bestScore = ranked[0].score;
+            const selected = [];
+            groups
+                .map(group => group.best)
+                .filter(Boolean)
+                .sort((a, b) => b.score - a.score)
+                .forEach(item => {
+                    if (item.score >= bestScore - 18) addUniqueStrategyItem(selected, item);
+                });
+            ranked.forEach(item => {
+                if (selected.length < 3) addUniqueStrategyItem(selected, item);
+            });
+            ranked.forEach(item => {
+                if (selected.length < 4 && item.score >= bestScore - 8) addUniqueStrategyItem(selected, item);
+            });
+            const finalItems = selected.slice(0, 4);
+            const minScore = Math.min(...finalItems.map(item => item.score));
+            const rawWeights = finalItems.map(item => Math.max(12, item.score - minScore + 18));
+            const rawTotal = rawWeights.reduce((sum, weight) => sum + weight, 0) || 1;
+            let used = 0;
+            return finalItems.map((item, index) => {
+                const weight = index === finalItems.length - 1
+                    ? Math.max(0, 100 - used)
+                    : Math.round(rawWeights[index] / rawTotal * 100);
+                used += weight;
+                return { ...item, weight };
+            });
+        }
+
+        function allocationVisual(allocation) {
+            if (!allocation.length) return '';
+            const rows = allocation.map(item => {
+                const accent = entryScenarioAccent(item.scenario, allocation.map(entry => entry.scenario));
+                return `<div class="flex items-center justify-between gap-3 text-[11px] leading-4">
+                    <div class="min-w-0 truncate text-zinc-300"><span class="mr-1.5 inline-block h-1.5 w-1.5 rounded-full ${accent.dot}"></span>${escapeHtml(item.label)}</div>
+                    <div class="font-mono font-semibold text-zinc-100">${item.weight}%</div>
+                </div>`;
+            }).join('');
+            return `<div>
+                <div class="flex h-3 overflow-hidden rounded-full bg-zinc-800">
+                    ${allocation.map(item => {
+                        const accent = entryScenarioAccent(item.scenario, allocation.map(entry => entry.scenario));
+                        return `<div class="${accent.dot}" title="${escapeHtml(`${item.label}: ${item.weight}%`)}" style="width:${item.weight}%"></div>`;
+                    }).join('')}
+                </div>
+                <div class="mt-3 grid gap-1.5 sm:grid-cols-2">${rows}</div>
+            </div>`;
+        }
+
+        function bestScenarioMetric(scenarios, key, ids = null) {
+            const candidates = scenarios
+                .filter(scenario => !ids || ids.includes(scenario.id))
+                .map(scenario => ({ scenario, value: statAverage(scenario[key]) }))
+                .filter(item => Number.isFinite(item.value))
+                .sort((a, b) => b.value - a.value);
+            return candidates[0] || null;
+        }
+
+        function entryStrategyKpis(analysis, scenarios) {
+            const items = scenarioStrategyRows(scenarios);
+            if (!items.length) {
+                return {
+                    buyBias: '—',
+                    buyBiasHelper: 'No ranked entry scenarios are available.',
+                    buyBiasTone: 'zinc',
+                    planValue: '—',
+                    planHelper: 'No staged allocation is available.',
+                    planTone: 'zinc'
+                };
+            }
+            const groups = entryStrategyGroups(items);
+            const d1Group = groups.find(group => group.id === 'd1');
+            const bridgeGroup = groups.find(group => group.id === 'bridge');
+            const d2Group = groups.find(group => group.id === 'd2');
+            const bestGroup = [...groups].sort((a, b) => (b.score || -Infinity) - (a.score || -Infinity))[0];
+            const d1Score = Number(d1Group?.score);
+            const d2Score = Number(d2Group?.score);
+            const bridgeScore = Number(bridgeGroup?.score);
+            let buyBias = 'Split D1 / D2';
+            let buyBiasTone = 'blue';
+            if (Number.isFinite(d1Score) && Number.isFinite(d2Score)) {
+                if (d1Score >= d2Score + 8) {
+                    buyBias = 'Day 1 bias';
+                    buyBiasTone = 'blue';
+                } else if (d2Score >= d1Score + 8) {
+                    buyBias = 'Day 2 bias';
+                    buyBiasTone = 'emerald';
+                }
+            } else if (bestGroup?.id === 'd1') {
+                buyBias = 'Day 1 bias';
+            } else if (bestGroup?.id === 'd2') {
+                buyBias = 'Day 2 bias';
+                buyBiasTone = 'emerald';
+            }
+            if (Number.isFinite(bridgeScore) && bridgeScore >= Math.max(d1Score || -Infinity, d2Score || -Infinity) + 5) {
+                buyBias = 'Bridge sessions';
+                buyBiasTone = 'amber';
+            }
+            const allocation = strategyAllocation(items, groups);
+            const allocationText = allocation.length
+                ? allocation.map(item => `${item.weight}% ${item.label}`).join(' · ')
+                : 'No allocation could be ranked.';
+            const lateIds = new Set(['buyAfter', 'buyPreSecond', 'buyOpenDayTwo', 'buyEndDayTwo']);
+            const lateWeight = allocation.reduce((sum, item) => sum + (lateIds.has(item.id) ? item.weight : 0), 0);
+            const planTone = lateWeight >= 55 ? 'emerald' : (lateWeight >= 30 ? 'amber' : 'blue');
+            return {
+                buyBias,
+                buyBiasHelper: bestGroup?.best
+                    ? `${bestGroup.label} leads via ${scenarioDisplayLabel(bestGroup.best.scenario)}. Typical low time: ${medianLowMarketMoment(analysis)}.`
+                    : 'Best day group is not available.',
+                buyBiasTone,
+                planValue: `${allocation.length || 1} buys`,
+                planHelper: allocationText,
+                planTone
+            };
+        }
+
+        function entryStrategyPlaybook(analysis, scenarios) {
+            const items = scenarioStrategyRows(scenarios);
+            if (!items.length) return '';
+            const groups = entryStrategyGroups(items);
+            const d1Group = groups.find(group => group.id === 'd1');
+            const bridgeGroup = groups.find(group => group.id === 'bridge');
+            const d2Group = groups.find(group => group.id === 'd2');
+            const bestGroup = [...groups].sort((a, b) => (b.score || -Infinity) - (a.score || -Infinity))[0];
+            const d1Score = Number(d1Group?.score);
+            const d2Score = Number(d2Group?.score);
+            const bridgeScore = Number(bridgeGroup?.score);
+            let dayChoice = 'Split D1 / D2';
+            let dayChoiceTone = 'blue';
+            if (Number.isFinite(d1Score) && Number.isFinite(d2Score)) {
+                if (d1Score >= d2Score + 8) {
+                    dayChoice = 'Day 1 bias';
+                    dayChoiceTone = 'blue';
+                } else if (d2Score >= d1Score + 8) {
+                    dayChoice = 'Day 2 bias';
+                    dayChoiceTone = 'emerald';
+                }
+            } else if (bestGroup?.id === 'd1') {
+                dayChoice = 'Day 1 bias';
+            } else if (bestGroup?.id === 'd2') {
+                dayChoice = 'Day 2 bias';
+                dayChoiceTone = 'emerald';
+            }
+            if (Number.isFinite(bridgeScore) && bridgeScore >= Math.max(d1Score || -Infinity, d2Score || -Infinity) + 5) {
+                dayChoice = 'Bridge sessions';
+                dayChoiceTone = 'amber';
+            }
+
+            const allocation = strategyAllocation(items, groups);
+            const lateIds = new Set(['buyAfter', 'buyPreSecond', 'buyOpenDayTwo', 'buyEndDayTwo']);
+            const lateWeight = allocation.reduce((sum, item) => sum + (lateIds.has(item.id) ? item.weight : 0), 0);
+            const bestSingle = bestStrategyItem(items);
+            const dayTrade = bestScenarioMetric(scenarios, 'vsEndD1Stats', ['openHighLimit', 'medianTiming', 'thirtyMinutes', 'oneHour']);
+            const dayTradeReturn = Number(dayTrade?.value);
+            const dayTradeSafety = Number(dayTrade?.scenario?.lossUnder5Pct);
+            const dayTradeValue = dayTradeReturn >= 2 && dayTradeSafety >= 60
+                ? 'Supported'
+                : (dayTradeReturn >= 0 ? 'Selective only' : 'Not favored');
+            const dayTradeTone = dayTradeValue === 'Supported' ? 'emerald' : (dayTradeValue === 'Selective only' ? 'amber' : 'red');
+            const swing = bestScenarioMetric(
+                scenarios.filter(scenario => scenario.id !== 'buyEndDayTwo'),
+                'vsEndD2Stats'
+            );
+            const swingReturn = Number(swing?.value);
+            const swingValue = swingReturn > Math.max(dayTradeReturn || -Infinity, 0) + 1
+                ? 'Prefer D2 exit'
+                : (swingReturn >= 0 ? 'Selective hold' : 'Not favored');
+            const swingTone = swingValue === 'Prefer D2 exit' ? 'emerald' : (swingValue === 'Selective hold' ? 'amber' : 'red');
+            const openItem = items.find(item => item.id === 'openHighLimit');
+            const openGap = Number.isFinite(openItem?.score) && Number.isFinite(bestSingle?.score) ? bestSingle.score - openItem.score : null;
+            const openValue = !Number.isFinite(openGap)
+                ? 'Unknown'
+                : (openGap <= 8 ? 'Open acceptable' : (openGap <= 18 ? 'Starter only' : 'Avoid full open'));
+            const openTone = openValue === 'Open acceptable' ? 'emerald' : (openValue === 'Starter only' ? 'amber' : 'red');
+            const dryValue = lateWeight >= 55 ? 'Save most' : (lateWeight >= 30 ? 'Keep dry powder' : 'Mostly D1');
+            const dryTone = lateWeight >= 55 ? 'emerald' : (lateWeight >= 30 ? 'amber' : 'blue');
+            const lowWindowText = `Typical low time: ${medianLowMarketMoment(analysis)}`;
+
+            return `<div class="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 sm:p-5">
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-3">
+                    <div>
+                        <div class="section-header text-blue-400">Buy-plan questions</div>
+                        <p class="mt-2 max-w-4xl text-sm leading-6 text-zinc-400">The plan score blends 60% Vs Current, 25% closeness to the absolute low, and 15% loss containment. Column border colors still rank only Vs Current.</p>
+                    </div>
+                    <div class="text-xs text-zinc-500">Active sample: ${analysis.sampleSize} IPOs</div>
+                </div>
+                <div class="mt-4 grid gap-4 xl:grid-cols-3">
+                    ${strategyQuestionCard({
+                        label: 'Should I buy D1 or D2?',
+                        value: dayChoice,
+                        body: `${bestGroup?.label || 'Best group'} leads via ${scenarioDisplayLabel(bestGroup?.best?.scenario)}. ${lowWindowText}; ${analysis.lowLabel || 'low'} timing remains the main pacing signal.`,
+                        tone: dayChoiceTone,
+                        visual: groupScoreBars(groups),
+                        wide: true
+                    })}
+                    ${strategyQuestionCard({
+                        label: 'How many buys?',
+                        value: `${allocation.length || 1} staged buys`,
+                        body: 'Use multiple entries when the best windows are close enough that one exact fill is fragile.',
+                        tone: allocation.length >= 3 ? 'emerald' : 'amber',
+                        visual: allocationVisual(allocation),
+                        footer: 'Percentages are shares of the intended original amount.'
+                    })}
+                    ${strategyQuestionCard({
+                        label: 'Day-trade D1?',
+                        value: dayTradeValue,
+                        body: dayTrade ? `Best D1 exit setup is ${scenarioDisplayLabel(dayTrade.scenario)} to End D1 at ${fmtPct(dayTradeReturn)} avg; loss <5% in ${fmtWholePct(dayTradeSafety)} of samples.` : 'No D1 exit sample is available.',
+                        tone: dayTradeTone
+                    })}
+                    ${strategyQuestionCard({
+                        label: 'D1 / D2 swing?',
+                        value: swingValue,
+                        body: swing ? `Best End D2 setup is ${scenarioDisplayLabel(swing.scenario)} at ${fmtPct(swingReturn)} avg versus its buy price.` : 'No D2 exit sample is available.',
+                        tone: swingTone
+                    })}
+                    ${strategyQuestionCard({
+                        label: 'Chase the open?',
+                        value: openValue,
+                        body: openItem && bestSingle ? `Open trails the best setup by ${Number.isFinite(openGap) ? openGap.toFixed(0) : '—'} score points; its average gap to the absolute low is ${fmtPct(openItem.lowGap)}.` : 'Open comparison is unavailable.',
+                        tone: openTone
+                    })}
+                    ${strategyQuestionCard({
+                        label: 'How much dry powder?',
+                        value: `${lateWeight}% later`,
+                        body: `${dryValue}: allocation reserved for after-hours, pre-D2, or D2 entries based on the ranked plan.`,
+                        tone: dryTone
+                    })}
+                    ${strategyQuestionCard({
+                        label: 'Best single fill?',
+                        value: bestSingle ? scenarioDisplayLabel(bestSingle.scenario) : '—',
+                        body: bestSingle ? `Highest plan score: Vs Current ${fmtPct(bestSingle.current)}, gap to absolute low ${fmtPct(bestSingle.lowGap)}, loss <5% ${fmtWholePct(bestSingle.safety)}.` : 'No ranked entry is available.',
+                        tone: 'emerald'
+                    })}
+                </div>
             </div>`;
         }
 
@@ -2797,10 +4108,10 @@
                 <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-3">
                     <div>
                         <div class="section-header text-blue-400">Entry scenario analysis</div>
-                        <p class="text-zinc-400 mt-2 leading-6 text-sm max-w-4xl">On-the-fly comparison for the active cap and trading-place filter. Timed entries use the next available 5-minute open; the day-low benchmark is a perfect low entry, so its gap is the opportunity cost of each scenario.</p>
-                    </div>
-                    <div class="text-xs text-zinc-500">Prob. means historical share of samples; loss contained means day-end return stayed above the threshold.</div>
-                </div>
+	                        <p class="text-zinc-400 mt-2 leading-6 text-sm max-w-4xl">On-the-fly comparison for the active cap, trading-place, and analysis-range filter. Columns match the chart-card entry scenarios; values are sample averages with min/max beneath.</p>
+	                    </div>
+	                    <div class="text-xs text-zinc-500">Gap to low uses the absolute low over available Day 1/Ext/D2 candles. Current uses the runtime Yahoo quote.</div>
+	                </div>
                 <div class="mt-4">
                     ${entryScenarioScoreboard(scenarios)}
                 </div>
@@ -2822,10 +4133,18 @@
                     endLabel: 'Vs day end'
                 },
                 {
-                    id: 'buyOpenSecond',
+                    id: 'buyOpenDayTwo',
                     rowLabel: 'Open D2',
                     milestone: milestones.openSecond,
-                    endLabel: 'Vs day end'
+                    exitMilestone: milestones.endSecond,
+                    endLabel: 'End D2'
+                },
+                {
+                    id: 'buyEndDayTwo',
+                    rowLabel: 'End D2',
+                    milestone: milestones.endSecond,
+                    exitMilestone: milestones.endSecond,
+                    endLabel: 'End D2'
                 }
             ];
         }
@@ -2843,12 +4162,34 @@
             const lowPoint = lowInfo?.lowPoint;
             if (!first || !last || !lowPoint || !Number.isFinite(last.close) || !Number.isFinite(lowPoint.low) || lowPoint.low <= 0) return [];
 
-            const analysis = currentAnalysis();
+            const analysis = baseAnalysisForFilter() || {};
             const medianMinutes = Number(analysis?.medianDeltaMinutes);
             const medianEntry = Number.isFinite(medianMinutes)
                 ? entryBarAtOrAfter(valid, first.minute + medianMinutes)
                 : null;
             const medianEntryPrice = Number(medianEntry?.open);
+            const milestones = combinedSessionMilestones(ipo);
+            const endD1Price = Number(last.close);
+            const endD2Price = Number(milestones.endSecond?.price);
+            const currentPrice = Number(ipo.current);
+            const wholePeriodData = chartData(ipo, 'd1ExtD2')
+                .filter(bar => Number.isFinite(bar.minute))
+                .sort((a, b) => a.minute - b.minute);
+            const wholeLowInfo = chartLowPoints(wholePeriodData.length ? wholePeriodData : valid);
+            const wholeLowPoint = wholeLowInfo?.lowPoint;
+            if (!wholeLowPoint || !Number.isFinite(wholeLowPoint.low) || wholeLowPoint.low <= 0 || !Number.isFinite(endD1Price)) return [];
+
+            const comparisonMetrics = (entryPrice, entryMinute) => ({
+                vsEndD1: endD1Price / entryPrice * 100 - 100,
+                vsEndD2: Number.isFinite(endD2Price) && endD2Price > 0 ? endD2Price / entryPrice * 100 - 100 : null,
+                vsCurrent: Number.isFinite(currentPrice) && currentPrice > 0 ? currentPrice / entryPrice * 100 - 100 : null,
+                medianGap: Number.isFinite(medianEntryPrice) && medianEntryPrice > 0
+                    ? medianEntryPrice / entryPrice * 100 - 100
+                    : null,
+                lowReturn: wholeLowPoint.low / entryPrice * 100 - 100,
+                lowAlreadyPassed: Number.isFinite(entryMinute) && wholeLowPoint.minute < entryMinute,
+                dayEndReturn: endD1Price / entryPrice * 100 - 100
+            });
 
             const regularRows = entryScenarioDefinitions(analysis)
                 .filter(scenario => Number.isFinite(scenario.targetDelta))
@@ -2868,15 +4209,9 @@
                         available: true,
                         entryTime: entry.time || minutesToTime(entry.minute),
                         entryPrice: entry.open,
-                        dayEndReturn: (last.close / entry.open - 1) * 100,
-                        medianGap: Number.isFinite(medianEntryPrice) && medianEntryPrice > 0
-                            ? (medianEntryPrice / entry.open - 1) * 100
-                            : null,
-                        lowReturn: (lowPoint.low / entry.open - 1) * 100,
-                        lowAlreadyPassed: lowPoint.minute < entry.minute
+                        ...comparisonMetrics(entry.open, entry.minute)
                     };
                 });
-            const milestones = extendedSessionMilestones(ipo);
             const extendedRows = extendedEntryScenarioDefinitions(milestones).map(scenario => {
                 const entry = scenario.milestone;
                 if (!entry || !Number.isFinite(entry.price) || entry.price <= 0) {
@@ -2890,67 +4225,71 @@
                     available: true,
                     entryTime: entry.time,
                     entryPrice: entry.price,
-                    dayEndReturn: (last.close / entry.price - 1) * 100,
-                    medianGap: Number.isFinite(medianEntryPrice) && medianEntryPrice > 0
-                        ? (medianEntryPrice / entry.price - 1) * 100
-                        : null,
-                    lowReturn: (lowPoint.low / entry.price - 1) * 100,
-                    lowAlreadyPassed: true
+                    ...comparisonMetrics(entry.price, entry.bar?.minute)
                 };
             });
             return [...regularRows, ...extendedRows].filter(row => row.available);
         }
 
-        function scenarioMetricLine(label, value) {
-            return `<div class="flex items-center justify-between gap-3 rounded-lg bg-zinc-950/70 px-2 py-1.5">
-                <span class="text-[11px] font-semibold text-zinc-500">${escapeHtml(label)}</span>
-                <span class="font-mono text-xs font-semibold ${pctTone(value)}">${fmtPct(value)}</span>
-            </div>`;
+        function entryScenarioTableValue(value, toneFn) {
+            return `<span class="font-mono text-[10px] font-semibold ${toneFn(value)}">${fmtPct(value)}</span>`;
         }
 
-        function cardEntryScenarioControl(row) {
+        function entryScenarioColumnHeader(row, rows = []) {
             const label = escapeHtml(String(row.rowLabel).toUpperCase());
-            const endLabel = row.endLabel || 'End of day';
-            if (!row.available) {
-                return `<div class="min-w-0 rounded-xl border border-zinc-800 bg-zinc-900/70 p-3 shadow-inner">
-                    <div class="flex min-w-0 items-center gap-2 whitespace-nowrap">
-                        <span class="h-1.5 w-1.5 rounded-full bg-zinc-500"></span>
-                        <span class="text-xs font-semibold text-zinc-200">Buy ${label}</span>
-                    </div>
-                    <div class="mt-3 space-y-1.5">
-                        ${scenarioMetricLine(endLabel, null)}
-                        ${scenarioMetricLine('Gap to median', null)}
-                        ${scenarioMetricLine('Gap to low', null)}
-                    </div>
-                </div>`;
-            }
-            const accent = pctAccent(row.dayEndReturn);
-            return `<div class="min-w-0 rounded-xl border ${accent.border} bg-zinc-900/80 p-3 shadow-inner">
-                <div class="flex min-w-0 items-center gap-2 whitespace-nowrap">
+            const accent = entryScenarioAccent(row, rows);
+            const currentScore = entryScenarioCurrentScore(row);
+            const title = Number.isFinite(currentScore)
+                ? `Buy ${label} · ${accent.label} · Vs Current ${fmtPct(currentScore)}`
+                : `Buy ${label} · ${accent.label}`;
+            return `<th scope="col" title="${escapeHtml(title)}" class="border border-zinc-800 ${accent.border} bg-zinc-900/80 px-1 py-2 text-center align-middle">
+                <div class="inline-flex items-center justify-center gap-1 whitespace-nowrap">
                     <span class="h-1.5 w-1.5 rounded-full ${accent.dot}"></span>
-                    <span class="text-xs font-semibold text-zinc-200">Buy ${label}</span>
+                    <span class="text-[9px] font-semibold uppercase leading-none text-zinc-200">${label}</span>
                 </div>
-                <div class="mt-3 space-y-1.5">
-                    ${scenarioMetricLine(endLabel, row.dayEndReturn)}
-                    ${scenarioMetricLine('Gap to median', row.medianGap)}
-                    ${scenarioMetricLine('Gap to low', row.lowReturn)}
-                </div>
-            </div>`;
+            </th>`;
+        }
+
+        function entryScenarioMetricRow(label, key, toneFn, rows) {
+            const dashedTopStyle = key === 'vsCurrent' ? ' style="border-top-style:dashed;border-top-color:rgba(113,113,122,0.75)"' : '';
+            return `<tr>
+                <th scope="row" class="sticky left-0 z-10 w-[6.75rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2 py-2 text-left text-[10px] font-semibold text-zinc-500"${dashedTopStyle}>${escapeHtml(label)}</th>
+                ${rows.map(row => {
+                    const value = key === 'vsEndD2' && row.id === 'buyEndDayTwo'
+                        ? '<span class="font-mono text-[10px] font-semibold text-zinc-500">-</span>'
+                        : entryScenarioTableValue(row[key], toneFn);
+                    return `<td class="border border-zinc-800 bg-zinc-950/70 px-1 py-2 text-center align-middle whitespace-nowrap"${dashedTopStyle}>${value}</td>`;
+                }).join('')}
+            </tr>`;
         }
 
         function cardEntryScenarioTable(ipo, data) {
             const rows = cardEntryScenarioRows(ipo, data);
             if (!rows.length) return '';
-            const gridClass = rows.length > 5
-                ? 'sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-8'
-                : 'sm:grid-cols-2 xl:grid-cols-5';
+            const metricRows = [
+                ['Vs End D1', 'vsEndD1', endpointTone],
+                ['Gap to median', 'medianGap', gapTone],
+                ['Gap to low', 'lowReturn', gapTone],
+                ['Vs End D2', 'vsEndD2', endpointTone],
+                ['Vs Current', 'vsCurrent', endpointTone]
+            ];
             return `<div class="mt-3 rounded-2xl border border-zinc-800 bg-zinc-950 p-3 sm:p-4">
                 <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-1.5">
                     <div class="section-header text-blue-400">Entry scenarios</div>
-                    <div class="text-xs leading-5 text-zinc-500">Gaps compare each entry with the active median entry and first-day low; extended entries use Alpaca after/pre/open candles.</div>
+                    <div class="text-xs leading-5 text-zinc-500">Each entry is compared with End D1, the active median entry, the absolute low across available Day 1/Ext/D2 candles, End D2, and Current.</div>
                 </div>
-                <div class="mt-3 grid gap-2 ${gridClass}">
-                    ${rows.map(cardEntryScenarioControl).join('')}
+                <div class="mt-3 overflow-x-auto rounded-xl border border-zinc-800" data-entry-scenario-table="${escapeHtml(ipo.ticker)}">
+                    <table class="w-full min-w-[35rem] table-fixed border-separate border-spacing-0 text-xs">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="sticky left-0 z-20 w-[6.75rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2 py-2 text-right text-[10px] font-semibold uppercase text-zinc-500">Buy At</th>
+                                ${rows.map(row => entryScenarioColumnHeader(row, rows)).join('')}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${metricRows.map(([label, key, toneFn]) => entryScenarioMetricRow(label, key, toneFn, rows)).join('')}
+                        </tbody>
+                    </table>
                 </div>
             </div>`;
         }
@@ -2958,6 +4297,7 @@
         function decisionTimelineSvg(analysis) {
             const buckets = analysis.buckets || [];
             const compact = window.matchMedia('(max-width: 640px)').matches;
+            const multiSession = analysis.rangeMode && analysis.rangeMode !== 'day1';
             const W = compact ? 420 : 1120;
             const H = compact ? 182 : 214;
             const left = compact ? 34 : 58;
@@ -2968,7 +4308,7 @@
             const tickY = barY + barH + (compact ? 30 : 34);
             const dotY = compact ? 138 : 166;
             const pctY = compact ? 160 : 192;
-            const domainMax = 300;
+            const domainMax = Math.max(300, Number(analysis.timelineMaxMinutes) || 300);
             const plotW = W - left - right;
             const x = minutes => left + Math.max(0, Math.min(domainMax, minutes)) / domainMax * plotW;
             const maxCount = Math.max(...buckets.map(bucket => bucket.count || 0), 1);
@@ -2986,15 +4326,33 @@
                     : '';
                 return `<g><title>${escapeHtml(bucket.label)}: ${bucket.count || 0} IPOs (${fmtWholePct(bucket.pct)})</title><rect x="${xx.toFixed(1)}" y="${barY}" width="${width.toFixed(1)}" height="${barH}" rx="7" fill="${fill}" opacity="${opacity.toFixed(2)}"/>${text}</g>`;
             }).join('');
-            const ticks = [
-                [0, 'first trade'],
-                [30, '30m'],
-                [60, '1h'],
-                [120, '2h'],
-                [180, '3h'],
-                [240, '4h'],
-                [300, '4h+']
-            ].map(([minute, label]) => {
+            const tickSpecs = domainMax > 600
+                ? [
+                    [0, 'first trade'],
+                    [60, '1h'],
+                    [240, '4h'],
+                    [480, '8h'],
+                    [720, '12h'],
+                    [960, '16h'],
+                    [Math.min(1440, domainMax), domainMax >= 1440 ? '24h' : `${Math.round(Math.min(1440, domainMax) / 60)}h`],
+                    [domainMax, `${Math.round(domainMax / 60)}h+`]
+                ]
+                : [
+                    [0, 'first trade'],
+                    [30, '30m'],
+                    [60, '1h'],
+                    [120, '2h'],
+                    [180, '3h'],
+                    [240, '4h'],
+                    [300, '4h+']
+                ];
+            const seenTickMinutes = new Set();
+            const ticks = tickSpecs.filter(([minute]) => {
+                const rounded = Math.round(minute);
+                if (seenTickMinutes.has(rounded)) return false;
+                seenTickMinutes.add(rounded);
+                return rounded <= domainMax;
+            }).map(([minute, label]) => {
                 const xx = x(minute);
                 const text = compact && (minute === 30 || minute === 180 || minute === 240) ? '' : `<text x="${xx.toFixed(1)}" y="${tickY.toFixed(1)}" text-anchor="middle" font-size="${compact ? 10 : 14}" fill="#a1a1aa">${label}</text>`;
                 return `<g><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(barY + barH + 10).toFixed(1)}" y2="${(barY + barH + 18).toFixed(1)}" stroke="#3f3f46"/>${text}</g>`;
@@ -3015,7 +4373,9 @@
                 const color = pct >= 55 ? '#34d399' : pct >= 35 ? '#60a5fa' : '#fbbf24';
                 return `<g><title>${escapeHtml(checkpoint.label)}: ${fmtWholePct(pct)} still ahead</title><circle cx="${xx.toFixed(1)}" cy="${dotY}" r="${compact ? 4 : 5}" fill="${color}"/><text x="${xx.toFixed(1)}" y="${pctY}" text-anchor="middle" font-size="${compact ? 9 : 12}" fill="#71717a">${fmtWholePct(pct)}</text></g>`;
             }).join('');
-            return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="IPO first-day low timing decision timeline"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${left}" y="${compact ? 24 : 30}" font-size="${compact ? 13 : 17}" font-weight="700" fill="#d4d4d8">Elapsed-time opportunity map</text><text x="${W - right}" y="${compact ? 24 : 30}" text-anchor="end" font-size="${compact ? 10 : 14}" fill="#71717a">${compact ? 'odds low still ahead' : 'lower bars show odds low was still ahead'}</text>${segments}<line x1="${left}" x2="${W - right}" y1="${(barY + barH + 10).toFixed(1)}" y2="${(barY + barH + 10).toFixed(1)}" stroke="#27272a"/>${ticks}${checkpointDots}${median}</svg>`;
+            const title = multiSession ? 'Active candle-time opportunity map' : 'Elapsed-time opportunity map';
+            const helper = compact ? 'odds low still ahead' : (multiSession ? 'gaps without candles excluded' : 'lower dots show odds low was still ahead');
+            return `<svg class="w-full h-auto block" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(title)}"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${left}" y="${compact ? 24 : 30}" font-size="${compact ? 13 : 17}" font-weight="700" fill="#d4d4d8">${escapeHtml(title)}</text><text x="${W - right}" y="${compact ? 24 : 30}" text-anchor="end" font-size="${compact ? 10 : 14}" fill="#71717a">${escapeHtml(helper)}</text>${segments}<line x1="${left}" x2="${W - right}" y1="${(barY + barH + 10).toFixed(1)}" y2="${(barY + barH + 10).toFixed(1)}" stroke="#27272a"/>${ticks}${checkpointDots}${median}</svg>`;
         }
 
         function renderAnalysis() {
@@ -3023,21 +4383,15 @@
             if (!mount) return;
             const analysis = currentAnalysis();
             if (!analysis || !analysis.sampleSize) {
-                mount.innerHTML = `<div class="p-5 sm:p-6 text-zinc-400">Not enough first-day price data is available for the 15-year timing analysis.</div>`;
+                mount.innerHTML = `<div class="p-5 sm:p-6 text-zinc-400">Not enough price data is available for the selected timing analysis.</div>`;
                 return;
             }
             const analysisLabel = currentAnalysisLabel(analysis);
-            const topWindow = analysis.topBucket ? analysis.topBucket.label : '—';
-            const medianClockLabel = dualClockLabel(analysis.medianLowTime || '—', analysis.medianLowGermanTime);
-            const medianClockMetricValue = dualClockMetricValue(analysis.medianLowTime || '—', analysis.medianLowGermanTime);
-            const topClockMetricValue = clockBucketMetricValue(analysis.topClockBucket);
-            const wait30 = checkpointByMinutes(analysis, 30);
-            const wait60 = checkpointByMinutes(analysis, 60);
-            const decisionRows = (analysis.decisionCheckpoints || []).map(checkpoint => decisionOddRow(checkpoint, analysis.sampleSize)).join('');
+            const lowLabel = analysis.lowLabel || 'first-day low';
             const entryScenarios = entryScenarioAnalysis(analysis);
-            const entryScenarioPills = entryScenarioInsightMetrics(entryScenarios);
-            const wait30Text = wait30 ? fmtWholePct(wait30.stillAheadPct) : '—';
-            const wait60Text = wait60 ? fmtWholePct(wait60.stillAheadPct) : '—';
+            const strategyKpis = entryStrategyKpis(analysis, entryScenarios);
+            const medianLowMoment = medianLowMarketMoment(analysis);
+            const medianLowGerman = analysis.medianLowGermanTime ? ` (${analysis.medianLowGermanTime} DE)` : '';
             mount.innerHTML = `
                 <div class="p-5 sm:p-6 border-b border-zinc-800 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.20),transparent_34rem)]">
                     <div class="grid xl:grid-cols-[minmax(0,1.1fr)_minmax(22rem,0.9fr)] gap-5 items-stretch">
@@ -3045,7 +4399,7 @@
                             <div>
                                 <div class="section-header text-blue-400">IPO buying decision dashboard</div>
                                 <h2 class="font-display text-3xl sm:text-4xl mt-1">How patient should the first order be?</h2>
-                                <p class="text-zinc-400 mt-2 leading-7">For ${escapeHtml(analysisLabel)} since ${analysis.cutoffDate}, the median first-day low appeared ${formatElapsedPlain(analysis.medianDeltaMinutes)} after the first public trade, around ${medianClockLabel}. The dashboard below turns those first-day charts into wait-time odds for pacing an entry.</p>
+                                <p class="text-zinc-400 mt-2 leading-7">For ${escapeHtml(analysisLabel)} since ${analysis.cutoffDate}, the median ${escapeHtml(lowLabel)} in the selected chart range was ${escapeHtml(medianLowMoment)} ET${escapeHtml(medianLowGerman)}. The dashboard below turns those candles into an entry plan.</p>
                                 <div class="mt-4 flex flex-wrap gap-2">
                                     <button type="button" data-three-map-open aria-label="Open 3D IPO path map" class="inline-flex h-11 items-center gap-2 rounded-2xl border border-blue-500/40 bg-blue-600 px-4 text-sm font-semibold text-white transition-colors hover:border-blue-300 hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
                                         <i class="fa-solid fa-cubes text-xs"></i>
@@ -3055,10 +4409,10 @@
                             </div>
                         </div>
                         <div class="grid sm:grid-cols-2 gap-3">
-                            ${dashboardMetric('Sample', `${analysis.sampleSize} IPOs`, 'Exact 5-minute first-day charts in this filter.')}
-                            ${dashboardMetric('Typical low', formatElapsedPlain(analysis.medianDeltaMinutes), `Most common elapsed window: ${topWindow}.`, 'text-blue-400')}
-                            ${dashboardMetric('After 30m', wait30Text, 'Chance the first-day low was still ahead.', 'text-emerald-400')}
-                            ${dashboardMetric('After 1h', wait60Text, 'Chance the first-day low was still ahead.', 'text-blue-400')}
+                            ${dashboardMetric('Sample', `${analysis.sampleSize} IPOs`, analysis.sampleHelper || 'Exact 5-minute charts in this filter.')}
+                            ${dashboardMetric('Typical low time', medianLowMarketMoment(analysis), medianLowMetricHelper(analysis), 'text-blue-400')}
+                            ${dashboardMetric('Buy bias', strategyKpis.buyBias, strategyKpis.buyBiasHelper, strategyToneTextClass(strategyKpis.buyBiasTone))}
+                            ${dashboardMetric('Entry plan', strategyKpis.planValue, strategyKpis.planHelper, strategyToneTextClass(strategyKpis.planTone))}
                         </div>
                     </div>
                     <div class="mt-5 bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden">
@@ -3074,24 +4428,9 @@
                             ${clockTimingChartSvg(analysis)}
                         </div>
                     </div>
-                    <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4">
-                            <div class="flex items-start justify-between gap-4">
-                                <div>
-                                    <div class="section-header text-blue-400">Decision odds</div>
-                                    <p class="text-zinc-400 mt-2 leading-6 text-sm">Read each row as: after waiting this long, how often was the day-one low still in front of you?</p>
-                                </div>
-                            </div>
-                            <div class="mt-4 grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6 gap-3">${decisionRows}</div>
-                    </div>
-                    ${entryScenarioSection(analysis, entryScenarios)}
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-8 gap-3 text-sm">
-                        ${metric('Median clock', medianClockMetricValue, 'text-blue-400')}
-                        ${metric('Most common clock', topClockMetricValue)}
-                        ${metric('Low 2h+', fmtWholePct(analysis.afterTwoHoursPct), 'text-amber-400')}
-                        ${metric('Current view', analysisLabel)}
-                        ${entryScenarioPills}
-                    </div>
-                </div>`;
+                    ${entryStrategyPlaybook(analysis, entryScenarios)}
+	                    ${entryScenarioSection(analysis, entryScenarios)}
+	                </div>`;
         }
 
         function cardHtml(ipo, index) {
@@ -3104,8 +4443,9 @@
                 ? `<span class="px-3 h-8 rounded-2xl border border-zinc-700 text-zinc-300 text-xs font-semibold flex items-center">Deal ${fmtDeal(dealSize)}</span>`
                 : '';
             const quoteUrl = yahooFinanceUrl(ipo.ticker);
-            const extendedPrices = extendedSessionMilestones(ipo);
-            const dayTwoMilestone = extendedPrices.openSecond || extendedPrices.preSecond;
+            const extendedPrices = combinedSessionMilestones(ipo);
+            const openD2Milestone = extendedPrices.openSecond;
+            const closeD2Milestone = extendedPrices.endSecond;
             return `<article class="ipo-card bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden modern-shadow" data-search="${escapeHtml(searchBlob)}">
                 <div class="p-5 sm:p-6 border-b border-zinc-800 flex flex-col lg:flex-row gap-4 lg:items-start lg:justify-between">
                     <div class="min-w-0">
@@ -3126,12 +4466,13 @@
                 <div class="p-4 sm:p-6">
                     ${chartFrameHtml(ipo)}
                     ${cardPriceTimelineHtml(ipo, data, summary, medianQuote, extendedPrices)}
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 mt-3">
-                        ${progressMicroChart('IPO to day-one close', 'IPO', 'Close', ipo.ipoPrice, summary.endPrice, firstDayClosePath(data, ipo.ipoPrice, 'IPO'))}
-                        ${progressMicroChart('Start price to end price', 'Start', 'End', summary.startPrice, summary.endPrice, firstDayStartEndPath(data))}
-                        ${progressMicroChart('Day-one low to end price', 'Low', 'End', summary.lowPrice, summary.endPrice, lowToEndPath(data))}
-                        ${progressMicroChart('Start price to Day-two', 'Start', dayTwoMilestone?.label || 'D2', summary.startPrice, dayTwoMilestone?.price, startToDayTwoPath(data, extendedPrices))}
-                        ${progressMicroChart('Day-one close to current*', 'Close', 'Current*', summary.endPrice, ipo.current, roughHistoryPath(ipo, summary.endPrice, ipo.current, 'Close'))}
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-3 mt-3">
+                        ${progressMicroChart('IPO to D1 close', 'IPO', 'D1 close', ipo.ipoPrice, summary.endPrice, firstDayClosePath(data, ipo.ipoPrice, 'IPO'))}
+                        ${progressMicroChart('D1 start to D1 close', 'D1 start', 'D1 close', summary.startPrice, summary.endPrice, firstDayStartEndPath(data))}
+                        ${progressMicroChart('D1 low to D1 close', 'D1 low', 'D1 close', summary.lowPrice, summary.endPrice, lowToEndPath(data))}
+                        ${progressMicroChart('Start price to open D2', 'Start', 'Open D2', summary.startPrice, openD2Milestone?.price, startToOpenDayTwoPath(data, extendedPrices))}
+                        ${progressMicroChart('D1 close to current', 'D1 close', 'Current', summary.endPrice, ipo.current, roughHistoryPath(ipo, summary.endPrice, ipo.current, 'D1 close'))}
+                        ${progressMicroChart('D2 close to current', 'D2 close', 'Current', closeD2Milestone?.price, ipo.current, roughHistoryPathFromDate(ipo, closeD2Milestone?.price, ipo.current, 'D2 close', closeD2Milestone?.bar?.date))}
                     </div>
                     ${cardEntryScenarioTable(ipo, data)}
                 </div>
@@ -3175,21 +4516,41 @@
             return filtered;
         }
 
+        function resetCardLimit() {
+            visibleCardLimit = CARD_PAGE_SIZE;
+        }
+
+        function setLoadMoreState(totalCount, shownCount) {
+            const wrap = document.getElementById('load-more-wrap');
+            const button = document.getElementById('load-more-cards');
+            if (!wrap || !button) return;
+            const remaining = Math.max(0, totalCount - shownCount);
+            wrap.classList.toggle('hidden', remaining <= 0);
+            wrap.classList.toggle('flex', remaining > 0);
+            button.querySelector('span').textContent = remaining > 0
+                ? `Load more (${remaining} left)`
+                : 'Load more';
+        }
+
         function renderCards() {
             const exactCount = exactChartIpos().length;
             const list = visibleIpos();
+            const shownCount = Math.min(list.length, visibleCardLimit);
+            const renderedList = list.slice(0, shownCount);
             const capLabel = CAP_FILTERS.find(filter => filter.id === capFilterMode)?.label || '*';
             const placeLabel = TRADING_PLACE_FILTERS.find(filter => filter.id === tradingPlaceFilterMode)?.label || 'All';
             const activeLabels = [
                 capFilterMode === 'all' ? '' : capLabel,
                 tradingPlaceFilterMode === 'all' ? '' : placeLabel
             ].filter(Boolean).join(' ');
+            const shownSuffix = list.length > shownCount ? ` · showing ${shownCount}/${list.length}` : '';
             const countLabel = !activeLabels
-                ? `${list.length} ${list.length === 1 ? 'listing' : 'listings'} with exact 5m data`
-                : `${list.length} ${activeLabels} ${list.length === 1 ? 'listing' : 'listings'} · ${exactCount} exact total`;
-            document.getElementById('cards').innerHTML = list.map(cardHtml).join('');
+                ? `${list.length} ${list.length === 1 ? 'listing' : 'listings'} with exact 5m data${shownSuffix}`
+                : `${list.length} ${activeLabels} ${list.length === 1 ? 'listing' : 'listings'}${shownSuffix} · ${exactCount} exact total`;
+            document.getElementById('cards').innerHTML = renderedList.map(cardHtml).join('');
             document.getElementById('nav-count').textContent = countLabel;
             document.getElementById('empty-state').classList.toggle('hidden', list.length !== 0);
+            setLoadMoreState(list.length, shownCount);
         }
 
         function setSortToggleState() {
@@ -3250,29 +4611,14 @@
             const toggle = document.getElementById('chart-mode-toggle');
             const day = document.getElementById('chart-mode-day1');
             const extended = document.getElementById('chart-mode-extended');
-            if (!toggle || !day || !extended) return;
-            const summary = chartModeSummary();
-            const mixed = summary.state === 'mixed';
-            setSegmentButtonState(day, summary.state === 'day1');
-            setSegmentButtonState(extended, summary.state === 'extended', summary.total === 0);
-            toggle.classList.toggle('border-amber-500/50', mixed);
-            toggle.classList.toggle('border-zinc-800', !mixed);
-            const modeLabel = summary.state === 'extended'
-                ? 'All charts use extended data'
-                : summary.state === 'day1'
-                    ? 'All charts use one-day data'
-                    : `${summary.active} of ${summary.total} charts use extended data`;
-            toggle.setAttribute('aria-label', `${modeLabel}. Set all card charts to day-one or extended data.`);
-            toggle.title = modeLabel;
-        }
-
-        function setAllChartMode(mode) {
-            extendedChartTickers.clear();
-            if (mode === 'extended') {
-                extendedChartCapableTickers().forEach(ticker => extendedChartTickers.add(ticker));
-            }
-            setChartModeToggleState();
-            renderCards();
+            const day2 = document.getElementById('chart-mode-day2');
+            if (!toggle || !day || !extended || !day2) return;
+            const config = analysisRangeConfig();
+            setSegmentButtonState(day, config.id === 'day1');
+            setSegmentButtonState(extended, config.id === 'd1Ext');
+            setSegmentButtonState(day2, config.id === 'd1ExtD2');
+            toggle.title = `Analysis range: ${config.label}`;
+            toggle.setAttribute('aria-label', `Analysis range: ${config.label}. Card charts keep their own data-mode controls.`);
         }
 
         function findIpoByTicker(ticker) {
@@ -3290,12 +4636,12 @@
                 const ipo = findIpoByTicker(ticker);
                 if (!ipo) return;
                 chartModalTicker = ipo.ticker;
-                const active = chartHasExtendedMode(ipo);
+                const activeMode = chartModeForCard(ipo);
                 const data = chartDataForCard(ipo);
                 const sourceLabel = chartSourceLabel(data);
-                if (title) title.textContent = `${ipo.ticker} ${chartTitleLabel(active)}`;
+                if (title) title.textContent = `${ipo.ticker} ${chartTitleLabel(activeMode)}`;
                 if (subtitle) subtitle.textContent = `${ipo.name}${sourceLabel ? ` · ${sourceLabel}` : ''}`;
-                chart.innerHTML = `<div class="h-full min-h-[420px]">${renderChart(ipo, data, { extended: active })}</div>`;
+                chart.innerHTML = `<div class="h-full min-h-[420px]">${renderChart(ipo, data, { mode: activeMode })}</div>`;
             }
             modal.classList.toggle('hidden', !open);
             document.body.classList.toggle('overflow-hidden', open);
@@ -3430,12 +4776,19 @@
 
         document.getElementById('search').addEventListener('input', event => {
             searchTerm = event.target.value;
+            resetCardLimit();
             renderCards();
         });
 
         document.getElementById('sort-toggle').addEventListener('click', () => {
             sortMode = sortMode === 'date' ? 'cap' : 'date';
+            resetCardLimit();
             setSortToggleState();
+            renderCards();
+        });
+
+        document.getElementById('load-more-cards')?.addEventListener('click', () => {
+            visibleCardLimit += CARD_PAGE_SIZE;
             renderCards();
         });
 
@@ -3445,6 +4798,7 @@
             const nextMode = button.dataset.capFilter;
             if (!CAP_FILTERS.some(filter => filter.id === nextMode)) return;
             capFilterMode = nextMode;
+            resetCardLimit();
             setCapFilterState();
             renderAnalysis();
             renderUpcomingIpos();
@@ -3457,30 +4811,35 @@
             const nextMode = button.dataset.tradingPlaceFilter;
             if (!TRADING_PLACE_FILTERS.some(filter => filter.id === nextMode)) return;
             tradingPlaceFilterMode = nextMode;
+            resetCardLimit();
             setTradingPlaceFilterState();
             renderAnalysis();
             renderCards();
         });
 
         document.getElementById('chart-mode-toggle')?.addEventListener('click', event => {
-            const button = event.target.closest('button[data-chart-mode]');
+            const button = event.target.closest('button[data-analysis-range]');
             if (!button || button.disabled) return;
-            const mode = button.dataset.chartMode;
-            if (!['day1', 'extended'].includes(mode)) return;
-            setAllChartMode(mode);
+            const mode = button.dataset.analysisRange;
+            if (!['day1', 'd1Ext', 'd1ExtD2'].includes(mode)) return;
+            analysisRangeMode = mode;
+            setChartModeToggleState();
+            renderAnalysis();
         });
 
         document.getElementById('cards')?.addEventListener('click', event => {
-            const button = event.target.closest('button[data-chart-extended-toggle]');
+            const button = event.target.closest('button[data-chart-card-mode]');
             if (!button || button.disabled) return;
-            const ticker = button.dataset.chartExtendedToggle;
-            if (!ticker) return;
-            if (extendedChartTickers.has(ticker)) {
-                extendedChartTickers.delete(ticker);
+            const ticker = button.dataset.chartTicker;
+            const mode = normalizeChartMode(button.dataset.chartCardMode);
+            if (!ticker || !['day1', 'd1Ext', 'd1ExtD2', 'd1D2', 'd2'].includes(mode)) return;
+            const ipo = findIpoByTicker(ticker);
+            if (!ipo || !chartModeCapable(ipo, mode)) return;
+            if (mode === DEFAULT_CARD_CHART_MODE) {
+                chartModeByTicker.delete(ticker);
             } else {
-                extendedChartTickers.add(ticker);
+                chartModeByTicker.set(ticker, mode);
             }
-            setChartModeToggleState();
             renderCards();
         });
 
@@ -3506,6 +4865,7 @@
         renderAnalysis();
         initUpcomingIpos();
         renderCards();
+        refreshRuntimeCurrentQuotes();
     </script>
     <script>
         const ipoThreeScript = document.createElement('script');

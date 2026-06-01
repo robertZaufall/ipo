@@ -7,7 +7,7 @@ metadata, keeps the top symbols with market cap at or above the configured
 threshold, and writes:
 
 - ipo-data.js: card metadata
-- chart-data.js: first-trading-day exact 5-minute OHLCV bars
+- chart-data.js: first-trading-day, extended-hours, and second-day exact 5-minute OHLCV bars
 - ipo-analysis.js: derived first-day low timing analysis
 
 Dependencies: Python 3.11+ standard library only.
@@ -50,6 +50,8 @@ DEFAULT_RECENT_AFTER_YEAR = 2020
 DEFAULT_INCLUDE_TICKERS = ["CBRS"]
 DEFAULT_EXCLUDE_TICKERS = ["VG"]
 DEFAULT_MIN_START_PRICE = 1.0
+DEFAULT_CURRENT_PRICE_CACHE = "current-price-cache.json"
+DEFAULT_CURRENT_PRICE_CACHE_TTL_HOURS = 6.0
 ALPACA_KEY_ID_ENV_NAMES = (
     "APCA_API_KEY_ID",
     "ALPACA_KEY_ID",
@@ -530,6 +532,81 @@ def iso_from_epoch(timestamp: int | float | None) -> str | None:
         return None
 
 
+def parse_iso_datetime(value: str | None) -> dt.datetime | None:
+    if not value:
+        return None
+    try:
+        return dt.datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(UTC)
+    except ValueError:
+        return None
+
+
+def normalize_quote(quote: dict | None) -> dict | None:
+    if not isinstance(quote, dict):
+        return None
+    price = quote.get("price")
+    if not isinstance(price, (int, float)) or not math.isfinite(price) or price <= 0:
+        return None
+    return {
+        "price": rounded(float(price), 4),
+        "asOf": quote.get("asOf"),
+        "source": quote.get("source") or "Yahoo regularMarketPrice",
+        "currency": quote.get("currency") or "USD",
+    }
+
+
+def load_current_price_cache(path: pathlib.Path | None) -> dict:
+    if path is None:
+        return {"version": 1, "quotes": {}}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return {"version": 1, "quotes": {}}
+    except json.JSONDecodeError as exc:
+        print(f"warning: ignoring invalid current price cache {path}: {exc}", file=sys.stderr)
+        return {"version": 1, "quotes": {}}
+    quotes = data.get("quotes") if isinstance(data, dict) else None
+    return {"version": 1, "quotes": quotes if isinstance(quotes, dict) else {}}
+
+
+def cached_current_quote(cache: dict, ticker: str, ttl_hours: float | None) -> dict | None:
+    entry = (cache.get("quotes") or {}).get(normalize_ticker(ticker))
+    quote = normalize_quote(entry)
+    if not quote:
+        return None
+    if ttl_hours is None:
+        return quote
+    if ttl_hours <= 0:
+        return None
+    fetched_at = parse_iso_datetime(entry.get("fetchedAt") if isinstance(entry, dict) else None)
+    if not fetched_at:
+        return None
+    age = dt.datetime.now(tz=UTC) - fetched_at
+    return quote if age <= dt.timedelta(hours=ttl_hours) else None
+
+
+def remember_current_quote(cache: dict, ticker: str, quote: dict | None) -> bool:
+    normalized = normalize_quote(quote)
+    if not normalized:
+        return False
+    cache.setdefault("quotes", {})[normalize_ticker(ticker)] = {
+        **normalized,
+        "fetchedAt": dt.datetime.now(tz=UTC).isoformat().replace("+00:00", "Z"),
+    }
+    return True
+
+
+def write_current_price_cache(path: pathlib.Path | None, cache: dict) -> None:
+    if path is None:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    serializable = {
+        "version": 1,
+        "quotes": cache.get("quotes") or {},
+    }
+    path.write_text(json.dumps(serializable, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
 def fetch_latest_quote_yahoo(ticker: str) -> dict | None:
     data = fetch_json(yahoo_latest_quote_url(ticker))
     result = ((data.get("chart") or {}).get("result") or [None])[0]
@@ -614,6 +691,45 @@ def apply_latest_quote(ipo: dict, quote: dict | None) -> dict:
     }
 
 
+def resolve_current_price_cache_path(output_dir: pathlib.Path, args: argparse.Namespace) -> pathlib.Path | None:
+    if not args.current_price_cache:
+        return None
+    configured = pathlib.Path(args.current_price_cache)
+    return configured if configured.is_absolute() else output_dir / configured
+
+
+def refresh_latest_quotes_for_items(items: list[dict], args: argparse.Namespace, output_dir: pathlib.Path) -> list[dict]:
+    current_price_cache_path = resolve_current_price_cache_path(output_dir, args)
+    current_price_cache = load_current_price_cache(current_price_cache_path)
+    current_price_cache_dirty = False
+    if current_price_cache_path:
+        print(f"Refreshing latest quote prices from Yahoo Finance with cache {current_price_cache_path}.")
+    else:
+        print("Refreshing latest quote prices from Yahoo Finance.")
+    refreshed_items = []
+    for item in items:
+        stale_quote = cached_current_quote(current_price_cache, item["ticker"], None)
+        try:
+            quote = None
+            if not args.refresh_current_price_cache:
+                quote = cached_current_quote(current_price_cache, item["ticker"], args.current_price_cache_ttl_hours)
+            if quote is None:
+                quote = fetch_latest_quote_yahoo(item["ticker"])
+                current_price_cache_dirty = remember_current_quote(current_price_cache, item["ticker"], quote) or current_price_cache_dirty
+                time.sleep(args.current_price_delay)
+            refreshed_items.append(apply_latest_quote(item, quote))
+        except Exception as exc:
+            if stale_quote:
+                print(f"warning: {item['ticker']} Yahoo latest quote failed, using cached quote: {exc}", file=sys.stderr)
+                refreshed_items.append(apply_latest_quote(item, stale_quote))
+            else:
+                print(f"warning: {item['ticker']} Yahoo latest quote failed: {exc}", file=sys.stderr)
+                refreshed_items.append(item)
+    if current_price_cache_dirty:
+        write_current_price_cache(current_price_cache_path, current_price_cache)
+    return refreshed_items
+
+
 def alpaca_interval(interval: str) -> str:
     try:
         return ALPACA_INTERVALS[interval.lower()]
@@ -637,6 +753,15 @@ def alpaca_extended_bounds(date_s: str) -> tuple[str, str]:
     start = dt.datetime(d.year, d.month, d.day, 16, 0, tzinfo=ET).astimezone(UTC)
     end_date = d + dt.timedelta(days=7)
     end = dt.datetime(end_date.year, end_date.month, end_date.day, 10, 0, tzinfo=ET).astimezone(UTC)
+    return start.isoformat().replace("+00:00", "Z"), end.isoformat().replace("+00:00", "Z")
+
+
+def alpaca_second_day_bounds(date_s: str) -> tuple[str, str]:
+    d = dt.date.fromisoformat(date_s)
+    start_date = d + dt.timedelta(days=1)
+    end_date = d + dt.timedelta(days=10)
+    start = dt.datetime(start_date.year, start_date.month, start_date.day, 9, 30, tzinfo=ET).astimezone(UTC)
+    end = dt.datetime(end_date.year, end_date.month, end_date.day, 16, 0, tzinfo=ET).astimezone(UTC)
     return start.isoformat().replace("+00:00", "Z"), end.isoformat().replace("+00:00", "Z")
 
 
@@ -671,6 +796,11 @@ def alpaca_url(ticker: str, date_s: str, interval: str, feed: str, *, page_token
 
 def alpaca_extended_url(ticker: str, date_s: str, interval: str, feed: str, *, page_token: str | None = None) -> str:
     start, end = alpaca_extended_bounds(date_s)
+    return alpaca_bar_url(ticker, interval, feed, start, end, page_token=page_token)
+
+
+def alpaca_second_day_url(ticker: str, date_s: str, interval: str, feed: str, *, page_token: str | None = None) -> str:
+    start, end = alpaca_second_day_bounds(date_s)
     return alpaca_bar_url(ticker, interval, feed, start, end, page_token=page_token)
 
 
@@ -880,6 +1010,77 @@ def fetch_extended_day_bars_alpaca(ipo: dict, interval: str, key_id: str, secret
     return [], ""
 
 
+def fetch_second_day_bars_alpaca(ipo: dict, interval: str, key_id: str, secret: str, feeds: list[str]) -> tuple[list[list], str]:
+    headers = {
+        "APCA-API-KEY-ID": key_id,
+        "APCA-API-SECRET-KEY": secret,
+    }
+    target_date = dt.date.fromisoformat(ipo["date"])
+    symbol = alpaca_symbol(ipo["ticker"])
+    regular_open_minute = 9 * 60 + 30
+    regular_close_minute = 16 * 60
+    last_error = ""
+    for feed in feeds:
+        rows: list[list] = []
+        page_token = None
+        second_trading_date = None
+        try:
+            while True:
+                data = fetch_json(alpaca_second_day_url(ipo["ticker"], ipo["date"], interval, feed, page_token=page_token), headers=headers)
+                bars = ((data.get("bars") or {}).get(symbol) or [])
+                for bar in bars:
+                    timestamp = bar.get("t")
+                    if not timestamp:
+                        continue
+                    local = dt.datetime.fromisoformat(timestamp.replace("Z", "+00:00")).astimezone(ET)
+                    local_date = local.date()
+                    minute = local.hour * 60 + local.minute
+                    if local_date <= target_date:
+                        continue
+                    if minute < regular_open_minute or minute >= regular_close_minute:
+                        continue
+                    if second_trading_date is None:
+                        second_trading_date = local_date
+                    if local_date != second_trading_date:
+                        break
+                    open_ = alpaca_num(bar, "o")
+                    high = alpaca_num(bar, "h")
+                    low = alpaca_num(bar, "l")
+                    close = alpaca_num(bar, "c")
+                    volume = alpaca_num(bar, "v") or 0
+                    price_values = [open_, high, low, close]
+                    if any(value is None for value in price_values):
+                        continue
+                    rows.append([
+                        local.strftime("%Y-%m-%d %H:%M"),
+                        rounded(open_, 4),
+                        rounded(high, 4),
+                        rounded(low, 4),
+                        rounded(close, 4),
+                        int(volume),
+                    ])
+                if second_trading_date and bars:
+                    last_local = dt.datetime.fromisoformat(bars[-1]["t"].replace("Z", "+00:00")).astimezone(ET) if bars[-1].get("t") else None
+                    if last_local and last_local.date() > second_trading_date:
+                        break
+                page_token = data.get("next_page_token")
+                if not page_token:
+                    break
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", "replace")
+            last_error = f"{feed} HTTP {exc.code}: {body[:240]}"
+            continue
+        except Exception as exc:
+            last_error = f"{feed}: {exc}"
+            continue
+        rows.sort(key=lambda row: row[0])
+        if rows:
+            return rows, f"Alpaca {feed.upper()} second-day 5m bars"
+    if last_error:
+        raise RuntimeError(last_error)
+    return [], ""
+
+
 def fetch_first_day_bars_alpha_vantage(ipo: dict, interval: str, api_key: str) -> list[list]:
     target_date = dt.date.fromisoformat(ipo["date"])
     if target_date < dt.date(2000, 1, 1):
@@ -1016,12 +1217,41 @@ def write_js(path: pathlib.Path, variable: str, data, sources: list[str]) -> Non
     path.write_text("\n".join(header) + json.dumps(data, indent=2) + ";\n", encoding="utf-8")
 
 
+def read_js_variable(path: pathlib.Path, variable: str):
+    text = path.read_text(encoding="utf-8")
+    match = re.search(rf"window\.{re.escape(variable)}\s*=\s*(.*);\s*$", text, re.S)
+    if not match:
+        raise RuntimeError(f"Could not find window.{variable} assignment in {path}")
+    return json.loads(match.group(1))
+
+
+def read_source_comments(path: pathlib.Path) -> list[str]:
+    sources = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("// Source: "):
+            sources.append(line.removeprefix("// Source: "))
+    return sources
+
+
+def unique_ordered(items) -> list:
+    seen = set()
+    result = []
+    for item in items:
+        if item in seen:
+            continue
+        seen.add(item)
+        result.append(item)
+    return result
+
+
 def write_chart_js(
     path: pathlib.Path,
     first_day_bars: dict[str, list[list]],
     bar_sources: dict[str, str],
     extended_day_bars: dict[str, list[list]],
     extended_bar_sources: dict[str, str],
+    second_day_bars: dict[str, list[list]],
+    second_day_bar_sources: dict[str, str],
     rough_price_series: dict[str, list[list]],
     sources: list[str],
 ) -> None:
@@ -1035,13 +1265,35 @@ def write_chart_js(
     body += "window.firstDayBarSources = " + json.dumps(bar_sources, indent=2) + ";\n"
     body += "window.extendedDayBars = " + json.dumps(extended_day_bars, indent=2) + ";\n"
     body += "window.extendedDayBarSources = " + json.dumps(extended_bar_sources, indent=2) + ";\n"
+    body += "window.secondDayBars = " + json.dumps(second_day_bars, indent=2) + ";\n"
+    body += "window.secondDayBarSources = " + json.dumps(second_day_bar_sources, indent=2) + ";\n"
     body += "window.roughPriceSeries = " + json.dumps(rough_price_series, separators=(",", ":")) + ";\n"
     path.write_text(body, encoding="utf-8")
+
+
+def refresh_current_price_file(output_dir: pathlib.Path, args: argparse.Namespace) -> int:
+    data_path = output_dir / "ipo-data.js"
+    ipos_data = read_js_variable(data_path, "ipos")
+    if not isinstance(ipos_data, list):
+        raise RuntimeError(f"Expected window.ipos to be a list in {data_path}")
+    if args.no_yahoo_latest:
+        print("Yahoo latest quote refresh is disabled; ipo-data.js was not changed.")
+        return 0
+    refreshed = refresh_latest_quotes_for_items(ipos_data, args, output_dir)
+    sources = unique_ordered([
+        *read_source_comments(data_path),
+        *[yahoo_latest_quote_url(item["ticker"]) for item in refreshed],
+    ])
+    write_js(data_path, "ipos", [card_record(item) for item in refreshed], sources)
+    print(f"Wrote {data_path}")
+    return 0
 
 
 def build(args: argparse.Namespace) -> int:
     output_dir = pathlib.Path(args.output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
+    if args.current_price_only:
+        return refresh_current_price_file(output_dir, args)
     source = "yearly" if args.year is not None else args.source
     if source == "screener":
         candidates = parse_stock_screener(args.threshold_b, args.candidate_limit)
@@ -1131,17 +1383,7 @@ def build(args: argparse.Namespace) -> int:
     print(f"Selected {len(top_selected)} top-cap IPOs plus {len(recent_selected)} recent IPOs after {args.recent_after_year}.")
     print(f"Tracking {len(selected)} unique IPO candidates. Cards render only when exact intraday bars exist.")
     if not args.no_yahoo_latest:
-        print("Refreshing latest quote prices from Yahoo Finance.")
-        refreshed_selected = []
-        for item in selected:
-            try:
-                quote = fetch_latest_quote_yahoo(item["ticker"])
-                refreshed_selected.append(apply_latest_quote(item, quote))
-            except Exception as exc:
-                print(f"warning: {item['ticker']} Yahoo latest quote failed: {exc}", file=sys.stderr)
-                refreshed_selected.append(item)
-            time.sleep(args.current_price_delay)
-        selected = refreshed_selected
+        selected = refresh_latest_quotes_for_items(selected, args, output_dir)
     for item in selected:
         current = f"${item['current']:.2f}" if item.get("current") is not None else "current n/a"
         print(f"- {item['ticker']}: ${item['marketCap']:.2f}B market cap, {current}")
@@ -1244,6 +1486,26 @@ def build(args: argparse.Namespace) -> int:
     else:
         print("Alpaca extended bars skipped because key/secret env vars are incomplete.")
 
+    second_day_bars = {}
+    second_day_bar_sources = {}
+    if alpaca_key_id and alpaca_secret:
+        print("Fetching Alpaca second trading day regular-session bars.")
+        for item in selected:
+            ticker = item["ticker"]
+            if ticker not in first_day_bars:
+                continue
+            try:
+                rows, source_label = fetch_second_day_bars_alpaca(item, args.interval, alpaca_key_id, alpaca_secret, alpaca_feed_order)
+                if rows:
+                    second_day_bars[ticker] = rows
+                    second_day_bar_sources[ticker] = source_label
+                    print(f"  {ticker}: {len(rows)} {source_label}")
+            except Exception as exc:
+                print(f"warning: {ticker} Alpaca second-day bars failed: {exc}", file=sys.stderr)
+            time.sleep(args.alpaca_delay)
+    else:
+        print("Alpaca second-day bars skipped because key/secret env vars are incomplete.")
+
     rough_price_series = {}
     rough_price_series_sources = []
     if not args.no_rough_price_series:
@@ -1277,6 +1539,7 @@ def build(args: argparse.Namespace) -> int:
             yahoo_url(item["ticker"], item["date"], args.interval),
             *( [alpaca_url(item["ticker"], item["date"], args.interval, feed) for feed in alpaca_feed_order] if alpaca_key_id and alpaca_secret else [] ),
             *( [alpaca_extended_url(item["ticker"], item["date"], args.interval, feed) for feed in alpaca_feed_order] if alpaca_key_id and alpaca_secret else [] ),
+            *( [alpaca_second_day_url(item["ticker"], item["date"], args.interval, feed) for feed in alpaca_feed_order] if alpaca_key_id and alpaca_secret else [] ),
             *( [alpha_vantage_url(item["ticker"], item["date"], args.interval)] if alpha_key else [] ),
         ]
     ]
@@ -1288,6 +1551,8 @@ def build(args: argparse.Namespace) -> int:
         bar_sources,
         extended_day_bars,
         extended_bar_sources,
+        second_day_bars,
+        second_day_bar_sources,
         rough_price_series,
         chart_sources,
     )
@@ -1320,6 +1585,10 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--no-alpha-vantage", action="store_true", help="disable Alpha Vantage fallback even when an API key env var is set")
     parser.add_argument("--alpha-vantage-delay", type=float, default=12.1, help="seconds to wait after each Alpha Vantage request; lower this for premium keys")
     parser.add_argument("--no-yahoo-latest", action="store_true", help="disable Yahoo latest quote refresh for current/today prices")
+    parser.add_argument("--current-price-cache", default=DEFAULT_CURRENT_PRICE_CACHE, help="JSON cache path for Yahoo latest quote prices; set empty to disable")
+    parser.add_argument("--current-price-cache-ttl-hours", type=float, default=DEFAULT_CURRENT_PRICE_CACHE_TTL_HOURS, help="hours to reuse cached Yahoo latest quote prices; use 0 to always refetch")
+    parser.add_argument("--refresh-current-price-cache", action="store_true", help="ignore cached latest quote freshness and refetch Yahoo current prices")
+    parser.add_argument("--current-price-only", action="store_true", help="refresh cached Yahoo current prices in existing ipo-data.js and exit")
     parser.add_argument("--current-price-delay", type=float, default=0.05, help="seconds to wait after each latest quote request")
     parser.add_argument("--no-rough-price-series", action="store_true", help="disable rough Yahoo weekly close series for mini charts")
     parser.add_argument("--rough-price-series-points", type=int, default=36, help="maximum sampled weekly close points per ticker for mini charts")
