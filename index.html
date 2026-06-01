@@ -3417,6 +3417,16 @@
                     fillMode: 'timed'
                 },
                 {
+                    id: 'buyLow',
+                    label: 'Absolute low',
+                    shortLabel: 'Low',
+                    rowLabel: 'Low',
+                    detail: 'Reference fill at the absolute low across available Day 1, extended, and Day 2 candles.',
+                    referenceLow: true,
+                    isReference: true,
+                    fillMode: 'reference'
+                },
+                {
                     id: 'buyAfter',
                     label: 'After end',
                     shortLabel: 'After',
@@ -3456,7 +3466,7 @@
                     fillMode: 'secondDay',
                     returnLabel: 'D2 end'
                 }
-            ].filter(scenario => Number.isFinite(scenario.targetDelta) || scenario.milestoneId);
+            ].filter(scenario => Number.isFinite(scenario.targetDelta) || scenario.milestoneId || scenario.referenceLow);
         }
 
         function entryScenarioStats(analysis, scenario) {
@@ -3475,10 +3485,18 @@
                 const allMilestones = combinedSessionMilestones(ipo);
                 const milestone = scenario.milestoneId ? milestones[scenario.milestoneId] : null;
                 const exitMilestone = scenario.exitMilestoneId ? milestones[scenario.exitMilestoneId] : null;
+                const wholePeriodData = chartData(ipo, 'd1ExtD2')
+                    .filter(bar => Number.isFinite(bar.minute))
+                    .sort((a, b) => a.minute - b.minute);
+                const wholeLowPoint = chartLowPoints(wholePeriodData.length ? wholePeriodData : data)?.lowPoint;
                 const entry = scenario.milestoneId
                     ? milestone?.bar
-                    : entryBarAtOrAfter(data, data[0].minute + scenario.targetDelta);
-                const entryPrice = scenario.milestoneId ? Number(milestone?.price) : Number(entry?.open);
+                    : (scenario.referenceLow
+                        ? wholeLowPoint
+                        : entryBarAtOrAfter(data, data[0].minute + scenario.targetDelta));
+                const entryPrice = scenario.milestoneId
+                    ? Number(milestone?.price)
+                    : (scenario.referenceLow ? Number(wholeLowPoint?.low) : Number(entry?.open));
                 const entryMinute = Number(entry?.minute);
                 const last = data.filter(bar => Number.isFinite(bar.close)).sort((a, b) => b.minute - a.minute)[0] || null;
                 const exitPrice = scenario.exitMilestoneId ? Number(exitMilestone?.price) : Number(last?.close);
@@ -3491,16 +3509,13 @@
                     ? entryBarAtOrAfter(data, data[0].minute + Number(analysis.medianDeltaMinutes))
                     : null;
                 const medianEntryPrice = Number(medianEntry?.open);
-                const wholePeriodData = chartData(ipo, 'd1ExtD2')
-                    .filter(bar => Number.isFinite(bar.minute))
-                    .sort((a, b) => a.minute - b.minute);
-                const wholeLowPoint = chartLowPoints(wholePeriodData.length ? wholePeriodData : data)?.lowPoint;
                 if (!first || !entry || !last || !lowPoint || !Number.isFinite(lowPoint.low) || !Number.isFinite(exitPrice) || !Number.isFinite(entryPrice) || entryPrice <= 0 || !Number.isFinite(entryMinute) || lowPoint.low <= 0) {
                     unavailable += 1;
                     return;
                 }
                 const dayEndReturn = (exitPrice / entryPrice - 1) * 100;
-                const perfectLowReturn = (exitPrice / lowPoint.low - 1) * 100;
+                const perfectLowPrice = Number.isFinite(wholeLowPoint?.low) && wholeLowPoint.low > 0 ? wholeLowPoint.low : lowPoint.low;
+                const perfectLowReturn = (exitPrice / perfectLowPrice - 1) * 100;
                 const lowReturn = Number.isFinite(wholeLowPoint?.low) && wholeLowPoint.low > 0
                     ? wholeLowPoint.low / entryPrice * 100 - 100
                     : null;
@@ -3520,7 +3535,7 @@
                     lowReturn,
                     vsEndD2: Number.isFinite(endD2Price) && endD2Price > 0 ? endD2Price / entryPrice * 100 - 100 : null,
                     vsCurrent: Number.isFinite(currentPrice) && currentPrice > 0 ? currentPrice / entryPrice * 100 - 100 : null,
-                    lowAlreadyPassed: lowPoint.minute < entryMinute,
+                    lowAlreadyPassed: scenario.referenceLow ? false : lowPoint.minute < entryMinute,
                     entryAboveFirst: entryPrice > first.open * 1.000001
                 });
             });
@@ -3645,6 +3660,9 @@
         }
 
         function entryScenarioRiskText(scenario) {
+            if (scenario.isReference || scenario.fillMode === 'reference') {
+                return 'Benchmark: a perfect fill at the absolute low, useful for comparison but not a realistic entry order.';
+            }
             if (scenario.fillMode === 'marketable') {
                 return 'Risk: a high limit should fill, but it can also accept an ugly first print. A lower limit may miss immediately.';
             }
@@ -3701,19 +3719,19 @@
         }
 
         function entryScenarioStatsTableValue(stats, toneFn) {
-            if (!stats || !Number.isFinite(stats.avg)) return '<span class="font-mono text-[10px] font-semibold text-zinc-500">—</span>';
-            return `<div class="font-mono text-[10px] font-semibold ${toneFn(stats.avg)}">${fmtPct(stats.avg)}</div>
-                <div class="mt-0.5 break-words text-[9px] leading-3 text-zinc-500">${fmtPct(stats.min)} .. ${fmtPct(stats.max)}</div>`;
+            if (!stats || !Number.isFinite(stats.avg)) return '<span class="font-mono text-xs font-semibold text-zinc-500">—</span>';
+            return `<div class="font-mono text-xs font-semibold ${toneFn(stats.avg)}">${fmtPct(stats.avg)}</div>
+                <div class="mt-1 break-words text-[10px] leading-4 text-zinc-500">${fmtPct(stats.min)} .. ${fmtPct(stats.max)}</div>`;
         }
 
         function entryScenarioStatsMetricRow(label, key, toneFn, scenarios) {
             return `<tr>
-                <th scope="row" class="sticky left-0 z-10 w-[6.75rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2 py-2 text-left text-[10px] font-semibold text-zinc-500">${escapeHtml(label)}</th>
+                <th scope="row" class="sticky left-0 z-10 w-[7.75rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2.5 py-3 text-left text-xs font-semibold text-zinc-500">${escapeHtml(label)}</th>
                 ${scenarios.map(scenario => {
                     const value = key === 'vsEndD2Stats' && scenario.id === 'buyEndDayTwo'
-                        ? '<span class="font-mono text-[10px] font-semibold text-zinc-500">-</span>'
+                        ? '<span class="font-mono text-xs font-semibold text-zinc-500">-</span>'
                         : entryScenarioStatsTableValue(scenario[key], toneFn);
-                    return `<td class="min-w-0 border border-zinc-800 bg-zinc-950/70 px-1 py-2 text-center align-middle">${value}</td>`;
+                    return `<td class="min-w-0 border border-zinc-800 bg-zinc-950/70 px-2 py-3 text-center align-middle">${value}</td>`;
                 }).join('')}
             </tr>`;
         }
@@ -3727,11 +3745,11 @@
                 ['Vs End D2', 'vsEndD2Stats', endpointTone]
             ];
             return `<div class="overflow-x-auto rounded-xl border border-zinc-800" data-entry-scenario-table="global">
-                <table class="w-full min-w-[35rem] table-fixed border-separate border-spacing-0 text-xs">
+                <table class="w-full min-w-[56rem] table-fixed border-separate border-spacing-0 text-sm">
                     <thead>
                         <tr>
-                            <th scope="col" class="sticky left-0 z-20 w-[6.75rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2 py-2 text-right text-[10px] font-semibold uppercase text-zinc-500">Buy At</th>
-                            ${scenarios.map(scenario => entryScenarioColumnHeader(scenario, scenarios)).join('')}
+                            <th scope="col" class="sticky left-0 z-20 w-[7.75rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2.5 py-2.5 text-right text-[11px] font-semibold uppercase text-zinc-500">Buy At</th>
+                            ${scenarios.map(scenario => entryScenarioColumnHeader(scenario, scenarios, { variant: 'global' })).join('')}
                         </tr>
                     </thead>
                     <tbody>
@@ -3767,7 +3785,7 @@
         }
 
         function scenarioStrategyRows(scenarios) {
-            const source = scenarios || [];
+            const source = (scenarios || []).filter(scenario => !scenario.isReference && scenario.fillMode !== 'reference');
             const currentValues = source.map(entryScenarioCurrentScore).filter(Number.isFinite);
             const lowValues = source.map(scenario => statAverage(scenario.lowReturnStats)).filter(Number.isFinite);
             const safetyValues = source.map(scenario => Number(scenario.lossUnder5Pct)).filter(Number.isFinite);
@@ -4235,6 +4253,19 @@
                         ...comparisonMetrics(entry.open, entry.minute)
                     };
                 });
+            const lowRow = {
+                id: 'buyLow',
+                label: 'Absolute low',
+                shortLabel: 'Low',
+                rowLabel: 'Low',
+                detail: 'Reference fill at the absolute low across available Day 1, extended, and Day 2 candles.',
+                fillMode: 'reference',
+                isReference: true,
+                available: true,
+                entryTime: wholeLowPoint.time || minutesToTime(wholeLowPoint.minute),
+                entryPrice: wholeLowPoint.low,
+                ...comparisonMetrics(wholeLowPoint.low, wholeLowPoint.minute)
+            };
             const extendedRows = extendedEntryScenarioDefinitions(milestones).map(scenario => {
                 const entry = scenario.milestone;
                 if (!entry || !Number.isFinite(entry.price) || entry.price <= 0) {
@@ -4251,24 +4282,28 @@
                     ...comparisonMetrics(entry.price, entry.bar?.minute)
                 };
             });
-            return [...regularRows, ...extendedRows].filter(row => row.available);
+            return [...regularRows, lowRow, ...extendedRows].filter(row => row.available);
         }
 
         function entryScenarioTableValue(value, toneFn) {
             return `<span class="font-mono text-[10px] font-semibold ${toneFn(value)}">${fmtPct(value)}</span>`;
         }
 
-        function entryScenarioColumnHeader(row, rows = []) {
+        function entryScenarioColumnHeader(row, rows = [], options = {}) {
             const label = escapeHtml(String(row.rowLabel).toUpperCase());
             const accent = entryScenarioAccent(row, rows);
             const currentScore = entryScenarioCurrentScore(row);
             const title = Number.isFinite(currentScore)
                 ? `Buy ${label} · ${accent.label} · Vs Current ${fmtPct(currentScore)}`
                 : `Buy ${label} · ${accent.label}`;
-            return `<th scope="col" title="${escapeHtml(title)}" class="border border-zinc-800 ${accent.border} bg-zinc-900/80 px-1 py-2 text-center align-middle">
+            const isGlobal = options.variant === 'global';
+            const padClass = isGlobal ? 'px-2 py-2.5' : 'px-1 py-2';
+            const dotClass = isGlobal ? 'h-2 w-2' : 'h-1.5 w-1.5';
+            const labelClass = isGlobal ? 'text-[10px] sm:text-[11px]' : 'text-[9px]';
+            return `<th scope="col" title="${escapeHtml(title)}" class="border border-zinc-800 ${accent.border} bg-zinc-900/80 ${padClass} text-center align-middle">
                 <div class="inline-flex items-center justify-center gap-1 whitespace-nowrap">
-                    <span class="h-1.5 w-1.5 rounded-full ${accent.dot}"></span>
-                    <span class="text-[9px] font-semibold uppercase leading-none text-zinc-200">${label}</span>
+                    <span class="${dotClass} rounded-full ${accent.dot}"></span>
+                    <span class="${labelClass} font-semibold uppercase leading-none text-zinc-200">${label}</span>
                 </div>
             </th>`;
         }
@@ -4302,7 +4337,7 @@
                     <div class="text-xs leading-5 text-zinc-500">Each entry is compared with End D1, the active median entry, the absolute low across available Day 1/Ext/D2 candles, End D2, and Current.</div>
                 </div>
                 <div class="mt-3 overflow-x-auto rounded-xl border border-zinc-800" data-entry-scenario-table="${escapeHtml(ipo.ticker)}">
-                    <table class="w-full min-w-[35rem] table-fixed border-separate border-spacing-0 text-xs">
+                    <table class="w-full min-w-[40rem] table-fixed border-separate border-spacing-0 text-xs">
                         <thead>
                             <tr>
                                 <th scope="col" class="sticky left-0 z-20 w-[6.75rem] whitespace-nowrap border border-zinc-800 bg-zinc-950 px-2 py-2 text-right text-[10px] font-semibold uppercase text-zinc-500">Buy At</th>
