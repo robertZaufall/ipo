@@ -1384,22 +1384,46 @@
             return `${pctValue.toFixed(2)}%`;
         }
 
-        function chartBuySignalSeries(ipo, timeline, firstMinute, lastMinute) {
-            return rawBuySignalSeries(ipo).map(signal => {
+        function chartBuySignalSeries(ipo, chartPoints) {
+            const parsedSignals = rawBuySignalSeries(ipo).map(signal => {
                 const parsed = splitChartDateTime(signal.time || '', ipo.date);
                 const minuteOfDay = timeToMinutes(parsed.time);
                 const minute = Number.isFinite(minuteOfDay)
                     ? minuteOfDay + dateOffsetMinutes(ipo.date, parsed.date)
                     : null;
-                const plot = Number.isFinite(minute) ? chartPlotForMinute(minute, timeline) : null;
-                return { ...signal, date: parsed.date, time: parsed.time, minute, plot };
+                return { ...signal, date: parsed.date, time: parsed.time, minute };
             }).filter(signal =>
                 signal.date === ipo.date
                 && Number.isFinite(signal.minute)
-                && Number.isFinite(signal.plot)
-                && signal.minute >= firstMinute
-                && signal.minute <= lastMinute
             ).sort((a, b) => a.minute - b.minute);
+            const dayOneChartPoints = (chartPoints || []).filter(point =>
+                point?.date === ipo.date
+                && Number.isFinite(point.minute)
+                && Number.isFinite(point.plot)
+            );
+            const maxDistance = CHART_INTERVAL_MINUTES / 2 + 0.05;
+            return dayOneChartPoints.map(point => {
+                let best = null;
+                parsedSignals.forEach(signal => {
+                    const distance = Math.abs(signal.minute - point.minute);
+                    if (distance <= maxDistance && (!best || distance < best.distance)) {
+                        best = { signal, distance };
+                    }
+                });
+                if (!best) return null;
+                return {
+                    ...best.signal,
+                    chartTime: point.time,
+                    chartMinute: point.minute,
+                    chartPlot: point.plot,
+                    sourceTime: best.signal.time,
+                    sourceMinute: best.signal.minute,
+                    minute: point.minute,
+                    plot: point.plot,
+                    time: point.time,
+                    distanceMinutes: best.distance,
+                };
+            }).filter(Boolean);
         }
 
         function chartSourceLabel(data) {
@@ -2266,8 +2290,8 @@
             const volumeGap = compact ? 10 : 9;
             const axisBottomY = H - mb;
             const volumeTopY = axisBottomY - volumeH;
-            const signalLaneH = compact ? 24 : 26;
-            const signalLaneGap = compact ? 8 : 9;
+            const signalLaneH = compact ? 66 : 72;
+            const signalLaneGap = compact ? 9 : 10;
             const signalLaneBottomY = volumeTopY - signalLaneGap;
             const signalLaneTopY = signalLaneBottomY - signalLaneH;
             const priceBottomY = signalLaneTopY - volumeGap;
@@ -2348,7 +2372,7 @@
                 const bodyTop = y(Math.max(d.open, d.close));
                 const bodyBottom = y(Math.min(d.open, d.close));
                 const bodyH = Math.max(1.5, bodyBottom - bodyTop);
-                return `<g><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, d)} O ${fmtUsd(d.open)} H ${fmtUsd(d.high)} L ${fmtUsd(d.low)} C ${fmtUsd(d.close)}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${y(d.high).toFixed(1)}" y2="${y(d.low).toFixed(1)}" stroke="${color}" stroke-width="1.35"/><rect x="${(xx - candleW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${candleW.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${color}" rx="1"/></g>`;
+                return `<g data-chart-candle-minute="${Math.round(d.minute)}" data-chart-candle-x="${xx.toFixed(1)}"><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, d)} O ${fmtUsd(d.open)} H ${fmtUsd(d.high)} L ${fmtUsd(d.low)} C ${fmtUsd(d.close)}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${y(d.high).toFixed(1)}" y2="${y(d.low).toFixed(1)}" stroke="${color}" stroke-width="1.35"/><rect x="${(xx - candleW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${candleW.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${color}" rx="1"/></g>`;
             }).join('');
             const closeSegments = closeLineSegmentsFromBars(chartPoints, xPlot, y);
             const closeLine = closeSegments.length
@@ -2366,7 +2390,13 @@
             }).join('');
             const volumePanel = `<g><line x1="${ml}" x2="${W - mr}" y1="${volumeTopY.toFixed(1)}" y2="${volumeTopY.toFixed(1)}" stroke="#27272a"/><text x="${ml + 4}" y="${(volumeTopY + 14).toFixed(1)}" font-size="${axisSize}" fill="#71717a">Volume</text>${volumeBars}</g>`;
             const hoverBoxW = compact ? 184 : 220;
-            const hoverBoxH = compact ? 110 : 112;
+            const signalSeries = chartBuySignalSeries(ipo, chartPoints);
+            const signalByChartMinute = new Map(signalSeries.map(signal => [Math.round(signal.chartMinute), signal]));
+            const signalForHoverPoint = point => {
+                if (!signalSeries.length || point?.date !== ipo.date || !Number.isFinite(point?.minute)) return null;
+                return signalByChartMinute.get(Math.round(point.minute)) || null;
+            };
+            const hoverBoxH = compact ? 130 : 134;
             const hoverTitleSize = compact ? 10 : 11;
             const hoverValueSize = compact ? 10 : 11;
             const hoverData = chartPoints.map((d, i) => {
@@ -2404,7 +2434,14 @@
                 const row1Y = boxY + (compact ? 54 : 56);
                 const row2Y = row1Y + (compact ? 20 : 21);
                 const row3Y = row2Y + (compact ? 20 : 21);
+                const row4Y = row3Y + (compact ? 20 : 21);
                 const pair = (label, value, x, yPos, valueColor = '#e4e4e7') => `<text x="${x.toFixed(1)}" y="${yPos.toFixed(1)}" font-size="${hoverValueSize}" fill="#a1a1aa">${label} <tspan fill="${valueColor}" font-weight="800">${escapeHtml(value)}</tspan></text>`;
+                const hoverSignal = signalForHoverPoint(d);
+                const hoverSignalBps = Number(hoverSignal?.predictedDownsideBps);
+                const hoverSignalValue = hoverSignal && Number.isFinite(hoverSignalBps)
+                    ? `${chartBuySignalStateLabel(hoverSignal.state)} · ${formatTinyPercentFromBps(hoverSignalBps)}`
+                    : '-';
+                const hoverSignalColor = hoverSignal ? chartBuySignalStateColor(hoverSignal.state) : '#71717a';
                 return `<g class="chart-hover-item" data-chart-hover-candle="${escapeHtml(ipo.ticker)}-${i}">
                     <rect class="chart-hover-hit" x="${laneLeft.toFixed(1)}" y="${mt}" width="${laneW.toFixed(1)}" height="${(axisBottomY - mt).toFixed(1)}" aria-label="${escapeHtml(`${ipo.ticker} ${timeLabel} open ${fmtUsd(d.open)} high ${fmtUsd(d.high)} low ${fmtUsd(d.low)} close ${fmtUsd(d.close)} volume ${volume.toLocaleString('en-US')}`)}"/>
                     <g class="chart-hover-data">
@@ -2424,6 +2461,7 @@
                         ${pair('C', fmtUsd(d.close), secondColX, row2Y, color)}
                         <text x="${valueX.toFixed(1)}" y="${row3Y.toFixed(1)}" font-size="${hoverValueSize}" fill="#a1a1aa">Vol <tspan fill="#e4e4e7" font-weight="800">${escapeHtml(fmtCompactVolume(volume))}</tspan></text>
                         <text x="${secondColX.toFixed(1)}" y="${row3Y.toFixed(1)}" font-size="${hoverValueSize}" font-weight="800" fill="${color}">${signedChangeFull}</text>
+                        ${pair('XGB', hoverSignalValue, valueX, row4Y, hoverSignalColor)}
                         </g>
                     </g>
                 </g>`;
@@ -2446,51 +2484,76 @@
                 const labelY = lowLabelBaseY + row * lowLabelRowGap;
                 return `<g><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, point)} low ${fmtUsd(point.low)}</title><circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${isExactLow ? (compact ? 3.5 : 4.5) : (compact ? 2.8 : 3.5)}" fill="#f59e0b" stroke="#09090b" stroke-width="1.5" opacity="${isExactLow ? 1 : 0.78}"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#f59e0b" stroke-width="${isExactLow ? 0.95 : 0.7}" stroke-dasharray="4 5" opacity="${isExactLow ? 0.85 : 0.45}"/><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#09090b" stroke="#09090b" stroke-width="3" opacity="0.85">${deltaLabel}</text><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#fbbf24">${deltaLabel}</text></g>`;
             }).join('');
-            const signalSeries = chartBuySignalSeries(ipo, timeline, firstMinute, lastMinute);
             const signalStrip = signalSeries.length ? (() => {
-                const ribbonY = signalLaneTopY + (compact ? 12 : 13);
+                const watchThreshold = ipoBuySignalMeta?.watchThresholdBps || 150;
+                const buyThreshold = ipoBuySignalMeta?.buyThresholdBps || 45;
+                const bpsValues = signalSeries
+                    .map(signal => Number(signal.predictedDownsideBps))
+                    .filter(value => Number.isFinite(value));
+                const bpsDomainMax = Math.max(
+                    watchThreshold,
+                    buyThreshold,
+                    ...bpsValues,
+                    1
+                );
+                const bpsScaleMax = Math.max(100, Math.ceil(bpsDomainMax / 100) * 100);
+                const bpsPlotTop = signalLaneTopY + (compact ? 7 : 8);
+                const bpsPlotH = compact ? 42 : 44;
+                const bpsScaleLogMax = Math.log1p(bpsScaleMax);
+                const bpsY = value => {
+                    const clamped = Math.min(bpsScaleMax, Math.max(0, value));
+                    return bpsPlotTop + (Math.log1p(clamped) / bpsScaleLogMax) * bpsPlotH;
+                };
+                const bpsPoints = signalSeries.map(signal => {
+                    const bps = Number(signal.predictedDownsideBps);
+                    if (!Number.isFinite(bps)) return null;
+                    return {
+                        x: xPlot(signal.plot),
+                        y: bpsY(bps),
+                        bps,
+                        signal,
+                    };
+                }).filter(Boolean);
+                const bpsPolyline = bpsPoints.map(point => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(' ');
+                const bpsMin = bpsValues.length ? Math.min(...bpsValues) : null;
+                const bpsMax = bpsValues.length ? Math.max(...bpsValues) : null;
+                const bpsLineTitle = [
+                    `${ipo.ticker} XGBoost predicted remaining downside`,
+                    'log scale',
+                    'lower model values draw higher',
+                    Number.isFinite(bpsMin) ? `min ${bpsMin.toFixed(1)} bps` : '',
+                    Number.isFinite(bpsMax) ? `max ${bpsMax.toFixed(1)} bps` : '',
+                    `scale 0-${Math.round(bpsScaleMax)} bps`,
+                ].filter(Boolean).join(' · ');
+                const thresholdGuides = [
+                    { value: watchThreshold, label: 'Watch', color: '#fbbf24', dash: '3 4' },
+                    { value: buyThreshold, label: 'Buy', color: '#34d399', dash: '2 3' },
+                ].filter(guide => Number.isFinite(guide.value) && guide.value <= bpsScaleMax).map(guide => {
+                    const yy = bpsY(guide.value);
+                    return `<g><title>${ipo.ticker} ${guide.label} threshold ${formatTinyPercentFromBps(guide.value)}</title><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="${guide.color}" stroke-width="0.7" stroke-dasharray="${guide.dash}" opacity="0.42"/><text x="${ml + 4}" y="${(yy - 2).toFixed(1)}" font-size="${Math.max(7, axisSize - 3)}" font-weight="700" fill="${guide.color}" opacity="0.78">${guide.label}</text></g>`;
+                }).join('');
+                const bpsPointMarkers = bpsPoints.map(point => `<circle data-buy-signal-point-minute="${Math.round(point.signal.chartMinute)}" data-buy-signal-point-x="${point.x.toFixed(1)}" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="0" opacity="0"/>`).join('');
+                const bpsLine = bpsPolyline ? `<g data-buy-signal-bps-line="${escapeHtml(ipo.ticker)}"><title>${escapeHtml(bpsLineTitle)}</title><line x1="${ml}" x2="${W - mr}" y1="${bpsPlotTop.toFixed(1)}" y2="${bpsPlotTop.toFixed(1)}" stroke="#27272a" stroke-width="0.8"/><line x1="${ml}" x2="${W - mr}" y1="${(bpsPlotTop + bpsPlotH).toFixed(1)}" y2="${(bpsPlotTop + bpsPlotH).toFixed(1)}" stroke="#27272a" stroke-width="0.8" opacity="0.72"/>${thresholdGuides}<polyline points="${bpsPolyline}" fill="none" stroke="#020617" stroke-width="${compact ? 3.2 : 3.8}" stroke-linejoin="round" stroke-linecap="round" opacity="0.72"/><polyline points="${bpsPolyline}" fill="none" stroke="#38bdf8" stroke-width="${compact ? 1.25 : 1.55}" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${bpsPoints[bpsPoints.length - 1].x.toFixed(1)}" cy="${bpsPoints[bpsPoints.length - 1].y.toFixed(1)}" r="${compact ? 2.2 : 2.6}" fill="#38bdf8" stroke="#09090b" stroke-width="1"/>${bpsPointMarkers}</g>` : '';
+                const ribbonY = signalLaneTopY + (compact ? 55 : 60);
                 const ribbonH = compact ? 7 : 8;
-                const legendItems = [
-                    ['wait', 'Wait'],
-                    ['watch', 'Watch'],
-                    ['buy', 'Buy']
-                ];
-                const legend = (() => {
-                    const labelText = compact ? 'Timing' : 'Entry timing';
-                    const itemGap = compact ? 34 : 46;
-                    const labelW = compact ? 42 : 68;
-                    const legendW = labelW + 8 + legendItems.length * itemGap;
-                    const startX = Math.max(ml + 4, W - mr - legendW);
-                    const yText = signalLaneTopY + (compact ? 12 : 13);
-                    const title = `<text x="${startX.toFixed(1)}" y="${yText.toFixed(1)}" font-size="${Math.max(8, axisSize - 1)}" font-weight="700" fill="#d4d4d8">${labelText}</text>`;
-                    const items = legendItems.map((entry, index) => {
-                        const [state, itemLabel] = entry;
-                        const x = startX + labelW + 8 + index * itemGap;
-                        const color = chartBuySignalStateColor(state);
-                        return `<g><rect x="${x.toFixed(1)}" y="${(signalLaneTopY + 6).toFixed(1)}" width="8" height="7" rx="2" fill="${color}" opacity="${state === 'wait' ? 0.48 : 0.9}"/><text x="${(x + 11).toFixed(1)}" y="${yText.toFixed(1)}" font-size="${Math.max(8, axisSize - 1)}" fill="#a1a1aa">${itemLabel}</text></g>`;
-                    }).join('');
-                    return `${title}${items}`;
-                })();
-                const segments = signalSeries.map((signal, index) => {
-                    const nextSignal = signalSeries[index + 1];
+                const segments = signalSeries.map(signal => {
                     const color = chartBuySignalStateColor(signal.state);
                     const stateLabel = chartBuySignalStateLabel(signal.state);
                     const bps = Number(signal.predictedDownsideBps);
-                    const x1 = xPlot(signal.plot);
-                    const x2 = xPlot(nextSignal?.plot ?? (signal.plot + 1));
-                    const width = Math.max(2.4, x2 - x1);
+                    const cx = xPlot(signal.plot);
+                    const radius = signal.state === 'wait'
+                        ? (compact ? 2.5 : 3)
+                        : (compact ? 3.1 : 3.7);
                     const opacity = signal.state === 'buy' ? 0.95 : signal.state === 'watch' ? 0.74 : 0.34;
                     const title = [
                         `${ipo.ticker} entry timing: ${stateLabel}`,
                         chartTooltipTimeLabel(ipo, signal),
                         Number.isFinite(bps) ? `waiting may still save about ${formatTinyPercentFromBps(bps)}` : '',
                     ].filter(Boolean).join(' · ');
-                    return `<rect data-buy-signal-state="${escapeHtml(signal.state || '')}" x="${x1.toFixed(1)}" y="${ribbonY.toFixed(1)}" width="${width.toFixed(1)}" height="${ribbonH}" rx="2.2" fill="${color}" opacity="${opacity}"><title>${escapeHtml(title)}</title></rect>`;
+                    return `<circle data-buy-signal-state="${escapeHtml(signal.state || '')}" data-buy-signal-state-minute="${Math.round(signal.chartMinute)}" data-buy-signal-state-x="${cx.toFixed(1)}" cx="${cx.toFixed(1)}" cy="${(ribbonY + ribbonH / 2).toFixed(1)}" r="${radius}" fill="${color}" opacity="${opacity}"><title>${escapeHtml(title)}</title></circle>`;
                 }).join('');
-                const watchThreshold = ipoBuySignalMeta?.watchThresholdBps || 150;
-                const buyThreshold = ipoBuySignalMeta?.buyThresholdBps || 45;
                 const title = `${ipo.ticker} entry timing: wait above ${formatTinyPercentFromBps(watchThreshold)} potential improvement, watch from ${formatTinyPercentFromBps(watchThreshold)} to ${formatTinyPercentFromBps(buyThreshold)}, buy at or below ${formatTinyPercentFromBps(buyThreshold)}`;
-                return `<g data-buy-signal-strip="${escapeHtml(ipo.ticker)}"><title>${escapeHtml(title)}</title><rect x="${ml}" y="${signalLaneTopY.toFixed(1)}" width="${plotW}" height="${signalLaneH}" rx="6" fill="#09090b" stroke="#27272a" opacity="0.94"/><line x1="${ml}" x2="${W - mr}" y1="${(ribbonY + ribbonH / 2).toFixed(1)}" y2="${(ribbonY + ribbonH / 2).toFixed(1)}" stroke="#27272a" stroke-width="1"/>${legend}${segments}</g>`;
+                return `<g data-buy-signal-strip="${escapeHtml(ipo.ticker)}"><title>${escapeHtml(title)}</title><rect x="${ml}" y="${signalLaneTopY.toFixed(1)}" width="${plotW}" height="${signalLaneH}" rx="6" fill="#09090b" stroke="#27272a" opacity="0.94"/><line x1="${ml}" x2="${W - mr}" y1="${(ribbonY + ribbonH / 2).toFixed(1)}" y2="${(ribbonY + ribbonH / 2).toFixed(1)}" stroke="#27272a" stroke-width="1"/>${bpsLine}${segments}</g>`;
             })() : '';
             const d2OpenLine = chartMode === 'd1D2' && Number.isFinite(secondDayOpenMinute) ? (() => {
                 const xx = xMinute(secondDayOpenMinute);

@@ -40,7 +40,7 @@ The default chart view is now `D1 D2`: it stitches Day 1 regular trading and Day
 - `refresh_ipo_data.py` - refreshes IPO metadata, chart data, and analysis.
 - `build_ipo_analysis.py` - rebuilds only `ipo-analysis.js` from existing generated data.
 - `vendor/three.module.min.js` - local Three.js module used by the 3D map; no charting CDN is required for the map.
-- `1m/` - ignored local research folder for one-minute candle gathering scripts, JSON data, private dependencies, and the buy-signal generator.
+- `1m/` - ignored local research folder for one-minute candle gathering scripts, symbol-specific `*-first-day-1min-candles.json` data, private dependencies, and the buy-signal generator.
 
 ## Run Locally
 
@@ -68,9 +68,9 @@ Main candle charts show only real 5-minute bars. First-day charts include a top 
 
 ## XGBoost Buy Signals
 
-The chart can overlay a public `Wait` / `Watch` / `Buy` strip generated from private one-minute IPO candles. The raw minute candles and the generator stay in ignored `1m/`; only `ipo-buy-signals.js` is committed. That public file contains chart-ready state ticks, selected pins, and metadata such as the model id, thresholds, symbol count, and sample count.
+The chart can overlay a public `Wait` / `Watch` / `Buy` strip generated from private one-minute IPO candles. The raw minute candles live in ignored `1m/<symbol>-first-day-1min-candles.json` files, and the generator stays in ignored `1m/`; only `ipo-buy-signals.js` is committed. That public file contains chart-ready state ticks, selected pins, and metadata such as the model id, thresholds, symbol count, and sample count.
 
-The first implementation is `ipo-minute-xgboost-downside-v0`, trained with `xgboost.XGBRegressor` on 3,821 minute-level samples across 18 IPOs. At each minute, the model estimates the remaining downside to the rest-of-day low from the next executable open. The target is stored in basis points in the artifact for precision, where 45 basis points means 0.45%; the UI renders this as plain percentages. A state becomes `Buy` when the predicted remaining downside is at or below 0.45%, `Watch` when it is at or below 1.50%, and `Wait` above that. A time-based forced pin is kept after 180 elapsed minutes so each covered chart can still show a late-day entry reference when the threshold buy never appears.
+The first implementation is `ipo-minute-xgboost-downside-v0`, trained with `xgboost.XGBRegressor` on 33,639 minute-level samples across 157 IPOs. At each minute, the model estimates the remaining downside to the rest-of-day low from the next executable open. The target is stored in basis points in the artifact for precision, where 45 basis points means 0.45%; the UI renders this as plain percentages. A state becomes `Buy` when the predicted remaining downside is at or below 0.45%, `Watch` when it is at or below 1.50%, and `Wait` above that. A time-based forced pin is kept after 180 elapsed minutes so each covered chart can still show a late-day entry reference when the threshold buy never appears.
 
 XGBoost fits this scenario because IPO minute candles are noisy, nonlinear, and sparse. A boosted-tree regressor can combine timing, price action, range, wick, volume, and momentum patterns without assuming a straight-line relationship between those inputs and the eventual low. It also works well on tabular data with mixed scales and missing-ish market behavior, which is exactly what early IPO trading produces. For now the model is a decision aid for chart timing, not a trading guarantee: it answers "how much lower might the next executable entry still be from the remaining Day 1 low?" and the chart turns that estimate into readable `Wait`, `Watch`, and `Buy` states.
 
