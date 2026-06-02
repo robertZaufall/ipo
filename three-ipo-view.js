@@ -20,6 +20,7 @@ const FLAT_CAMERA_PITCH = 0.82;
 const DEFAULT_CAMERA_ZOOM_OUT = 1.45;
 const FLAT_SCALE_MAJOR_TEXT = '#a1a1aa';
 const FLAT_SCALE_MINOR_TEXT = '#71717a';
+const DEFAULT_MAP_MODE = 'd1D2';
 
 const colors = {
     bg: 0x09090b,
@@ -77,7 +78,7 @@ const lowMarkerStyles = {
 const state = {
     open: false,
     view: 'paths',
-    mode: 'day1',
+    mode: DEFAULT_MAP_MODE,
     renderer: null,
     scene: null,
     camera: null,
@@ -3668,6 +3669,7 @@ function openModal() {
     if (!modal || !pageApi()) return;
     state.open = true;
     state.view = 'paths';
+    state.mode = DEFAULT_MAP_MODE;
     state.flatLowActive = false;
     state.flatPinnedTicker = '';
     leaveIsolatedRender();
