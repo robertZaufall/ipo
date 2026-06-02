@@ -255,9 +255,11 @@
                     <div id="three-map-subtitle" class="hidden">Filtered first-day paths</div>
                 </div>
                 <div class="flex flex-wrap items-center justify-end gap-2">
-                    <div id="three-map-mode-toggle" role="group" aria-label="Choose 3D IPO map data range" class="h-10 rounded-xl border border-zinc-800 bg-zinc-900 p-1 text-xs font-semibold grid grid-cols-2 gap-1">
-                        <button id="three-map-mode-day1" type="button" data-three-map-mode="day1" aria-pressed="true" class="whitespace-nowrap rounded-lg px-3 transition-colors bg-blue-600 text-white">Day 1</button>
-                        <button id="three-map-mode-extended" type="button" data-three-map-mode="extended" aria-pressed="false" class="whitespace-nowrap rounded-lg px-3 transition-colors text-zinc-400 hover:text-zinc-200">Ext</button>
+                    <div id="three-map-mode-toggle" role="group" aria-label="Choose 3D IPO map data range" class="h-10 rounded-xl border border-zinc-800 bg-zinc-900 p-1 text-xs font-semibold grid grid-cols-4 gap-1">
+                        <button id="three-map-mode-day1" type="button" data-three-map-mode="day1" aria-pressed="true" class="whitespace-nowrap rounded-lg px-2 transition-colors bg-blue-600 text-white">Day 1</button>
+                        <button id="three-map-mode-extended" type="button" data-three-map-mode="extended" aria-pressed="false" class="whitespace-nowrap rounded-lg px-2 transition-colors text-zinc-400 hover:text-zinc-200">Ext</button>
+                        <button id="three-map-mode-d1d2" type="button" data-three-map-mode="d1D2" aria-pressed="false" class="whitespace-nowrap rounded-lg px-2 transition-colors text-zinc-400 hover:text-zinc-200">D1 D2</button>
+                        <button id="three-map-mode-d1extd2" type="button" data-three-map-mode="d1ExtD2" aria-pressed="false" class="whitespace-nowrap rounded-lg px-2 transition-colors text-zinc-400 hover:text-zinc-200">D1 Ext D2</button>
                     </div>
                     <div id="three-map-flat-align-toggle" role="group" aria-label="Choose 3D IPO map alignment" class="h-10 rounded-xl border border-zinc-800 bg-zinc-900 p-1 text-xs font-semibold grid grid-cols-3 gap-1">
                         <button id="three-map-flat-align-open" type="button" data-three-map-flat-align="open" aria-pressed="true" class="whitespace-nowrap rounded-lg px-3 transition-colors bg-blue-600 text-white">Open aligned</button>
@@ -3590,10 +3592,10 @@
             };
         }
 
-        function currentAnalysis() {
+        function analysisForRange(mode = analysisRangeMode) {
             const base = baseAnalysisForFilter();
             if (!base) return null;
-            const config = analysisRangeConfig();
+            const config = analysisRangeConfig(mode);
             if (config.id === 'day1') {
                 return {
                     ...base,
@@ -3614,6 +3616,10 @@
                 chartMode: config.chartMode,
                 sampleHelper: 'No complete candle set is available for this range; showing the first-day baseline.'
             };
+        }
+
+        function currentAnalysis() {
+            return analysisForRange();
         }
 
         function dashboardMetric(label, value, helper, colorClass = 'text-zinc-100') {
@@ -5479,14 +5485,20 @@
 
         window.ipoThreeSceneApi = {
             getVisibleIpos: () => visibleIpos(),
-            getChartData: (ticker, includeExtended = false) => {
+            getChartData: (ticker, mode = 'day1') => {
                 const ipo = findIpoByTicker(ticker);
-                return ipo ? chartData(ipo, includeExtended) : [];
+                return ipo ? chartData(ipo, mode) : [];
             },
             hasExtendedChartData: ticker => {
                 const ipo = findIpoByTicker(ticker);
                 return ipo ? hasExtendedChartData(ipo) : false;
             },
+            hasSecondDayChartData: ticker => {
+                const ipo = findIpoByTicker(ticker);
+                return ipo ? hasSecondDayChartData(ipo) : false;
+            },
+            getAnalysisForRange: mode => analysisForRange(mode),
+            getAnalysisLabelForRange: mode => currentAnalysisLabel(analysisForRange(mode)),
             getCurrentAnalysis: () => currentAnalysis(),
             getCurrentAnalysisLabel: () => currentAnalysisLabel(currentAnalysis())
         };

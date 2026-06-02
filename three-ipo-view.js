@@ -64,6 +64,13 @@ const lowMarkerStyles = {
         border: 'rgba(255, 255, 255, 0.58)',
         shortLabel: 'D2',
         label: 'D2 open low'
+    },
+    secondDay: {
+        color: 0xbfdbfe,
+        text: '#bfdbfe',
+        border: 'rgba(147, 197, 253, 0.58)',
+        shortLabel: 'D2',
+        label: 'Day 2 low'
     }
 };
 
@@ -225,11 +232,92 @@ function formatLowTiming(record) {
     const sessionMinute = asNumber(point?.sessionMinute);
     if (Number.isFinite(sessionMinute)) {
         const clock = formatClockFromMinute(sessionMinute);
-        if (sessionMinute >= SECOND_DAY_OPEN_MINUTES) return `D2 open ${clock}`;
+        if (sessionMinute >= SECOND_DAY_OPEN_MINUTES) return `D2 ${clock}`;
         if (sessionMinute >= PREMARKET_START_MINUTES) return `premarket ${clock}`;
         if (sessionMinute >= MARKET_CLOSE_MINUTES) return `after-hours ${clock}`;
     }
     return formatElapsed(record?.lowDelta);
+}
+
+function formatSessionMoment(sessionMinute) {
+    if (!Number.isFinite(sessionMinute)) return '';
+    const clock = formatClockFromMinute(sessionMinute);
+    if (sessionMinute >= SECOND_DAY_OPEN_MINUTES) return `D2 ${clock}`;
+    if (sessionMinute >= PREMARKET_START_MINUTES) return `Pre D2 ${clock}`;
+    if (sessionMinute >= MARKET_CLOSE_MINUTES) return `D1 Ext ${clock}`;
+    return `D1 ${clock}`;
+}
+
+function mapModeConfig(value = state.mode) {
+    if (value === 'd1ExtD2') {
+        return {
+            id: 'd1ExtD2',
+            chartMode: 'd1ExtD2',
+            analysisMode: 'd1ExtD2',
+            label: 'Day 1 + Ext + Day 2',
+            shortLabel: 'D1 Ext D2',
+            includeExtended: true,
+            includeSecondDay: true
+        };
+    }
+    if (value === 'd1D2') {
+        return {
+            id: 'd1D2',
+            chartMode: 'd1D2',
+            analysisMode: 'd1D2',
+            label: 'Day 1 + Day 2',
+            shortLabel: 'D1 D2',
+            includeExtended: false,
+            includeSecondDay: true
+        };
+    }
+    if (value === 'extended') {
+        return {
+            id: 'extended',
+            chartMode: 'd1Ext',
+            analysisMode: 'd1Ext',
+            label: 'Day 1 + extended',
+            shortLabel: 'Ext',
+            includeExtended: true,
+            includeSecondDay: false
+        };
+    }
+    return {
+        id: 'day1',
+        chartMode: 'day1',
+        analysisMode: 'day1',
+        label: 'Day 1',
+        shortLabel: 'Day 1',
+        includeExtended: false,
+        includeSecondDay: false
+    };
+}
+
+function hasMultiSession(config = mapModeConfig()) {
+    return Boolean(config.includeExtended || config.includeSecondDay);
+}
+
+function pathSessionWidths(config = mapModeConfig()) {
+    if (config.includeExtended && config.includeSecondDay) {
+        const bridgeWidth = 28;
+        const gapWidth = 2.35;
+        const regularWidth = 44;
+        const secondRegularWidth = Math.max(1, 100 - regularWidth - bridgeWidth - gapWidth);
+        return { regularWidth, bridgeWidth, gapWidth, secondRegularWidth };
+    }
+    if (config.includeExtended) {
+        const regularWidth = 55;
+        const gapWidth = 2.35;
+        const bridgeWidth = Math.max(1, 100 - regularWidth - gapWidth);
+        return { regularWidth, bridgeWidth, gapWidth, secondRegularWidth: 0 };
+    }
+    if (config.includeSecondDay) {
+        const regularWidth = 52;
+        const gapWidth = 3.2;
+        const secondRegularWidth = Math.max(1, 100 - regularWidth - gapWidth);
+        return { regularWidth, bridgeWidth: 0, gapWidth, secondRegularWidth };
+    }
+    return { regularWidth: 100, bridgeWidth: 0, gapWidth: 0, secondRegularWidth: 0 };
 }
 
 function averageNumber(values) {
@@ -586,7 +674,9 @@ function chartNearLowPoints(points) {
 }
 
 function lowMarkerIdForPoint(point) {
-    if (point?.session !== 'extended' || !Number.isFinite(point.sessionMinute)) return 'regular';
+    if (!Number.isFinite(point?.sessionMinute)) return 'regular';
+    if (point.session === 'secondDay') return 'secondDay';
+    if (point.session !== 'extended') return 'regular';
     if (point.sessionMinute > MARKET_CLOSE_MINUTES && point.sessionMinute <= AFTER_HOURS_END_MINUTES) return 'afterHours';
     if (point.sessionMinute >= PREMARKET_START_MINUTES && point.sessionMinute < SECOND_DAY_OPEN_MINUTES) return 'premarket';
     if (point.sessionMinute >= SECOND_DAY_OPEN_MINUTES) return 'secondOpen';
@@ -620,23 +710,29 @@ function labelRepeatedLowSpecs(specs) {
         seen.set(spec.id, next);
         return {
             ...spec,
-            shortLabel: `${spec.shortLabel}${next}`
+            shortLabel: `${spec.shortLabel}${/\d$/.test(spec.shortLabel) ? ' ' : ''}${next}`
         };
     });
 }
 
-function recordLowMarkerSpecs(record, includeExtended) {
-    const regularPoints = record.points.filter(point => point.session !== 'extended');
+function recordLowMarkerSpecs(record, config = mapModeConfig()) {
+    const regularPoints = record.points.filter(point => point.session !== 'extended' && point.session !== 'secondDay');
     const regularSpecs = chartNearLowPoints(regularPoints)
         .map(point => lowMarkerSpec('regular', point))
         .filter(Boolean);
-    const extendedSpecs = includeExtended
+    const extendedSpecs = config.includeExtended
         ? chartNearLowPoints(record.points)
             .filter(point => point.session === 'extended')
             .map(point => lowMarkerSpec(lowMarkerIdForPoint(point), point))
             .filter(Boolean)
         : [];
-    const candidates = [...regularSpecs, ...extendedSpecs];
+    const secondDaySpecs = config.includeSecondDay
+        ? chartNearLowPoints(record.points)
+            .filter(point => point.session === 'secondDay')
+            .map(point => lowMarkerSpec(lowMarkerIdForPoint(point), point))
+            .filter(Boolean)
+        : [];
+    const candidates = [...regularSpecs, ...extendedSpecs, ...secondDaySpecs];
 
     const seen = new Set();
     const unique = candidates.filter(spec => {
@@ -645,7 +741,8 @@ function recordLowMarkerSpecs(record, includeExtended) {
         seen.add(key);
         return true;
     });
-    const fallback = [lowMarkerSpec('regular', lowestPoint(record.points.filter(point => point.session !== 'extended')) || record.lowPoint3d)].filter(Boolean);
+    const fallbackPoint = lowestPoint(record.points.filter(point => point.session !== 'extended' && point.session !== 'secondDay')) || record.lowPoint3d;
+    const fallback = [lowMarkerSpec(lowMarkerIdForPoint(fallbackPoint), fallbackPoint)].filter(Boolean);
     return labelRepeatedLowSpecs(unique.length ? unique : fallback);
 }
 
@@ -660,10 +757,13 @@ function flatLowMarkerCount(dataset) {
     return (dataset?.records || []).reduce((total, record) => total + flatLowMarkerSpecs(record).length, 0);
 }
 
-function buildSessionTimeline(records, includeExtended) {
+function buildSessionTimeline(records, config = mapModeConfig()) {
+    const includeExtended = Boolean(config.includeExtended);
+    const includeSecondDay = Boolean(config.includeSecondDay);
+    const includeShared = includeExtended || includeSecondDay;
     const regularMinutes = records
         .flatMap(record => record.points)
-        .filter(point => point.session !== 'extended' && Number.isFinite(point.sessionMinute))
+        .filter(point => point.session !== 'extended' && point.session !== 'secondDay' && Number.isFinite(point.sessionMinute))
         .map(point => point.sessionMinute);
     const firstRegularMinute = regularMinutes.length
         ? Math.min(...regularMinutes)
@@ -672,35 +772,43 @@ function buildSessionTimeline(records, includeExtended) {
     const regularSpan = Math.max(INTERVAL_MINUTES, MARKET_CLOSE_MINUTES - regularStart);
     const afterSpan = includeExtended ? AFTER_HOURS_END_MINUTES - MARKET_CLOSE_MINUTES : 0;
     const preSpan = includeExtended ? SECOND_DAY_OPEN_MINUTES - PREMARKET_START_MINUTES : 0;
-    const extendedMaxMinute = includeExtended
-        ? Math.max(...records.flatMap(record => record.points.map(point => point.sessionMinute).filter(Number.isFinite)), SECOND_DAY_OPEN_MINUTES)
-        : MARKET_CLOSE_MINUTES;
-    const secondRegularSpan = includeExtended ? Math.max(0, extendedMaxMinute - SECOND_DAY_OPEN_MINUTES) : 0;
+    const secondDayMinutes = includeSecondDay
+        ? records.flatMap(record => record.points)
+            .filter(point => point.session === 'secondDay' && Number.isFinite(point.sessionMinute))
+            .map(point => point.sessionMinute)
+        : [];
+    const secondMaxMinute = secondDayMinutes.length ? Math.max(...secondDayMinutes) : SECOND_DAY_OPEN_MINUTES;
+    const secondRegularSpan = includeSecondDay ? Math.max(0, secondMaxMinute - SECOND_DAY_OPEN_MINUTES) : 0;
     const gapStart = regularSpan + afterSpan;
-    const preStart = gapStart + (includeExtended ? SESSION_GAP_WIDTH : 0);
-    const secondOpen = preStart + preSpan;
-    const domainEnd = includeExtended ? secondOpen + secondRegularSpan : regularSpan;
+    const preStart = gapStart + (includeShared ? SESSION_GAP_WIDTH : 0);
+    const secondOpen = includeExtended ? preStart + preSpan : preStart;
+    const domainEnd = includeShared ? secondOpen + secondRegularSpan : regularSpan;
 
     const minuteToPlot = minute => {
         if (!Number.isFinite(minute)) return 0;
         if (minute <= MARKET_CLOSE_MINUTES) {
             return Math.max(0, Math.min(regularSpan, minute - regularStart));
         }
-        if (!includeExtended) return regularSpan;
-        if (minute <= AFTER_HOURS_END_MINUTES) {
+        if (!includeShared) return regularSpan;
+        if (includeExtended && minute <= AFTER_HOURS_END_MINUTES) {
             return regularSpan + Math.max(0, minute - MARKET_CLOSE_MINUTES);
         }
-        if (minute < PREMARKET_START_MINUTES) {
+        if (includeExtended && minute < PREMARKET_START_MINUTES) {
             return gapStart + SESSION_GAP_WIDTH / 2;
         }
-        if (minute <= SECOND_DAY_OPEN_MINUTES) {
+        if (includeExtended && minute <= SECOND_DAY_OPEN_MINUTES) {
             return preStart + Math.max(0, minute - PREMARKET_START_MINUTES);
         }
-        return secondOpen + Math.max(0, minute - SECOND_DAY_OPEN_MINUTES);
+        if (includeSecondDay && minute >= SECOND_DAY_OPEN_MINUTES) {
+            return secondOpen + Math.max(0, minute - SECOND_DAY_OPEN_MINUTES);
+        }
+        return secondOpen;
     };
 
     return {
         includeExtended,
+        includeSecondDay,
+        includeShared,
         regularStart,
         regularEnd: regularSpan,
         marketClose: regularSpan,
@@ -755,18 +863,22 @@ function regularPhaseProgress(record, point) {
     return clamp(elapsed / Math.max(duration, INTERVAL_MINUTES), 0, 1);
 }
 
-function buildPathTimeline(records, includeExtended, sessionTimeline) {
+function buildPathTimeline(records, config = mapModeConfig(), sessionTimeline) {
+    const includeExtended = Boolean(config.includeExtended);
+    const includeSecondDay = Boolean(config.includeSecondDay);
+    const includeShared = includeExtended || includeSecondDay;
     const alignment = alignmentMode();
     const maxRegularDuration = maxRegularDurationForRecords(records);
-    const regularWidth = includeExtended ? 55 : 100;
-    const gapWidth = includeExtended ? 2.35 : 0;
-    const sharedWidth = includeExtended ? Math.max(1, 100 - regularWidth - gapWidth) : 0;
+    const { regularWidth, bridgeWidth, gapWidth, secondRegularWidth } = pathSessionWidths(config);
     const afterSpan = AFTER_HOURS_END_MINUTES - MARKET_CLOSE_MINUTES;
     const preSpan = SECOND_DAY_OPEN_MINUTES - PREMARKET_START_MINUTES;
-    const afterWidth = includeExtended ? sharedWidth * (afterSpan / Math.max(afterSpan + preSpan, 1)) : 0;
+    const afterWidth = includeExtended ? bridgeWidth * (afterSpan / Math.max(afterSpan + preSpan, 1)) : 0;
     const preStart = regularWidth + afterWidth + gapWidth;
-    const preWidth = includeExtended ? sharedWidth - afterWidth : 0;
-    const domainEnd = includeExtended ? preStart + preWidth : regularWidth;
+    const preWidth = includeExtended ? bridgeWidth - afterWidth : 0;
+    const secondOpen = includeExtended ? preStart + preWidth : preStart;
+    const domainEnd = includeSecondDay
+        ? secondOpen + secondRegularWidth
+        : (includeExtended ? secondOpen : regularWidth);
     const regularClockSpan = MARKET_CLOSE_MINUTES - MARKET_OPEN_MINUTES;
     const elapsedToPlot = minutes => {
         const progress = clamp((Number(minutes) || 0) / maxRegularDuration, 0, 1);
@@ -782,18 +894,22 @@ function buildPathTimeline(records, includeExtended, sessionTimeline) {
         return progress * regularWidth;
     };
     const sharedMinuteToPlot = minute => {
-        if (!includeExtended) return regularWidth;
+        if (!includeShared) return regularWidth;
         if (!Number.isFinite(minute)) return regularWidth;
-        if (minute <= AFTER_HOURS_END_MINUTES) {
+        if (includeExtended && minute <= AFTER_HOURS_END_MINUTES) {
             const progress = clamp((minute - MARKET_CLOSE_MINUTES) / Math.max(afterSpan, 1), 0, 1);
             return regularWidth + progress * afterWidth;
         }
-        if (minute < PREMARKET_START_MINUTES) {
+        if (includeExtended && minute < PREMARKET_START_MINUTES) {
             return regularWidth + afterWidth + gapWidth / 2;
         }
-        if (minute <= SECOND_DAY_OPEN_MINUTES) {
+        if (includeExtended && minute <= SECOND_DAY_OPEN_MINUTES) {
             const progress = clamp((minute - PREMARKET_START_MINUTES) / Math.max(preSpan, 1), 0, 1);
             return preStart + progress * preWidth;
+        }
+        if (includeSecondDay && minute >= SECOND_DAY_OPEN_MINUTES) {
+            const progress = clamp((minute - SECOND_DAY_OPEN_MINUTES) / Math.max(MARKET_CLOSE_MINUTES - MARKET_OPEN_MINUTES, 1), 0, 1);
+            return secondOpen + progress * secondRegularWidth;
         }
         return domainEnd;
     };
@@ -806,6 +922,8 @@ function buildPathTimeline(records, includeExtended, sessionTimeline) {
     return {
         alignment,
         includeExtended,
+        includeSecondDay,
+        includeShared,
         maxRegularDuration,
         regularStart: alignment === 'close' ? MARKET_OPEN_MINUTES : 0,
         regularEnd: regularWidth,
@@ -815,15 +933,15 @@ function buildPathTimeline(records, includeExtended, sessionTimeline) {
         gapStart: regularWidth + afterWidth,
         gapEnd: preStart,
         preStart,
-        preEnd: domainEnd,
-        secondOpen: domainEnd,
+        preEnd: includeExtended ? secondOpen : preStart,
+        secondOpen,
         end: domainEnd,
         elapsedToPlot,
         progressToPlot,
         minuteToPlot,
         pointToPlot: (record, point) => {
-            const isShared = includeExtended
-                && point?.session === 'extended'
+            const isShared = includeShared
+                && (point?.session === 'extended' || point?.session === 'secondDay' || point?.sessionMinute >= SECOND_DAY_OPEN_MINUTES)
                 && Number.isFinite(point.sessionMinute)
                 && point.sessionMinute > MARKET_CLOSE_MINUTES;
             if (isShared) return sharedMinuteToPlot(point.sessionMinute);
@@ -839,9 +957,23 @@ function buildDataset() {
     if (!api) return null;
 
     const visible = api.getVisibleIpos?.() || [];
-    const includeExtended = state.mode === 'extended';
+    const hasExtendedData = visible.some(ipo => api.hasExtendedChartData?.(ipo.ticker));
+    const hasSecondDayData = visible.some(ipo => api.hasSecondDayChartData?.(ipo.ticker));
+    if (state.mode === 'd1ExtD2' && !(hasExtendedData && hasSecondDayData)) {
+        state.mode = hasSecondDayData ? 'd1D2' : (hasExtendedData ? 'extended' : 'day1');
+    }
+    if (!hasSecondDayData && state.mode === 'd1D2') {
+        state.mode = hasExtendedData ? 'extended' : 'day1';
+    }
+    if (!hasExtendedData && state.mode === 'extended') {
+        state.mode = 'day1';
+    }
+    const config = mapModeConfig();
+    const label = api.getAnalysisLabelForRange?.(config.analysisMode)
+        || api.getCurrentAnalysisLabel?.()
+        || '$5B+ IPOs';
     const records = visible
-        .map((ipo, index) => buildRecord(ipo, api.getChartData?.(ipo.ticker, includeExtended) || [], index))
+        .map((ipo, index) => buildRecord(ipo, api.getChartData?.(ipo.ticker, config.chartMode) || [], index))
         .filter(Boolean)
         .sort((a, b) => String(a.ipo.date || '').localeCompare(String(b.ipo.date || ''))
             || (a.ipo.marketCap || 0) - (b.ipo.marketCap || 0)
@@ -850,13 +982,16 @@ function buildDataset() {
     if (!records.length) {
         return {
             records: [],
-            hasExtended: visible.some(ipo => api.hasExtendedChartData?.(ipo.ticker)),
-            label: api.getCurrentAnalysisLabel?.() || '$5B+ IPOs'
+            hasExtended: hasExtendedData,
+            hasSecondDay: hasSecondDayData,
+            mode: config.id,
+            modeConfig: config,
+            label
         };
     }
 
-    const sessionTimeline = buildSessionTimeline(records, includeExtended);
-    const timeline = buildPathTimeline(records, includeExtended, sessionTimeline);
+    const sessionTimeline = buildSessionTimeline(records, config);
+    const timeline = buildPathTimeline(records, config, sessionTimeline);
     const maxPlot = Math.max(timeline.end, 1);
     const allReturns = records.flatMap(record => record.points.flatMap(point => [point.pctLow, point.pctHigh]));
     let minReturn = Math.min(...allReturns);
@@ -903,21 +1038,36 @@ function buildDataset() {
             point.z = record.z;
         });
         record.lowPoint3d = record.points.reduce((best, point) => point.pctLow < best.pctLow ? point : best, record.points[0]);
-        record.lowMarkerSpecs3d = recordLowMarkerSpecs(record, includeExtended);
+        record.lowMarkerSpecs3d = recordLowMarkerSpecs(record, config);
         record.dayEndX = toX(timeline.marketClose);
     });
 
-    const analysis = api.getCurrentAnalysis?.() || {};
-    const medianMinutes = asNumber(analysis.medianDeltaMinutes);
+    const analysis = api.getAnalysisForRange?.(config.analysisMode) || api.getCurrentAnalysis?.() || {};
+    const medianMinutes = asNumber(analysis.medianDeltaMinutes) ?? medianNumber(records.map(record => record.lowDelta).filter(Number.isFinite));
     const medianClockMinute = asNumber(analysis.medianLowMinute);
     const medianRegularLowFraction = medianNumber(records
         .map(record => regularPhaseProgress(record, record.lowPoint3d))
         .filter(Number.isFinite));
-    const medianPlot = timeline.alignment === 'close'
-        ? (Number.isFinite(medianClockMinute) ? timeline.minuteToPlot(medianClockMinute) : null)
-        : (timeline.alignment === 'openClose'
-            ? (Number.isFinite(medianRegularLowFraction) ? timeline.progressToPlot(medianRegularLowFraction) : null)
-            : (Number.isFinite(medianMinutes) ? timeline.elapsedToPlot(medianMinutes) : null));
+    const lowPointsByPlot = records
+        .map(record => record.lowPoint3d)
+        .filter(point => Number.isFinite(point?.pathPlot));
+    const medianLowPathPlot = medianNumber(lowPointsByPlot.map(point => point.pathPlot));
+    const medianLowPoint = Number.isFinite(medianLowPathPlot)
+        ? [...lowPointsByPlot].sort((a, b) => Math.abs(a.pathPlot - medianLowPathPlot) - Math.abs(b.pathPlot - medianLowPathPlot))[0]
+        : null;
+    const medianPlot = hasMultiSession(config)
+        ? medianLowPathPlot
+        : (timeline.alignment === 'close'
+            ? (Number.isFinite(medianClockMinute) ? timeline.minuteToPlot(medianClockMinute) : null)
+            : (timeline.alignment === 'openClose'
+                ? (Number.isFinite(medianRegularLowFraction) ? timeline.progressToPlot(medianRegularLowFraction) : null)
+                : (Number.isFinite(medianMinutes) ? timeline.elapsedToPlot(medianMinutes) : null)));
+    const medianSessionMinute = hasMultiSession(config)
+        ? asNumber(medianLowPoint?.sessionMinute)
+        : medianClockMinute;
+    const medianLabel = hasMultiSession(config) && Number.isFinite(medianSessionMinute)
+        ? `Median low ${formatSessionMoment(medianSessionMinute)}`
+        : '';
     const insights = buildInsights(records);
     const marketCloseX = toX(timeline.marketClose);
     const entryScenarios = buildEntryScenarios(records, medianMinutes);
@@ -931,9 +1081,11 @@ function buildDataset() {
 
     return {
         records,
-        label: api.getCurrentAnalysisLabel?.() || '$5B+ IPOs',
-        mode: state.mode,
-        hasExtended: visible.some(ipo => api.hasExtendedChartData?.(ipo.ticker)),
+        label,
+        mode: config.id,
+        modeConfig: config,
+        hasExtended: hasExtendedData,
+        hasSecondDay: hasSecondDayData,
         maxPlot,
         timeline,
         sessionTimeline,
@@ -944,16 +1096,17 @@ function buildDataset() {
         levels: niceReturnLevels(minReturn, maxReturn),
         zeroY: toY(0),
         medianX: Number.isFinite(medianPlot) ? toX(Math.min(medianPlot, maxPlot)) : null,
-        medianClockMinute,
-        medianClockTime: analysis.medianLowTime || (Number.isFinite(medianClockMinute) ? formatClockFromMinute(medianClockMinute) : ''),
+        medianClockMinute: medianSessionMinute,
+        medianClockTime: analysis.medianLowTime || (Number.isFinite(medianSessionMinute) ? formatClockFromMinute(medianSessionMinute) : ''),
         medianMinutes,
+        medianLabel,
         medianRegularLowFraction,
         insights,
         entryScenarios,
         marketCloseX,
         marketCloseMinutes: insights.medianCloseDelta,
         marketCloseTime: '16:00',
-        lowWindow: topBucket && Number.isFinite(topBucketStart) ? {
+        lowWindow: !hasMultiSession(config) && topBucket && Number.isFinite(topBucketStart) ? {
             label: topBucket.label || `${formatElapsedCompact(topBucketStart)}-${formatElapsedCompact(topBucketSafeEnd)}`,
             pct: asNumber(topBucket.pct),
             startMinutes: topBucketStart,
@@ -1455,9 +1608,10 @@ function addMedianWall(dataset) {
         dataset.medianX, dataset.zeroY, dataset.zMax
     ];
     state.world.add(lineSegments(edgePoints, colors.median, 0.92));
-    const medianLabel = dataset.timeline?.alignment === 'openClose' && Number.isFinite(dataset.medianRegularLowFraction)
-        ? `Median low ${Math.round(dataset.medianRegularLowFraction * 100)}% to close`
-        : `Median low ${formatElapsedCompact(dataset.medianMinutes)}`;
+    const medianLabel = dataset.medianLabel
+        || (dataset.timeline?.alignment === 'openClose' && Number.isFinite(dataset.medianRegularLowFraction)
+            ? `Median low ${Math.round(dataset.medianRegularLowFraction * 100)}% to close`
+            : `Median low ${formatElapsedCompact(dataset.medianMinutes)}`);
     addLabel(medianLabel, dataset.medianX, dataset.ySpan / 2 + 1.1, dataset.zMin - 1.4, {
         color: '#7dd3fc',
         border: 'rgba(56, 189, 248, 0.76)',
@@ -1549,6 +1703,7 @@ function addMarketCloseWall(dataset) {
 
     addFloorBand(dataset.timeline.afterStart, dataset.timeline.afterEnd, 0x475569, dataset.timeline.includeExtended ? 0.13 : 0);
     addFloorBand(dataset.timeline.preStart, dataset.timeline.preEnd, 0x0f766e, dataset.timeline.includeExtended ? 0.12 : 0);
+    addFloorBand(dataset.timeline.secondOpen, dataset.timeline.end, 0x1d4ed8, dataset.timeline.includeSecondDay ? 0.095 : 0);
 
     const marketClosePoints = [
         dataset.marketCloseX, -height / 2, dataset.zMin,
@@ -1572,7 +1727,7 @@ function addMarketCloseWall(dataset) {
     closeRail.position.set(dataset.marketCloseX, floorY + 0.04, 0);
     state.world.add(closeRail);
 
-    if (dataset.timeline.includeExtended) {
+    if (dataset.timeline.includeShared) {
         const gapX = dataset.toX(dataset.timeline.gapStart);
         const preX = dataset.toX(dataset.timeline.preStart);
         const gapPoints = [
@@ -1589,28 +1744,30 @@ function addMarketCloseWall(dataset) {
             worldWidth: 2.6,
             fontSize: 17
         });
-        addLabel('After-hours', (dataset.toX(dataset.timeline.afterStart) + dataset.toX(dataset.timeline.afterEnd)) / 2, floorY + 0.72, dataset.zMin - 1.4, {
-            color: '#cbd5e1',
-            border: 'rgba(148, 163, 184, 0.5)',
-            background: 'rgba(15, 23, 42, 0.74)',
-            worldWidth: 2.4,
-            fontSize: 17
-        });
-        addLabel('Premarket', (dataset.toX(dataset.timeline.preStart) + dataset.toX(dataset.timeline.preEnd)) / 2, floorY + 0.72, dataset.zMin - 1.4, {
-            color: '#99f6e4',
-            border: 'rgba(20, 184, 166, 0.5)',
-            background: 'rgba(4, 47, 46, 0.72)',
-            worldWidth: 2.2,
-            fontSize: 17
-        });
-        addVerticalSessionGuide(dataset.timeline.preStart, 0x2dd4bf, 0.9, 'Premarket start', 'D2 04:00 ET', {
-            color: '#99f6e4',
-            border: 'rgba(20, 184, 166, 0.62)',
-            background: 'rgba(4, 47, 46, 0.76)',
-            worldWidth: 3.1,
-            timeWorldWidth: 2.25,
-            y: dataset.ySpan / 2 + 1.15
-        });
+        if (dataset.timeline.includeExtended) {
+            addLabel('After-hours', (dataset.toX(dataset.timeline.afterStart) + dataset.toX(dataset.timeline.afterEnd)) / 2, floorY + 0.72, dataset.zMin - 1.4, {
+                color: '#cbd5e1',
+                border: 'rgba(148, 163, 184, 0.5)',
+                background: 'rgba(15, 23, 42, 0.74)',
+                worldWidth: 2.4,
+                fontSize: 17
+            });
+            addLabel('Premarket', (dataset.toX(dataset.timeline.preStart) + dataset.toX(dataset.timeline.preEnd)) / 2, floorY + 0.72, dataset.zMin - 1.4, {
+                color: '#99f6e4',
+                border: 'rgba(20, 184, 166, 0.5)',
+                background: 'rgba(4, 47, 46, 0.72)',
+                worldWidth: 2.2,
+                fontSize: 17
+            });
+            addVerticalSessionGuide(dataset.timeline.preStart, 0x2dd4bf, 0.9, 'Premarket start', 'D2 04:00 ET', {
+                color: '#99f6e4',
+                border: 'rgba(20, 184, 166, 0.62)',
+                background: 'rgba(4, 47, 46, 0.76)',
+                worldWidth: 3.1,
+                timeWorldWidth: 2.25,
+                y: dataset.ySpan / 2 + 1.15
+            });
+        }
         addVerticalSessionGuide(dataset.timeline.secondOpen, 0xffffff, 0.88, 'D2 market open', '09:30 ET', {
             color: '#f8fafc',
             border: 'rgba(255, 255, 255, 0.58)',
@@ -1618,6 +1775,23 @@ function addMarketCloseWall(dataset) {
             worldWidth: 3.05,
             y: dataset.ySpan / 2 + 1.15
         });
+        if (dataset.timeline.includeSecondDay) {
+            addLabel('Day 2 regular', (dataset.toX(dataset.timeline.secondOpen) + dataset.toX(dataset.timeline.end)) / 2, floorY + 0.72, dataset.zMin - 1.4, {
+                color: '#bfdbfe',
+                border: 'rgba(147, 197, 253, 0.5)',
+                background: 'rgba(15, 23, 42, 0.74)',
+                worldWidth: 2.65,
+                fontSize: 17
+            });
+            addVerticalSessionGuide(dataset.timeline.end, 0x93c5fd, 0.62, 'D2 close', '16:00 ET', {
+                color: '#bfdbfe',
+                border: 'rgba(147, 197, 253, 0.48)',
+                background: 'rgba(15, 23, 42, 0.68)',
+                worldWidth: 2.2,
+                timeWorldWidth: 2.1,
+                y: dataset.ySpan / 2 - 1.0
+            });
+        }
     }
 
     addLabel('Market close', dataset.marketCloseX, dataset.ySpan / 2 + 1.65, dataset.zMin - 1.4, {
@@ -1679,13 +1853,21 @@ function addSceneLabels(dataset) {
             tickSpecs.push(
                 { plot: timeline.afterEnd, label: '20:00' },
                 { plot: timeline.preStart, label: 'D2 04:00' },
-                { plot: timeline.secondOpen, label: 'D2 09:30' }
+                ...(!timeline.includeSecondDay ? [{ plot: timeline.secondOpen, label: 'D2 09:30' }] : [])
+            );
+        }
+        if (timeline.includeSecondDay) {
+            tickSpecs.push(
+                { plot: timeline.secondOpen, label: 'D2 09:30' },
+                { minute: DAY_MINUTES + 12 * 60, label: 'D2 12:00' },
+                { minute: DAY_MINUTES + 14 * 60, label: 'D2 14:00' },
+                { plot: timeline.end, label: 'D2 16:00' }
             );
         }
     } else if (openAligned) {
         const maxDuration = timeline.maxRegularDuration || 390;
         const elapsedTicks = [0, 30, 60, 120, 180, 240, 300, 360]
-            .filter(minute => minute <= maxDuration + 0.1 && (!timeline.includeExtended || minute === 0 || maxDuration - minute >= 35));
+            .filter(minute => minute <= maxDuration + 0.1 && (!timeline.includeShared || minute === 0 || maxDuration - minute >= 35));
         tickSpecs = elapsedTicks.map(minute => ({
             plot: timeline.elapsedToPlot(minute),
             label: formatElapsedCompact(minute)
@@ -1695,7 +1877,16 @@ function addSceneLabels(dataset) {
                 { plot: timeline.marketClose, label: '16:00' },
                 { plot: timeline.afterEnd, label: '20:00' },
                 { plot: timeline.preStart, label: 'D2 04:00' },
-                { plot: timeline.secondOpen, label: 'D2 09:30' }
+                ...(!timeline.includeSecondDay ? [{ plot: timeline.secondOpen, label: 'D2 09:30' }] : [])
+            );
+        }
+        if (timeline.includeSecondDay) {
+            tickSpecs.push(
+                { plot: timeline.marketClose, label: '16:00' },
+                { plot: timeline.secondOpen, label: 'D2 09:30' },
+                { minute: DAY_MINUTES + 12 * 60, label: 'D2 12:00' },
+                { minute: DAY_MINUTES + 14 * 60, label: 'D2 14:00' },
+                { plot: timeline.end, label: 'D2 16:00' }
             );
         }
     } else {
@@ -1709,7 +1900,15 @@ function addSceneLabels(dataset) {
             tickSpecs.push(
                 { plot: timeline.afterEnd, label: '20:00' },
                 { plot: timeline.preStart, label: 'D2 04:00' },
-                { plot: timeline.secondOpen, label: 'D2 09:30' }
+                ...(!timeline.includeSecondDay ? [{ plot: timeline.secondOpen, label: 'D2 09:30' }] : [])
+            );
+        }
+        if (timeline.includeSecondDay) {
+            tickSpecs.push(
+                { plot: timeline.secondOpen, label: 'D2 09:30' },
+                { minute: DAY_MINUTES + 12 * 60, label: 'D2 12:00' },
+                { minute: DAY_MINUTES + 14 * 60, label: 'D2 14:00' },
+                { plot: timeline.end, label: 'D2 16:00' }
             );
         }
     }
@@ -1719,7 +1918,9 @@ function addSceneLabels(dataset) {
             ? tick.plot
             : (Number.isFinite(tick.minute) && tick.minute >= timeline.regularStart && tick.minute <= MARKET_CLOSE_MINUTES
                 ? timeline.minuteToPlot(tick.minute)
-                : null);
+                : (Number.isFinite(tick.minute) && timeline.includeSecondDay && tick.minute >= SECOND_DAY_OPEN_MINUTES
+                    ? timeline.minuteToPlot(tick.minute)
+                    : null));
         const x = Number.isFinite(plot) ? dataset.toX(plot) : null;
         if (!Number.isFinite(x) || x < dataset.xMin - 0.1 || x > dataset.xMax + 0.1) return;
         if (usedTicks.some(previous => Math.abs(previous - x) < 1.35)) return;
@@ -2294,13 +2495,14 @@ function entryInsightPanel(dataset) {
 function entryMobileMetrics(dataset) {
     const balanced = dataset.entryScenarios?.balanced || dataset.entryScenarios?.best || null;
     const rawBest = dataset.entryScenarios?.best || null;
+    const medianLowText = dataset.medianLabel ? dataset.medianLabel.replace(/^Median low\s+/i, '') : (Number.isFinite(dataset.medianMinutes) ? formatElapsed(dataset.medianMinutes) : '-');
     return [
         insightMetric('Best balance', balanced ? `${balanced.label} ${fmtPct(balanced.avgReturn)}` : '-', 'text-emerald-300'),
         insightMetric('Best avg', rawBest ? `${rawBest.label} ${fmtPct(rawBest.avgReturn)}` : '-', 'text-emerald-300'),
         insightMetric('Gap to low', balanced ? `${(balanced.avgGapToLow || 0).toFixed(1)}%` : '-', 'text-amber-300'),
         insightMetric('Loss <5%', balanced ? `${Math.round(balanced.contained5 || 0)}%` : '-', 'text-blue-300'),
         insightMetric('Low cluster', dataset.lowWindow ? `${dataset.lowWindow.label} ${Math.round(dataset.lowWindow.pct || 0)}%` : '-', 'text-yellow-300'),
-        insightMetric('Median low', Number.isFinite(dataset.medianMinutes) ? formatElapsed(dataset.medianMinutes) : '-', 'text-cyan-300')
+        insightMetric('Median low', medianLowText, 'text-cyan-300')
     ].join('');
 }
 
@@ -2335,96 +2537,68 @@ function flatLowLegendHtml(dataset) {
     const scaleLabel = alignment === 'close'
         ? 'countdown to close'
         : (alignment === 'openClose' ? 'open-close' : 'open aligned');
+    const rangeLines = [
+        dataset?.timeline?.includeExtended ? '<div class="flex items-center justify-between gap-3"><span>Ext</span><span class="font-semibold text-teal-300">after/pre</span></div>' : '',
+        dataset?.timeline?.includeSecondDay ? '<div class="flex items-center justify-between gap-3"><span>D2</span><span class="font-semibold text-sky-300">regular</span></div>' : ''
+    ].filter(Boolean).join('');
     return `
         <div class="section-header text-zinc-500">Flat scale</div>
         <div class="mt-2 space-y-1.5 text-zinc-400">
             <div class="flex items-center justify-between gap-3"><span>Dot</span><span class="font-semibold text-amber-300">low</span></div>
             <div class="flex items-center justify-between gap-3"><span>X</span><span class="font-semibold text-blue-300">${scaleLabel}</span></div>
-            <div class="flex items-center justify-between gap-3"><span>Ext</span><span class="font-semibold text-teal-300">after/pre</span></div>
+            ${rangeLines}
         </div>`;
 }
 
 function buildFlatLowLayout(dataset) {
     const alignment = alignmentMode();
-    const includeShared = Boolean(dataset?.timeline?.includeExtended);
-    const regularWidth = includeShared ? X_SPAN * 0.55 : X_SPAN;
-    const gapWidth = includeShared ? 2.35 : 0;
-    const regularStartX = dataset.xMin;
-    const regularEndX = includeShared ? dataset.xMin + regularWidth : dataset.xMax;
-    const sharedStartX = regularEndX + gapWidth;
-    const sharedEndX = dataset.xMax;
+    const timeline = dataset?.timeline || {};
+    const includeExtended = Boolean(timeline.includeExtended);
+    const includeSecondDay = Boolean(timeline.includeSecondDay);
+    const includeShared = Boolean(timeline.includeShared || includeExtended || includeSecondDay);
+    const plotToX = plot => dataset.toX(Math.min(Math.max(Number(plot) || 0, 0), dataset.maxPlot || timeline.end || 1));
+    const regularStartX = plotToX(0);
+    const regularEndX = plotToX(timeline.marketClose ?? timeline.regularEnd ?? 0);
+    const sharedStartX = plotToX(includeExtended ? timeline.afterStart : timeline.gapStart);
+    const sharedEndX = plotToX(timeline.end ?? timeline.marketClose ?? 0);
     const maxDuration = Math.max(
         120,
         Math.min(390, Math.ceil(Math.max(...dataset.records.map(record => record.dayEndDelta || 0), 300) / 30) * 30)
     );
-    const regularClockStart = MARKET_OPEN_MINUTES;
-    const regularClockEnd = MARKET_CLOSE_MINUTES;
-    const regularClockSpan = regularClockEnd - regularClockStart;
-    const afterSpan = AFTER_HOURS_END_MINUTES - MARKET_CLOSE_MINUTES;
-    const preSpan = SECOND_DAY_OPEN_MINUTES - PREMARKET_START_MINUTES;
-    const sharedSpan = afterSpan + SESSION_GAP_WIDTH + preSpan;
-    const elapsedToX = minutes => {
-        const progress = clamp((Number(minutes) || 0) / maxDuration, 0, 1);
-        return lerp(regularStartX, regularEndX, progress);
-    };
-    const progressToX = progress => lerp(regularStartX, regularEndX, clamp(Number(progress) || 0, 0, 1));
-    const stretchPointToX = (record, point) => progressToX(regularPhaseProgress(record, point));
-    const clockMinuteToX = minute => {
-        const dayMinute = minuteOfDay(minute);
-        const progress = Number.isFinite(dayMinute)
-            ? clamp((dayMinute - regularClockStart) / Math.max(regularClockSpan, 1), 0, 1)
-            : 0;
-        return lerp(regularStartX, regularEndX, progress);
-    };
-    const sharedPlotForMinute = minute => {
-        if (!Number.isFinite(minute)) return 0;
-        if (minute <= AFTER_HOURS_END_MINUTES) {
-            return Math.max(0, minute - MARKET_CLOSE_MINUTES);
-        }
-        if (minute < PREMARKET_START_MINUTES) {
-            return afterSpan + SESSION_GAP_WIDTH / 2;
-        }
-        if (minute <= SECOND_DAY_OPEN_MINUTES) {
-            return afterSpan + SESSION_GAP_WIDTH + Math.max(0, minute - PREMARKET_START_MINUTES);
-        }
-        return sharedSpan;
-    };
-    const sharedMinuteToX = minute => {
-        if (!includeShared) return elapsedToX(maxDuration);
-        const progress = clamp(sharedPlotForMinute(minute) / Math.max(sharedSpan, 1), 0, 1);
-        return lerp(sharedStartX, sharedEndX, progress);
-    };
-    const lowPointToX = (record, point) => {
-        const isShared = includeShared
-            && point?.session === 'extended'
-            && Number.isFinite(point.sessionMinute)
-            && point.sessionMinute > MARKET_CLOSE_MINUTES;
-        if (isShared) return sharedMinuteToX(point.sessionMinute);
-        if (alignment === 'close') {
-            return clockMinuteToX(Number.isFinite(point?.sessionMinute) ? point.sessionMinute : record.lowSessionMinute);
-        }
-        if (alignment === 'openClose') {
-            return stretchPointToX(record, point);
-        }
-        return elapsedToX(Number.isFinite(point?.sessionDeltaMinutes) ? point.sessionDeltaMinutes : record.lowDelta);
-    };
-    const medianGuideX = alignment === 'close'
-        ? (Number.isFinite(dataset.medianClockMinute) ? clockMinuteToX(dataset.medianClockMinute) : null)
-        : (alignment === 'openClose'
-            ? (Number.isFinite(dataset.medianRegularLowFraction) ? progressToX(dataset.medianRegularLowFraction) : null)
-            : (Number.isFinite(dataset.medianMinutes) ? elapsedToX(dataset.medianMinutes) : null));
+    const elapsedToX = minutes => plotToX(timeline.elapsedToPlot ? timeline.elapsedToPlot(minutes) : 0);
+    const progressToX = progress => plotToX(timeline.progressToPlot ? timeline.progressToPlot(progress) : 0);
+    const clockMinuteToX = minute => plotToX(timeline.minuteToPlot ? timeline.minuteToPlot(minute) : 0);
+    const sharedMinuteToX = minute => plotToX(timeline.minuteToPlot ? timeline.minuteToPlot(minute) : timeline.end);
+    const lowPointToX = (record, point) => plotToX(timeline.pointToPlot ? timeline.pointToPlot(record, point) : 0);
+    const medianGuideX = includeShared
+        ? dataset.medianX
+        : (alignment === 'close'
+            ? (Number.isFinite(dataset.medianClockMinute) ? clockMinuteToX(dataset.medianClockMinute) : null)
+            : (alignment === 'openClose'
+                ? (Number.isFinite(dataset.medianRegularLowFraction) ? progressToX(dataset.medianRegularLowFraction) : null)
+                : (Number.isFinite(dataset.medianMinutes) ? elapsedToX(dataset.medianMinutes) : null)));
     return {
         alignment,
         includeShared,
+        includeExtended,
+        includeSecondDay,
         regularStartX,
         regularEndX,
         sharedStartX,
         sharedEndX,
-        gapWidth,
+        afterStartX: plotToX(timeline.afterStart ?? timeline.marketClose ?? 0),
+        afterEndX: plotToX(timeline.afterEnd ?? timeline.marketClose ?? 0),
+        gapStartX: plotToX(timeline.gapStart ?? timeline.marketClose ?? 0),
+        gapEndX: plotToX(timeline.gapEnd ?? timeline.marketClose ?? 0),
+        preStartX: plotToX(timeline.preStart ?? timeline.marketClose ?? 0),
+        preEndX: plotToX(timeline.preEnd ?? timeline.marketClose ?? 0),
+        secondOpenX: plotToX(timeline.secondOpen ?? timeline.end ?? 0),
+        secondEndX: plotToX(timeline.end ?? timeline.secondOpen ?? 0),
+        gapWidth: Math.max(0, plotToX(timeline.gapEnd ?? 0) - plotToX(timeline.gapStart ?? 0)),
         maxDuration,
-        regularClockStart,
-        regularClockEnd,
-        regularClockSpan,
+        regularClockStart: MARKET_OPEN_MINUTES,
+        regularClockEnd: MARKET_CLOSE_MINUTES,
+        regularClockSpan: MARKET_CLOSE_MINUTES - MARKET_OPEN_MINUTES,
         elapsedToX,
         progressToX,
         clockMinuteToX,
@@ -2477,7 +2651,7 @@ function flatAxisTickCandidates(layout) {
             });
         });
     }
-    if (layout.includeShared) {
+    if (layout.includeExtended) {
         const dayPrefix = layout.alignment === 'close';
         const sharedTicks = [
             { minute: MARKET_CLOSE_MINUTES, label: dayPrefix ? 'D1 16:00' : '16:00', priority: 6, color: '#e4e4e7' },
@@ -2488,9 +2662,22 @@ function flatAxisTickCandidates(layout) {
             { minute: PREMARKET_START_MINUTES, label: 'D2 04:00', priority: 6, color: '#99f6e4' },
             { minute: PREMARKET_START_MINUTES + 2 * 60, label: dayPrefix ? 'D2 06:00' : '06:00', priority: 2, color: '#99f6e4' },
             { minute: PREMARKET_START_MINUTES + 4 * 60, label: dayPrefix ? 'D2 08:00' : '08:00', priority: 2, color: '#99f6e4' },
-            { minute: SECOND_DAY_OPEN_MINUTES, label: dayPrefix ? 'D2 09:30' : '09:30', priority: 6, color: '#f8fafc' }
+            ...(!layout.includeSecondDay ? [{ minute: SECOND_DAY_OPEN_MINUTES, label: dayPrefix ? 'D2 09:30' : '09:30', priority: 6, color: '#f8fafc' }] : [])
         ];
         sharedTicks.forEach(tick => ticks.push({
+            ...tick,
+            x: layout.sharedMinuteToX(tick.minute),
+            hourTick: tick.priority >= 5
+        }));
+    }
+    if (layout.includeSecondDay) {
+        const secondTicks = [
+            { minute: SECOND_DAY_OPEN_MINUTES, label: 'D2 09:30', priority: 7, color: '#f8fafc' },
+            { minute: DAY_MINUTES + 12 * 60, label: '12:00', priority: 3, color: '#bfdbfe' },
+            { minute: DAY_MINUTES + 14 * 60, label: '14:00', priority: 3, color: '#bfdbfe' },
+            { minute: DAY_MINUTES + MARKET_CLOSE_MINUTES, label: 'D2 16:00', priority: 6, color: '#bfdbfe' }
+        ];
+        secondTicks.forEach(tick => ticks.push({
             ...tick,
             x: layout.sharedMinuteToX(tick.minute),
             hourTick: tick.priority >= 5
@@ -2646,9 +2833,15 @@ function addFlatLowMesh(dataset, y, layout) {
         addProjectedGuide(layout.marketCloseX, colors.highlight, 0.72);
     }
     if (layout.includeShared) {
-        addProjectedGuide(layout.sharedStartX, colors.neutral, 0.82);
+        addProjectedGuide(layout.gapStartX, colors.neutral, 0.82);
+    }
+    if (layout.includeExtended) {
         addProjectedGuide(layout.sharedMinuteToX(PREMARKET_START_MINUTES), 0x2dd4bf, 0.76);
         addProjectedGuide(layout.sharedMinuteToX(SECOND_DAY_OPEN_MINUTES), 0xffffff, 0.7);
+    }
+    if (layout.includeSecondDay) {
+        addProjectedGuide(layout.secondOpenX, 0xffffff, 0.72);
+        addProjectedGuide(layout.secondEndX, 0x93c5fd, 0.54);
     }
 
     if (layout.alignment === 'open' && dataset.lowWindow && Number.isFinite(dataset.lowWindow.startMinutes) && Number.isFinite(dataset.lowWindow.endMinutes)) {
@@ -3041,9 +3234,18 @@ function buildScene(options = {}) {
 function updateModeControls(dataset = state.dataset) {
     const day = byId('three-map-mode-day1');
     const extended = byId('three-map-mode-extended');
+    const d1d2 = byId('three-map-mode-d1d2');
+    const d1extd2 = byId('three-map-mode-d1extd2');
     const entry = byId('three-map-view-entry');
     const paths = byId('three-map-view-paths');
     const hasExtended = Boolean(dataset?.hasExtended);
+    const hasSecondDay = Boolean(dataset?.hasSecondDay);
+    if (state.mode === 'd1ExtD2' && !(hasExtended && hasSecondDay)) {
+        state.mode = hasSecondDay ? 'd1D2' : (hasExtended ? 'extended' : 'day1');
+    }
+    if (!hasSecondDay && state.mode === 'd1D2') {
+        state.mode = hasExtended ? 'extended' : 'day1';
+    }
     if (!hasExtended && state.mode === 'extended') {
         state.mode = 'day1';
     }
@@ -3051,6 +3253,8 @@ function updateModeControls(dataset = state.dataset) {
     setSegmentState(paths, state.view === 'paths', false);
     setSegmentState(day, state.mode === 'day1', false);
     setSegmentState(extended, state.mode === 'extended', !hasExtended);
+    setSegmentState(d1d2, state.mode === 'd1D2', !hasSecondDay);
+    setSegmentState(d1extd2, state.mode === 'd1ExtD2', !(hasExtended && hasSecondDay));
     applyFlatLowControlState(dataset);
     applyFlatLowAlignmentControlState(dataset);
 }
@@ -3248,7 +3452,9 @@ function selectedLowMarkersHtml(record) {
     if (!state.flatLowActive || specs.length <= 1) return '';
     const pills = specs.map(spec => {
         const point = spec.point;
-        const clock = Number.isFinite(point?.sessionMinute) ? formatClockFromMinute(point.sessionMinute) : (point?.time || '-');
+        const clock = Number.isFinite(point?.sessionMinute)
+            ? (spec.id === 'regular' ? formatClockFromMinute(point.sessionMinute) : formatSessionMoment(point.sessionMinute))
+            : (point?.time || '-');
         const pct = Number.isFinite(point?.pctLow) ? fmtPct(point.pctLow) : '-';
         return `<span class="inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 font-semibold" style="border-color:${escapeHtml(spec.border)};color:${escapeHtml(spec.text)};background:rgba(9,9,11,0.58)">
             <span>${escapeHtml(spec.shortLabel)}</span>
@@ -3288,8 +3494,9 @@ function updateInsightPanels(dataset) {
     const latePct = total ? Math.round((insights.lateLows / total) * 100) : 0;
     const deepPct = total ? Math.round((insights.belowMinus10 / total) * 100) : 0;
     const bestEntry = dataset.entryScenarios?.best;
+    const medianLowText = dataset.medianLabel ? dataset.medianLabel.replace(/^Median low\s+/i, '') : (Number.isFinite(dataset.medianMinutes) ? formatElapsed(dataset.medianMinutes) : '-');
     const quickMetrics = [
-        insightMetric('Median low', Number.isFinite(dataset.medianMinutes) ? formatElapsed(dataset.medianMinutes) : '-', 'text-cyan-300'),
+        insightMetric('Median low', medianLowText, 'text-cyan-300'),
         insightMetric('Avg close', fmtPct(insights.avgDayEnd), pctToneClass(insights.avgDayEnd)),
         insightMetric('Green', `${gainPct}%`, 'text-emerald-300'),
         insightMetric('Dips -10%', `${deepPct}%`, 'text-amber-300')
@@ -3333,9 +3540,14 @@ function updateSummary(dataset) {
         return;
     }
     const winners = dataset.insights?.winners ?? dataset.records.filter(record => record.dayEndPct >= 0).length;
-    const medianText = Number.isFinite(dataset.medianMinutes) ? `Median low ${formatElapsed(dataset.medianMinutes)}` : 'Median low -';
-    const modeLabel = state.mode === 'extended' ? 'Day 1 + extended' : 'Day 1';
+    const medianText = dataset.medianLabel || (Number.isFinite(dataset.medianMinutes) ? `Median low ${formatElapsed(dataset.medianMinutes)}` : 'Median low -');
+    const modeLabel = mapModeConfig(state.mode).label;
     const alignment = alignmentMode();
+    const sharedClockText = dataset.timeline?.includeExtended && dataset.timeline?.includeSecondDay
+        ? ', then use shared after-hours, premarket, and Day 2 clock time'
+        : (dataset.timeline?.includeExtended
+            ? ', then use shared after-hours and premarket clock time'
+            : (dataset.timeline?.includeSecondDay ? ', then use shared Day 2 clock time' : ''));
     if (state.view === 'entry') {
         const best = dataset.entryScenarios?.balanced || dataset.entryScenarios?.best;
         const bestText = best ? `Best balanced entry ${best.label} (${fmtPct(best.avgReturn)} avg)` : 'Entry frontier';
@@ -3347,18 +3559,18 @@ function updateSummary(dataset) {
         subtitle.textContent = alignment === 'close'
             ? `${dataset.label} | ${modeLabel} lows use market-clock time with a countdown to the 16:00 ET close`
             : (alignment === 'openClose'
-                ? `${dataset.label} | ${modeLabel} lows stretch each IPO from first print to D1 close${dataset.timeline?.includeExtended ? ', then use shared after-hours and premarket clock time' : ''}`
-                : (dataset.timeline?.includeExtended
-                ? `${dataset.label} | ${modeLabel} lows use open-aligned elapsed time, then shared after-hours and premarket clock time`
+                ? `${dataset.label} | ${modeLabel} lows stretch each IPO from first print to D1 close${sharedClockText}`
+                : (dataset.timeline?.includeShared
+                ? `${dataset.label} | ${modeLabel} lows use open-aligned elapsed time${sharedClockText}`
                 : `${dataset.label} | ${modeLabel} lows use open-aligned elapsed time from each IPO open`));
     } else {
         summary.textContent = `${dataset.records.length} IPOs | 0% = each first public open | ${winners} ended above first print | ${medianText}`;
         subtitle.textContent = alignment === 'close'
             ? `${dataset.label} | ${modeLabel} paths aligned by market session time, shown as % from each IPO's first opening print`
             : (alignment === 'openClose'
-                ? `${dataset.label} | ${modeLabel} paths stretch each IPO from first print to D1 close${dataset.timeline?.includeExtended ? ', then use shared after-hours and premarket clock time' : ''}`
-                : (dataset.timeline?.includeExtended
-                ? `${dataset.label} | ${modeLabel} paths aligned by each IPO open, with shared after-hours and premarket clock time`
+                ? `${dataset.label} | ${modeLabel} paths stretch each IPO from first print to D1 close${sharedClockText}`
+                : (dataset.timeline?.includeShared
+                ? `${dataset.label} | ${modeLabel} paths aligned by each IPO open${sharedClockText}`
                 : `${dataset.label} | ${modeLabel} paths aligned by each IPO open, shown as elapsed time from first print`));
     }
     updateInsightPanels(dataset);
@@ -3603,7 +3815,7 @@ document.addEventListener('click', event => {
     const modeButton = event.target.closest?.('button[data-three-map-mode]');
     if (modeButton && !modeButton.disabled) {
         const nextMode = modeButton.dataset.threeMapMode;
-        if (nextMode === 'day1' || nextMode === 'extended') {
+        if (nextMode === 'day1' || nextMode === 'extended' || nextMode === 'd1D2' || nextMode === 'd1ExtD2') {
             const preserveCamera = state.flatLowActive;
             state.mode = nextMode;
             state.interacted = preserveCamera;
