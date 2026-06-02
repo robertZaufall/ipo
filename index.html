@@ -73,7 +73,7 @@
                 </div>
                 <h1 class="font-display text-5xl sm:text-6xl tracking-tighter font-semibold mt-3">First-day moves for market giants</h1>
                 <p class="text-lg sm:text-xl text-zinc-400 mt-2 max-w-3xl">A day-one view of top IPO companies.</p>
-                <div class="mt-5 grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(15rem,17rem)]">
+                <div class="mt-5 grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(24rem,30rem)]">
                     <div class="flex w-full flex-col gap-1 rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-[11px] font-semibold sm:text-xs md:h-12 md:flex-row md:items-center">
                         <div id="cap-filter" role="group" aria-label="Filter IPO analysis and cards by market cap" class="flex min-h-10 w-full min-w-0 items-stretch gap-1 md:h-full md:flex-[1.08]">
                             <span class="inline-flex shrink-0 items-center gap-1 rounded-xl border border-zinc-800 bg-zinc-950/70 px-2 text-[10px] font-semibold text-zinc-300 sm:text-[11px]">
@@ -99,7 +99,11 @@
                             <button id="place-nyse" type="button" data-trading-place-filter="nyse" aria-pressed="false" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">NYSE</button>
                         </div>
                     </div>
-                    <div id="chart-mode-toggle" role="group" aria-label="Set analysis range" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-[10px] sm:text-xs font-semibold grid grid-cols-4 gap-1 transition-colors">
+                    <div id="chart-mode-toggle" role="group" aria-label="Set analysis timespan" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-[10px] sm:text-xs font-semibold grid grid-cols-[auto_repeat(4,minmax(0,1fr))] gap-1 transition-colors">
+                        <span class="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-950/70 px-2.5 text-[11px] font-semibold text-zinc-300 sm:px-3 sm:text-xs">
+                            <i class="fa-solid fa-clock text-[10px] text-blue-300" aria-hidden="true"></i>
+                            <span>Span</span>
+                        </span>
                         <button id="chart-mode-day1" type="button" data-analysis-range="day1" aria-pressed="false" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors text-zinc-400 hover:text-zinc-200">Day 1</button>
                         <button id="chart-mode-extended" type="button" data-analysis-range="d1Ext" aria-pressed="false" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors text-zinc-400 hover:text-zinc-200">Ext</button>
                         <button id="chart-mode-d1d2" type="button" data-analysis-range="d1D2" aria-pressed="true" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors bg-blue-600 text-white">D1 D2</button>
@@ -5103,7 +5107,7 @@
             setSegmentButtonState(extended, config.id === 'd1Ext');
             setSegmentButtonState(d1d2, config.id === 'd1D2');
             setSegmentButtonState(day2, config.id === 'd1ExtD2');
-            toggle.title = `Analysis range: ${config.label}`;
+            toggle.removeAttribute('title');
             toggle.setAttribute('aria-label', `Analysis range: ${config.label}. Card charts keep their own data-mode controls.`);
         }
 
