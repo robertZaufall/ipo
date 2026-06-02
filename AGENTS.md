@@ -11,7 +11,7 @@ Path placeholders in this file are intentional. Substitute them with the matchin
 
 ## Current Shape
 
-- The app is a static page: `index.html` plus generated `ipo-data.js`, `chart-data.js`, and `ipo-analysis.js`.
+- The app is a static page: `index.html` plus generated `ipo-data.js`, `chart-data.js`, `ipo-analysis.js`, and `ipo-buy-signals.js`.
 - There is no build step.
 - Styling uses Tailwind from CDN plus local CSS in `index.html`.
 - Candlestick charts are inline SVG generated in browser JavaScript.
@@ -27,9 +27,13 @@ Path placeholders in this file are intentional. Substitute them with the matchin
 - The entry-scenario comparison is calculated in browser JavaScript from the active cap/trading-place filtered exact 5-minute bars plus available extended/Day 2 bars. It reports average/min/max comparisons against End D1, median entry, absolute low, End D2, and, on card-local tables, runtime Current.
 - Analysis distribution charts include dynamic median reference lines from the currently active cap and trading-place filter.
 - Main candle charts include a top elapsed-minutes axis from first public trade, bottom NYC/German clock labels, and a blue vertical median timing reference line from the currently active analysis filter. They also show a thin gray horizontal first-public-open reference line with a plain `Open` label, plus conditional horizontal IPO-price and current-price reference lines only when those prices are inside the visible chart OHLC range.
+- Main candle charts can overlay generated buy-signal states from `ipo-buy-signals.js`. Render these as an in-grid state strip with `Wait`, `Watch`, and `Buy` labels, never as a floating pill over the candles. `Wait` means predicted remaining downside is still above the watch threshold, `Watch` means it is within the watch band but not the buy threshold, and `Buy` means it is within the buy threshold. Use plain percentages in user-facing copy; the artifact stores basis-point values only for compact precision.
+- The private 1-minute candle inputs, private dependencies, and XGBoost signal generator live in ignored `1m/`; only the exported `ipo-buy-signals.js` states/pins and public metadata should be committed unless explicitly requested.
 - Each card chart has an enlarge button that opens the current per-card chart mode in a full-screen modal.
-- The header includes a top-level analysis-range switch near the market and trading-place filters: `Day 1`, `Ext`, and `Day 1-Day 2`. It changes the global analysis only, not per-card chart drawings. Each main candle chart has its own top switch: `D1`, `D1 Ext`, `D1 Ext D2`, `D1 D2`, and `D2`. The default card chart mode is `D1 Ext D2`.
-- Stitched candle charts must not draw empty overnight gaps across the x-axis. Bottom x-axis labels stay clock-only, use half-hour/full-hour times where space allows, and never show calendar dates. The top axis uses first-trade elapsed time during the IPO day, resets to `0m` for after-hours, resets again at the start of second-day premarket, and resets again at D2 regular open. Extended trading-hour candle regions should have a subtle background shade.
+- The header includes a top-level analysis-range switch near the market and trading-place filters: `Day 1`, `Ext`, `D1 D2`, and `D1 Ext D2`. The default global analysis range is `D1 D2`. It changes the global analysis only, not per-card chart drawings. Each main candle chart has its own top switch: `D1`, `D1 Ext`, `D1 Ext D2`, `D1 D2`, and `D2`. The default card chart mode is `D1 D2`.
+- Stitched candle charts must not draw empty overnight gaps across the x-axis. Bottom x-axis labels stay clock-only, use half-hour/full-hour times where space allows, never show calendar dates, and may omit the far-right close label when space is tight. In `D1 D2`, keep the early Day 2 full-hour bottom label visible even if normal label filtering would remove it. The top axis uses first-trade elapsed time during the IPO day, resets to `0m` for after-hours, resets again at the start of second-day premarket, and resets again at D2 regular open; suppress the duplicate top-axis D2-open `0m` label in `D1 D2` because it overlaps the normal top labels. Extended trading-hour candle regions should have a subtle background shade.
+- `D1 D2` charts show a thin light-gray vertical D2-open marker behind the candles, not blue and not above the candle layer.
+- Candle hover cards use the compact old-style dialog layout, about half the width of the larger card design, and the dialog follows the mouse cursor vertically instead of locking to candle height.
 - Visible chart source labels are compact provider markers: `(Y)` for Yahoo, `(A)` for Alpaca, and `(AV)` for Alpha Vantage. The generated `firstDayBarSources` and `extendedDayBarSources` values keep their full provider labels.
 - IPO card company names link to their Yahoo Finance quote pages.
 - IPO card header pills show market cap and, when available, deal size. Do not render the deal pill when `dealSize` is missing or non-positive.
@@ -44,10 +48,11 @@ Path placeholders in this file are intentional. Substitute them with the matchin
 - The chart path only draws real first-trading-day 5-minute OHLCV bars from `chart-data.js`. Suppress cards without exact bars; do not reintroduce daily-OHLC estimates or synthetic fallback charts unless explicitly requested.
 - Use `refresh_ipo_data.py` to refresh the IPO list, first-day intraday bars, and derived timing analysis.
 - Use `build_ipo_analysis.py` only when rebuilding the analysis from existing generated data without re-fetching market data.
+- Use the ignored private `1m/build_buy_signals.py` only when regenerating public buy-signal states/pins from local 1-minute candles.
 
 ## Data Model
 
-The page has three generated JavaScript data files plus one runtime quote cache:
+The page has four generated JavaScript data files plus one runtime quote cache:
 
 - `ipos` in `ipo-data.js`: one object per IPO candidate/card; the page renders only entries with exact `firstDayBars`.
 - `firstDayBars` in `chart-data.js`: optional real first-trading-day 5-minute OHLCV bars keyed by ticker.
@@ -59,6 +64,10 @@ The page has three generated JavaScript data files plus one runtime quote cache:
 - `roughPriceSeries` in `chart-data.js`: optional sampled Yahoo weekly close rows keyed by ticker for rough long-range micro-chart paths.
 - `current-price-cache.json`: bundled Yahoo current-price cache used as a browser runtime seed before fresh Yahoo proxy quotes arrive.
 - `ipoAnalysis` in `ipo-analysis.js`: derived 15-year first-day low timing analysis, probability checkpoints, and timing insights precomputed for each cap and trading-place filter.
+- `ipoBuySignals` in `ipo-buy-signals.js`: public chart-ready buy-signal pins keyed by ticker. Pins are reserved for threshold buys and time-based forced entries.
+- `ipoBuySignalSeries` in `ipo-buy-signals.js`: public chart-ready Day 1 signal-state ticks keyed by ticker. Each state includes time, elapsed minutes, predicted remaining downside bps, threshold bps, watch threshold bps, state (`wait`, `watch`, or `buy`), and model id.
+- `ipoBuySignalMeta` in `ipo-buy-signals.js`: public metadata for the generated buy-signal artifact. Keep raw 1-minute candles, local dependencies, and the private generator in ignored `1m/`.
+  Current public model metadata: `modelId` is `ipo-minute-xgboost-downside-v0`, engine is `xgboost.XGBRegressor`, target is remaining Day 1 downside from the next executable open to the remaining Day 1 low, `buyThresholdBps` is `45` (0.45%), `watchThresholdBps` is `150` (1.50%), `forceBuyMinute` is `180`, and `seriesStepMinutes` is `5`.
 
 IPO object fields:
 
@@ -172,6 +181,13 @@ Analysis source:
   - Schwab IPO basics: `https://www.schwab.com/learn/story/ipo-basics-what-to-know-before-investing`
   - Fidelity IPO FAQ: `https://www.fidelity.com/stock-trading/faqs-ipos`
 
+Buy-signal source:
+
+- `1m/build_buy_signals.py` reads ignored one-minute first-day regular-session candles from `1m/*.json`, trains `ipo-minute-xgboost-downside-v0`, and writes only public chart-ready data to `ipo-buy-signals.js`.
+- The model frames entry timing as remaining downside estimation, not as a binary "stock is good" classifier. At each minute it predicts how far the next executable open may still be above the remaining Day 1 low.
+- The public output is safe to commit because it contains only aggregate metadata, 5-minute signal states, selected pins, prices, thresholds, and model id. It must not include raw one-minute candles, feature tables, local dependency folders, credentials, or private generator code.
+- XGBoost is used because the minute-level IPO signal is tabular, nonlinear, and small enough that boosted trees can combine timing, price-action, range, wick, volume, and momentum patterns without assuming a linear relationship.
+
 Process for real first-day bars:
 
 1. Fetch Yahoo `chart.result[0]`.
@@ -204,7 +220,7 @@ Then open:
 http://localhost:8080
 ```
 
-Most page layout, candle chart, dashboard, and IPO-list behavior edits are made directly in `index.html`; the 3D map lives in `three-ipo-view.js`; generated IPO metadata lives in `ipo-data.js`, real candle rows live in `chart-data.js`, and derived low-timing analysis lives in `ipo-analysis.js`.
+Most page layout, candle chart, dashboard, and IPO-list behavior edits are made directly in `index.html`; the 3D map lives in `three-ipo-view.js`; generated IPO metadata lives in `ipo-data.js`, real candle rows live in `chart-data.js`, derived low-timing analysis lives in `ipo-analysis.js`, and public buy-signal states/pins live in `ipo-buy-signals.js`.
 
 Refresh the default combined `$5B+` data set with:
 
@@ -220,6 +236,13 @@ cd <local-ipo-site-repo>
 python3 build_ipo_analysis.py --input-dir . --output-dir .
 ```
 
+Regenerate only the public buy-signal states/pins from ignored local 1-minute candles with:
+
+```sh
+cd <local-ipo-site-repo>
+python3 1m/build_buy_signals.py --input-dir 1m --output ipo-buy-signals.js
+```
+
 ## Deploy Site
 
 The site repo is Git-backed and pushes to GitHub. The live `https://glaubi.net/ipo` route uses the Cloudflare Worker proxy to fetch the latest static files from GitHub raw `main`; GitHub Pages is intentionally disabled and should not be treated as a production target.
@@ -227,7 +250,7 @@ The site repo is Git-backed and pushes to GitHub. The live `https://glaubi.net/i
 ```sh
 cd <local-ipo-site-repo>
 git status --short
-git add .gitignore index.html three-ipo-view.js vendor/three.module.min.js vendor/three.LICENSE.txt ipo-data.js chart-data.js current-price-cache.json ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py AGENTS.md README.md LICENSE docs/*.png
+git add .gitignore index.html three-ipo-view.js vendor/three.module.min.js vendor/three.LICENSE.txt ipo-data.js chart-data.js current-price-cache.json ipo-analysis.js ipo-buy-signals.js refresh_ipo_data.py build_ipo_analysis.py AGENTS.md README.md LICENSE docs/*.png
 git commit -m "Update IPO site"
 git push
 ```
@@ -310,6 +333,7 @@ Before calling an IPO change done:
 - `index.html` still renders without a build step.
 - `ipo-data.js` includes `$5B+` IPO candidates from the cap screener plus all post-2020 `$5B+` IPO archive matches.
 - `ipo-analysis.js` is generated from `build_ipo_analysis.py` and contains precomputed `byCap` plus `byFilter` analyses for all cap and trading-place filters.
+- `ipo-buy-signals.js` is generated from private ignored `1m/` inputs and contains only public chart-ready signal states/pins, not raw minute candles or private model code.
 - The header cap, trading-place, and analysis-range filters sit above the analysis and change the rendered analysis and card list appropriately.
 - The top analysis panel shows decision-oriented KPI cards, elapsed-time/candle-time distribution, and US/Eastern plus German clock/session distribution for the active analysis range, with the elapsed-time opportunity map using the full panel width.
 - The compact infographic strip above search shows both the IPO playbook and buy-timing thumbnails, and both open the full-size image modal.
@@ -319,9 +343,9 @@ Before calling an IPO change done:
 - Clock-time chart labels use 24-hour NYC and German labels, not AM/PM labels. Two-line labels are allowed, and the market-clock distribution chart omits trailing `(DE)` on German axis labels.
 - No included IPO has a known `firstDay.open` below `$1`.
 - `CBRS` is present and its chart uses real Yahoo 5-minute bars and does not begin at `$185`.
-- Main candle charts show the top elapsed-minutes axis, active-filter median timing line, compact provider marker, thin gray open-price reference line, compressed no-candle gap markers when needed, and only show IPO-price/current-price horizontal reference lines when those values are within that chart's visible OHLC range.
+- Main candle charts show the top elapsed-minutes axis, active-filter median timing line, buy-signal states/pins when available, compact provider marker, thin gray open-price reference line, compressed no-candle gap markers when needed, and only show IPO-price/current-price horizontal reference lines when those values are within that chart's visible OHLC range.
 - Each card chart enlarge button opens a full-screen chart modal using the same chart data mode currently active for that card.
-- The global `Day 1` / `Ext` / `Day 1-Day 2` switch changes the analysis range. Card-level `D1` / `D1 Ext` / `D1 Ext D2` / `D1 D2` / `D2` switches change chart drawings without changing search/filter behavior. Card-level extended and Day 2 price timeline events and entry scenario columns use generated Alpaca data directly.
+- The global `Day 1` / `Ext` / `D1 D2` / `D1 Ext D2` switch changes the analysis range and defaults to `D1 D2`. Card-level `D1` / `D1 Ext` / `D1 Ext D2` / `D1 D2` / `D2` switches change chart drawings without changing search/filter behavior and default to `D1 D2`. Card-level extended and Day 2 price timeline events and entry scenario columns use generated Alpaca data directly.
 - Low markers on main candle charts are in the same near-low price band and are spaced at least one hour apart.
 - The `Forthcoming IPOs` modal opens from the header, renders the StockAnalysis-derived IPO-list or a clear unavailable/empty state, keeps rows info-only, and updates when switching between `All` and the active cap filter.
 - The 3D map opens from the analysis panel, loads local `vendor/three.module.min.js`, and renders without a blank WebGL canvas.
@@ -344,5 +368,7 @@ Before calling an IPO change done:
   `node --input-type=module --check < three-ipo-view.js`
 - Python scripts compile:
   `python3 -m py_compile refresh_ipo_data.py build_ipo_analysis.py`
+- If the private `1m/` generator was changed, it compiles:
+  `python3 -m py_compile 1m/build_buy_signals.py`
 - `https://glaubi.net/ipo` returns the page, not a 404.
 - `https://glaubi.net/ipo?v=<commit>` visually shows candles and serves the current GitHub raw `main` content through the Worker.

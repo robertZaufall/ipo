@@ -99,10 +99,11 @@
                             <button id="place-nyse" type="button" data-trading-place-filter="nyse" aria-pressed="false" class="min-w-0 rounded-xl px-1 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">NYSE</button>
                         </div>
                     </div>
-                    <div id="chart-mode-toggle" role="group" aria-label="Set analysis range" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-[11px] sm:text-xs font-semibold grid grid-cols-3 gap-1 transition-colors">
+                    <div id="chart-mode-toggle" role="group" aria-label="Set analysis range" class="h-12 w-full rounded-2xl border border-zinc-800 bg-zinc-900 p-1 text-[10px] sm:text-xs font-semibold grid grid-cols-4 gap-1 transition-colors">
                         <button id="chart-mode-day1" type="button" data-analysis-range="day1" aria-pressed="false" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors text-zinc-400 hover:text-zinc-200">Day 1</button>
                         <button id="chart-mode-extended" type="button" data-analysis-range="d1Ext" aria-pressed="false" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors text-zinc-400 hover:text-zinc-200">Ext</button>
-                        <button id="chart-mode-day2" type="button" data-analysis-range="d1ExtD2" aria-pressed="true" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors bg-blue-600 text-white">Day 1-Day 2</button>
+                        <button id="chart-mode-d1d2" type="button" data-analysis-range="d1D2" aria-pressed="true" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors bg-blue-600 text-white">D1 D2</button>
+                        <button id="chart-mode-day2" type="button" data-analysis-range="d1ExtD2" aria-pressed="false" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors text-zinc-400 hover:text-zinc-200">D1 Ext D2</button>
                     </div>
                 </div>
             </div>
@@ -322,7 +323,7 @@
 
     <script>
         const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-05-31-day2-alpaca';
-        ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js'].forEach(src => {
+        ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js', 'ipo-buy-signals.js'].forEach(src => {
             document.write(`<script src="${src}?v=${encodeURIComponent(IPO_ASSET_VERSION)}"><\/script>`);
         });
     </script>
@@ -337,12 +338,14 @@
         const secondDayBarSources = window.secondDayBarSources || {};
         const roughPriceSeries = window.roughPriceSeries || {};
         const ipoAnalysis = window.ipoAnalysis || null;
+        const ipoBuySignalSeries = window.ipoBuySignalSeries || {};
+        const ipoBuySignalMeta = window.ipoBuySignalMeta || null;
 
         let sortMode = 'date';
         let searchTerm = '';
         const DEFAULT_CAP_FILTER = 'gt50';
-        const DEFAULT_ANALYSIS_RANGE_MODE = 'd1ExtD2';
-        const DEFAULT_CARD_CHART_MODE = 'd1ExtD2';
+        const DEFAULT_ANALYSIS_RANGE_MODE = 'd1D2';
+        const DEFAULT_CARD_CHART_MODE = 'd1D2';
         const CARD_PAGE_SIZE = 10;
 
         let capFilterMode = DEFAULT_CAP_FILTER;
@@ -377,6 +380,14 @@
         const fmtDeal = m => m == null || !isFinite(m) ? '—' : m >= 1000 ? '$' + (m / 1000).toFixed(2) + 'B' : '$' + Math.round(m) + 'M';
         const fmtPct = v => v == null || !isFinite(v) ? '—' : (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
         const fmtRoundedPct = v => v == null || !isFinite(v) ? '—' : (v >= 0 ? '+' : '') + Math.round(v).toLocaleString('en-US') + '%';
+        const fmtCompactVolume = v => {
+            const value = Number(v);
+            if (!Number.isFinite(value) || value < 0) return '—';
+            if (value >= 1000000000) return `${(value / 1000000000).toFixed(value >= 10000000000 ? 1 : 2)}B`;
+            if (value >= 1000000) return `${(value / 1000000).toFixed(value >= 10000000 ? 1 : 2)}M`;
+            if (value >= 1000) return `${(value / 1000).toFixed(value >= 10000 ? 1 : 2)}K`;
+            return Math.round(value).toLocaleString('en-US');
+        };
         const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
         const MARKET_OPEN_MINUTES = 9 * 60 + 30;
         const MARKET_CLOSE_MINUTES = 16 * 60;
@@ -1344,6 +1355,49 @@
             return `${datePrefix}${dualTimeLabel(ipo.date, point.minute, point.time || chartClockTime(point.minute))}`;
         }
 
+        function rawBuySignalSeries(ipo) {
+            const rows = ipoBuySignalSeries?.[ipo.ticker];
+            return Array.isArray(rows) ? rows : [];
+        }
+
+        function chartBuySignalStateColor(state) {
+            if (state === 'buy') return '#34d399';
+            if (state === 'watch') return '#fbbf24';
+            return '#71717a';
+        }
+
+        function chartBuySignalStateLabel(state) {
+            if (state === 'buy') return 'Buy';
+            if (state === 'watch') return 'Watch';
+            return 'Wait';
+        }
+
+        function formatTinyPercentFromBps(bps) {
+            const value = Number(bps);
+            if (!Number.isFinite(value)) return '';
+            const pctValue = value / 100;
+            if (Math.abs(pctValue) >= 1) return `${pctValue.toFixed(1)}%`;
+            return `${pctValue.toFixed(2)}%`;
+        }
+
+        function chartBuySignalSeries(ipo, timeline, firstMinute, lastMinute) {
+            return rawBuySignalSeries(ipo).map(signal => {
+                const parsed = splitChartDateTime(signal.time || '', ipo.date);
+                const minuteOfDay = timeToMinutes(parsed.time);
+                const minute = Number.isFinite(minuteOfDay)
+                    ? minuteOfDay + dateOffsetMinutes(ipo.date, parsed.date)
+                    : null;
+                const plot = Number.isFinite(minute) ? chartPlotForMinute(minute, timeline) : null;
+                return { ...signal, date: parsed.date, time: parsed.time, minute, plot };
+            }).filter(signal =>
+                signal.date === ipo.date
+                && Number.isFinite(signal.minute)
+                && Number.isFinite(signal.plot)
+                && signal.minute >= firstMinute
+                && signal.minute <= lastMinute
+            ).sort((a, b) => a.minute - b.minute);
+        }
+
         function chartSourceLabel(data) {
             const labels = [...new Set(data.map(point => compactBarSourceLabel(point.source)).filter(Boolean))];
             return labels.length ? labels.join(' + ') : '';
@@ -1461,7 +1515,7 @@
             const displayData = chartDataForCard(ipo);
             const activeMode = chartModeForCard(ipo);
             return `<div class="bg-zinc-950 rounded-2xl border border-zinc-800 overflow-hidden">
-                <div class="flex items-center justify-between gap-3 border-b border-zinc-800 bg-zinc-950 px-3 py-2">
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 bg-zinc-950 px-3 py-2">
                     ${chartEnlargeButtonHtml(ipo)}
                     ${chartToggleHtml(ipo)}
                 </div>
@@ -1612,10 +1666,11 @@
 
         function chartBottomGridTickPoints(ipo, timeline) {
             const ticks = new Map();
-            chartTimelineSegments(ipo, timeline).forEach(segment => {
+            chartTimelineSegments(ipo, timeline).forEach((segment, segmentIndex) => {
                 const first = segment.points[0];
                 const last = segment.points[segment.points.length - 1];
                 const start = Math.ceil(first.minute / HALF_HOUR_MINUTES) * HALF_HOUR_MINUTES;
+                const firstHour = Math.ceil(first.minute / 60) * 60;
                 for (let minute = start; minute <= last.minute + 0.1; minute += HALF_HOUR_MINUTES) {
                     const mod = minuteOfDay(minute);
                     if (mod == null || mod % HALF_HOUR_MINUTES !== 0) continue;
@@ -1626,6 +1681,9 @@
                         plot,
                         date: first.date,
                         group: segment.group,
+                        segmentIndex,
+                        segmentStartTick: Math.abs(minute - start) < 0.1,
+                        segmentFirstHourTick: Math.abs(minute - firstHour) < 0.1,
                         priority: mod % 60 === 0 ? 2 : 1
                     });
                 }
@@ -1633,12 +1691,22 @@
             return [...ticks.values()].sort((a, b) => a.plot - b.plot);
         }
 
-        function chartBottomTickPoints(ipo, timeline, compact, plotW, gridTicks = null) {
+        function chartBottomTickPoints(ipo, timeline, compact, plotW, gridTicks = null, chartMode = 'day1') {
             const ticks = gridTicks || chartBottomGridTickPoints(ipo, timeline);
-            return filterChartAxisTicks(ticks, timeline, plotW, compact ? 48 : 72);
+            const filtered = filterChartAxisTicks(ticks, timeline, plotW, compact ? 48 : 72);
+            if (chartMode === 'd1D2') {
+                const pinned = ticks.filter(tick =>
+                    tick.group === 'secondDay'
+                    && tick.segmentFirstHourTick
+                );
+                const byKey = new Map(filtered.map(tick => [`${Math.round(tick.minute)}:${tick.group || ''}`, tick]));
+                pinned.forEach(tick => byKey.set(`${Math.round(tick.minute)}:${tick.group || ''}`, tick));
+                return [...byKey.values()].sort((a, b) => a.plot - b.plot);
+            }
+            return filtered;
         }
 
-        function chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended, sessionStartByKey = new Map()) {
+        function chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended, chartMode, sessionStartByKey = new Map()) {
             const group = tick.group || chartSessionGroup(ipo, tick);
             const mod = minuteOfDay(tick.minute);
             if (isExtended && group === 'afterHours') {
@@ -1664,6 +1732,7 @@
             if (isExtended && group === 'secondDay') {
                 const startMinute = sessionStartByKey.get(`secondDay:${tick.date || ''}`) ?? tick.minute;
                 const delta = tick.minute - startMinute;
+                if (chartMode === 'd1D2' && Math.round(delta) === 0) return null;
                 return {
                     label: elapsedAxisLabel(delta),
                     color: '#bfdbfe',
@@ -1683,7 +1752,7 @@
             return null;
         }
 
-        function chartTopAxisTickPoints(ipo, timeline, bottomTicks, compact, plotW, isExtended) {
+        function chartTopAxisTickPoints(ipo, timeline, bottomTicks, compact, plotW, isExtended, chartMode) {
             const points = timeline.points || [];
             if (!points.length) return [];
             const firstMinute = points[0]?.minute;
@@ -1698,7 +1767,7 @@
             });
             const add = tick => {
                 if (!tick || !Number.isFinite(tick.minute) || !Number.isFinite(tick.plot)) return;
-                const meta = chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended, sessionStartByKey);
+                const meta = chartTopAxisTickMeta(ipo, tick, firstMinute, isExtended, chartMode, sessionStartByKey);
                 if (!meta || !meta.label) return;
                 candidates.set(`${Math.round(tick.minute)}:${tick.group || ''}`, { ...tick, ...meta });
             };
@@ -2193,13 +2262,17 @@
             const volumeGap = compact ? 10 : 9;
             const axisBottomY = H - mb;
             const volumeTopY = axisBottomY - volumeH;
-            const priceBottomY = volumeTopY - volumeGap;
+            const signalLaneH = compact ? 24 : 26;
+            const signalLaneGap = compact ? 8 : 9;
+            const signalLaneBottomY = volumeTopY - signalLaneGap;
+            const signalLaneTopY = signalLaneBottomY - signalLaneH;
+            const priceBottomY = signalLaneTopY - volumeGap;
             const pricePlotH = priceBottomY - mt;
             const timeline = compressedChartTimeline(data, compact, { noGaps });
             const chartPoints = timeline.points;
             const bottomGridPoints = chartBottomGridTickPoints(ipo, timeline);
-            const bottomTickPoints = chartBottomTickPoints(ipo, timeline, compact, plotW, bottomGridPoints);
-            const topTickPoints = chartTopAxisTickPoints(ipo, timeline, bottomGridPoints, compact, plotW, isExtended);
+            const bottomTickPoints = chartBottomTickPoints(ipo, timeline, compact, plotW, bottomGridPoints, chartMode);
+            const topTickPoints = chartTopAxisTickPoints(ipo, timeline, bottomGridPoints, compact, plotW, isExtended, chartMode);
             const prices = chartPoints.flatMap(d => [d.open, d.high, d.low, d.close]);
             const rawMin = Math.min(...prices);
             const rawMax = Math.max(...prices);
@@ -2288,10 +2361,10 @@
                 return `<rect x="${(xx - candleW / 2).toFixed(1)}" y="${yy.toFixed(1)}" width="${candleW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${color}" opacity="0.28" rx="1"><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, d)} volume ${volume.toLocaleString('en-US')}</title></rect>`;
             }).join('');
             const volumePanel = `<g><line x1="${ml}" x2="${W - mr}" y1="${volumeTopY.toFixed(1)}" y2="${volumeTopY.toFixed(1)}" stroke="#27272a"/><text x="${ml + 4}" y="${(volumeTopY + 14).toFixed(1)}" font-size="${axisSize}" fill="#71717a">Volume</text>${volumeBars}</g>`;
-            const hoverBoxW = compact ? 142 : 172;
-            const hoverBoxH = compact ? 91 : 96;
-            const hoverTitleSize = compact ? 9 : 10;
-            const hoverValueSize = compact ? 9 : 11;
+            const hoverBoxW = compact ? 184 : 220;
+            const hoverBoxH = compact ? 110 : 112;
+            const hoverTitleSize = compact ? 10 : 11;
+            const hoverValueSize = compact ? 10 : 11;
             const hoverData = chartPoints.map((d, i) => {
                 const up = d.close >= d.open;
                 const color = up ? '#22c55e' : '#ef4444';
@@ -2307,21 +2380,47 @@
                 const boxNearRight = xx > ml + plotW * 0.58;
                 const rawBoxX = boxNearRight ? xx - hoverBoxW - 12 : xx + 12;
                 const boxX = Math.min(W - mr - hoverBoxW - 4, Math.max(ml + 4, rawBoxX));
-                const boxY = mt + (compact ? 22 : 24);
+                const closeY = y(d.close);
+                const preferAbove = closeY > mt + pricePlotH * 0.56;
+                const rawBoxY = preferAbove ? closeY - hoverBoxH - 18 : closeY + 18;
+                const panelMinY = mt + 8;
+                const panelMaxY = Math.max(panelMinY, priceBottomY - hoverBoxH - 6);
+                const boxY = Math.min(panelMaxY, Math.max(panelMinY, rawBoxY));
                 const changePct = d.open ? ((d.close - d.open) / d.open) * 100 : 0;
-                const signedChange = `${changePct >= 0 ? '+' : ''}${changePct.toFixed(1)}%`;
+                const signedChangeFull = `${changePct >= 0 ? '+' : ''}${changePct.toFixed(2)}%`;
                 const timeLabel = chartTooltipTimeLabel(ipo, d);
+                const germanMatch = timeLabel.match(/\(DE\s+([^)]+)\)/);
+                const marketTimeLabel = timeLabel.replace(/\s+\(DE\s+[^)]+\)/, '');
+                const germanTimeLabelText = germanMatch ? `DE ${germanMatch[1]}` : '';
+                const cardX = boxX + 12;
+                const compactMarketTimeLabel = marketTimeLabel.replace(/^\d{4}-\d{2}-\d{2}\s+/, '');
+                const headerTitle = `${ipo.ticker} · ${compact ? compactMarketTimeLabel : marketTimeLabel}`;
+                const valueX = cardX;
+                const secondColX = boxX + hoverBoxW * (compact ? 0.55 : 0.53);
+                const row1Y = boxY + (compact ? 54 : 56);
+                const row2Y = row1Y + (compact ? 20 : 21);
+                const row3Y = row2Y + (compact ? 20 : 21);
+                const pair = (label, value, x, yPos, valueColor = '#e4e4e7') => `<text x="${x.toFixed(1)}" y="${yPos.toFixed(1)}" font-size="${hoverValueSize}" fill="#a1a1aa">${label} <tspan fill="${valueColor}" font-weight="800">${escapeHtml(value)}</tspan></text>`;
                 return `<g class="chart-hover-item" data-chart-hover-candle="${escapeHtml(ipo.ticker)}-${i}">
                     <rect class="chart-hover-hit" x="${laneLeft.toFixed(1)}" y="${mt}" width="${laneW.toFixed(1)}" height="${(axisBottomY - mt).toFixed(1)}" aria-label="${escapeHtml(`${ipo.ticker} ${timeLabel} open ${fmtUsd(d.open)} high ${fmtUsd(d.high)} low ${fmtUsd(d.low)} close ${fmtUsd(d.close)} volume ${volume.toLocaleString('en-US')}`)}"/>
                     <g class="chart-hover-data">
-                        <line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#bfdbfe" stroke-width="${compact ? 1.2 : 1.4}" opacity="0.95"/>
+                        <line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#e0f2fe" stroke-width="${compact ? 1 : 1.15}" opacity="0.8"/>
                         <circle cx="${xx.toFixed(1)}" cy="${y(d.close).toFixed(1)}" r="${compact ? 3 : 3.6}" fill="${color}" stroke="#e0f2fe" stroke-width="1.2"/>
                         <rect x="${(xx - candleW / 2).toFixed(1)}" y="${volumeY.toFixed(1)}" width="${candleW.toFixed(1)}" height="${volumeBarH.toFixed(1)}" fill="${color}" opacity="0.82" rx="1"/>
-                        <rect x="${boxX.toFixed(1)}" y="${boxY.toFixed(1)}" width="${hoverBoxW}" height="${hoverBoxH}" rx="8" fill="#09090b" opacity="0.96" stroke="#60a5fa" stroke-opacity="0.72"/>
-                        <text x="${(boxX + 10).toFixed(1)}" y="${(boxY + 18).toFixed(1)}" font-size="${hoverTitleSize}" font-weight="700" fill="#dbeafe">${escapeHtml(ipo.ticker)} · ${escapeHtml(timeLabel)}</text>
-                        <text x="${(boxX + 10).toFixed(1)}" y="${(boxY + 38).toFixed(1)}" font-size="${hoverValueSize}" fill="#a1a1aa">O <tspan fill="#e4e4e7">${fmtUsd(d.open)}</tspan>  H <tspan fill="#e4e4e7">${fmtUsd(d.high)}</tspan></text>
-                        <text x="${(boxX + 10).toFixed(1)}" y="${(boxY + 56).toFixed(1)}" font-size="${hoverValueSize}" fill="#a1a1aa">L <tspan fill="#e4e4e7">${fmtUsd(d.low)}</tspan>  C <tspan fill="${color}" font-weight="700">${fmtUsd(d.close)}</tspan></text>
-                        <text x="${(boxX + 10).toFixed(1)}" y="${(boxY + 74).toFixed(1)}" font-size="${hoverValueSize}" fill="#a1a1aa">Vol <tspan fill="#e4e4e7">${volume.toLocaleString('en-US')}</tspan>  <tspan fill="${color}" font-weight="700">${signedChange}</tspan></text>
+                        <g class="chart-hover-panel" data-base-y="${boxY.toFixed(1)}" data-panel-height="${hoverBoxH}" data-min-y="${panelMinY.toFixed(1)}" data-max-y="${panelMaxY.toFixed(1)}">
+                        <rect x="${(boxX + 3).toFixed(1)}" y="${(boxY + 4).toFixed(1)}" width="${hoverBoxW}" height="${hoverBoxH}" rx="14" fill="#000000" opacity="0.35"/>
+                        <rect x="${boxX.toFixed(1)}" y="${boxY.toFixed(1)}" width="${hoverBoxW}" height="${hoverBoxH}" rx="14" fill="#09090b" opacity="0.98" stroke="#52525b" stroke-opacity="0.9"/>
+                        <rect x="${boxX.toFixed(1)}" y="${boxY.toFixed(1)}" width="${hoverBoxW}" height="${compact ? 36 : 38}" rx="14" fill="#18181b" opacity="0.96"/>
+                        <line x1="${boxX.toFixed(1)}" x2="${(boxX + hoverBoxW).toFixed(1)}" y1="${(boxY + (compact ? 36 : 38)).toFixed(1)}" y2="${(boxY + (compact ? 36 : 38)).toFixed(1)}" stroke="#27272a"/>
+                        <text x="${cardX.toFixed(1)}" y="${(boxY + (compact ? 17 : 18)).toFixed(1)}" font-size="${hoverTitleSize}" font-weight="800" fill="#dbeafe">${escapeHtml(headerTitle)}</text>
+                        ${germanTimeLabelText ? `<text x="${cardX.toFixed(1)}" y="${(boxY + (compact ? 31 : 32)).toFixed(1)}" font-size="${compact ? 9 : 9}" fill="#a1a1aa">${escapeHtml(germanTimeLabelText)}</text>` : ''}
+                        ${pair('O', fmtUsd(d.open), valueX, row1Y)}
+                        ${pair('H', fmtUsd(d.high), secondColX, row1Y)}
+                        ${pair('L', fmtUsd(d.low), valueX, row2Y)}
+                        ${pair('C', fmtUsd(d.close), secondColX, row2Y, color)}
+                        <text x="${valueX.toFixed(1)}" y="${row3Y.toFixed(1)}" font-size="${hoverValueSize}" fill="#a1a1aa">Vol <tspan fill="#e4e4e7" font-weight="800">${escapeHtml(fmtCompactVolume(volume))}</tspan></text>
+                        <text x="${secondColX.toFixed(1)}" y="${row3Y.toFixed(1)}" font-size="${hoverValueSize}" font-weight="800" fill="${color}">${signedChangeFull}</text>
+                        </g>
                     </g>
                 </g>`;
             }).join('');
@@ -2343,6 +2442,61 @@
                 const labelY = lowLabelBaseY + row * lowLabelRowGap;
                 return `<g><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, point)} low ${fmtUsd(point.low)}</title><circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${isExactLow ? (compact ? 3.5 : 4.5) : (compact ? 2.8 : 3.5)}" fill="#f59e0b" stroke="#09090b" stroke-width="1.5" opacity="${isExactLow ? 1 : 0.78}"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#f59e0b" stroke-width="${isExactLow ? 0.95 : 0.7}" stroke-dasharray="4 5" opacity="${isExactLow ? 0.85 : 0.45}"/><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#09090b" stroke="#09090b" stroke-width="3" opacity="0.85">${deltaLabel}</text><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#fbbf24">${deltaLabel}</text></g>`;
             }).join('');
+            const signalSeries = chartBuySignalSeries(ipo, timeline, firstMinute, lastMinute);
+            const signalStrip = signalSeries.length ? (() => {
+                const ribbonY = signalLaneTopY + (compact ? 12 : 13);
+                const ribbonH = compact ? 7 : 8;
+                const legendItems = [
+                    ['wait', 'Wait'],
+                    ['watch', 'Watch'],
+                    ['buy', 'Buy']
+                ];
+                const legend = (() => {
+                    const labelText = compact ? 'Timing' : 'Entry timing';
+                    const itemGap = compact ? 34 : 46;
+                    const labelW = compact ? 42 : 68;
+                    const legendW = labelW + 8 + legendItems.length * itemGap;
+                    const startX = Math.max(ml + 4, W - mr - legendW);
+                    const yText = signalLaneTopY + (compact ? 12 : 13);
+                    const title = `<text x="${startX.toFixed(1)}" y="${yText.toFixed(1)}" font-size="${Math.max(8, axisSize - 1)}" font-weight="700" fill="#d4d4d8">${labelText}</text>`;
+                    const items = legendItems.map((entry, index) => {
+                        const [state, itemLabel] = entry;
+                        const x = startX + labelW + 8 + index * itemGap;
+                        const color = chartBuySignalStateColor(state);
+                        return `<g><rect x="${x.toFixed(1)}" y="${(signalLaneTopY + 6).toFixed(1)}" width="8" height="7" rx="2" fill="${color}" opacity="${state === 'wait' ? 0.48 : 0.9}"/><text x="${(x + 11).toFixed(1)}" y="${yText.toFixed(1)}" font-size="${Math.max(8, axisSize - 1)}" fill="#a1a1aa">${itemLabel}</text></g>`;
+                    }).join('');
+                    return `${title}${items}`;
+                })();
+                const segments = signalSeries.map((signal, index) => {
+                    const nextSignal = signalSeries[index + 1];
+                    const color = chartBuySignalStateColor(signal.state);
+                    const stateLabel = chartBuySignalStateLabel(signal.state);
+                    const bps = Number(signal.predictedDownsideBps);
+                    const x1 = xPlot(signal.plot);
+                    const x2 = xPlot(nextSignal?.plot ?? (signal.plot + 1));
+                    const width = Math.max(2.4, x2 - x1);
+                    const opacity = signal.state === 'buy' ? 0.95 : signal.state === 'watch' ? 0.74 : 0.34;
+                    const title = [
+                        `${ipo.ticker} entry timing: ${stateLabel}`,
+                        chartTooltipTimeLabel(ipo, signal),
+                        Number.isFinite(bps) ? `waiting may still save about ${formatTinyPercentFromBps(bps)}` : '',
+                    ].filter(Boolean).join(' · ');
+                    return `<rect data-buy-signal-state="${escapeHtml(signal.state || '')}" x="${x1.toFixed(1)}" y="${ribbonY.toFixed(1)}" width="${width.toFixed(1)}" height="${ribbonH}" rx="2.2" fill="${color}" opacity="${opacity}"><title>${escapeHtml(title)}</title></rect>`;
+                }).join('');
+                const watchThreshold = ipoBuySignalMeta?.watchThresholdBps || 150;
+                const buyThreshold = ipoBuySignalMeta?.buyThresholdBps || 45;
+                const title = `${ipo.ticker} entry timing: wait above ${formatTinyPercentFromBps(watchThreshold)} potential improvement, watch from ${formatTinyPercentFromBps(watchThreshold)} to ${formatTinyPercentFromBps(buyThreshold)}, buy at or below ${formatTinyPercentFromBps(buyThreshold)}`;
+                return `<g data-buy-signal-strip="${escapeHtml(ipo.ticker)}"><title>${escapeHtml(title)}</title><rect x="${ml}" y="${signalLaneTopY.toFixed(1)}" width="${plotW}" height="${signalLaneH}" rx="6" fill="#09090b" stroke="#27272a" opacity="0.94"/><line x1="${ml}" x2="${W - mr}" y1="${(ribbonY + ribbonH / 2).toFixed(1)}" y2="${(ribbonY + ribbonH / 2).toFixed(1)}" stroke="#27272a" stroke-width="1"/>${legend}${segments}</g>`;
+            })() : '';
+            const d2OpenLine = chartMode === 'd1D2' && Number.isFinite(secondDayOpenMinute) ? (() => {
+                const xx = xMinute(secondDayOpenMinute);
+                if (!Number.isFinite(xx)) return '';
+                const openPoint = chartPoints.find(point => Math.abs(point.minute - secondDayOpenMinute) < 0.1) || null;
+                const title = openPoint
+                    ? `${ipo.ticker} D2 Open ${chartTooltipTimeLabel(ipo, openPoint)} open ${fmtUsd(openPoint.open)}`
+                    : `${ipo.ticker} D2 Open`;
+                return `<g data-d2-open-line="${escapeHtml(ipo.ticker)}"><title>${escapeHtml(title)}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#d4d4d8" stroke-width="${compact ? 0.75 : 0.9}" opacity="0.72"/></g>`;
+            })() : '';
             const showMedianReferenceLine = chartMode !== 'd2';
             const medianReferenceLine = showMedianReferenceLine && Number.isFinite(medianReferenceMinute) && medianReferenceMinute >= firstMinute && medianReferenceMinute <= lastMinute ? (() => {
                 const xx = xMinute(medianReferenceMinute);
@@ -2384,7 +2538,7 @@
             const visibleTitle = compact
                 ? `${ipo.ticker} ${chartModeShortLabel(chartMode)}${sourceLabel ? ` · ${sourceLabel}` : ''}`
                 : `${ipo.ticker} ${titleLabel}${sourceLabel ? ` · ${sourceLabel}` : ''}`;
-            return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} ${titleLabel} chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${visibleTitle}</text>${extendedSessionBands}${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${gapBreaks}${elapsedAxis}${volumePanel}${lowGuideLines}${candles}${closeLine}${priceReferenceLines}${medianReferenceLine}${lowPriceMarker}${lowMarkers}<g class="chart-hover-layer">${hoverData}</g></svg>`;
+            return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} ${titleLabel} chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${visibleTitle}</text>${extendedSessionBands}${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${gapBreaks}${d2OpenLine}${elapsedAxis}${volumePanel}${signalStrip}${lowGuideLines}${candles}${closeLine}${priceReferenceLines}${medianReferenceLine}${lowPriceMarker}${lowMarkers}<g class="chart-hover-layer">${hoverData}</g></svg>`;
         }
 
         function metric(label, value, extra = '') {
@@ -3113,11 +3267,22 @@
             if (mode === 'd1ExtD2') {
                 return {
                     id: 'd1ExtD2',
-                    label: 'Day 1-Day 2',
+                    label: 'D1 Ext D2',
                     chartMode: 'd1ExtD2',
-                    lowLabel: 'Day 1 through Day 2 low',
+                    lowLabel: 'Day 1 + Ext + Day 2 low',
                     sampleHelper: 'Exact Day 1 charts with Alpaca extended and Day 2 candles.',
                     requiresExtended: true,
+                    requiresSecond: true
+                };
+            }
+            if (mode === 'd1D2') {
+                return {
+                    id: 'd1D2',
+                    label: 'D1 D2',
+                    chartMode: 'd1D2',
+                    lowLabel: 'Day 1 + Day 2 regular low',
+                    sampleHelper: 'Exact Day 1 and Day 2 regular-session candles.',
+                    requiresExtended: false,
                     requiresSecond: true
                 };
             }
@@ -3394,6 +3559,7 @@
 
         function analysisRangeShortLabel(analysis) {
             if (analysis?.rangeMode === 'd1ExtD2') return 'D1 Ext D2';
+            if (analysis?.rangeMode === 'd1D2') return 'D1 D2';
             if (analysis?.rangeMode === 'd1Ext') return 'D1 Ext';
             return 'D1';
         }
@@ -4929,11 +5095,13 @@
             const toggle = document.getElementById('chart-mode-toggle');
             const day = document.getElementById('chart-mode-day1');
             const extended = document.getElementById('chart-mode-extended');
+            const d1d2 = document.getElementById('chart-mode-d1d2');
             const day2 = document.getElementById('chart-mode-day2');
-            if (!toggle || !day || !extended || !day2) return;
+            if (!toggle || !day || !extended || !d1d2 || !day2) return;
             const config = analysisRangeConfig();
             setSegmentButtonState(day, config.id === 'day1');
             setSegmentButtonState(extended, config.id === 'd1Ext');
+            setSegmentButtonState(d1d2, config.id === 'd1D2');
             setSegmentButtonState(day2, config.id === 'd1ExtD2');
             toggle.title = `Analysis range: ${config.label}`;
             toggle.setAttribute('aria-label', `Analysis range: ${config.label}. Card charts keep their own data-mode controls.`);
@@ -5050,9 +5218,32 @@
             activeChartHoverItem?.classList.add('is-active');
         }
 
+        function positionChartHoverPanel(item, event) {
+            const panel = item?.querySelector?.('.chart-hover-panel');
+            const svg = panel?.ownerSVGElement;
+            if (!panel || !svg || !event) return;
+            const matrix = svg.getScreenCTM?.();
+            if (!matrix) return;
+            const point = svg.createSVGPoint();
+            point.x = event.clientX;
+            point.y = event.clientY;
+            const svgPoint = point.matrixTransform(matrix.inverse());
+            const baseY = Number(panel.dataset.baseY);
+            const panelHeight = Number(panel.dataset.panelHeight);
+            const minY = Number(panel.dataset.minY);
+            const maxY = Number(panel.dataset.maxY);
+            if (![baseY, panelHeight, minY, maxY, svgPoint.y].every(Number.isFinite)) return;
+            const targetY = Math.min(maxY, Math.max(minY, svgPoint.y - panelHeight / 2));
+            const deltaY = targetY - baseY;
+            panel.setAttribute('transform', `translate(0 ${deltaY.toFixed(1)})`);
+        }
+
         document.addEventListener('pointermove', event => {
             const item = chartHoverItemFromEvent(event);
-            if (item) setActiveChartHoverItem(item);
+            if (item) {
+                setActiveChartHoverItem(item);
+                positionChartHoverPanel(item, event);
+            }
         });
 
         document.addEventListener('pointerout', event => {
@@ -5063,7 +5254,10 @@
 
         document.addEventListener('click', event => {
             const item = chartHoverItemFromEvent(event);
-            if (item) setActiveChartHoverItem(item);
+            if (item) {
+                setActiveChartHoverItem(item);
+                positionChartHoverPanel(item, event);
+            }
         });
 
         document.addEventListener('click', event => {
@@ -5194,7 +5388,7 @@
             const button = event.target.closest('button[data-analysis-range]');
             if (!button || button.disabled) return;
             const mode = button.dataset.analysisRange;
-            if (!['day1', 'd1Ext', 'd1ExtD2'].includes(mode)) return;
+            if (!['day1', 'd1Ext', 'd1D2', 'd1ExtD2'].includes(mode)) return;
             analysisRangeMode = mode;
             setChartModeToggleState();
             renderAnalysis();

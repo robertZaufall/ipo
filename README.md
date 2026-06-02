@@ -2,13 +2,15 @@
 
 Static first-day IPO chart page for `https://glaubi.net/ipo`.
 
-The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top buying-decision dashboard built from exact Day 1, extended-hours, and Day 2 candles where available. The header market-cap filter defaults to `>$50B`, the trading-place filter defaults to `All`, and both switch the card list plus the analysis. The global analysis range defaults to `Day 1-Day 2`; card charts default to `D1 Ext D2` and can be switched per card between `D1`, `D1 Ext`, `D1 Ext D2`, `D1 D2`, and `D2`. Each card links the company name to its Yahoo Finance quote page, shows cap plus deal-size pills in the header when available, and uses an ordered price-level timeline for IPO/start/low/median/end, after-hours, pre-D2, open-D2, end-D2, and current runtime price events. Cards intentionally do not show the ambiguous generated IPO-to-current return field.
+The site shows large IPO companies as full-width cards only when exact 5-minute IPO-day bars are available, plus a top buying-decision dashboard built from exact Day 1, extended-hours, and Day 2 candles where available. The header market-cap filter defaults to `>$50B`, the trading-place filter defaults to `All`, and both switch the card list plus the analysis. The global analysis range defaults to `D1 D2` and can switch between `Day 1`, `Ext`, `D1 D2`, and `D1 Ext D2`; card charts default to `D1 D2` and can be switched per card between `D1`, `D1 Ext`, `D1 Ext D2`, `D1 D2`, and `D2`. Each card links the company name to its Yahoo Finance quote page, shows cap plus deal-size pills in the header when available, and uses an ordered price-level timeline for IPO/start/low/median/end, after-hours, pre-D2, open-D2, end-D2, and current runtime price events. Cards intentionally do not show the ambiguous generated IPO-to-current return field.
 
 Each card also includes six micro charts comparing IPO price, D1 start, D1 low, D1 close, open D2, D2 close, and current runtime price. Micro-chart lines use exact IPO-day 5-minute closes where possible, extended/Day 2 milestones for the Day-two path, and sampled Yahoo weekly closes for rough longer-term current paths. Entry-scenario tables compare buying at the open, active median timing, 30 minutes, 60 minutes, after-hours end, second-day premarket, second-day open, and second-day end. Rows compare each buy against End D1, the median entry, the absolute low across available D1/Ext/D2 candles, End D2, and, on card-local tables only, Current. Scenario border color ranks the entries by absolute `Vs Current` opportunity.
 
 The dashboard also opens a Three.js `3D Map` view from the analysis panel. It renders filtered IPO paths, a hideable year-clustered symbol list, Day 1/Ext modes, open/open+close/close alignment modes, hideable Quick Read/Scale/Selected panels, selected-symbol candles, an isolated one-row candle view with normalized return scale and linear 5-minute volume bars, and a `Flatten Low` mesh that places low markers on a comparable timing plane.
 
 The header `Forthcoming IPOs` button opens an info-only IPO-list modal from the StockAnalysis calendar. It shows known listings in the next 12 months with date, symbol, company, exchange, price range, shares, deal, market cap, and revenue, and can switch between all listings and the active cap filter. These upcoming rows are deliberately excluded from timing samples, odds, charts, and card calculations.
+
+The default chart view is now `D1 D2`: it stitches Day 1 regular trading and Day 2 regular trading without drawing an empty overnight gap. The D2 open is marked with a thin light-gray vertical line behind the candles, the top elapsed axis suppresses the duplicate D2 `0m` label, and the bottom clock axis keeps the important early Day 2 hour label while allowing the far-right close label to be omitted when space is tight. Candle hover cards use a compact old-style layout and follow the mouse cursor vertically.
 
 ## Screenshots
 
@@ -34,10 +36,11 @@ The header `Forthcoming IPOs` button opens an info-only IPO-list modal from the 
 - `chart-data.js` - generated exact 5-minute first-day bars, optional Alpaca extended-hours bars, optional Alpaca Day 2 bars, and sampled rough weekly close paths where available.
 - `current-price-cache.json` - bundled Yahoo current-price cache used as a fast runtime seed before browser-side quote refreshes.
 - `ipo-analysis.js` - generated 15-year low-timing analysis and timing insights, precomputed per cap and trading-place filter.
+- `ipo-buy-signals.js` - generated public buy-timing state strips and pins from the private one-minute XGBoost experiment.
 - `refresh_ipo_data.py` - refreshes IPO metadata, chart data, and analysis.
 - `build_ipo_analysis.py` - rebuilds only `ipo-analysis.js` from existing generated data.
 - `vendor/three.module.min.js` - local Three.js module used by the 3D map; no charting CDN is required for the map.
-- `1m/` - ignored local scratch folder for 1-minute candle gathering scripts and JSON data.
+- `1m/` - ignored local research folder for one-minute candle gathering scripts, JSON data, private dependencies, and the buy-signal generator.
 
 ## Run Locally
 
@@ -63,6 +66,20 @@ Clock-time analysis is shown with dual 24-hour labels in `HH:MM (DE HH:MM)` form
 
 Main candle charts show only real 5-minute bars. First-day charts include a top elapsed-minutes axis from the first public trade, bottom NYC/German clock labels, the active-filter median timing reference line, the first public open reference line, the low reference, and conditional IPO-price/current-price horizontal reference lines only when those prices fall inside the visible OHLC range. Stitched D1/Ext/D2 charts shade extended-hours regions, restart the top elapsed axis at `0m` for after-hours, premarket, and D2 regular-session segments, and do not draw empty overnight time across the x-axis. Each card chart has an enlarge button that opens the current chart in a full-screen modal. Low markers are selected from the same near-low price band and are spaced at least one hour apart so late retests are visible without labeling every adjacent candle. Visible candle source labels are compact provider markers such as `(Y)` for Yahoo and `(A)` for Alpaca.
 
+## XGBoost Buy Signals
+
+The chart can overlay a public `Wait` / `Watch` / `Buy` strip generated from private one-minute IPO candles. The raw minute candles and the generator stay in ignored `1m/`; only `ipo-buy-signals.js` is committed. That public file contains chart-ready state ticks, selected pins, and metadata such as the model id, thresholds, symbol count, and sample count.
+
+The first implementation is `ipo-minute-xgboost-downside-v0`, trained with `xgboost.XGBRegressor` on 3,821 minute-level samples across 18 IPOs. At each minute, the model estimates the remaining downside to the rest-of-day low from the next executable open. The target is stored in basis points in the artifact for precision, where 45 basis points means 0.45%; the UI renders this as plain percentages. A state becomes `Buy` when the predicted remaining downside is at or below 0.45%, `Watch` when it is at or below 1.50%, and `Wait` above that. A time-based forced pin is kept after 180 elapsed minutes so each covered chart can still show a late-day entry reference when the threshold buy never appears.
+
+XGBoost fits this scenario because IPO minute candles are noisy, nonlinear, and sparse. A boosted-tree regressor can combine timing, price action, range, wick, volume, and momentum patterns without assuming a straight-line relationship between those inputs and the eventual low. It also works well on tabular data with mixed scales and missing-ish market behavior, which is exactly what early IPO trading produces. For now the model is a decision aid for chart timing, not a trading guarantee: it answers "how much lower might the next executable entry still be from the remaining Day 1 low?" and the chart turns that estimate into readable `Wait`, `Watch`, and `Buy` states.
+
+Regenerate the public artifact from the private folder with:
+
+```sh
+python3 1m/build_buy_signals.py --input-dir 1m --output ipo-buy-signals.js
+```
+
 To rebuild only the derived analysis:
 
 ```sh
@@ -75,16 +92,23 @@ python3 build_ipo_analysis.py --input-dir . --output-dir .
 python3 -m py_compile refresh_ipo_data.py build_ipo_analysis.py
 perl -0ne 'while(/<script>(.*?)<\/script>/sg){print $1}' index.html > /tmp/ipo-inline.js && node --check /tmp/ipo-inline.js
 node --input-type=module --check < three-ipo-view.js
+node --check ipo-buy-signals.js
 ```
 
-For visual QA, serve the page locally and check that the header cap, trading-place, and analysis-range filters change the `Sample`, KPI cards, distribution charts, buy-plan questions, global entry-scenario analysis, and card count together. Also check the compact timing/playbook infographic thumbnails and modals, search, sort toggle, load-more button, chart enlarge modal, the `CBRS` chart, rough-path micro charts, card entry-scenario tables, the Yahoo Finance company-name links, and at least one Alpaca-sourced chart such as `CRWV` or `CBRS`. In main candle charts, verify the top elapsed axis, bottom NYC/German clock labels, compact provider marker, blue median timing line, gray open reference line, and confirm IPO/current price reference lines appear only when in range. Toggle card-level chart modes for `D1`, `D1 Ext`, `D1 Ext D2`, `D1 D2`, and `D2` to verify stitched candles, shaded extended-hours regions, restored bottom time labels, and D2 low labels. Open the `3D Map`, check the year-clustered symbol pills, selected-symbol candles, isolated one-row candle/volume view, `Flatten Low` mesh, alignment controls, reset behavior, and hideable info panels. Open `Forthcoming IPOs` and confirm the info-only list renders, links to StockAnalysis, and respects the all/cap-filter toggle.
+If `1m/build_buy_signals.py` changed locally, also run:
+
+```sh
+python3 -m py_compile 1m/build_buy_signals.py
+```
+
+For visual QA, serve the page locally and check that the header cap, trading-place, and analysis-range filters change the `Sample`, KPI cards, distribution charts, buy-plan questions, global entry-scenario analysis, and card count together. Also check the compact timing/playbook infographic thumbnails and modals, search, sort toggle, load-more button, chart enlarge modal, the `CBRS` chart, rough-path micro charts, card entry-scenario tables, the Yahoo Finance company-name links, and at least one Alpaca-sourced chart such as `CRWV` or `CBRS`. In main candle charts, verify the top elapsed axis, bottom NYC/German clock labels, compact provider marker, blue median timing line, gray open reference line, buy-signal strip, and confirm IPO/current price reference lines appear only when in range. Toggle card-level chart modes for `D1`, `D1 Ext`, `D1 Ext D2`, `D1 D2`, and `D2` to verify stitched candles, shaded extended-hours regions, restored bottom time labels, D2 low labels, the thin gray D2 open marker behind candles, and the compact hover card following the cursor. Open the `3D Map`, check the year-clustered symbol pills, selected-symbol candles, isolated one-row candle/volume view, `Flatten Low` mesh, alignment controls, reset behavior, and hideable info panels. Open `Forthcoming IPOs` and confirm the info-only list renders, links to StockAnalysis, and respects the all/cap-filter toggle.
 
 ## Deploy
 
 This repo is pushed to GitHub at `https://github.com/robertZaufall/ipo`. The public route `https://glaubi.net/ipo` is served by the Cloudflare Worker in `<local-ipo-proxy-repo>`, which fetches the static files from GitHub raw `main` and injects `<base href="/ipo/">`.
 
 ```sh
-git add .gitignore index.html three-ipo-view.js vendor/three.module.min.js vendor/three.LICENSE.txt ipo-data.js chart-data.js current-price-cache.json ipo-analysis.js refresh_ipo_data.py build_ipo_analysis.py README.md LICENSE AGENTS.md docs/*.png
+git add .gitignore index.html three-ipo-view.js vendor/three.module.min.js vendor/three.LICENSE.txt ipo-data.js chart-data.js current-price-cache.json ipo-analysis.js ipo-buy-signals.js refresh_ipo_data.py build_ipo_analysis.py README.md LICENSE AGENTS.md docs/*.png
 git commit -m "Update IPO site"
 git push
 ```
