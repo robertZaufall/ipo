@@ -60,7 +60,11 @@ The refresh uses StockAnalysis for IPO metadata, Yahoo Finance chart endpoints f
 
 API keys are read only from the environment and must not be committed. Alpaca credentials are sent only in request headers. Alpha Vantage remains an optional fallback, but historical intraday month requests require a premium-enabled Alpha Vantage key.
 
-Current prices are refreshed at runtime in TypeScript/browser JavaScript through the Yahoo proxy route and cached in `localStorage`; generated `current` values and `current-price-cache.json` remain fallbacks. The live site depends on the Cloudflare Worker proxy for `/ipo/api/yahoo/...`; local testing uses `http://localhost:8787/ipo/api/yahoo` when the proxy dev server is running.
+Current prices are refreshed at runtime in browser JavaScript through the Yahoo proxy route and cached as path-namespaced IndexedDB records; generated `current` values and `current-price-cache.json` remain fallbacks. The live site depends on the Cloudflare Worker proxy for `/ipo/api/yahoo/...`; local testing uses `http://localhost:8787/ipo/api/yahoo` when the proxy dev server is running.
+
+## Browser Cache
+
+Runtime quote data and the forthcoming-IPO calendar are regenerable browser caches, so they live in IndexedDB under the `ipo-site-cache-v1` database with record keys namespaced to the `/ipo/` base path. The legacy `localStorage` keys `ipo-yahoo-current-quotes-v2` and `ipo-upcoming-calendar-v1` are read once, migrated into IndexedDB when possible, and removed. Quote cache writes are capped to the most recent 300 symbols, while upcoming IPO rows are pruned to the next 12 months and capped at 240 rows. If a runtime error interrupts the page, the recovery overlay can reload or clear only this IPO app's IndexedDB records plus those legacy localStorage keys.
 
 Clock-time analysis is shown with dual 24-hour labels in `HH:MM (DE HH:MM)` format, or as two lines where space is tight, converted with daylight-saving rules. The visible analysis UI has a buyer-window summary, decision-oriented KPI cards (`Sample`, `Typical low time`, `Buy bias`, `Entry plan`), a full-width elapsed-time opportunity map, two larger distribution charts with dynamic median reference lines, a `Buy-plan questions` section, and an entry-scenario comparison table. A compact two-thumbnail infographic strip above search opens the playbook and buy-timing guides. The low-timing dashboard comes from `ipo-analysis.js`; entry-scenario comparisons are calculated in the browser from the active filtered exact bars and runtime current prices.
 

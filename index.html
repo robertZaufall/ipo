@@ -177,6 +177,27 @@
         </footer>
     </main>
 
+    <div id="app-recovery" class="fixed inset-0 z-[140] hidden bg-zinc-950/95 p-4 backdrop-blur-xl" role="alertdialog" aria-modal="true" aria-labelledby="app-recovery-title" aria-describedby="app-recovery-message">
+        <div class="mx-auto mt-24 max-w-lg rounded-3xl border border-amber-500/30 bg-zinc-900 p-6 shadow-2xl">
+            <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-amber-400/30 bg-amber-500/10 text-amber-300">
+                <i class="fa-solid fa-triangle-exclamation text-base" aria-hidden="true"></i>
+            </div>
+            <h2 id="app-recovery-title" class="font-display mt-4 text-2xl tracking-tight text-zinc-100">IPO tracker needs a quick reset</h2>
+            <p id="app-recovery-message" class="mt-2 text-sm leading-6 text-zinc-400">A runtime error interrupted this view. Reload the page, or clear this IPO app's cached quotes and calendar rows, then reload.</p>
+            <div id="app-recovery-detail" class="mt-4 hidden rounded-2xl border border-zinc-800 bg-zinc-950 p-3 font-mono text-xs leading-5 text-zinc-500"></div>
+            <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                <button id="app-reload" type="button" class="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-2xl border border-blue-500/50 bg-blue-600 px-4 text-sm font-semibold text-white transition-colors hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
+                    <i class="fa-solid fa-rotate-right text-xs" aria-hidden="true"></i>
+                    <span>Reload</span>
+                </button>
+                <button id="app-cache-clear" type="button" class="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-2xl border border-zinc-700 bg-zinc-950 px-4 text-sm font-semibold text-zinc-200 transition-colors hover:border-amber-500/60 hover:text-amber-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">
+                    <i class="fa-solid fa-broom text-xs" aria-hidden="true"></i>
+                    <span>Clear app cache</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div id="image-modal" class="fixed inset-0 z-[100] hidden bg-zinc-950/90 p-3 backdrop-blur-xl sm:p-6" role="dialog" aria-modal="true" aria-labelledby="image-modal-title">
         <div class="flex h-full flex-col gap-3">
             <div class="mx-auto flex w-full max-w-[96rem] items-center justify-between gap-3">
@@ -328,7 +349,7 @@
     </div>
 
     <script>
-        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-06-03-d1d2-map-default';
+        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-06-04-isolated-3d-telephoto';
         ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js', 'ipo-buy-signals.js'].forEach(src => {
             document.write(`<script src="${src}?v=${encodeURIComponent(IPO_ASSET_VERSION)}"><\/script>`);
         });
@@ -346,6 +367,53 @@
         const ipoAnalysis = window.ipoAnalysis || null;
         const ipoBuySignalSeries = window.ipoBuySignalSeries || {};
         const ipoBuySignalMeta = window.ipoBuySignalMeta || null;
+        let clearIpoAppCache = async () => {};
+
+        function appErrorText(error) {
+            if (!error) return 'Unknown runtime error';
+            if (typeof error === 'string') return error;
+            return error.message || String(error);
+        }
+
+        function showAppRecovery(error) {
+            const modal = document.getElementById('app-recovery');
+            const detail = document.getElementById('app-recovery-detail');
+            if (!modal) return;
+            const message = appErrorText(error);
+            if (detail && message) {
+                detail.textContent = message;
+                detail.classList.remove('hidden');
+            }
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            document.getElementById('app-reload')?.focus();
+        }
+
+        function installAppRecoveryUi() {
+            document.getElementById('app-reload')?.addEventListener('click', () => {
+                window.location.reload();
+            });
+            document.getElementById('app-cache-clear')?.addEventListener('click', async event => {
+                const button = event.currentTarget;
+                button.disabled = true;
+                button.classList.add('opacity-60');
+                try {
+                    await clearIpoAppCache();
+                } finally {
+                    window.location.reload();
+                }
+            });
+            window.addEventListener('error', event => {
+                console.error('IPO runtime error:', event.error || event.message);
+                showAppRecovery(event.error || event.message);
+            });
+            window.addEventListener('unhandledrejection', event => {
+                console.error('IPO unhandled rejection:', event.reason);
+                showAppRecovery(event.reason);
+            });
+        }
+
+        installAppRecoveryUi();
 
         let sortMode = 'date';
         let searchTerm = '';
@@ -406,12 +474,20 @@
         const UPCOMING_IPO_FETCH_URL = `https://r.jina.ai/http://${UPCOMING_IPO_SOURCE_URL}`;
         const UPCOMING_IPO_CACHE_KEY = 'ipo-upcoming-calendar-v1';
         const UPCOMING_IPO_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+        const UPCOMING_IPO_CACHE_RECORD_KEY = 'upcoming-calendar-v1';
+        const UPCOMING_IPO_CACHE_MAX_ITEMS = 240;
         const CURRENT_QUOTE_CACHE_KEY = 'ipo-yahoo-current-quotes-v2';
         const CURRENT_QUOTE_CACHE_TTL_MS = 2 * 60 * 1000;
+        const CURRENT_QUOTE_CACHE_RECORD_KEY = 'current-quotes-v1';
+        const CURRENT_QUOTE_CACHE_MAX_QUOTES = 300;
         const CURRENT_QUOTE_BATCH_SIZE = 5;
         const CURRENT_QUOTE_BATCH_DELAY_MS = 175;
         const YAHOO_REQUEST_RETRY_DELAYS_MS = [900, 2200];
         const YAHOO_RETRYABLE_STATUS_CODES = new Set([403, 408, 425, 429, 500, 502, 503, 504, 999]);
+        const IPO_PERSISTENT_CACHE_DB_NAME = 'ipo-site-cache-v1';
+        const IPO_PERSISTENT_CACHE_STORE_NAME = 'records';
+        const IPO_PERSISTENT_CACHE_APP_ID = 'ipo-static-page';
+        const LEGACY_LOCAL_STORAGE_CACHE_KEYS = [CURRENT_QUOTE_CACHE_KEY, UPCOMING_IPO_CACHE_KEY];
         let upcomingIpos = [];
         let upcomingIpoCacheMeta = {
             state: 'loading',
@@ -480,6 +556,144 @@
             return Number.isFinite(time) ? time : null;
         }
 
+        function isStorageQuotaError(error) {
+            return Boolean(error) && (
+                error.name === 'QuotaExceededError'
+                || error.name === 'NS_ERROR_DOM_QUOTA_REACHED'
+                || error.code === 22
+                || error.code === 1014
+            );
+        }
+
+        function warnStorageFailure(action, error) {
+            const prefix = isStorageQuotaError(error) ? 'Storage quota reached' : 'Browser storage unavailable';
+            console.warn(`${prefix} while ${action}:`, error);
+        }
+
+        function safeLocalStorageGet(key) {
+            try {
+                return window.localStorage?.getItem(key) || null;
+            } catch (error) {
+                warnStorageFailure(`reading legacy ${key}`, error);
+                return null;
+            }
+        }
+
+        function safeLocalStorageRemove(key) {
+            try {
+                window.localStorage?.removeItem(key);
+            } catch (error) {
+                warnStorageFailure(`removing legacy ${key}`, error);
+            }
+        }
+
+        let persistentCacheDbPromise = null;
+
+        function persistentCacheRecordPrefix() {
+            const path = ipoBasePath().replace(/^\/+|\/+$/g, '') || 'root';
+            return `${IPO_PERSISTENT_CACHE_APP_ID}:${path}:`;
+        }
+
+        function persistentCacheRecordKey(key) {
+            return `${persistentCacheRecordPrefix()}${key}`;
+        }
+
+        function persistentCacheRequest(request) {
+            return new Promise((resolve, reject) => {
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error || new Error('IndexedDB request failed'));
+            });
+        }
+
+        function persistentCacheTransactionDone(transaction) {
+            return new Promise((resolve, reject) => {
+                transaction.oncomplete = () => resolve();
+                transaction.onerror = () => reject(transaction.error || new Error('IndexedDB transaction failed'));
+                transaction.onabort = () => reject(transaction.error || new Error('IndexedDB transaction aborted'));
+            });
+        }
+
+        function openPersistentCacheDb() {
+            if (!window.indexedDB) return Promise.reject(new Error('IndexedDB unavailable'));
+            if (persistentCacheDbPromise) return persistentCacheDbPromise;
+            persistentCacheDbPromise = new Promise((resolve, reject) => {
+                let request;
+                try {
+                    request = window.indexedDB.open(IPO_PERSISTENT_CACHE_DB_NAME, 1);
+                } catch (error) {
+                    persistentCacheDbPromise = null;
+                    reject(error);
+                    return;
+                }
+                request.onupgradeneeded = () => {
+                    const db = request.result;
+                    if (!db.objectStoreNames.contains(IPO_PERSISTENT_CACHE_STORE_NAME)) {
+                        db.createObjectStore(IPO_PERSISTENT_CACHE_STORE_NAME, { keyPath: 'key' });
+                    }
+                };
+                request.onsuccess = () => {
+                    const db = request.result;
+                    db.onversionchange = () => db.close();
+                    resolve(db);
+                };
+                request.onerror = () => {
+                    persistentCacheDbPromise = null;
+                    reject(request.error || new Error('IndexedDB open failed'));
+                };
+                request.onblocked = () => {
+                    console.warn('IPO cache IndexedDB upgrade is blocked by another open tab.');
+                };
+            });
+            return persistentCacheDbPromise;
+        }
+
+        async function readPersistentCacheRecord(key) {
+            const db = await openPersistentCacheDb();
+            const transaction = db.transaction(IPO_PERSISTENT_CACHE_STORE_NAME, 'readonly');
+            const store = transaction.objectStore(IPO_PERSISTENT_CACHE_STORE_NAME);
+            const record = await persistentCacheRequest(store.get(persistentCacheRecordKey(key)));
+            return record?.value ?? null;
+        }
+
+        async function writePersistentCacheRecord(key, value) {
+            const db = await openPersistentCacheDb();
+            const transaction = db.transaction(IPO_PERSISTENT_CACHE_STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(IPO_PERSISTENT_CACHE_STORE_NAME);
+            const request = store.put({
+                key: persistentCacheRecordKey(key),
+                value,
+                updatedAt: Date.now()
+            });
+            await Promise.all([persistentCacheRequest(request), persistentCacheTransactionDone(transaction)]);
+        }
+
+        async function clearPersistentCacheNamespace() {
+            const db = await openPersistentCacheDb();
+            const prefix = persistentCacheRecordPrefix();
+            const transaction = db.transaction(IPO_PERSISTENT_CACHE_STORE_NAME, 'readwrite');
+            const store = transaction.objectStore(IPO_PERSISTENT_CACHE_STORE_NAME);
+            const cursorRequest = store.openCursor();
+            cursorRequest.onsuccess = event => {
+                const cursor = event.target.result;
+                if (!cursor) return;
+                if (String(cursor.key).startsWith(prefix)) cursor.delete();
+                cursor.continue();
+            };
+            cursorRequest.onerror = () => {
+                transaction.abort();
+            };
+            await persistentCacheTransactionDone(transaction);
+        }
+
+        clearIpoAppCache = async () => {
+            LEGACY_LOCAL_STORAGE_CACHE_KEYS.forEach(safeLocalStorageRemove);
+            try {
+                await clearPersistentCacheNamespace();
+            } catch (error) {
+                warnStorageFailure('clearing IPO IndexedDB cache', error);
+            }
+        };
+
         function normalizeRuntimeQuote(quote) {
             if (!quote || typeof quote !== 'object') return null;
             const price = Number(quote.price);
@@ -492,28 +706,97 @@
             };
         }
 
-        function loadRuntimeCurrentQuoteCache() {
-            try {
-                const parsed = JSON.parse(localStorage.getItem(CURRENT_QUOTE_CACHE_KEY) || '{}');
-                return {
-                    version: 1,
-                    bundledLoadedAt: parsed.bundledLoadedAt || null,
-                    quotes: parsed && typeof parsed.quotes === 'object' && parsed.quotes ? parsed.quotes : {}
+        function emptyRuntimeCurrentQuoteCache() {
+            return { version: 1, bundledLoadedAt: null, quotes: {} };
+        }
+
+        function normalizeRuntimeCurrentQuoteCache(cache) {
+            const normalized = emptyRuntimeCurrentQuoteCache();
+            if (!cache || typeof cache !== 'object') return normalized;
+            normalized.bundledLoadedAt = cache.bundledLoadedAt || null;
+            const quotes = cache.quotes && typeof cache.quotes === 'object' ? cache.quotes : {};
+            Object.entries(quotes).forEach(([ticker, quote]) => {
+                const key = normalizedTicker(ticker);
+                const normalizedQuote = normalizeRuntimeQuote(quote);
+                if (!key || !normalizedQuote) return;
+                normalized.quotes[key] = {
+                    ...normalizedQuote,
+                    fetchedAt: quote?.fetchedAt || normalizedQuote.asOf || null
                 };
-            } catch {
-                return { version: 1, bundledLoadedAt: null, quotes: {} };
+            });
+            return normalized;
+        }
+
+        function pruneRuntimeCurrentQuoteCache(cache, protectedTickers = []) {
+            const normalized = normalizeRuntimeCurrentQuoteCache(cache);
+            const protectedSet = new Set(protectedTickers.map(normalizedTicker).filter(Boolean));
+            const entries = Object.entries(normalized.quotes).map(([ticker, quote]) => {
+                const timestamp = parseIsoDate(quote.fetchedAt) || parseIsoDate(quote.asOf) || 0;
+                return { ticker, quote, timestamp, protected: protectedSet.has(ticker) };
+            }).sort((a, b) => {
+                if (a.protected !== b.protected) return a.protected ? -1 : 1;
+                return b.timestamp - a.timestamp || a.ticker.localeCompare(b.ticker);
+            }).slice(0, CURRENT_QUOTE_CACHE_MAX_QUOTES);
+            normalized.quotes = Object.fromEntries(entries.map(entry => [entry.ticker, entry.quote]));
+            return normalized;
+        }
+
+        function mergeRuntimeCurrentQuoteCaches(baseCache, nextCache) {
+            const merged = normalizeRuntimeCurrentQuoteCache(baseCache);
+            const next = normalizeRuntimeCurrentQuoteCache(nextCache);
+            if (!merged.bundledLoadedAt && next.bundledLoadedAt) {
+                merged.bundledLoadedAt = next.bundledLoadedAt;
+            }
+            Object.entries(next.quotes).forEach(([ticker, quote]) => {
+                const existingTime = parseIsoDate(merged.quotes[ticker]?.fetchedAt) || parseIsoDate(merged.quotes[ticker]?.asOf) || 0;
+                const nextTime = parseIsoDate(quote.fetchedAt) || parseIsoDate(quote.asOf) || 0;
+                if (!merged.quotes[ticker] || nextTime >= existingTime) merged.quotes[ticker] = quote;
+            });
+            return pruneRuntimeCurrentQuoteCache(merged);
+        }
+
+        function readLegacyRuntimeCurrentQuoteCache() {
+            const raw = safeLocalStorageGet(CURRENT_QUOTE_CACHE_KEY);
+            if (!raw) return null;
+            try {
+                return normalizeRuntimeCurrentQuoteCache(JSON.parse(raw));
+            } catch (error) {
+                warnStorageFailure(`parsing legacy ${CURRENT_QUOTE_CACHE_KEY}`, error);
+                safeLocalStorageRemove(CURRENT_QUOTE_CACHE_KEY);
+                return null;
             }
         }
 
-        function saveRuntimeCurrentQuoteCache(cache) {
+        async function loadRuntimeCurrentQuoteCache() {
+            let cache = emptyRuntimeCurrentQuoteCache();
             try {
-                localStorage.setItem(CURRENT_QUOTE_CACHE_KEY, JSON.stringify({
-                    version: 1,
-                    bundledLoadedAt: cache.bundledLoadedAt || null,
-                    quotes: cache.quotes || {}
-                }));
-            } catch {
-                // Local storage can be unavailable in strict privacy modes; the page still works from generated data.
+                cache = normalizeRuntimeCurrentQuoteCache(await readPersistentCacheRecord(CURRENT_QUOTE_CACHE_RECORD_KEY));
+            } catch (error) {
+                warnStorageFailure('reading current quote cache', error);
+            }
+            const legacyCache = readLegacyRuntimeCurrentQuoteCache();
+            if (!legacyCache) return cache;
+            const merged = mergeRuntimeCurrentQuoteCaches(cache, legacyCache);
+            try {
+                await writePersistentCacheRecord(CURRENT_QUOTE_CACHE_RECORD_KEY, merged);
+            } catch (error) {
+                warnStorageFailure('migrating current quote cache', error);
+            } finally {
+                safeLocalStorageRemove(CURRENT_QUOTE_CACHE_KEY);
+            }
+            return merged;
+        }
+
+        async function saveRuntimeCurrentQuoteCache(cache, protectedTickers = []) {
+            const pruned = pruneRuntimeCurrentQuoteCache(cache, protectedTickers);
+            cache.bundledLoadedAt = pruned.bundledLoadedAt;
+            cache.quotes = pruned.quotes;
+            try {
+                await writePersistentCacheRecord(CURRENT_QUOTE_CACHE_RECORD_KEY, pruned);
+                return true;
+            } catch (error) {
+                warnStorageFailure('saving current quote cache', error);
+                return false;
             }
         }
 
@@ -560,6 +843,7 @@
                 const data = await response.json();
                 const quotes = data?.quotes && typeof data.quotes === 'object' ? data.quotes : {};
                 let changed = false;
+                const previousBundledLoadedAt = cache.bundledLoadedAt;
                 Object.entries(quotes).forEach(([ticker, quote]) => {
                     const key = normalizedTicker(ticker);
                     const existingTime = parseIsoDate(cache.quotes[key]?.fetchedAt) || 0;
@@ -570,7 +854,9 @@
                     }
                 });
                 cache.bundledLoadedAt = IPO_ASSET_VERSION;
-                if (changed) saveRuntimeCurrentQuoteCache(cache);
+                if (changed || previousBundledLoadedAt !== IPO_ASSET_VERSION) {
+                    await saveRuntimeCurrentQuoteCache(cache);
+                }
                 return changed;
             } catch {
                 return false;
@@ -734,45 +1020,54 @@
             if (currentQuoteRefreshState.running) return;
             currentQuoteRefreshState.running = true;
             currentQuoteRefreshState.lastError = '';
-            const cache = loadRuntimeCurrentQuoteCache();
-            await seedRuntimeCurrentQuoteCache(cache);
-            const targets = uniqueCurrentQuoteIpos();
-            const cachedChanged = [];
-            targets.forEach(ipo => {
-                const quote = runtimeCachedQuote(cache, ipo.ticker, CURRENT_QUOTE_CACHE_TTL_MS);
-                if (quote && applyRuntimeCurrentQuote(ipo, quote)) cachedChanged.push(ipo.ticker);
-            });
-            currentQuoteRefreshState.cached = cachedChanged.length;
-            scheduleCurrentQuoteRender(cachedChanged);
+            try {
+                const cache = await loadRuntimeCurrentQuoteCache();
+                await seedRuntimeCurrentQuoteCache(cache);
+                const targets = uniqueCurrentQuoteIpos();
+                const targetTickers = targets.map(ipo => ipo.ticker);
+                const cachedChanged = [];
+                targets.forEach(ipo => {
+                    const quote = runtimeCachedQuote(cache, ipo.ticker, CURRENT_QUOTE_CACHE_TTL_MS);
+                    if (quote && applyRuntimeCurrentQuote(ipo, quote)) cachedChanged.push(ipo.ticker);
+                });
+                currentQuoteRefreshState.cached = cachedChanged.length;
+                scheduleCurrentQuoteRender(cachedChanged);
 
-            const staleTargets = targets.filter(ipo => !runtimeCachedQuote(cache, ipo.ticker, CURRENT_QUOTE_CACHE_TTL_MS));
-            for (let index = 0; index < staleTargets.length; index += CURRENT_QUOTE_BATCH_SIZE) {
-                const batch = staleTargets.slice(index, index + CURRENT_QUOTE_BATCH_SIZE);
-                try {
-                    const quotes = await fetchYahooCurrentQuotes(batch.map(ipo => ipo.ticker));
-                    const changed = [];
-                    batch.forEach(ipo => {
-                        const quote = quotes.get(normalizedTicker(ipo.ticker)) || quotes.get(yahooSymbol(ipo.ticker));
-                        if (!quote) return;
-                        rememberRuntimeCurrentQuote(cache, ipo.ticker, quote);
-                        if (applyRuntimeCurrentQuote(ipo, quote)) changed.push(ipo.ticker);
-                    });
-                    if (changed.length) {
-                        currentQuoteRefreshState.refreshed += changed.length;
-                        currentQuoteRefreshState.updatedAt = new Date().toISOString();
-                        saveRuntimeCurrentQuoteCache(cache);
-                        scheduleCurrentQuoteRender(changed);
+                const staleTargets = targets.filter(ipo => !runtimeCachedQuote(cache, ipo.ticker, CURRENT_QUOTE_CACHE_TTL_MS));
+                for (let index = 0; index < staleTargets.length; index += CURRENT_QUOTE_BATCH_SIZE) {
+                    const batch = staleTargets.slice(index, index + CURRENT_QUOTE_BATCH_SIZE);
+                    try {
+                        const quotes = await fetchYahooCurrentQuotes(batch.map(ipo => ipo.ticker));
+                        const changed = [];
+                        let rememberedAny = false;
+                        batch.forEach(ipo => {
+                            const quote = quotes.get(normalizedTicker(ipo.ticker)) || quotes.get(yahooSymbol(ipo.ticker));
+                            if (!quote) return;
+                            if (rememberRuntimeCurrentQuote(cache, ipo.ticker, quote)) rememberedAny = true;
+                            if (applyRuntimeCurrentQuote(ipo, quote)) changed.push(ipo.ticker);
+                        });
+                        if (rememberedAny) {
+                            await saveRuntimeCurrentQuoteCache(cache, targetTickers);
+                        }
+                        if (changed.length) {
+                            currentQuoteRefreshState.refreshed += changed.length;
+                            currentQuoteRefreshState.updatedAt = new Date().toISOString();
+                            scheduleCurrentQuoteRender(changed);
+                        }
+                    } catch (error) {
+                        currentQuoteRefreshState.failed += batch.length;
+                        currentQuoteRefreshState.lastError = String(error?.message || error);
+                        break;
                     }
-                } catch (error) {
-                    currentQuoteRefreshState.failed += batch.length;
-                    currentQuoteRefreshState.lastError = String(error?.message || error);
-                    break;
+                    if (index + CURRENT_QUOTE_BATCH_SIZE < staleTargets.length) {
+                        await new Promise(resolve => window.setTimeout(resolve, CURRENT_QUOTE_BATCH_DELAY_MS));
+                    }
                 }
-                if (index + CURRENT_QUOTE_BATCH_SIZE < staleTargets.length) {
-                    await new Promise(resolve => window.setTimeout(resolve, CURRENT_QUOTE_BATCH_DELAY_MS));
-                }
+            } catch (error) {
+                currentQuoteRefreshState.lastError = String(error?.message || error);
+            } finally {
+                currentQuoteRefreshState.running = false;
             }
-            currentQuoteRefreshState.running = false;
         }
 
         function timeToMinutes(time) {
@@ -984,23 +1279,92 @@
             return Number.isFinite(ipo.dateTs) && ipo.dateTs >= start && ipo.dateTs <= end;
         }
 
-        function readUpcomingIpoCache() {
+        function pruneUpcomingIpoItems(items) {
+            return (Array.isArray(items) ? items : [])
+                .filter(item => item && typeof item === 'object' && upcomingIpoInWindow(item))
+                .sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')) || (Number(b.marketCapB) || -1) - (Number(a.marketCapB) || -1))
+                .slice(0, UPCOMING_IPO_CACHE_MAX_ITEMS);
+        }
+
+        function normalizeUpcomingIpoCache(cache) {
+            if (!cache || typeof cache !== 'object' || cache.version !== 1) return null;
+            return {
+                version: 1,
+                sourceUrl: cache.sourceUrl || UPCOMING_IPO_SOURCE_URL,
+                fetchUrl: cache.fetchUrl || UPCOMING_IPO_FETCH_URL,
+                fetchedAt: cache.fetchedAt || null,
+                lastAttemptAt: cache.lastAttemptAt || cache.fetchedAt || null,
+                errorAt: cache.errorAt || null,
+                error: cache.error || '',
+                items: pruneUpcomingIpoItems(cache.items)
+            };
+        }
+
+        function mergeUpcomingIpoCaches(baseCache, nextCache) {
+            const base = normalizeUpcomingIpoCache(baseCache);
+            const next = normalizeUpcomingIpoCache(nextCache);
+            if (!base) return next;
+            if (!next) return base;
+            const baseTime = Number(base.lastAttemptAt || base.fetchedAt || 0);
+            const nextTime = Number(next.lastAttemptAt || next.fetchedAt || 0);
+            const selected = nextTime >= baseTime ? next : base;
+            const fallback = selected === next ? base : next;
+            if (!selected.items.length && fallback.items.length) {
+                selected.items = fallback.items;
+                selected.fetchedAt = selected.fetchedAt || fallback.fetchedAt;
+            }
+            return selected;
+        }
+
+        function readLegacyUpcomingIpoCache() {
+            const raw = safeLocalStorageGet(UPCOMING_IPO_CACHE_KEY);
+            if (!raw) return null;
             try {
-                const raw = localStorage.getItem(UPCOMING_IPO_CACHE_KEY);
-                if (!raw) return null;
-                const cache = JSON.parse(raw);
-                if (!cache || cache.version !== 1 || !Array.isArray(cache.items)) return null;
-                return cache;
-            } catch {
+                return normalizeUpcomingIpoCache(JSON.parse(raw));
+            } catch (error) {
+                warnStorageFailure(`parsing legacy ${UPCOMING_IPO_CACHE_KEY}`, error);
+                safeLocalStorageRemove(UPCOMING_IPO_CACHE_KEY);
                 return null;
             }
         }
 
-        function writeUpcomingIpoCache(cache) {
+        async function readUpcomingIpoCache() {
+            let cache = null;
             try {
-                localStorage.setItem(UPCOMING_IPO_CACHE_KEY, JSON.stringify(cache));
-            } catch {
-                // localStorage can be unavailable in private contexts; the table still works for this load.
+                cache = normalizeUpcomingIpoCache(await readPersistentCacheRecord(UPCOMING_IPO_CACHE_RECORD_KEY));
+            } catch (error) {
+                warnStorageFailure('reading upcoming IPO cache', error);
+            }
+            const legacyCache = readLegacyUpcomingIpoCache();
+            if (!legacyCache) return cache;
+            const merged = mergeUpcomingIpoCaches(cache, legacyCache);
+            try {
+                await writePersistentCacheRecord(UPCOMING_IPO_CACHE_RECORD_KEY, merged);
+            } catch (error) {
+                warnStorageFailure('migrating upcoming IPO cache', error);
+            } finally {
+                safeLocalStorageRemove(UPCOMING_IPO_CACHE_KEY);
+            }
+            return merged;
+        }
+
+        async function writeUpcomingIpoCache(cache) {
+            const normalized = normalizeUpcomingIpoCache(cache) || {
+                version: 1,
+                sourceUrl: UPCOMING_IPO_SOURCE_URL,
+                fetchUrl: UPCOMING_IPO_FETCH_URL,
+                fetchedAt: cache?.fetchedAt || null,
+                lastAttemptAt: cache?.lastAttemptAt || null,
+                errorAt: cache?.errorAt || null,
+                error: cache?.error || '',
+                items: []
+            };
+            try {
+                await writePersistentCacheRecord(UPCOMING_IPO_CACHE_RECORD_KEY, normalized);
+                return true;
+            } catch (error) {
+                warnStorageFailure('saving upcoming IPO cache', error);
+                return false;
             }
         }
 
@@ -1031,8 +1395,9 @@
                     error: '',
                     items
                 };
-                writeUpcomingIpoCache(cache);
-                applyUpcomingIpoCache(cache);
+                const normalizedCache = normalizeUpcomingIpoCache(cache);
+                await writeUpcomingIpoCache(normalizedCache);
+                applyUpcomingIpoCache(normalizedCache);
             } catch (error) {
                 const cache = {
                     version: 1,
@@ -1044,17 +1409,18 @@
                     error: error?.message || 'Calendar request failed',
                     items: Array.isArray(previousCache?.items) ? previousCache.items : upcomingIpos
                 };
-                writeUpcomingIpoCache(cache);
-                applyUpcomingIpoCache(cache, {
-                    state: cache.items.length ? 'ready' : 'error',
-                    stale: cache.items.length > 0
+                const normalizedCache = normalizeUpcomingIpoCache(cache);
+                await writeUpcomingIpoCache(normalizedCache);
+                applyUpcomingIpoCache(normalizedCache, {
+                    state: normalizedCache.items.length ? 'ready' : 'error',
+                    stale: normalizedCache.items.length > 0
                 });
             }
             renderUpcomingIpos();
         }
 
-        function initUpcomingIpos() {
-            const cache = readUpcomingIpoCache();
+        async function initUpcomingIpos() {
+            const cache = await readUpcomingIpoCache();
             const now = Date.now();
             const lastAttemptAt = cache?.lastAttemptAt || cache?.fetchedAt || 0;
             const cacheIsFresh = Boolean(cache && now - lastAttemptAt < UPCOMING_IPO_CACHE_TTL_MS);

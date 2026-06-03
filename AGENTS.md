@@ -20,6 +20,7 @@ Path placeholders in this file are intentional. Substitute them with the matchin
 - The visible analysis UI starts with a buyer-window summary, decision-oriented KPI cards (`Sample`, `Typical low time`, `Buy bias`, and `Entry plan`), and a full-width elapsed-time opportunity map; below that it shows two larger distribution charts, a `Buy-plan questions` section, then an entry-scenario comparison table. The buy-plan section answers D1/D2 bias, staged buy count, allocation percentages, day-trade/swing suitability, open-chase suitability, dry-powder share, and best single fill. Do not re-add the removed `Timing signals` panel, old `Decision odds` panel, checkpoint highlight pill, duplicate `median clock` block, lower summary-pill row, or a trailing "not a buy signal" note unless explicitly requested.
 - A compact infographic strip above the search row shows the IPO playbook and IPO buy-timing guides as small thumbnails. Both thumbnails open the full-size image modal when clicked.
 - The header `Forthcoming IPOs` button opens a modal IPO-list of known upcoming listings from the StockAnalysis IPO calendar. This list is info-only and must stay excluded from timing samples, odds, charts, card filtering, and generated analysis. It shows the next 12 months of dated listings with date, symbol, company, exchange, price range, shares, deal, market cap, and revenue, plus `All` and active-cap-filter views.
+- Runtime browser cache payloads are stored in IndexedDB, not origin-wide `localStorage`. The `ipo-site-cache-v1` database keeps path-namespaced records for Yahoo current quotes and the upcoming-IPO calendar; legacy `localStorage` keys are migration-only and should be removed after reading.
 - The 3D map is opened from the analysis dashboard `3D Map` button. It supports Day 1 and Ext modes, open aligned / open+close / close aligned scaling, Reset View, Flatten Low, and hideable Symbols, Quick Read, Scale, and Selected panels. Automatic rotation is intentionally disabled.
 - The 3D symbol selector is a hideable year-clustered top strip, newest IPO years on the left and oldest on the right. Each year uses two symbol columns when needed, but a single-symbol year should use one visual row. Symbol text color matches the line's up/down tone and does not use a separate bullet.
 - In regular 3D path view, clicking a symbol pill selects it and overlays full candle bodies/wicks for that IPO; clicking the same selected symbol again isolates it into a one-row close-aligned candle view and hides other rows; clicking it again clears the selection and restores all rows. The isolated one-row view must switch to close aligned while active, restore the previous alignment when leaving, remove empty regular-session time before the first real price, normalize the return y-axis to that one IPO, and show linear 5-minute volume bars from the real bar volume field.
@@ -136,7 +137,7 @@ Per-ticker detail source:
 - `https://stockanalysis.com/stocks/<ticker>/`
 - `https://stockanalysis.com/stocks/<ticker>/company/`
 - Pull or verify market cap, IPO price/date, exchange, sector/industry, and related company fields from the StockAnalysis ticker pages when available.
-- Refresh the generated current snapshot price from Yahoo Finance latest chart metadata during data generation; if Yahoo is unavailable for a ticker, keep the StockAnalysis fallback value. Browser runtime code refreshes Current again through the Yahoo proxy and caches results in `localStorage`.
+- Refresh the generated current snapshot price from Yahoo Finance latest chart metadata during data generation; if Yahoo is unavailable for a ticker, keep the StockAnalysis fallback value. Browser runtime code refreshes Current again through the Yahoo proxy and caches results in path-namespaced IndexedDB records.
 - When adding a new symbol or refreshing symbol data, update the public data snapshot date in the footer of `index.html` so the visible freshness term matches the data actually shown.
 - Fetch sampled Yahoo weekly closes for `roughPriceSeries`; these are only used for small micro-chart shape hints, not for main candle charts or low-timing analysis.
 - For `CBRS`, also checked Cerebras' own IPO pricing release:
@@ -147,7 +148,7 @@ Upcoming IPO-list source:
 - `https://stockanalysis.com/ipos/calendar/`
 - The browser fetches a markdown copy through:
   `https://r.jina.ai/http://https://stockanalysis.com/ipos/calendar/`
-- Parsed rows are cached in `localStorage` under `ipo-upcoming-calendar-v1` with a 24-hour retry/freshness window.
+- Parsed rows are cached in IndexedDB under the path-namespaced `upcoming-calendar-v1` record with a 24-hour retry/freshness window. The legacy `ipo-upcoming-calendar-v1` `localStorage` key is only a one-time migration source.
 - Only dated rows in the next 12 months are shown. The modal can show all upcoming rows or rows matching the active market-cap filter.
 - Upcoming rows must remain informational only. Do not feed them into `ipos`, `ipoAnalysis`, timing samples, chart cards, buy-plan questions, or entry-scenario analysis.
 

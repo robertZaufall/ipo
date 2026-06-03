@@ -864,6 +864,10 @@ function regularPhaseProgress(record, point) {
     return clamp(elapsed / Math.max(duration, INTERVAL_MINUTES), 0, 1);
 }
 
+function worldXForPlot(plot, maxPlot) {
+    return (plot / Math.max(maxPlot || 1, 1)) * X_SPAN - X_SPAN / 2;
+}
+
 function buildPathTimeline(records, config = mapModeConfig(), sessionTimeline) {
     const includeExtended = Boolean(config.includeExtended);
     const includeSecondDay = Boolean(config.includeSecondDay);
@@ -1013,7 +1017,7 @@ function buildDataset() {
     const yRange = Math.max(1, maxReturn - minReturn);
     const ySpan = Math.min(30, Math.max(18, records.length > 38 ? 28 : 24));
     const zSpan = Math.max((records.length - 1) * ROW_GAP, 1);
-    const toX = plot => (plot / maxPlot) * X_SPAN - X_SPAN / 2;
+    const toX = plot => worldXForPlot(plot, maxPlot);
     const toY = pct => ((pct - minReturn) / yRange - 0.5) * ySpan;
     const toZ = row => zSpan / 2 - row * ROW_GAP;
 
@@ -1135,30 +1139,17 @@ function isolatedRenderDataset(dataset) {
         state.isolatedTicker = '';
         return dataset;
     }
-    const firstRegularMinute = isolatedRecord.points
-        .filter(point => point.session !== 'extended' && Number.isFinite(point.sessionMinute))
-        .map(point => point.sessionMinute)
-        .sort((a, b) => a - b)[0];
-    const isolatedRegularStart = Number.isFinite(firstRegularMinute)
-        ? Math.min(Math.max(firstRegularMinute, MARKET_OPEN_MINUTES), MARKET_CLOSE_MINUTES - INTERVAL_MINUTES)
-        : MARKET_OPEN_MINUTES;
-    const isolatedRegularSpan = Math.max(INTERVAL_MINUTES, MARKET_CLOSE_MINUTES - isolatedRegularStart);
-    const isolatedTimeline = {
-        ...dataset.timeline,
-        regularStart: isolatedRegularStart,
-        minuteToPlot: minute => {
-            if (!Number.isFinite(minute)) return 0;
-            if (minute <= MARKET_CLOSE_MINUTES) {
-                const dayMinute = minuteOfDay(minute);
-                const progress = Number.isFinite(dayMinute)
-                    ? clamp((dayMinute - isolatedRegularStart) / isolatedRegularSpan, 0, 1)
-                    : 0;
-                return progress * dataset.timeline.marketClose;
-            }
-            return dataset.timeline.minuteToPlot(minute);
-        }
+    const isolatedTimeline = buildSessionTimeline([isolatedRecord], dataset.modeConfig);
+    isolatedTimeline.alignment = 'close';
+    isolatedTimeline.maxRegularDuration = isolatedTimeline.marketClose;
+    isolatedTimeline.elapsedToPlot = minutes => {
+        const progress = clamp((Number(minutes) || 0) / Math.max(isolatedTimeline.marketClose, INTERVAL_MINUTES), 0, 1);
+        return progress * isolatedTimeline.marketClose;
     };
+    isolatedTimeline.progressToPlot = progress => clamp(Number(progress) || 0, 0, 1) * isolatedTimeline.marketClose;
     isolatedTimeline.pointToPlot = (record, point) => isolatedTimeline.minuteToPlot(point?.sessionMinute);
+    const isolatedMaxPlot = Math.max(isolatedTimeline.end, 1);
+    const isolatedToX = plot => worldXForPlot(Math.min(Math.max(Number(plot) || 0, 0), isolatedMaxPlot), isolatedMaxPlot);
 
     isolatedRecord.rowIndex = 0;
     isolatedRecord.z = 0;
@@ -1187,19 +1178,19 @@ function isolatedRenderDataset(dataset) {
     const toY = pct => ((pct - minReturn) / yRange - 0.5) * ySpan;
     isolatedRecord.points.forEach(point => {
         point.pathPlot = isolatedTimeline.pointToPlot(isolatedRecord, point);
-        point.x = dataset.toX(point.pathPlot);
+        point.x = isolatedToX(point.pathPlot);
         point.y = toY(point.pctClose);
         point.yHigh = toY(point.pctHigh);
         point.yLow = toY(point.pctLow);
     });
     isolatedRecord.visualPoints.forEach(point => {
         point.pathPlot = isolatedTimeline.pointToPlot(isolatedRecord, point);
-        point.x = dataset.toX(point.pathPlot);
+        point.x = isolatedToX(point.pathPlot);
         point.y = toY(point.pctClose);
         point.yHigh = toY(point.pctHigh);
         point.yLow = toY(point.pctLow);
     });
-    isolatedRecord.dayEndX = dataset.toX(isolatedTimeline.marketClose);
+    isolatedRecord.dayEndX = isolatedToX(isolatedTimeline.marketClose);
     const medianPlot = Number.isFinite(dataset.medianClockMinute)
         ? isolatedTimeline.minuteToPlot(dataset.medianClockMinute)
         : null;
@@ -1213,13 +1204,16 @@ function isolatedRenderDataset(dataset) {
         maxReturn,
         ySpan,
         zSpan: 1,
+        maxPlot: isolatedMaxPlot,
         zMin: -0.5,
         zMax: 0.5,
         levels: niceReturnLevels(minReturn, maxReturn),
         zeroY: toY(0),
-        medianX: Number.isFinite(medianPlot) ? dataset.toX(Math.min(medianPlot, dataset.maxPlot)) : dataset.medianX,
-        marketCloseX: dataset.toX(isolatedTimeline.marketClose),
-        toY
+        medianX: Number.isFinite(medianPlot) ? isolatedToX(medianPlot) : null,
+        marketCloseX: isolatedToX(isolatedTimeline.marketClose),
+        toX: isolatedToX,
+        toY,
+        deltaToX: minutes => isolatedToX(isolatedTimeline.elapsedToPlot(minutes))
     };
 }
 
@@ -1442,6 +1436,14 @@ function tweenCameraTo(next, duration = 620) {
     });
 }
 
+function setCameraFov(fov = 44) {
+    if (!state.camera || !state.camera.isPerspectiveCamera) return;
+    const nextFov = clamp(Number(fov) || 44, 10, 60);
+    if (Math.abs(state.camera.fov - nextFov) < 0.01) return;
+    state.camera.fov = nextFov;
+    state.camera.updateProjectionMatrix();
+}
+
 function isCompactEntryViewport() {
     const stage = byId('three-map-stage');
     const rect = stage?.getBoundingClientRect?.();
@@ -1449,17 +1451,28 @@ function isCompactEntryViewport() {
 }
 
 function pathCameraConfig(dataset) {
+    if (dataset?.isolated) {
+        return {
+            target: new THREE.Vector3(0, -0.35, 0),
+            yaw: 0,
+            pitch: 0,
+            distance: 250,
+            fov: 14
+        };
+    }
     const baseDistance = 44 + (dataset?.zSpan || 0) * 0.45;
     return {
         target: new THREE.Vector3(0, 0, 0),
         yaw: PATH_CAMERA_YAW,
         pitch: PATH_CAMERA_PITCH,
-        distance: Math.max(36 * DEFAULT_CAMERA_ZOOM_OUT, Math.min(118 * DEFAULT_CAMERA_ZOOM_OUT, baseDistance * DEFAULT_CAMERA_ZOOM_OUT))
+        distance: Math.max(36 * DEFAULT_CAMERA_ZOOM_OUT, Math.min(118 * DEFAULT_CAMERA_ZOOM_OUT, baseDistance * DEFAULT_CAMERA_ZOOM_OUT)),
+        fov: 44
     };
 }
 
 function setPathCameraForDataset(dataset, resetOrientation = false) {
     const config = pathCameraConfig(dataset);
+    setCameraFov(config.fov);
     state.target.copy(config.target);
     state.distance = config.distance;
     if (resetOrientation) {
@@ -3183,9 +3196,11 @@ function buildScene(options = {}) {
     byId('three-map-empty')?.classList.add('hidden');
     byId('three-map-hover')?.classList.toggle('hidden', state.view === 'entry');
     if (state.view === 'entry') {
+        setCameraFov(44);
         setEntryCameraForStage();
         addEntryScene(dataset);
     } else if (state.flatLowActive) {
+        setCameraFov(44);
         addFlattenLowScene(dataset, Boolean(options.animateFlatten));
         const config = flatLowCameraConfig(dataset);
         if (options.animateFlatten) {
