@@ -65,9 +65,9 @@ The page has four generated JavaScript data files plus one runtime quote cache:
 - `current-price-cache.json`: bundled Yahoo current-price cache used as a browser runtime seed before fresh Yahoo proxy quotes arrive.
 - `ipoAnalysis` in `ipo-analysis.js`: derived 15-year first-day low timing analysis, probability checkpoints, and timing insights precomputed for each cap and trading-place filter.
 - `ipoBuySignals` in `ipo-buy-signals.js`: public chart-ready buy-signal pins keyed by ticker. Pins are reserved for threshold buys and time-based forced entries.
-- `ipoBuySignalSeries` in `ipo-buy-signals.js`: public chart-ready Day 1 signal-state ticks keyed by ticker. Each state includes time, elapsed minutes, predicted remaining downside bps, threshold bps, watch threshold bps, state (`wait`, `watch`, or `buy`), and model id.
+- `ipoBuySignalSeries` in `ipo-buy-signals.js`: public chart-ready Day 1 and Day 2 signal-state ticks keyed by ticker. Each state includes time, session, elapsed minutes, predicted remaining downside bps, threshold bps, watch threshold bps, state (`wait`, `watch`, or `buy`), and model id.
 - `ipoBuySignalMeta` in `ipo-buy-signals.js`: public metadata for the generated buy-signal artifact. Keep raw 1-minute candles, local dependencies, and the private generator in ignored `1m/`.
-  Current public model metadata: `modelId` is `ipo-minute-xgboost-downside-v0`, engine is `xgboost.XGBRegressor`, target is remaining Day 1 downside from the next executable open to the remaining Day 1 low, `buyThresholdBps` is `45` (0.45%), `watchThresholdBps` is `150` (1.50%), `forceBuyMinute` is `180`, and `seriesStepMinutes` is `5`.
+  Current public model metadata: `modelId` is `ipo-minute-xgboost-downside-v1`, engine is `xgboost.XGBRegressor`, target is remaining regular-session downside from the next executable open to that session's remaining low for Day 1 or Day 2, `buyThresholdBps` is `45` (0.45%), `watchThresholdBps` is `150` (1.50%), `forceBuyMinute` is `180`, and `seriesStepMinutes` is `5`.
 
 IPO object fields:
 
@@ -159,7 +159,7 @@ Intraday candle source:
 - Alpaca bars endpoint example:
   `https://data.alpaca.markets/v2/stocks/bars?symbols=ARM&timeframe=5Min&start=<rfc3339>&end=<rfc3339>&adjustment=raw&feed=sip`
 - Alpaca is also used for optional extended-hours and second-day chart data. Fetch extended bars from the first trading date at 16:00 ET through the next premarket/open handoff as available and store those rows in `extendedDayBars` with `YYYY-MM-DD HH:MM` New York timestamps. Fetch the second regular trading day into `secondDayBars`, including the regular-session close when available.
-- One-minute candle experiments live in the ignored local `1m/` folder. Keep both the gathering script and generated symbol-specific `*-first-day-1min-candles.json` files there unless the user explicitly asks to publish them.
+- One-minute candle experiments live in the ignored local `1m/` folder. Keep both the gathering script and generated symbol-specific `*-first-day-1min-candles.json` and `*-second-day-1min-candles.json` files there unless the user explicitly asks to publish them.
 - Never commit Alpaca or Alpha Vantage keys. Alpaca keys are sent only as request headers; generated source comments must not include credentials. Alpha Vantage generated source comments must keep the `apikey` redacted.
 - Alpha Vantage `TIME_SERIES_INTRADAY` remains an optional fallback when a key is available from `ALPHAVANTAGE_KEY`, `ALPHAVANTAGE_API_KEY`, `ALPHA_VANTAGE_API_KEY`, or `AV_API_KEY`.
 - Historical Alpha Vantage intraday month data requires a premium-enabled key; if the current key returns a premium-endpoint message, the script disables the fallback for the rest of that refresh.
@@ -183,8 +183,8 @@ Analysis source:
 
 Buy-signal source:
 
-- `1m/build_buy_signals.py` reads ignored one-minute first-day regular-session candles from `1m/*-first-day-1min-candles.json`, trains `ipo-minute-xgboost-downside-v0`, and writes only public chart-ready data to `ipo-buy-signals.js`. It can still fall back to the old combined JSON shape when no symbol-specific files are present.
-- The model frames entry timing as remaining downside estimation, not as a binary "stock is good" classifier. At each minute it predicts how far the next executable open may still be above the remaining Day 1 low.
+- `1m/build_buy_signals.py` reads ignored one-minute Day 1 and Day 2 regular-session candles from `1m/*-first-day-1min-candles.json` and `1m/*-second-day-1min-candles.json`, trains `ipo-minute-xgboost-downside-v1`, and writes only public chart-ready data to `ipo-buy-signals.js`. It can still fall back to the old combined JSON shape when no symbol-specific Day 1 files are present.
+- The model frames entry timing as remaining downside estimation, not as a binary "stock is good" classifier. At each minute it predicts how far the next executable open may still be above the remaining low for the active Day 1 or Day 2 regular session.
 - The public output is safe to commit because it contains only aggregate metadata, 5-minute signal states, selected pins, prices, thresholds, and model id. It must not include raw one-minute candles, feature tables, local dependency folders, credentials, or private generator code.
 - XGBoost is used because the minute-level IPO signal is tabular, nonlinear, and small enough that boosted trees can combine timing, price-action, range, wick, volume, and momentum patterns without assuming a linear relationship.
 

@@ -171,7 +171,7 @@
             </button>
         </div>
 
-        <footer class="mt-10 border-t border-zinc-900 pt-5 text-xs text-zinc-500 leading-6">
+        <footer class="mt-10 border-t border-zinc-900 pt-5 text-center text-xs text-zinc-500 leading-6">
             <p><span class="font-semibold text-zinc-400">Data:</span> IPO/candle snapshot through 2026-05-31; Current refreshes from Yahoo at runtime. Data may be delayed or wrong.</p>
             <p class="mt-2 text-center">&copy; <span id="copyright-year"></span> Robert Zaufall &middot; <a class="text-zinc-500 hover:text-zinc-300 transition-colors" href="https://glaubi.net/">glaubi.net</a> &middot; <a class="text-zinc-500 hover:text-zinc-300 transition-colors" href="https://github.com/robertZaufall/ipo">GitHub</a></p>
         </footer>
@@ -1395,18 +1395,19 @@
                     : null;
                 return { ...signal, date: parsed.date, time: parsed.time, minute };
             }).filter(signal =>
-                signal.date === ipo.date
+                signal.date
                 && Number.isFinite(signal.minute)
             ).sort((a, b) => a.minute - b.minute);
-            const dayOneChartPoints = (chartPoints || []).filter(point =>
-                point?.date === ipo.date
+            const visibleChartPoints = (chartPoints || []).filter(point =>
+                point?.date
                 && Number.isFinite(point.minute)
                 && Number.isFinite(point.plot)
             );
             const maxDistance = CHART_INTERVAL_MINUTES / 2 + 0.05;
-            return dayOneChartPoints.map(point => {
+            return visibleChartPoints.map(point => {
                 let best = null;
                 parsedSignals.forEach(signal => {
+                    if (signal.date !== point.date) return;
                     const distance = Math.abs(signal.minute - point.minute);
                     if (distance <= maxDistance && (!best || distance < best.distance)) {
                         best = { signal, distance };
@@ -2395,7 +2396,7 @@
             const signalSeries = chartBuySignalSeries(ipo, chartPoints);
             const signalByChartMinute = new Map(signalSeries.map(signal => [Math.round(signal.chartMinute), signal]));
             const signalForHoverPoint = point => {
-                if (!signalSeries.length || point?.date !== ipo.date || !Number.isFinite(point?.minute)) return null;
+                if (!signalSeries.length || !Number.isFinite(point?.minute)) return null;
                 return signalByChartMinute.get(Math.round(point.minute)) || null;
             };
             const hoverBoxH = compact ? 130 : 134;
