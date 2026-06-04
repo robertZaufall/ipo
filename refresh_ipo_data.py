@@ -36,6 +36,7 @@ BASE_URL = "https://stockanalysis.com"
 SCREENER_URL = f"{BASE_URL}/stocks/screener/"
 YAHOO_CHART_BASE = "https://query1.finance.yahoo.com/v8/finance/chart"
 ALPACA_DATA_BASE = "https://data.alpaca.markets/v2/stocks/bars"
+ALPACA_CORPORATE_ACTIONS_BASE = "https://data.alpaca.markets/v1/corporate-actions"
 ALPHA_VANTAGE_BASE = "https://www.alphavantage.co/query"
 ET = ZoneInfo("America/New_York")
 UTC = dt.timezone.utc
@@ -83,6 +84,7 @@ ALPACA_INTERVALS = {
     "1h": "1Hour",
     "1hour": "1Hour",
 }
+ALPACA_SPLIT_TYPES = ("forward_split", "reverse_split", "unit_split")
 ALPHA_VANTAGE_KEY_ENV_NAMES = (
     "ALPHAVANTAGE_KEY",
     "ALPHAVANTAGE_API_KEY",
@@ -871,6 +873,26 @@ def alpaca_second_day_url(ticker: str, date_s: str, interval: str, feed: str, *,
     return alpaca_bar_url(ticker, interval, feed, start, end, page_token=page_token)
 
 
+def alpaca_corporate_actions_url(
+    symbols: list[str],
+    start: str,
+    end: str,
+    *,
+    page_token: str | None = None,
+) -> str:
+    params = {
+        "symbols": ",".join(alpaca_symbol(symbol) for symbol in symbols),
+        "types": ",".join(ALPACA_SPLIT_TYPES),
+        "start": start,
+        "end": end,
+        "limit": "1000",
+        "sort": "asc",
+    }
+    if page_token:
+        params["page_token"] = page_token
+    return f"{ALPACA_CORPORATE_ACTIONS_BASE}?{urllib.parse.urlencode(params)}"
+
+
 def alpha_vantage_interval(interval: str) -> str:
     try:
         return ALPHA_VANTAGE_INTERVALS[interval]
@@ -922,6 +944,109 @@ def alpaca_num(values: dict, key: str) -> float | None:
         return None
     out = float(value)
     return out if math.isfinite(out) else None
+
+
+def corporate_action_value(action: dict, *keys: str):
+    for key in keys:
+        if key in action and action.get(key) not in {None, ""}:
+            return action.get(key)
+    return None
+
+
+def corporate_action_num(action: dict, *keys: str) -> float | None:
+    value = corporate_action_value(action, *keys)
+    if value in {None, ""}:
+        return None
+    try:
+        out = float(value)
+    except (TypeError, ValueError):
+        return None
+    return out if math.isfinite(out) else None
+
+
+def split_event_record(action: dict) -> tuple[str, dict] | None:
+    symbol = normalize_ticker(str(corporate_action_value(action, "symbol", "old_symbol", "new_symbol") or ""))
+    event_type = str(corporate_action_value(action, "type", "ca_type", "corporate_action_type") or "").strip().lower()
+    event_type = event_type.replace("-", "_")
+    if event_type and event_type not in ALPACA_SPLIT_TYPES:
+        return None
+    ex_date = str(corporate_action_value(action, "ex_date", "exDate", "exDateString") or "")[:10]
+    process_date = str(corporate_action_value(action, "process_date", "processDate", "payable_date") or ex_date)[:10]
+    old_rate = corporate_action_num(action, "old_rate", "oldRate", "old_rate_denominator", "old")
+    new_rate = corporate_action_num(action, "new_rate", "newRate", "new_rate_numerator", "new")
+    if not symbol or not ex_date or not old_rate or not new_rate or old_rate <= 0 or new_rate <= 0:
+        return None
+    if not event_type:
+        event_type = "forward_split" if new_rate > old_rate else "reverse_split"
+    record = {
+        "type": event_type,
+        "exDate": ex_date,
+        "processDate": process_date,
+        "oldRate": rounded(old_rate, 6),
+        "newRate": rounded(new_rate, 6),
+        "ratio": str(corporate_action_value(action, "ratio", "rate") or f"{rounded(new_rate, 6):g}:{rounded(old_rate, 6):g}"),
+        "source": "Alpaca corporate actions",
+    }
+    return symbol, record
+
+
+def fetch_split_events_alpaca(items: list[dict], key_id: str, secret: str) -> tuple[dict[str, list[dict]], list[str]]:
+    candidates = [
+        item for item in items
+        if item.get("ticker") and item.get("date")
+    ]
+    if not candidates:
+        return {}, []
+    first_date = min(str(item["date"])[:10] for item in candidates)
+    end_date = dt.date.today().isoformat()
+    ipo_dates = {normalize_ticker(item["ticker"]): str(item["date"])[:10] for item in candidates}
+    headers = {
+        "APCA-API-KEY-ID": key_id,
+        "APCA-API-SECRET-KEY": secret,
+    }
+    split_events: dict[str, list[dict]] = {}
+    sources: list[str] = []
+    symbols = sorted(ipo_dates)
+    batch_size = 80
+    for index in range(0, len(symbols), batch_size):
+        batch = symbols[index:index + batch_size]
+        page_token = None
+        while True:
+            url = alpaca_corporate_actions_url(batch, first_date, end_date, page_token=page_token)
+            if not page_token:
+                sources.append(url)
+            data = fetch_json(url, headers=headers)
+            actions = data.get("corporate_actions")
+            if actions is None:
+                actions = data.get("corporateActions") or data.get("data") or []
+            if isinstance(actions, dict):
+                actions = actions.get("corporate_actions") or actions.get("data") or []
+            for action in actions:
+                if not isinstance(action, dict):
+                    continue
+                parsed = split_event_record(action)
+                if not parsed:
+                    continue
+                symbol, event = parsed
+                ipo_date = ipo_dates.get(symbol)
+                if not ipo_date or event["exDate"] < ipo_date:
+                    continue
+                split_events.setdefault(symbol, []).append(event)
+            page_token = data.get("next_page_token") or data.get("nextPageToken")
+            if not page_token:
+                break
+    for symbol, events in list(split_events.items()):
+        events.sort(key=lambda event: (event.get("exDate") or "", event.get("type") or ""))
+        deduped = []
+        seen = set()
+        for event in events:
+            key = (event.get("type"), event.get("exDate"), event.get("oldRate"), event.get("newRate"))
+            if key in seen:
+                continue
+            seen.add(key)
+            deduped.append(event)
+        split_events[symbol] = deduped
+    return split_events, sources
 
 
 def fetch_first_day_bars(ipo: dict, interval: str) -> list[list]:
@@ -1292,6 +1417,20 @@ def read_js_variable(path: pathlib.Path, variable: str):
     return json.loads(match.group(1))
 
 
+def read_optional_js_variable(path: pathlib.Path, variable: str, default):
+    if not path.exists():
+        return default
+    text = path.read_text(encoding="utf-8")
+    match = re.search(rf"window\.{re.escape(variable)}\s*=\s*", text)
+    if not match:
+        return default
+    try:
+        value, _end = json.JSONDecoder().raw_decode(text[match.end():])
+    except json.JSONDecodeError:
+        return default
+    return value
+
+
 def read_source_comments(path: pathlib.Path) -> list[str]:
     sources = []
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -1319,6 +1458,7 @@ def write_chart_js(
     extended_bar_sources: dict[str, str],
     second_day_bars: dict[str, list[list]],
     second_day_bar_sources: dict[str, str],
+    split_events: dict[str, list[dict]],
     rough_price_series: dict[str, list[list]],
     sources: list[str],
 ) -> None:
@@ -1334,6 +1474,7 @@ def write_chart_js(
     body += "window.extendedDayBarSources = " + json.dumps(extended_bar_sources, indent=2) + ";\n"
     body += "window.secondDayBars = " + json.dumps(second_day_bars, indent=2) + ";\n"
     body += "window.secondDayBarSources = " + json.dumps(second_day_bar_sources, indent=2) + ";\n"
+    body += "window.ipoSplitEvents = " + json.dumps(split_events, indent=2) + ";\n"
     body += "window.roughPriceSeries = " + json.dumps(rough_price_series, separators=(",", ":")) + ";\n"
     path.write_text(body, encoding="utf-8")
 
@@ -1592,6 +1733,35 @@ def build(args: argparse.Namespace) -> int:
                 print(f"warning: {ticker} Yahoo rough price series failed: {exc}", file=sys.stderr)
             time.sleep(args.rough_price_series_delay)
 
+    exact_selected = [item for item in selected if item["ticker"] in first_day_bars]
+    split_events: dict[str, list[dict]] = {}
+    split_event_sources: list[str] = []
+    split_events_refreshed = False
+    if alpaca_key_id and alpaca_secret:
+        print("Fetching Alpaca split corporate actions for chart-rendered symbols.")
+        try:
+            split_events, split_event_sources = fetch_split_events_alpaca(exact_selected, alpaca_key_id, alpaca_secret)
+            split_events_refreshed = True
+            split_count = sum(len(events) for events in split_events.values())
+            if split_count:
+                detail = ", ".join(f"{symbol} ({len(events)})" for symbol, events in sorted(split_events.items()))
+                print(f"  Found {split_count} split actions: {detail}")
+            else:
+                print("  No post-IPO split actions found for chart-rendered symbols.")
+        except Exception as exc:
+            print(f"warning: Alpaca corporate actions failed: {exc}", file=sys.stderr)
+    if not split_events_refreshed:
+        existing_split_events = read_optional_js_variable(output_dir / "chart-data.js", "ipoSplitEvents", {})
+        exact_tickers = {normalize_ticker(item["ticker"]) for item in exact_selected}
+        if isinstance(existing_split_events, dict):
+            split_events = {
+                normalize_ticker(symbol): events
+                for symbol, events in existing_split_events.items()
+                if normalize_ticker(symbol) in exact_tickers and isinstance(events, list)
+            }
+            if split_events:
+                print(f"Preserved existing split metadata for {len(split_events)} symbols.")
+
     ipo_sources = [
         *source_urls,
         *[item["detailUrl"] for item in selected],
@@ -1611,6 +1781,7 @@ def build(args: argparse.Namespace) -> int:
         ]
     ]
     chart_sources.extend(rough_price_series_sources)
+    chart_sources.extend(split_event_sources)
     write_js(output_dir / "ipo-data.js", "ipos", [card_record(item) for item in selected], ipo_sources)
     write_chart_js(
         output_dir / "chart-data.js",
@@ -1620,6 +1791,7 @@ def build(args: argparse.Namespace) -> int:
         extended_bar_sources,
         second_day_bars,
         second_day_bar_sources,
+        split_events,
         rough_price_series,
         chart_sources,
     )

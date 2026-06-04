@@ -363,6 +363,7 @@
         const extendedDayBarSources = window.extendedDayBarSources || {};
         const secondDayBars = window.secondDayBars || {};
         const secondDayBarSources = window.secondDayBarSources || {};
+        const ipoSplitEvents = window.ipoSplitEvents || {};
         const roughPriceSeries = window.roughPriceSeries || {};
         const ipoAnalysis = window.ipoAnalysis || null;
         const ipoBuySignalSeries = window.ipoBuySignalSeries || {};
@@ -509,6 +510,115 @@
 
         function normalizedTicker(ticker) {
             return String(ticker || '').trim().toUpperCase();
+        }
+
+        function splitEventDateValue(date) {
+            const stamp = Date.parse(`${String(date || '').slice(0, 10)}T00:00:00Z`);
+            return Number.isFinite(stamp) ? stamp : 0;
+        }
+
+        function splitEventsForIpo(ipo) {
+            const rows = ipoSplitEvents[normalizedTicker(ipo?.ticker)];
+            if (!Array.isArray(rows)) return [];
+            return rows.map(event => {
+                const oldRate = Number(event.oldRate);
+                const newRate = Number(event.newRate);
+                const factor = Number.isFinite(oldRate) && oldRate > 0 && Number.isFinite(newRate) && newRate > 0
+                    ? newRate / oldRate
+                    : null;
+                return {
+                    ...event,
+                    oldRate,
+                    newRate,
+                    factor,
+                    exDate: String(event.exDate || event.processDate || '').slice(0, 10)
+                };
+            }).filter(event => event.exDate && Number.isFinite(event.factor) && event.factor > 0)
+                .sort((a, b) => splitEventDateValue(a.exDate) - splitEventDateValue(b.exDate));
+        }
+
+        function splitEventsAfterDate(ipo, date) {
+            const reference = String(date || ipo?.date || '').slice(0, 10);
+            if (!reference) return [];
+            return splitEventsForIpo(ipo).filter(event => event.exDate > reference);
+        }
+
+        function sameDaySplitEvents(ipo) {
+            const ipoDate = String(ipo?.date || '').slice(0, 10);
+            if (!ipoDate) return [];
+            return splitEventsForIpo(ipo).filter(event => event.exDate === ipoDate);
+        }
+
+        function splitAdjustmentFactorAfterDate(ipo, date) {
+            return splitEventsAfterDate(ipo, date).reduce((factor, event) => factor * event.factor, 1);
+        }
+
+        function hasPostIpoSplitAdjustment(ipo) {
+            return Math.abs(splitAdjustmentFactorAfterDate(ipo, ipo?.date) - 1) > 0.000001;
+        }
+
+        function splitAdjustedPrice(ipo, price, date) {
+            const value = Number(price);
+            if (!Number.isFinite(value)) return value;
+            const factor = splitAdjustmentFactorAfterDate(ipo, date);
+            if (!Number.isFinite(factor) || factor <= 0 || Math.abs(factor - 1) <= 0.000001) return value;
+            return Math.round((value / factor) * 10000) / 10000;
+        }
+
+        function adjustedIpoPrice(ipo) {
+            return splitAdjustedPrice(ipo, ipo?.ipoPrice, ipo?.date);
+        }
+
+        function splitRatioLabel(event) {
+            const oldRate = Number(event.oldRate);
+            const newRate = Number(event.newRate);
+            if (Number.isFinite(oldRate) && Number.isFinite(newRate) && oldRate > 0 && newRate > 0) {
+                const formatRate = (value) => Number(value.toFixed(6)).toLocaleString('en-US');
+                if (Math.abs(oldRate - 1) < 0.000001 && newRate < 1) {
+                    const reciprocal = 1 / newRate;
+                    const roundedReciprocal = Math.round(reciprocal);
+                    if (Math.abs(reciprocal - roundedReciprocal) < 0.01) return `1-for-${formatRate(roundedReciprocal)}`;
+                }
+                if (Math.abs(oldRate - 1) < 0.000001) return `${formatRate(newRate)}-for-1`;
+                if (Math.abs(newRate - 1) < 0.000001) return `1-for-${formatRate(oldRate)}`;
+                return `${formatRate(newRate)}-for-${formatRate(oldRate)}`;
+            }
+            return event.ratio || 'split';
+        }
+
+        function splitTypeLabel(type) {
+            return String(type || 'split').replace(/_/g, ' ');
+        }
+
+        function splitEventSummary(events) {
+            return events.map(event => `${splitRatioLabel(event)} ${splitTypeLabel(event.type)} on ${event.exDate}`).join(', ');
+        }
+
+        function splitPillHtml(ipo) {
+            const events = splitEventsForIpo(ipo);
+            if (!events.length) return '';
+            const adjusted = hasPostIpoSplitAdjustment(ipo);
+            const title = adjusted
+                ? `Historical prices are split-adjusted for ${splitEventSummary(splitEventsAfterDate(ipo, ipo.date))}.`
+                : `Split action noted: ${splitEventSummary(events)}.`;
+            return `<span class="px-3 h-8 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 text-cyan-200 text-xs font-semibold flex items-center" title="${escapeHtml(title)}">Split</span>`;
+        }
+
+        function splitAdjustmentNoteHtml(ipo) {
+            const adjustedEvents = splitEventsAfterDate(ipo, ipo?.date);
+            if (adjustedEvents.length) {
+                const factor = splitAdjustmentFactorAfterDate(ipo, ipo.date);
+                const direction = factor > 1 ? 'divided down' : 'scaled up';
+                return `<div class="mt-3 rounded-2xl border border-cyan-500/25 bg-cyan-500/10 px-4 py-3 text-xs text-cyan-100">
+                    <div class="font-semibold text-cyan-200">Split-adjusted price basis</div>
+                    <div class="mt-1 text-cyan-100/85">Historical candles and the IPO offer are shown on current-share basis after ${escapeHtml(splitEventSummary(adjustedEvents))}. Pre-split prices are ${direction}; current quotes and Yahoo rough history are already on this basis.</div>
+                </div>`;
+            }
+            const sameDayEvents = sameDaySplitEvents(ipo);
+            if (!sameDayEvents.length) return '';
+            return `<div class="mt-3 rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-xs text-zinc-400">
+                <span class="font-semibold text-zinc-300">Split action noted:</span> ${escapeHtml(splitEventSummary(sameDayEvents))}. The first chart print already matches the post-action price basis, so no extra scaling is applied.
+            </div>`;
         }
 
         function yahooSymbol(ticker) {
@@ -828,7 +938,7 @@
             ipo.currentAsOf = normalized.asOf;
             ipo.currentSource = normalized.source;
             ipo.currentCurrency = normalized.currency;
-            const ipoPrice = Number(ipo.ipoPrice);
+            const ipoPrice = adjustedIpoPrice(ipo);
             if (Number.isFinite(ipoPrice) && ipoPrice > 0) {
                 ipo.dayChange = (normalized.price - ipoPrice) / ipoPrice * 100;
             }
@@ -2371,15 +2481,27 @@
             const minute = Number.isFinite(minuteOfDay)
                 ? minuteOfDay + dateOffsetMinutes(ipo.date, parsed.date)
                 : null;
+            const rawOpen = Number(row[1]);
+            const rawHigh = Number(row[2]);
+            const rawLow = Number(row[3]);
+            const rawClose = Number(row[4]);
+            const splitFactor = splitAdjustmentFactorAfterDate(ipo, parsed.date);
+            const adjusted = Number.isFinite(splitFactor) && splitFactor > 0 && Math.abs(splitFactor - 1) > 0.000001;
             return {
                 index,
                 date: parsed.date,
                 time: parsed.time,
                 minute,
-                open: row[1],
-                high: row[2],
-                low: row[3],
-                close: row[4],
+                open: splitAdjustedPrice(ipo, rawOpen, parsed.date),
+                high: splitAdjustedPrice(ipo, rawHigh, parsed.date),
+                low: splitAdjustedPrice(ipo, rawLow, parsed.date),
+                close: splitAdjustedPrice(ipo, rawClose, parsed.date),
+                rawOpen,
+                rawHigh,
+                rawLow,
+                rawClose,
+                splitAdjustmentFactor: splitFactor,
+                splitAdjusted: adjusted,
                 volume: row[5],
                 source,
                 session
@@ -2741,7 +2863,10 @@
                 const bodyTop = y(Math.max(d.open, d.close));
                 const bodyBottom = y(Math.min(d.open, d.close));
                 const bodyH = Math.max(1.5, bodyBottom - bodyTop);
-                return `<g data-chart-candle-minute="${Math.round(d.minute)}" data-chart-candle-x="${xx.toFixed(1)}"><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, d)} O ${fmtUsd(d.open)} H ${fmtUsd(d.high)} L ${fmtUsd(d.low)} C ${fmtUsd(d.close)}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${y(d.high).toFixed(1)}" y2="${y(d.low).toFixed(1)}" stroke="${color}" stroke-width="1.35"/><rect x="${(xx - candleW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${candleW.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${color}" rx="1"/></g>`;
+                const rawSuffix = d.splitAdjusted
+                    ? ` raw O ${fmtUsd(d.rawOpen)} H ${fmtUsd(d.rawHigh)} L ${fmtUsd(d.rawLow)} C ${fmtUsd(d.rawClose)}`
+                    : '';
+                return `<g data-chart-candle-minute="${Math.round(d.minute)}" data-chart-candle-x="${xx.toFixed(1)}"><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, d)} O ${fmtUsd(d.open)} H ${fmtUsd(d.high)} L ${fmtUsd(d.low)} C ${fmtUsd(d.close)}${rawSuffix}</title><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${y(d.high).toFixed(1)}" y2="${y(d.low).toFixed(1)}" stroke="${color}" stroke-width="1.35"/><rect x="${(xx - candleW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${candleW.toFixed(1)}" height="${bodyH.toFixed(1)}" fill="${color}" rx="1"/></g>`;
             }).join('');
             const closeSegments = closeLineSegmentsFromBars(chartPoints, xPlot, y);
             const closeLine = closeSegments.length
@@ -2955,7 +3080,7 @@
             };
             const priceReferenceLines = [
                 { label: 'Open', price: Number(data[0]?.open), color: '#a1a1aa', dash: '8 4', strokeWidth: compact ? 0.75 : 0.9, haloWidth: 2.2, plainLabel: true },
-                { label: 'IPO', price: Number(ipo.ipoPrice), color: '#c084fc', dash: '6 5', strokeWidth: compact ? 0.9 : 1.1, haloWidth: 3 },
+                { label: 'IPO', price: adjustedIpoPrice(ipo), color: '#c084fc', dash: '6 5', strokeWidth: compact ? 0.9 : 1.1, haloWidth: 3 },
                 { label: 'Current', price: Number(ipo.current), color: '#22d3ee', dash: '3 5', strokeWidth: compact ? 0.9 : 1.1, haloWidth: 3 }
             ].filter(ref => Number.isFinite(ref.price) && ref.price >= rawMin && ref.price <= rawMax).map(ref => {
                 const yy = y(ref.price);
@@ -2971,9 +3096,10 @@
             }).join('');
             const lowPriceMarker = `<text x="${W - mr - 4}" y="${Math.max(mt + 14, lowY - 7).toFixed(1)}" text-anchor="end" font-size="${axisSize}" fill="#fbbf24">${lowPriceLabel}</text>`;
             const sourceLabel = chartSourceLabel(data);
+            const basisLabel = hasPostIpoSplitAdjustment(ipo) ? ' · split adj' : '';
             const visibleTitle = compact
-                ? `${ipo.ticker} ${chartModeShortLabel(chartMode)}${sourceLabel ? ` · ${sourceLabel}` : ''}`
-                : `${ipo.ticker} ${titleLabel}${sourceLabel ? ` · ${sourceLabel}` : ''}`;
+                ? `${ipo.ticker} ${chartModeShortLabel(chartMode)}${sourceLabel ? ` · ${sourceLabel}` : ''}${basisLabel}`
+                : `${ipo.ticker} ${titleLabel}${sourceLabel ? ` · ${sourceLabel}` : ''}${basisLabel}`;
             return `<svg class="chart-svg w-full h-full" viewBox="0 0 ${W} ${H}" role="img" aria-label="${ipo.ticker} ${titleLabel} chart"><rect width="${W}" height="${H}" fill="#09090b"/><text x="${ml}" y="20" font-size="${titleSize}" font-weight="700" fill="#d4d4d8">${visibleTitle}</text>${extendedSessionBands}${grid.join('')}${timeGrid}<rect x="${ml}" y="${mt}" width="${plotW}" height="${plotH}" fill="none" stroke="#27272a"/>${gapBreaks}${d2OpenLine}${elapsedAxis}${volumePanel}${signalStrip}${lowGuideLines}${candles}${closeLine}${priceReferenceLines}${medianReferenceLine}${lowPriceMarker}${lowMarkers}<g class="chart-hover-layer">${hoverData}</g></svg>`;
         }
 
@@ -3124,7 +3250,7 @@
             addEvent({
                 id: 'ipo',
                 label: 'IPO',
-                price: ipo.ipoPrice,
+                price: adjustedIpoPrice(ipo),
                 sortKey: firstMinute - 120,
                 rank: 0,
                 color: '#e4e4e7'
@@ -3469,7 +3595,7 @@
                 ? `M ${left} ${bottom} L ${linePoints.replaceAll(' ', ' L ')} L ${right} ${bottom} Z`
                 : '';
             const pathTitle = pathPoints.length > 2
-                ? `<title>${safeTitle}: rough real-price path from ${pathPoints.length} points</title>`
+                ? `<title>${safeTitle}: rough price path from ${pathPoints.length} points</title>`
                 : '';
             return `<div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3 min-h-[112px]">
                 <div class="flex items-baseline justify-between gap-3">
@@ -5077,7 +5203,7 @@
                 dayEndReturn: endD1Price / entryPrice * 100 - 100
             });
 
-            const ipoPrice = Number(ipo.ipoPrice);
+            const ipoPrice = adjustedIpoPrice(ipo);
             const ipoRow = Number.isFinite(ipoPrice) && ipoPrice > 0
                 ? {
                     id: 'buyIpo',
@@ -5366,10 +5492,12 @@
             const dealPill = Number.isFinite(dealSize) && dealSize > 0
                 ? `<span class="px-3 h-8 rounded-2xl border border-zinc-700 text-zinc-300 text-xs font-semibold flex items-center">Deal ${fmtDeal(dealSize)}</span>`
                 : '';
+            const splitPill = splitPillHtml(ipo);
             const quoteUrl = yahooFinanceUrl(ipo.ticker);
             const extendedPrices = combinedSessionMilestones(ipo);
             const openD2Milestone = extendedPrices.openSecond;
             const closeD2Milestone = extendedPrices.endSecond;
+            const ipoOfferPrice = adjustedIpoPrice(ipo);
             return `<article class="ipo-card bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden modern-shadow" data-search="${escapeHtml(searchBlob)}">
                 <div class="p-5 sm:p-6 border-b border-zinc-800 flex flex-col lg:flex-row gap-4 lg:items-start lg:justify-between">
                     <div class="min-w-0">
@@ -5385,13 +5513,15 @@
                     <div class="flex flex-wrap gap-2 lg:justify-end">
                         <span class="px-3 h-8 rounded-2xl border border-zinc-700 text-zinc-300 text-xs font-semibold flex items-center">Cap ${fmtCap(ipo.marketCap)}</span>
                         ${dealPill}
+                        ${splitPill}
                     </div>
                 </div>
                 <div class="p-4 sm:p-6">
                     ${chartFrameHtml(ipo)}
+                    ${splitAdjustmentNoteHtml(ipo)}
                     ${cardPriceTimelineHtml(ipo, data, summary, medianQuote, extendedPrices)}
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-3 mt-3">
-                        ${progressMicroChart('IPO to D1 close', 'IPO', 'D1 close', ipo.ipoPrice, summary.endPrice, firstDayClosePath(data, ipo.ipoPrice, 'IPO'))}
+                        ${progressMicroChart('IPO to D1 close', 'IPO', 'D1 close', ipoOfferPrice, summary.endPrice, firstDayClosePath(data, ipoOfferPrice, 'IPO'))}
                         ${progressMicroChart('D1 start to D1 close', 'D1 start', 'D1 close', summary.startPrice, summary.endPrice, firstDayStartEndPath(data))}
                         ${progressMicroChart('D1 low to D1 close', 'D1 low', 'D1 close', summary.lowPrice, summary.endPrice, lowToEndPath(data))}
                         ${progressMicroChart('Start price to open D2', 'Start', 'Open D2', summary.startPrice, openD2Milestone?.price, startToOpenDayTwoPath(data, extendedPrices))}
