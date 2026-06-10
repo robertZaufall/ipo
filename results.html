@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IPO 1m Entry-Timing Analysis</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="vendor/chart.umd.min.js"></script>
+<script src="results-data.js"></script>
+<style>
+  :root {
+    --bg:#0e1217; --panel:#161c24; --panel2:#1c242f; --text:#dde5ee; --muted:#8595a8;
+    --accent:#4cc2ff; --green:#3ddc84; --red:#ff6b6b; --amber:#ffc857; --border:#26303d;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font:15px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:1200px; margin:0 auto; padding:24px 20px 80px; }
+  h1 { font-size:26px; margin:8px 0 2px; }
+  h2 { font-size:19px; margin:46px 0 6px; border-bottom:1px solid var(--border); padding-bottom:8px;}
+  h3 { font-size:15px; margin:18px 0 8px; color:var(--accent); }
+  .sub { color:var(--muted); margin:0 0 18px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin:18px 0; }
+  .card { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
+  .card .v { font-size:24px; font-weight:650; }
+  .card .l { color:var(--muted); font-size:12.5px; margin-top:2px; }
+  .green { color:var(--green); } .red { color:var(--red); } .amber{ color:var(--amber);} .blue{color:var(--accent);}
+  .panel { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:16px; margin:14px 0; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:900px){ .grid2{grid-template-columns:1fr;} }
+  canvas { max-width:100%; }
+  table { border-collapse:collapse; width:100%; font-size:13.5px; }
+  th,td { padding:7px 10px; text-align:right; border-bottom:1px solid var(--border); white-space:nowrap;}
+  th { color:var(--muted); font-weight:600; cursor:pointer; user-select:none; position:sticky; top:0; background:var(--panel);}
+  td:first-child, th:first-child { text-align:left; }
+  td.note { text-align:left; white-space:normal; }
+  tr:hover td { background:var(--panel2); }
+  #ipoTable td { cursor:pointer; }
+  #ipoTable tr.selrow td { background:rgba(76,194,255,0.10);
+    border-top:1px solid rgba(76,194,255,0.35); border-bottom:1px solid rgba(76,194,255,0.35); }
+  .playbook { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px; }
+  .pb { background:linear-gradient(180deg,var(--panel2),var(--panel)); border:1px solid var(--border);
+        border-radius:12px; padding:16px; display:flex; flex-direction:column; }
+  .pb h4 { margin:0; font-size:15px; color:var(--accent); }
+  .pb ol { margin:6px 0 10px; padding-left:20px; }
+  .pb li { margin:4px 0; }
+  .pb-head { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px; }
+  .pb-head h4 { white-space:nowrap; }
+  .chip { font-size:11px; padding:3px 9px; border-radius:20px; white-space:nowrap;
+          background:rgba(61,220,132,0.12); color:var(--green); border:1px solid rgba(61,220,132,0.35); }
+  .chip.neg { background:rgba(255,107,107,0.12); color:var(--red); border-color:rgba(255,107,107,0.35); }
+  .ladder { position:relative; height:150px; border:1px solid var(--border); border-radius:8px;
+            background:linear-gradient(180deg, rgba(76,194,255,0.10), rgba(76,194,255,0.0) 55%);
+            margin:0 0 10px; overflow:hidden; }
+  .ladder .open-line { position:absolute; top:0; left:0; right:0; border-top:2px solid var(--accent); }
+  .ladder .open-line span { position:absolute; top:3px; left:8px; font-size:10px; color:var(--accent); }
+  .ladder .gl { position:absolute; left:0; right:0; border-top:1px solid rgba(133,149,168,0.12); }
+  .ladder .gl i { position:absolute; left:8px; top:-7px; font-size:9.5px; color:var(--muted);
+                  font-style:normal; opacity:.8; }
+  .ladder .lv { position:absolute; left:0; right:118px; border-top:1.5px dashed var(--amber); }
+  .ladder .lvl-label { position:absolute; right:6px; font-size:10.5px; line-height:1.2;
+                       color:var(--amber); background:rgba(255,200,87,0.10);
+                       border:1px solid rgba(255,200,87,0.30); padding:1px 6px; border-radius:4px; }
+  .ladder .lvl-label i { font-style:normal; color:var(--muted); font-size:9.5px; }
+  .ladder .lv { right:158px; }
+  .pb-fb { font-size:11.5px; color:var(--muted); margin:0 0 12px; padding-left:2px; }
+  .pb-fb b { color:var(--text); font-weight:600; }
+  .stats4 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:auto; }
+  .stats4 > div { background:rgba(28,36,47,0.7); border:1px solid var(--border); border-radius:8px;
+                  padding:8px 10px; }
+  .stats4 b { display:block; font-size:17px; font-weight:650; }
+  .stats4 span { font-size:10.5px; color:var(--muted); line-height:1.25; display:block; margin-top:2px; }
+  .kv { display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin:2px 0;}
+  .kv b { color:var(--text); font-weight:600; }
+  .badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; margin-left:6px;
+           background:var(--panel2); border:1px solid var(--border); color:var(--muted); }
+  .verdict { border-left:4px solid var(--amber); }
+  .verdict.good { border-left-color:var(--green); }
+  .verdict.bad { border-left-color:var(--red); }
+  select { background:var(--panel2); color:var(--text); border:1px solid var(--border);
+           border-radius:8px; padding:7px 10px; font-size:14px; }
+  .note { font-size:13px; color:var(--muted); }
+  .scroll { max-height:480px; overflow:auto; border:1px solid var(--border); border-radius:8px;}
+  .hscroll { overflow-x:auto; }
+  * { scrollbar-color:#2e3a49 var(--bg); scrollbar-width:thin; }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:#2e3a49; border-radius:6px; border:2px solid var(--bg); }
+  ::-webkit-scrollbar-thumb:hover { background:#3c4b5e; }
+  ::-webkit-scrollbar-corner { background:transparent; }
+  .foot { margin-top:50px; color:var(--muted); font-size:12.5px; }
+  .tabs { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 6px; position:sticky; top:0;
+          background:var(--bg); padding:10px 0; z-index:5; }
+  .tab { padding:8px 16px; border-radius:24px; border:1px solid var(--border); background:var(--panel);
+         color:var(--muted); cursor:pointer; font-size:14px; }
+  .tab.active { background:var(--accent); color:#06141d; border-color:var(--accent); font-weight:650; }
+  .tab.dim { opacity:.55; }
+  .tabs.caps { margin:0 0 6px; top:54px; padding:4px 0 8px; }
+  .tabs.caps .tab { padding:5px 13px; font-size:12.5px; }
+  .tabs.caps .tab.active { background:var(--amber); border-color:var(--amber); }
+  .warn { background:#2a2118; border:1px solid #5b4a2a; border-radius:10px; padding:14px 16px;
+          margin:14px 0; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>IPO Entry Timing</h1>
+  <p class="sub" id="subtitle"></p>
+
+  <div class="tabs" id="tabs"></div>
+  <div class="tabs caps" id="capTabs"></div>
+  <p class="note" id="scenDesc"></p>
+  <div id="extWarn"></div>
+
+  <h2 id="answersTitle">The recommended order plans — 1 to 4 orders</h2>
+  <p class="sub">Each card is a ready-to-use plan. The picture shows where the bargain orders sit below the
+  first traded price (the blue line at 0%). Every order has a deadline — if the price never dips that far,
+  the order turns into a normal buy at the deadline. The four numbers tell you how the plan performed on
+  the past IPOs in the selected window/filter.</p>
+  <div class="playbook" id="playbook"></div>
+
+  <h2>When is the cheapest moment to buy?</h2>
+  <div class="panel">
+    <h3 id="lowTimelineTitle">When the lowest price happened</h3>
+    <canvas id="lowTimeline" height="142"></canvas>
+    <p class="note" id="lowTimelineNote"></p>
+  </div>
+  <div class="grid2">
+    <div class="panel"><h3>How big the discount gets</h3>
+      <p class="note">How far below the first price each IPO eventually dropped. Most dip a few percent;
+      a long tail drops 15% or more.</p>
+      <canvas id="lowDepth" height="230"></canvas></div>
+    <div class="panel"><h3>Timing vs size of the discount — one dot per IPO</h3>
+      <p class="note">Dots far right/low: the longer the cheapest moment takes to arrive, the bigger the
+      discount tends to be. Quick dips (left) are shallow.</p>
+      <canvas id="lowScatter" height="230"></canvas></div>
+  </div>
+  <div class="panel" id="curvePanel"><h3>If you just bought everything at one fixed time…</h3>
+    <canvas id="timingCurve" height="240"></canvas>
+    <p class="note">…this is how much above the eventual low you would have paid, depending on when you buy.
+    The worst time to buy is the first ~20 minutes of trading. This is why the bargain-order plans above
+    beat simply "buying at 10 o'clock".</p>
+  </div>
+
+  <h2>Which buying method gets the best price?</h2>
+  <p class="sub">All numbers = how much above the lowest possible price each method paid. Lower is better.
+  The recommended ladder wins; the machine-learning model and the auto-optimizer don't beat it.</p>
+  <div class="panel"><div class="hscroll"><table id="stratTable"></table></div>
+    <p class="note">"Buy at preset times" = the best fixed clock times. "Auto-optimizer" rows show what
+    happens if you let an algorithm re-tune the orders for the selected company-size filter — shown only as
+    a sanity check, because that tends to fool itself on small samples. "ML model" = a machine-learning
+    classifier that tries to spot good moments minute by minute.</p></div>
+
+  <h2>Does it work on IPOs it has never seen? <span class="badge">the honest test</span></h2>
+  <div class="panel">
+    <div class="hscroll"><table id="wfTable"></table></div>
+    <p class="note"><b>How this was tested:</b> each strategy only ever saw IPOs from the past and was
+    then judged on the 79 newest IPOs it had never seen. Lower numbers = bought closer to the low.</p>
+    <ul class="note">
+      <li><b>Static ladder</b> — the recommended recipe from above, fixed once and never re-tuned.
+        It beats every strategy that kept re-optimizing itself.</li>
+      <li><b>Adaptive policy</b> — watches the first 30 minutes, then either buys immediately or
+        places deep limit orders. Slightly better on day 1, especially in bad cases.</li>
+      <li><b>Don't expect much below ~7%.</b> Even a strategy allowed to cheat and look at the test
+        IPOs in advance only reaches 6.7%, and the average dollar actually traded in the market paid
+        7.8% above the low. The recommended ladder buys cheaper than the average market participant —
+        the rest of the gap to the exact low is luck, not method.</li>
+      <li><b>The data behind this is checked:</b> all 157 IPOs passed an integrity audit, day-1 prices
+        match an independent second source, and the order-execution logic is covered by unit tests.</li>
+    </ul>
+  </div>
+
+  <h2>Can machine learning do better? <span class="badge" id="mlBadge"></span></h2>
+  <p class="sub">Short answer: no. A model trained on minute-by-minute trading data finds real patterns,
+  but its buying results are worse than the simple bargain-order plan — so the recommendation stays simple.</p>
+  <div class="grid2">
+    <div class="panel"><h3>What the model pays attention to</h3><canvas id="featImp" height="240"></canvas></div>
+    <div class="panel verdict" id="modelVerdict"></div>
+  </div>
+
+  <h2>What a typical IPO looks like <span class="badge">first traded price = 0%</span></h2>
+  <p class="sub">The bold blue line is the typical (median) IPO; the shaded bands show where most IPOs traded
+  — between the bands lies the middle half of all IPOs. Typical pattern: a dip below the first price during
+  day 1, then a slow recovery.</p>
+  <div class="grid2">
+    <div class="panel" id="ppD1"><h3>Day 1 — minutes after trading starts</h3><canvas id="pathD1" height="230"></canvas></div>
+    <div class="panel" id="ppAH"><h3>Day 1 evening (after-hours)</h3><canvas id="pathAH" height="230"></canvas></div>
+    <div class="panel" id="ppPre"><h3>Day 2 early morning (premarket)</h3><canvas id="pathPre" height="230"></canvas></div>
+    <div class="panel" id="ppD2"><h3>Day 2 — normal trading hours</h3><canvas id="pathD2" height="230"></canvas></div>
+  </div>
+
+  <h2>All IPOs in the data <span class="badge" id="tblBadge"></span></h2>
+  <p class="sub">Every IPO with its first price, biggest discount and when it happened. Click any column header
+  to sort, click a row to see that IPO's full price chart below.</p>
+  <div class="panel"><div class="scroll"><table id="ipoTable"></table></div></div>
+
+  <h2 id="explorerTitle">Look at a single IPO</h2>
+  <div class="panel">
+    <select id="ipoSel"></select>
+    <span class="note" id="ipoMeta"></span>
+    <canvas id="ipoChart" height="260" style="margin-top:10px"></canvas>
+    <p class="note" id="ipoNote"></p>
+  </div>
+
+  <div class="foot">Generated by analysis/*.py · scenario windows, empirical schedules, signal-pool
+  optimization, LightGBM classifier.</div>
+</div>
+
+<script>
+const R = window.RESULTS;
+const EM = R.empirical, SG = R.signals, MD = R.model;
+const SCENS = ['S1','S3','S2','S4'];  // tab display order
+const SCEN_TITLE = { S1:'Day 1 only', S3:'Day 1 + Day 2',
+                     S2:'Day 1 + overnight', S4:'Day 1 + Day 2 + overnight' };
+const CAPS = ['50b','25b','10b','all'];  // biggest first
+let currentCap = '50b';
+const EMC = () => EM.caps[currentCap];          // empirical, current cap bucket
+const SGC = () => SG.caps[currentCap];          // signals, current cap bucket
+const capMin = {all:0, '10b':10, '25b':25, '50b':50};
+const pct = (x, d=1) => x==null ? '—' : (x*100).toFixed(d) + '%';
+const C = { grid:'#26303d', text:'#8595a8', accent:'#4cc2ff', green:'#3ddc84',
+            red:'#ff6b6b', amber:'#ffc857', purple:'#b18cff' };
+const SESS_LABEL = {0:'Day 1', 1:'Day 1 after-hours', 2:'Day 2 premarket', 3:'Day 2'};
+Chart.defaults.color = C.text;
+Chart.defaults.borderColor = C.grid;
+Chart.defaults.font.size = 12;
+const charts = {};
+let currentScen = 'S1';
+function draw(id, cfg) { if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), cfg); }
+const clockOf = (sess, off) => { const base = {0:null,1:960,2:240,3:570}[sess];
+  if (base==null) return 'open+'+off+'m';
+  const t = base+off; return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0'); };
+
+document.getElementById('subtitle').textContent =
+  `${EM.nIpos} IPO events · 1-minute candles · ${R.nExt} with extended-hours data`;
+
+/* ================= scenario tabs ================= */
+const tabsEl = document.getElementById('tabs');
+SCENS.forEach(s => {
+  const e = EM.caps.all.scenarios[s];
+  const b = document.createElement('button');
+  b.className = 'tab' + (e.nIpos < 15 ? ' dim' : '');
+  b.id = 'tab-'+s;
+  b.textContent = SCEN_TITLE[s] + (e.nIpos < 15 ? ` (n=${e.nIpos})` : '');
+  b.onclick = () => renderScenario(s);
+  tabsEl.appendChild(b);
+});
+const capTabsEl = document.getElementById('capTabs');
+CAPS.forEach(c => {
+  const b = document.createElement('button');
+  b.className = 'tab';
+  b.id = 'cap-'+c;
+  b.textContent = `${EM.caps[c].label} (n=${EM.caps[c].nIpos})`;
+  b.onclick = () => { currentCap = c;
+    CAPS.forEach(cc => document.getElementById('cap-'+cc).classList.toggle('active', cc===c));
+    drawPaths();
+    rebuildIpoSelect();
+    renderScenario(currentScen); };
+  capTabsEl.appendChild(b);
+});
+
+function renderScenario(scen) {
+  SCENS.forEach(s => document.getElementById('tab-'+s).classList.toggle('active', s===scen));
+  const e = EMC().scenarios[scen], sg = SGC().scenarios[scen];
+  const ml = MD && MD.scenarios[scen] && !MD.scenarios[scen].insufficientData ? MD.scenarios[scen] : null;
+  const thin = e.nIpos < 15;
+  document.getElementById('scenDesc').textContent =
+    `Showing: ${SCEN_TITLE[scen]} · ${EMC().label} — ${e.nIpos} IPOs. "Lowest price" and all buying ` +
+    `happen inside this window.` +
+    (e.nIpos < 40 && e.nIpos >= 15 ? ' Few IPOs match this filter — read the numbers as rough guides.' : '');
+
+  /* warning for ext scenarios */
+  document.getElementById('extWarn').innerHTML = !thin ? '' : `
+    <div class="warn"><b>Only ${e.nIpos} IPOs match this window + cap bucket.</b>
+    Too few for optimization — statistics below are descriptive only.</div>`;
+
+  /* playbook */
+  const pb = document.getElementById('playbook');
+  if (sg && !sg.insufficientData) {
+    const allLv = [1,2,3,4].flatMap(k => ((sg.recommended && sg.recommended[k]) || sg.schedules[k].meanObj).legs)
+      .filter(l => l.type==='LIMIT').map(l => l.params.level*100);
+    const scaleMax = Math.max(12, Math.ceil((Math.max(...allLv, 0) + 1.5) / 2.5) * 2.5);
+    pb.innerHTML = [1,2,3,4].map(k => {
+      const rec = (sg.recommended && sg.recommended[k]) || sg.schedules[k].meanObj;
+      const sig = sg.loo[k], fix = e.looSchedules[k];
+      const sourceLoo = (SG.caps.all.scenarios[scen] && SG.caps.all.scenarios[scen].loo[k]) || sig;
+      const sourceN = (SG.caps.all.scenarios[scen] && SG.caps.all.scenarios[scen].nIpos) || e.nIpos;
+      const legs = rec.legs;
+      const limits = legs.filter(l => l.type==='LIMIT')
+        .sort((a,b) => a.params.level - b.params.level);
+      const others = legs.filter(l => l.type!=='LIMIT');
+      const delta = (fix.meanPremium - rec.meanPremium) * 100;
+      const grid = [2.5,5,7.5,10,12.5,15].filter(g => g < scaleMax).map(g =>
+        `<div class="gl" style="top:${g/scaleMax*100}%"><i>−${g}%</i></div>`).join('');
+      const H = 150, share = (100/legs.length).toFixed(0);
+      const yLines = limits.map(l => l.params.level*100/scaleMax*H);
+      let yLabs = [];
+      yLines.forEach(y => yLabs.push(Math.max(y - 8, (yLabs.at(-1) ?? -99) + 16)));
+      const overflow = Math.max(0, (yLabs.at(-1) ?? 0) + 16 - H);
+      yLabs = yLabs.map(y => Math.max(14, y - overflow));
+      const picks = Object.fromEntries(sourceLoo.topPicks || []);
+      const stabOf = l => (picks[l.label] || 0) / sourceN;
+      const stabTag = l => {
+        const st = stabOf(l);
+        const cls = st >= 0.8 ? 'green' : st >= 0.5 ? 'amber' : 'red';
+        return `<i class="${cls}" title="how reliably this exact level was the best choice across history — higher is more trustworthy">· ${Math.round(st*100)}%</i>`;
+      };
+      const lines = limits.map((l, ix) =>
+        `<div class="lv" style="top:${yLines[ix].toFixed(1)}px"></div>
+         <span class="lvl-label" style="top:${yLabs[ix].toFixed(1)}px">buy ${share}% @ −${(l.params.level*100).toFixed(1)}% <i>til ${dlLabel(l.params.deadline)}</i> ${stabTag(l)}</span>`).join('');
+      const otherTx = others.map(l => `<div class="pb-fb">+ ${prettyLeg(l)} ${stabTag(l)}</div>`).join('');
+      return `<div class="pb">
+        <div class="pb-head"><h4>${k} order${k>1?'s':''}</h4>
+          <span class="chip ${delta<0?'neg':''}">${Math.abs(delta).toFixed(1)}pp
+            ${delta>=0?'cheaper':'pricier'} than buying at a set time</span></div>
+        <div class="ladder"><div class="open-line"><span>first traded price = 0%</span></div>
+          ${grid}${lines}</div>
+        ${otherTx}
+        <div class="pb-fb">Each order waits for its price until its deadline ("til ..."). Not hit by
+          then? It simply <b>buys at the market price at the deadline</b> — you're always in.</div>
+        <div class="stats4">
+          <div><b>${pct(rec.meanPremium)}</b><span>paid above the lowest price, on average</span></div>
+          <div><b>${pct(rec.medianPremium)}</b><span>paid above the lowest price, typically</span></div>
+          <div><b>${pct(rec.p90Premium)}</b><span>in a bad case (worst 10% of IPOs)</span></div>
+          <div><b class="${rec.meanReturnToWinClose>=0?'green':'red'}">${(rec.meanReturnToWinClose>=0?'+':'')+pct(rec.meanReturnToWinClose)}</b><span>avg gain by the end of the window</span></div>
+        </div></div>`;
+    }).join('');
+  } else {
+    const row = (e.lowRows||[])[0];
+    pb.innerHTML = `<div class="pb"><h4>Case study only</h4>
+      ${row ? `<p>${row.ticker.toUpperCase()} (${row.ipoDate}): lowest price <b class="red">${pct(row.low-1)}</b>
+      at <b>${row.lowLabel}</b>, window close ${pct(row.winClose-1)}.</p>` : ''}
+      <p class="note">Too few IPOs match this filter (n=${e.nIpos}).</p></div>`;
+  }
+
+  /* when-the-low-happens charts */
+  const rows = e.lowRows || [];
+  lowTimelineChart(scen, rows);
+  lowDepthChart(rows);
+  lowScatterChart(scen, rows);
+
+  /* timing curve */
+  const cp = document.getElementById('curvePanel');
+  if (e.singleTradeCurve) {
+    cp.style.display = '';
+    const cur = e.singleTradeCurve;
+    draw('timingCurve', { type:'line',
+      data:{ labels:cur.map(c=>c.label), datasets:[
+        { label:'mean premium over low', data:cur.map(c=>c.meanPremium*100), borderColor:C.red, pointRadius:0, borderWidth:2, tension:.25 },
+        { label:'median premium over low', data:cur.map(c=>c.medianPremium*100), borderColor:C.amber, pointRadius:0, borderWidth:2, tension:.25 } ]},
+      options:{ animation:false, interaction:{mode:'index',intersect:false},
+        scales:{ y:{ ticks:{callback:v=>v+'%'} }, x:{ ticks:{ maxTicksLimit:16 } } },
+        plugins:{ tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.parsed.y.toFixed(2)}%`}} } }});
+  } else cp.style.display = 'none';
+
+  /* strategy table */
+  const tb = [];
+  if (e.looSchedules && sg && !sg.insufficientData) {
+    for (let k=1;k<=4;k++) {
+      const fix = e.looSchedules[k], sig = sg.loo[k], m = ml ? ml.strategies[k] : null;
+      const rec = (sg.recommended && sg.recommended[k]) || sg.schedules[k].meanObj;
+      const inLegs = sg.schedules[k].meanObj.legs.map(l=>l.label).join(' · ');
+      tb.push(`<tr><td><b>${k} order${k>1?'s':''}</b></td>
+        <td>buy at preset times</td><td>${pct(fix.meanPremium)}</td><td>${pct(fix.medianPremium)}</td>
+        <td>${pct(fix.p90Premium)}</td><td>${pct(fix.meanReturnToWinClose)}</td><td>${pct(fix.winRate,0)}</td></tr>`);
+      tb.push(`<tr><td></td><td class="green">recommended bargain orders ★</td><td><b>${pct(rec.meanPremium)}</b></td>
+        <td><b>${pct(rec.medianPremium)}</b></td><td>${pct(rec.p90Premium)}</td>
+        <td class="${rec.meanReturnToWinClose>=0?'green':'red'}"><b>${pct(rec.meanReturnToWinClose)}</b></td><td>${pct(rec.winRate,0)}</td></tr>`);
+      tb.push(`<tr><td></td><td>auto-optimizer (sanity check)</td><td>${pct(sig.meanPremium)}</td>
+        <td>${pct(sig.medianPremium)}</td><td>${pct(sig.p90Premium)}</td>
+        <td>${pct(sig.meanReturnToWinClose)}</td><td>${pct(sig.winRate,0)}</td></tr>`);
+      if (m) tb.push(`<tr><td></td><td>ML model</td><td>${pct(m.meanPremium)}</td>
+        <td>${pct(m.medianPremium)}</td><td>${pct(m.p90Premium)}</td>
+        <td>${pct(m.meanReturnToWinClose)}</td><td>${pct(m.winRate,0)}</td></tr>`);
+      tb.push(`<tr><td></td><td class="note" colspan="6">what the auto-optimizer picked here: ${inLegs}</td></tr>`);
+    }
+  } else tb.push(`<tr><td class="note" colspan="7">Not enough IPOs with this window's data.</td></tr>`);
+  document.getElementById('stratTable').innerHTML =
+    `<tr><th>orders</th><th>method</th><th>paid above low (avg)</th><th>typical</th><th>bad case (top 10%)</th>
+     <th>gain at window end</th><th>% profitable</th></tr>` + tb.join('');
+
+  /* model insights */
+  document.getElementById('mlBadge').textContent =
+    (ml ? SCEN_TITLE[scen] : (MD ? 'no model for this window' : '')) +
+    (ml && currentCap !== 'all' ? ' · trained on all company sizes' : '');
+  if (ml) {
+    const feats = Object.entries(ml.importance).slice(0,10);
+    draw('featImp', { type:'bar',
+      data:{ labels:feats.map(f=>f[0]), datasets:[{data:feats.map(f=>f[1]*100), backgroundColor:C.purple}]},
+      options:{ indexAxis:'y', animation:false, plugins:{legend:{display:false}},
+        scales:{x:{ticks:{callback:v=>v+'%'}, title:{display:true,text:'how much the model relies on it'}}} }});
+    document.getElementById('modelVerdict').innerHTML = `
+      <h3>Verdict: real patterns, worse results</h3>
+      <div class="kv"><span>Pattern-finding score (0.5 = coin flip, 1.0 = perfect)</span><b>${ml.oofAuc.toFixed(2)}</b></div>
+      <div class="kv"><span>Buying with the model: paid above the lowest price</span><b>${pct(Math.min(...Object.values(ml.strategies).map(s=>s.meanPremium)))}</b></div>
+      <div class="kv"><span>Buying with the simple bargain orders</span><b class="green">${sg && sg.recommended ? pct(sg.recommended[1].meanPremium) : '—'}</b></div>
+      <p>The model does notice real things — how far the price is below the start, whether it's bouncing off
+      its low, how it compares to the day's average price. But with only ~157 IPOs to learn from, acting on
+      those patterns buys <i>worse</i> than the simple bargain orders. More historical IPOs would help;
+      a fancier model would not.</p>`;
+  } else {
+    if (charts['featImp']) { charts['featImp'].destroy(); delete charts['featImp']; }
+    document.getElementById('modelVerdict').innerHTML =
+      `<h3>No model for this window</h3><p class="note">The ML model is trained only for the
+      "Day 1 only" and "Day 1 + Day 2" windows.</p>`;
+  }
+
+  /* all-IPO table */
+  document.getElementById('tblBadge').textContent = SCEN_TITLE[scen];
+  buildIpoTable(rows);
+
+  /* scenario-windowed global charts */
+  currentScen = scen;
+  const showPanels = {S1:['ppD1'], S2:['ppD1','ppAH','ppPre'],
+                      S3:['ppD1','ppD2'], S4:['ppD1','ppAH','ppPre','ppD2']}[scen];
+  ['ppD1','ppAH','ppPre','ppD2'].forEach(id =>
+    document.getElementById(id).style.display = showPanels.includes(id) ? '' : 'none');
+  if (typeof showIpo === 'function' && sel.options.length)
+    showIpo(+sel.value || 0);
+}
+
+function prettyLeg(l) {
+  if (l.type === 'LIMIT')
+    return `Resting limit order at <b>−${(l.params.level*100).toFixed(1)}%</b> below the IPO opening print
+      <span class="note">(unfilled by ${dlLabel(l.params.deadline)} → market buy there)</span>`;
+  if (l.type === 'REBOUND')
+    return `After a <b>≥${(l.params.dd*100).toFixed(0)}%</b> drawdown, buy on a
+      <b>${(l.params.rb*100).toFixed(1)}%</b> rebound off the low
+      <span class="note">(untriggered by ${dlLabel(l.params.deadline)} → market buy there)</span>`;
+  return `Market buy at <b>${l.label}</b>`;
+}
+const dlLabel = dl => !dl ? '?' :
+  dl[0]===0 ? (dl[1]>=9999 ? 'day-1 close' : `open+${dl[1]}m`) :
+  `${SESS_LABEL[dl[0]]} ${clockOf(dl[0], dl[1])}`;
+
+/* ---- scenario timeline machinery for the low-timing charts ---- */
+const SESS_COLOR = {0:C.accent, 1:C.amber, 2:'#b18cff', 3:C.green};
+function sessionSegments(scen) {
+  const segs = {S1:[0], S2:[0,1,2], S3:[0,3], S4:[0,1,2,3]}[scen]
+    .map(s => ({sess:s, len:{0:390,1:240,2:330,3:390}[s]}));
+  if (scen === 'S2') segs.push({sess:3, len:1, label:'D2 open'});  // 09:30 print
+  return segs;
+}
+const segName = sg => sg.label || {0:'day 1',1:'after-hours',2:'premarket',3:'day 2'}[sg.sess];
+const binLabel = (sg, off) => sg.label ? sg.label :
+  (sg.sess===0 ? '+'+off+'m' : clockOf(sg.sess, off));
+
+function lowTimelineChart(scen, rows) {
+  const binW = scen === 'S1' ? 15 : 30;
+  const segs = sessionSegments(scen);
+  const labels = [], colors = [], counts = [], meta = [];
+  segs.forEach(sg => {
+    const nb = sg.label ? 1 : Math.ceil(sg.len/binW);
+    for (let i=0;i<nb;i++) {
+      labels.push(binLabel(sg, i*binW));
+      colors.push(SESS_COLOR[sg.sess]);
+      counts.push(0);
+      meta.push({sess:sg.sess, start:i*binW, special:!!sg.label});
+    }
+  });
+  rows.forEach(r => {
+    let base = 0;
+    for (const sg of segs) {
+      const nb = sg.label ? 1 : Math.ceil(sg.len/binW);
+      const match = sg.label ? (scen==='S2' && r.lowSess===3)
+                             : (r.lowSess===sg.sess && !(scen==='S2' && sg.sess===3));
+      if (match) { counts[base + (sg.label ? 0 : Math.min(nb-1, Math.floor(r.lowOff/binW)))]++; return; }
+      base += nb;
+    }
+  });
+  draw('lowTimeline', { type:'bar',
+    data:{ labels, datasets:[{data:counts, backgroundColor:colors, borderWidth:0,
+      categoryPercentage:1.0, barPercentage:0.92}]},
+    options:{ animation:false, plugins:{legend:{display:false},
+        tooltip:{callbacks:{ title:(it)=>{ const m=meta[it[0].dataIndex], sg=segs.find(s=>s.sess===m.sess && !!s.label===m.special);
+          return segName(sg)+' '+labels[it[0].dataIndex]+(m.sess===0?' after open':''); },
+          label:(it)=>it.parsed.y+' IPOs'}}},
+      scales:{ y:{title:{display:true,text:'number of IPOs'}},
+               x:{ticks:{maxTicksLimit:26, autoSkip:true, maxRotation:60, minRotation:0}} } }});
+  document.getElementById('lowTimelineTitle').textContent =
+    `When the lowest price happened — each bar = a ${binW}-minute slot`;
+  const parts = segs.map(sg => `<span style="color:${SESS_COLOR[sg.sess]}">■</span> ${segName(sg)}`);
+  document.getElementById('lowTimelineNote').innerHTML =
+    parts.join(' · ') + ` — tall bars = many IPOs hit their cheapest price in that slot. The big spike right
+    after trading starts is why the plans don't buy in the first minutes; the rest spreads out over the
+    window (day-1 slots count minutes after the start; other sessions show clock time, ET).`;
+}
+
+function lowDepthChart(rows) {
+  const binW = 2.5, nb = 13;
+  const bins = new Array(nb).fill(0);
+  rows.forEach(r => {
+    const depth = (1 - r.low) * 100;
+    bins[Math.min(nb-1, Math.max(0, Math.floor(depth/binW)))]++;
+  });
+  draw('lowDepth', { type:'bar',
+    data:{ labels:[...Array(nb).keys()].map(i => i===nb-1 ? `>${(i*binW)}%` :
+        `${(i*binW)}–${((i+1)*binW)}%`),
+      datasets:[{data:bins, backgroundColor:C.red}]},
+    options:{ animation:false, plugins:{legend:{display:false}},
+      scales:{ y:{title:{display:true,text:'number of IPOs'}},
+               x:{title:{display:true,text:'biggest discount below the first traded price'}, ticks:{maxRotation:60}} } }});
+}
+
+function lowScatterChart(scen, rows) {
+  const segs = sessionSegments(scen);
+  const starts = []; let acc = 0;
+  segs.forEach(sg => { starts.push(acc); acc += sg.label ? 30 : sg.len; });
+  const total = acc;
+  const groups = {};
+  rows.forEach(r => {
+    let x = null, gi = null;
+    segs.forEach((sg, si) => {
+      const match = sg.label ? (scen==='S2' && r.lowSess===3)
+                             : (r.lowSess===sg.sess && !(scen==='S2' && sg.sess===3));
+      if (match && x===null) { x = starts[si] + (sg.label ? 0 : r.lowOff); gi = sg.sess; }
+    });
+    if (x===null) return;
+    (groups[gi] = groups[gi] || []).push({x, y:(r.low-1)*100, t:r.ticker.toUpperCase()});
+  });
+  const dsets = Object.entries(groups).map(([sess, pts]) => ({
+    label:{0:'day 1',1:'after-hours',2:'premarket',3:'day 2'}[sess], data:pts,
+    backgroundColor:SESS_COLOR[sess], pointRadius:3.2 }));
+  draw('lowScatter', { type:'scatter', data:{datasets:dsets},
+    options:{ animation:false,
+      plugins:{ legend:{labels:{boxWidth:12}}, tooltip:{callbacks:{
+        label:(it)=>`${it.raw.t}: ${it.raw.y.toFixed(1)}%` }}},
+      scales:{ x:{min:0, max:total, title:{display:true,text:'time of the window low'},
+          ticks:{maxTicksLimit:12, callback:(v)=>{
+            let si = segs.length-1;
+            while (si>0 && v < starts[si]) si--;
+            const sg = segs[si], off = Math.round(v - starts[si]);
+            return binLabel(sg, off); }}},
+        y:{title:{display:true,text:'low vs IPO open'}, ticks:{callback:v=>v+'%'}} } }});
+}
+
+/* ================= global sections ================= */
+function pathChart(id, qd, xlab, clockSess) {
+  const n = qd.quantiles['50'].length;
+  const xs = [...Array(n).keys()];
+  const xtick = v => clockSess != null ? clockOf(clockSess, xs[v]) :
+    (xlab.startsWith('clock') ? clockOf(3, xs[v]) : xs[v]);
+  const mk = (q, color, fill) => ({
+    label: q==='50' ? 'median' : 'p'+q, data: qd.quantiles[q].map(v => v==null?null:(v-1)*100),
+    borderColor: color, backgroundColor: fill||'transparent', fill: fill? '-1' : false,
+    borderWidth: q==='50'?2:1, pointRadius:0, spanGaps:false, tension:.2 });
+  draw(id, { type:'line',
+    data:{ labels:xs, datasets:[
+      mk('10', '#3a4a5d'), mk('25','#55708f','rgba(76,194,255,0.07)'),
+      mk('50', C.accent,'rgba(76,194,255,0.10)'), mk('75','#55708f','rgba(76,194,255,0.10)'),
+      mk('90', '#3a4a5d','rgba(76,194,255,0.07)') ]},
+    options:{ animation:false, interaction:{mode:'index',intersect:false},
+      scales:{ x:{ title:{display:true,text:xlab}, ticks:{maxTicksLimit:10,
+                 callback:xtick }},
+               y:{ title:{display:true,text:'% vs IPO open'}, ticks:{callback:v=>v+'%'}}},
+      plugins:{ legend:{display:true, labels:{boxWidth:14}},
+        tooltip:{callbacks:{label:(c)=>`${c.dataset.label}: ${c.parsed.y?.toFixed(2)}%`}} } }});
+}
+function drawPaths() {
+  const P = EMC().paths;
+  pathChart('pathD1', P.day1, 'minutes after IPO open');
+  if (P.day1ah) pathChart('pathAH', P.day1ah, 'clock time (ET) from 16:00', 1);
+  if (P.day2pre) pathChart('pathPre', P.day2pre, 'clock time (ET) from 04:00', 2);
+  pathChart('pathD2', P.day2, 'clock time (ET)');
+}
+drawPaths();
+
+/* walk-forward validation table (static, all caps) */
+(() => {
+  const WF = R.walkforward, M2 = R.modelV2;
+  if (!WF) return;
+  const rows = [];
+  const strat = { static:'recommended bargain orders ★', signal:'auto-optimizer',
+                  fixed:'buy at preset times' };
+  for (const scen of ['S1','S3','S4']) {
+    const r = WF.scenarios[scen];
+    if (!r) continue;
+    const title = SCEN_TITLE[scen];
+    let first = true;
+    for (const key of ['static','signal','fixed']) {
+      const v = r[key];
+      rows.push(`<tr><td>${first ? `<b>${title}</b>` : ''}</td>
+        <td${key==='static' ? ' class="green"' : ''}>${strat[key]}</td>
+        <td>${key==='static' ? '<b>'+pct(v.meanPremium)+'</b>' : pct(v.meanPremium)}</td>
+        <td>${pct(v.ci95[0])} … ${pct(v.ci95[1])}</td>
+        <td>${pct(v.medianPremium)}</td><td>${pct(v.p90Premium)}</td></tr>`);
+      first = false;
+    }
+    const ap = M2 && M2['adaptivePolicy_'+scen];
+    if (ap) rows.push(`<tr><td></td><td class="blue">adaptive: decide after first 30 min</td>
+      <td class="blue"><b>${pct(ap.policyMeanPremium)}</b></td><td>—</td>
+      <td>${pct(ap.policyMedianPremium)}</td><td>${pct(ap.policyP90Premium)}</td></tr>`);
+    const os = R.optstop && R.optstop[scen];
+    if (os) {
+      rows.push(`<tr><td></td><td>"wait for the perfect moment" policy</td>
+        <td>${pct(os.dpK1.meanPremium)}</td><td>—</td>
+        <td>${pct(os.dpK1.medianPremium)}</td><td>${pct(os.dpK1.p90Premium)}</td></tr>`);
+      rows.push(`<tr><td></td><td class="note">for scale: the average dollar traded in this window paid
+        ${pct(os.vwapBenchmark.meanPremiumOfVwapOverLow)} above the low — the recommended orders pay
+        ${pct(-os.ladderK4.meanVsVwap)} less than that average</td>
+        <td colspan="4"></td></tr>`);
+    }
+  }
+  document.getElementById('wfTable').innerHTML =
+    `<tr><th>window</th><th>method</th><th>paid above low (avg)</th><th>uncertainty range</th>
+     <th>typical</th><th>bad case (top 10%)</th></tr>` + rows.join('');
+})();
+
+/* explorer */
+const sel = document.getElementById('ipoSel');
+function rebuildIpoSelect() {
+  const keep = sel.value;
+  sel.innerHTML = '';
+  R.series.forEach((s,i) => {
+    if ((s.marketCap || 0) > capMin[currentCap])
+      sel.add(new Option(`${s.ticker.toUpperCase()} — ${s.name}`, i));
+  });
+  if ([...sel.options].some(o => o.value === keep)) sel.value = keep;
+}
+rebuildIpoSelect();
+function ladderLevels(scen) {
+  const legs = SGC().scenarios[scen]?.recommended?.[4]?.legs || [];
+  const lv = legs.filter(l => l.type==='LIMIT').map(l => -l.params.level*100)
+    .sort((a,b)=>b-a);
+  return lv.length ? lv : [-9,-9.5,-10,-10.5];
+}
+function showIpo(i) {
+  const s = R.series[i];
+  const gap = 8;
+  const allowed = {S1:['0'], S2:['0','1','2','3'], S3:['0','3'], S4:['0','1','2','3']}[currentScen];
+  const segColors = {0:C.accent, 1:C.amber, 2:C.amber, 3:C.accent};
+  const segNames = {0:'day 1', 1:'after-hours', 2:'premarket',
+                    3: currentScen==='S2' ? 'D2 open' : 'day 2'};
+  // S2's window ends at the day-2 opening print: keep only the first d2 sample
+  const segPts = k => (currentScen==='S2' && k==='3') ? s.segs[k].slice(0,1) : s.segs[k];
+  const segOrder = allowed.filter(k => s.segs[k] && segPts(k).length);
+  const labels = [], datasets = [];
+  const segData = {};
+  segOrder.forEach((k, si) => {
+    segData[k] = [];
+    const pfx = {1:'AH', 2:'pre', 3:'D2'};
+    segPts(k).forEach(p => { labels.push(
+      (k==='0' ? 'D1 +'+p[0]+'m' : pfx[+k]+' '+clockOf(+k,p[0])));
+      segData[k].push((p[1]-1)*100); });
+    if (si < segOrder.length-1) for (let g2=0; g2<gap; g2++) labels.push('');
+  });
+  let cursor = 0;
+  segOrder.forEach((k, si) => {
+    const pre = new Array(cursor).fill(null);
+    datasets.push({ label: segNames[k], data: pre.concat(segData[k]),
+      borderColor: segColors[k], pointRadius: segData[k].length>1?0:3,
+      pointBackgroundColor: segColors[k], borderWidth:1.7, tension:.15, spanGaps:false });
+    cursor += segData[k].length + (si < segOrder.length-1 ? gap : 0);
+  });
+  // window low for the ACTIVE scenario (exact, from the analysis output)
+  const scenRow = (EMC().scenarios[currentScen].lowRows || []).find(r => r.ticker === s.ticker);
+  const low = scenRow ? {sess:scenRow.lowSess, x:scenRow.lowOff, v:scenRow.low} : s.low;
+  let lowIdx = 0, run = 0;
+  segOrder.forEach((k, si) => {
+    if (+k === low.sess) {
+      const seg = segPts(k);
+      let best = 0;
+      for (let j=0;j<seg.length;j++) if (Math.abs(seg[j][0]-low.x) < Math.abs(seg[best][0]-low.x)) best=j;
+      lowIdx = run + best;
+    }
+    run += segData[k].length + (si < segOrder.length-1 ? gap : 0);
+  });
+  datasets.push({ label:'window low', data: labels.map((_,j)=> j===lowIdx ? (low.v-1)*100 : null),
+    pointRadius:5, pointBackgroundColor:C.red, borderColor:'transparent', showLine:false });
+  const ladder = ladderLevels(currentScen);
+  ladder.forEach((v,ix)=> datasets.push({ label: ix===0?'limit ladder':'_h',
+    data: labels.map(()=>v), borderColor:'rgba(255,200,87,0.45)', borderDash:[6,4],
+    borderWidth:1, pointRadius:0 }));
+  draw('ipoChart', { type:'line', data:{labels, datasets},
+    options:{ animation:false, interaction:{mode:'index',intersect:false},
+      plugins:{ legend:{ labels:{ filter:it=>it.text!=='_h' } } },
+      scales:{ x:{ticks:{maxTicksLimit:14}}, y:{ticks:{callback:v=>v+'%'},
+               title:{display:true,text:'% vs IPO open'}} } }});
+  document.getElementById('ipoMeta').textContent =
+    `  IPO ${s.ipoDate} · opened ${s.openClock} ET at $${s.ipoOpenPrice}` +
+    (s.ipoPrice ? ` (priced $${s.ipoPrice})` : '') +
+    (scenRow ? ` · window low ${pct(scenRow.low-1)} (${scenRow.lowLabel})` +
+               ` · window close ${pct(scenRow.winClose-1)}`
+             : ` · low ${pct(s.low.v-1)}`) +
+    ` · ${s.sector||''}`;
+  document.getElementById('ipoNote').innerHTML =
+    `The dashed lines show where the four recommended bargain orders would have been waiting
+     (${ladder.map(v=>v.toFixed(1)+'%').join(', ')} below the first traded price) — wherever the price line
+     crosses a dashed line, that order would have bought. The red dot is the cheapest moment of the window.
+     Amber parts of the line are evening/early-morning trading.`;
+  highlightIpoRow();
+}
+function highlightIpoRow() {
+  const t = (R.series[+sel.value] || {}).ticker;
+  document.querySelectorAll('#ipoTable tr[data-t]').forEach(tr =>
+    tr.classList.toggle('selrow', tr.dataset.t === t));
+}
+sel.onchange = e => showIpo(+e.target.value);
+
+/* all-IPO table */
+function buildIpoTable(lowRowsScen) {
+  const capOf = Object.fromEntries(R.series.map(s => [s.ticker, s.marketCap]));
+  const rows = lowRowsScen.map(r => ({
+    ticker:r.ticker.toUpperCase(), date:r.ipoDate, open:r.openClock,
+    ipoPx:r.ipoPrice, openPx:r.ipoOpenPrice, mcap:capOf[r.ticker],
+    pop: r.ipoPrice ? r.ipoOpenPrice/r.ipoPrice-1 : null,
+    low:r.low-1, lowWhen:r.lowLabel,
+    d1c:r.d1Close-1, wc:r.winClose-1 }));
+  const cols = [['ticker','Ticker'],['date','IPO date'],['open','Opened'],['ipoPx','IPO $'],
+    ['openPx','Open $'],['mcap','Mkt cap'],['pop','Pop at open'],['low','Window low'],['lowWhen','Low when'],
+    ['d1c','D1 close'],['wc','Window close']];
+  let sortK='date', asc=false;
+  const fmt = (k,v) => v==null ? '—' :
+    (['pop','low','d1c','wc'].includes(k) ? `<span class="${v<0?'red':'green'}">${pct(v)}</span>` :
+     (k==='openPx'||k==='ipoPx') ? '$'+(+v).toFixed(2) :
+     k==='mcap' ? '$'+(+v).toFixed(0)+'B' : v);
+  function render(){
+    rows.sort((a,b)=>{ const x=a[sortK],y=b[sortK];
+      return (x==null?1:y==null?-1:(x<y?-1:x>y?1:0))*(asc?1:-1); });
+    document.getElementById('ipoTable').innerHTML =
+      '<tr>'+cols.map(c=>`<th data-k="${c[0]}">${c[1]}${sortK===c[0]?(asc?' ▲':' ▼'):''}</th>`).join('')+'</tr>'+
+      rows.map(r=>`<tr data-t="${r.ticker.toLowerCase()}">`+
+        cols.map(c=>`<td>${fmt(c[0],r[c[0]])}</td>`).join('')+'</tr>').join('');
+    document.querySelectorAll('#ipoTable th').forEach(th=>th.onclick=()=>{
+      const k=th.dataset.k; asc = (sortK===k) ? !asc : false; sortK=k; render(); });
+    document.querySelectorAll('#ipoTable tr[data-t]').forEach(tr=>tr.onclick=()=>{
+      const idx = R.series.findIndex(s => s.ticker === tr.dataset.t);
+      if (idx < 0) return;
+      sel.value = idx;
+      showIpo(idx);
+      document.getElementById('explorerTitle').scrollIntoView({behavior:'smooth'});
+    });
+    highlightIpoRow();
+  }
+  render();
+}
+
+const defaultIpo = Math.max(0, R.series.findIndex(s => s.ticker === 'cbrs'));
+sel.value = defaultIpo;
+document.getElementById('cap-50b').classList.add('active');
+renderScenario('S1');  // also draws the explorer for the selected IPO
+</script>
+</body>
+</html>
