@@ -67,6 +67,12 @@ CAP_ANALYSIS_FILTERS = [
     {"id": "gt50", "label": ">$50B", "analysisLabel": ">$50B IPOs"},
 ]
 
+# Keep CBRS in the large-IPO cohort even if the refreshed current cap dips under
+# $50B; the displayed card market cap still comes from the latest source data.
+CAP_FILTER_MEMBERSHIP_OVERRIDES = {
+    "CBRS": {"gt50"},
+}
+
 DEFAULT_CAP_ANALYSIS_FILTER = "gt50"
 
 TRADING_PLACE_FILTERS = [
@@ -445,6 +451,9 @@ def build_analysis(ipos: list[dict[str, Any]], first_day_bars: dict[str, list[li
 
 
 def cap_filter_matches(ipo: dict[str, Any], filter_id: str) -> bool:
+    ticker = str(ipo.get("ticker") or "").strip().upper()
+    if filter_id in CAP_FILTER_MEMBERSHIP_OVERRIDES.get(ticker, set()):
+        return True
     market_cap = ipo.get("marketCap")
     if not is_finite_number(market_cap):
         return filter_id == "all"

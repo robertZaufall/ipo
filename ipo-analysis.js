@@ -7947,103 +7947,103 @@ window.ipoAnalysis = {
       "asOf": "2026-06-13",
       "windowYears": 15,
       "cutoffDate": "2011-06-13",
-      "sampleSize": 17,
+      "sampleSize": 18,
       "sourceCounts": {
-        "exact5m": 17,
+        "exact5m": 18,
         "missingExact5m": 5
       },
-      "medianDeltaMinutes": 25.0,
+      "medianDeltaMinutes": 32.5,
       "medianLowMinute": 760.0,
       "medianLowTime": "12:40",
-      "medianLowGermanMinute": 1115.0,
-      "medianLowGermanTime": "18:35",
-      "medianLowGermanLabel": "(DE 18:35)",
-      "firstHourPct": 76.5,
-      "first30MinutesPct": 52.9,
-      "afterTwoHoursPct": 11.8,
-      "noonOrLaterPct": 76.5,
+      "medianLowGermanMinute": 1117.5,
+      "medianLowGermanTime": "18:38",
+      "medianLowGermanLabel": "(DE 18:38)",
+      "firstHourPct": 72.2,
+      "first30MinutesPct": 50.0,
+      "afterTwoHoursPct": 11.1,
+      "noonOrLaterPct": 77.8,
       "decisionCheckpoints": [
         {
           "label": "Wait 15m",
           "minutes": 15,
-          "stillAheadCount": 11,
-          "stillAheadPct": 64.7,
+          "stillAheadCount": 12,
+          "stillAheadPct": 66.7,
           "missedCount": 6,
-          "missedPct": 35.3
+          "missedPct": 33.3
         },
         {
           "label": "Wait 30m",
           "minutes": 30,
-          "stillAheadCount": 8,
-          "stillAheadPct": 47.1,
+          "stillAheadCount": 9,
+          "stillAheadPct": 50.0,
           "missedCount": 9,
-          "missedPct": 52.9
+          "missedPct": 50.0
         },
         {
           "label": "Wait 45m",
           "minutes": 45,
-          "stillAheadCount": 4,
-          "stillAheadPct": 23.5,
+          "stillAheadCount": 5,
+          "stillAheadPct": 27.8,
           "missedCount": 13,
-          "missedPct": 76.5
+          "missedPct": 72.2
         },
         {
           "label": "Wait 1h",
           "minutes": 60,
-          "stillAheadCount": 4,
-          "stillAheadPct": 23.5,
+          "stillAheadCount": 5,
+          "stillAheadPct": 27.8,
           "missedCount": 13,
-          "missedPct": 76.5
+          "missedPct": 72.2
         },
         {
           "label": "Wait 90m",
           "minutes": 90,
           "stillAheadCount": 4,
-          "stillAheadPct": 23.5,
-          "missedCount": 13,
-          "missedPct": 76.5
+          "stillAheadPct": 22.2,
+          "missedCount": 14,
+          "missedPct": 77.8
         },
         {
           "label": "Wait 2h",
           "minutes": 120,
           "stillAheadCount": 2,
-          "stillAheadPct": 11.8,
-          "missedCount": 15,
-          "missedPct": 88.2
+          "stillAheadPct": 11.1,
+          "missedCount": 16,
+          "missedPct": 88.9
         }
       ],
       "decisionInsights": {
         "openingPrintLow": {
           "count": 5,
-          "pct": 29.4
+          "pct": 27.8
         },
         "openingRushLow": {
           "count": 9,
-          "pct": 52.9
+          "pct": 50.0
         },
         "lowAfterNoon": {
-          "count": 13,
-          "pct": 76.5
+          "count": 14,
+          "pct": 77.8
         },
         "lowAfter13": {
-          "count": 7,
-          "pct": 41.2
+          "count": 8,
+          "pct": 44.4
         },
         "lowAfter14": {
-          "count": 5,
-          "pct": 29.4
+          "count": 6,
+          "pct": 33.3
         },
         "finalHourLow": {
           "count": 3,
-          "pct": 17.6
+          "pct": 16.7
         },
         "lastEvenOddsWait": {
-          "label": "Wait 15m",
-          "minutes": 15,
-          "stillAheadCount": 11,
-          "stillAheadPct": 64.7,
-          "missedCount": 6,
-          "missedPct": 35.3
+          "label": "Wait 30m",
+          "minutes": 30,
+          "stillAheadCount": 9,
+          "stillAheadPct": 50.0,
+          "missedCount": 9,
+          "missedPct": 50.0
         }
       },
       "topBucket": {
@@ -8051,14 +8051,14 @@ window.ipoAnalysis = {
         "minMinutes": 0,
         "maxMinutes": 30,
         "count": 9,
-        "pct": 52.9
+        "pct": 50.0
       },
       "topClockBucket": {
         "label": "12:00-13:00",
         "startMinute": 720,
         "endMinute": 780,
         "count": 6,
-        "pct": 35.3,
+        "pct": 33.3,
         "nycLabel": "12:00-13:00",
         "berlinLabel": "17:00-18:00 / 18:00-19:00",
         "berlinZoneLabel": "MEZ/MESZ",
@@ -8109,21 +8109,21 @@ window.ipoAnalysis = {
           "minMinutes": 0,
           "maxMinutes": 30,
           "count": 9,
-          "pct": 52.9
+          "pct": 50.0
         },
         {
           "label": "30-60m",
           "minMinutes": 30,
           "maxMinutes": 60,
           "count": 4,
-          "pct": 23.5
+          "pct": 22.2
         },
         {
           "label": "1-2h",
           "minMinutes": 60,
           "maxMinutes": 120,
-          "count": 2,
-          "pct": 11.8
+          "count": 3,
+          "pct": 16.7
         },
         {
           "label": "2-3h",
@@ -8137,14 +8137,14 @@ window.ipoAnalysis = {
           "minMinutes": 180,
           "maxMinutes": 240,
           "count": 1,
-          "pct": 5.9
+          "pct": 5.6
         },
         {
           "label": "4h+",
           "minMinutes": 240,
           "maxMinutes": null,
           "count": 1,
-          "pct": 5.9
+          "pct": 5.6
         }
       ],
       "clockBuckets": [
@@ -8153,7 +8153,7 @@ window.ipoAnalysis = {
           "startMinute": 570,
           "endMinute": 660,
           "count": 1,
-          "pct": 5.9,
+          "pct": 5.6,
           "nycLabel": "09:30-11:00",
           "berlinLabel": "15:30-17:00",
           "berlinZoneLabel": "MESZ",
@@ -8165,7 +8165,7 @@ window.ipoAnalysis = {
           "startMinute": 660,
           "endMinute": 720,
           "count": 3,
-          "pct": 17.6,
+          "pct": 16.7,
           "nycLabel": "11:00-12:00",
           "berlinLabel": "17:00-18:00",
           "berlinZoneLabel": "MESZ",
@@ -8177,7 +8177,7 @@ window.ipoAnalysis = {
           "startMinute": 720,
           "endMinute": 780,
           "count": 6,
-          "pct": 35.3,
+          "pct": 33.3,
           "nycLabel": "12:00-13:00",
           "berlinLabel": "17:00-18:00 / 18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
@@ -8189,7 +8189,7 @@ window.ipoAnalysis = {
           "startMinute": 780,
           "endMinute": 840,
           "count": 2,
-          "pct": 11.8,
+          "pct": 11.1,
           "nycLabel": "13:00-14:00",
           "berlinLabel": "18:00-19:00 / 19:00-20:00",
           "berlinZoneLabel": "MEZ/MESZ",
@@ -8200,20 +8200,20 @@ window.ipoAnalysis = {
           "label": "14:00-15:00",
           "startMinute": 840,
           "endMinute": 900,
-          "count": 2,
-          "pct": 11.8,
+          "count": 3,
+          "pct": 16.7,
           "nycLabel": "14:00-15:00",
           "berlinLabel": "20:00-21:00",
-          "berlinZoneLabel": "MEZ",
+          "berlinZoneLabel": "MEZ/MESZ",
           "germanChartLabel": "(DE 20:00-21:00)",
-          "germanFullLabel": "MEZ 20:00-21:00"
+          "germanFullLabel": "MEZ/MESZ 20:00-21:00"
         },
         {
           "label": "15:00-16:00",
           "startMinute": 900,
           "endMinute": 960,
           "count": 3,
-          "pct": 17.6,
+          "pct": 16.7,
           "nycLabel": "15:00-16:00",
           "berlinLabel": "21:00-22:00",
           "berlinZoneLabel": "MESZ",
@@ -8468,6 +8468,25 @@ window.ipoAnalysis = {
           "lowPrice": 231.11,
           "bucket": "30-60m",
           "clockBucket": "13:00-14:00"
+        },
+        {
+          "ticker": "CBRS",
+          "name": "Cerebras Systems Inc.",
+          "date": "2026-05-14",
+          "marketCap": 47.0,
+          "source": "Yahoo 5m bars",
+          "firstTime": "12:55",
+          "lowTime": "14:00",
+          "firstBerlinTime": "18:55",
+          "lowBerlinTime": "20:00",
+          "lowBerlinZone": "MESZ",
+          "lowBerlinMinute": 1200,
+          "firstMinute": 775,
+          "lowMinute": 840,
+          "deltaMinutes": 65,
+          "lowPrice": 300.0,
+          "bucket": "1-2h",
+          "clockBucket": "14:00-15:00"
         },
         {
           "ticker": "NU",
@@ -25610,103 +25629,103 @@ window.ipoAnalysis = {
         "asOf": "2026-06-13",
         "windowYears": 15,
         "cutoffDate": "2011-06-13",
-        "sampleSize": 17,
+        "sampleSize": 18,
         "sourceCounts": {
-          "exact5m": 17,
+          "exact5m": 18,
           "missingExact5m": 5
         },
-        "medianDeltaMinutes": 25.0,
+        "medianDeltaMinutes": 32.5,
         "medianLowMinute": 760.0,
         "medianLowTime": "12:40",
-        "medianLowGermanMinute": 1115.0,
-        "medianLowGermanTime": "18:35",
-        "medianLowGermanLabel": "(DE 18:35)",
-        "firstHourPct": 76.5,
-        "first30MinutesPct": 52.9,
-        "afterTwoHoursPct": 11.8,
-        "noonOrLaterPct": 76.5,
+        "medianLowGermanMinute": 1117.5,
+        "medianLowGermanTime": "18:38",
+        "medianLowGermanLabel": "(DE 18:38)",
+        "firstHourPct": 72.2,
+        "first30MinutesPct": 50.0,
+        "afterTwoHoursPct": 11.1,
+        "noonOrLaterPct": 77.8,
         "decisionCheckpoints": [
           {
             "label": "Wait 15m",
             "minutes": 15,
-            "stillAheadCount": 11,
-            "stillAheadPct": 64.7,
+            "stillAheadCount": 12,
+            "stillAheadPct": 66.7,
             "missedCount": 6,
-            "missedPct": 35.3
+            "missedPct": 33.3
           },
           {
             "label": "Wait 30m",
             "minutes": 30,
-            "stillAheadCount": 8,
-            "stillAheadPct": 47.1,
+            "stillAheadCount": 9,
+            "stillAheadPct": 50.0,
             "missedCount": 9,
-            "missedPct": 52.9
+            "missedPct": 50.0
           },
           {
             "label": "Wait 45m",
             "minutes": 45,
-            "stillAheadCount": 4,
-            "stillAheadPct": 23.5,
+            "stillAheadCount": 5,
+            "stillAheadPct": 27.8,
             "missedCount": 13,
-            "missedPct": 76.5
+            "missedPct": 72.2
           },
           {
             "label": "Wait 1h",
             "minutes": 60,
-            "stillAheadCount": 4,
-            "stillAheadPct": 23.5,
+            "stillAheadCount": 5,
+            "stillAheadPct": 27.8,
             "missedCount": 13,
-            "missedPct": 76.5
+            "missedPct": 72.2
           },
           {
             "label": "Wait 90m",
             "minutes": 90,
             "stillAheadCount": 4,
-            "stillAheadPct": 23.5,
-            "missedCount": 13,
-            "missedPct": 76.5
+            "stillAheadPct": 22.2,
+            "missedCount": 14,
+            "missedPct": 77.8
           },
           {
             "label": "Wait 2h",
             "minutes": 120,
             "stillAheadCount": 2,
-            "stillAheadPct": 11.8,
-            "missedCount": 15,
-            "missedPct": 88.2
+            "stillAheadPct": 11.1,
+            "missedCount": 16,
+            "missedPct": 88.9
           }
         ],
         "decisionInsights": {
           "openingPrintLow": {
             "count": 5,
-            "pct": 29.4
+            "pct": 27.8
           },
           "openingRushLow": {
             "count": 9,
-            "pct": 52.9
+            "pct": 50.0
           },
           "lowAfterNoon": {
-            "count": 13,
-            "pct": 76.5
+            "count": 14,
+            "pct": 77.8
           },
           "lowAfter13": {
-            "count": 7,
-            "pct": 41.2
+            "count": 8,
+            "pct": 44.4
           },
           "lowAfter14": {
-            "count": 5,
-            "pct": 29.4
+            "count": 6,
+            "pct": 33.3
           },
           "finalHourLow": {
             "count": 3,
-            "pct": 17.6
+            "pct": 16.7
           },
           "lastEvenOddsWait": {
-            "label": "Wait 15m",
-            "minutes": 15,
-            "stillAheadCount": 11,
-            "stillAheadPct": 64.7,
-            "missedCount": 6,
-            "missedPct": 35.3
+            "label": "Wait 30m",
+            "minutes": 30,
+            "stillAheadCount": 9,
+            "stillAheadPct": 50.0,
+            "missedCount": 9,
+            "missedPct": 50.0
           }
         },
         "topBucket": {
@@ -25714,14 +25733,14 @@ window.ipoAnalysis = {
           "minMinutes": 0,
           "maxMinutes": 30,
           "count": 9,
-          "pct": 52.9
+          "pct": 50.0
         },
         "topClockBucket": {
           "label": "12:00-13:00",
           "startMinute": 720,
           "endMinute": 780,
           "count": 6,
-          "pct": 35.3,
+          "pct": 33.3,
           "nycLabel": "12:00-13:00",
           "berlinLabel": "17:00-18:00 / 18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
@@ -25772,21 +25791,21 @@ window.ipoAnalysis = {
             "minMinutes": 0,
             "maxMinutes": 30,
             "count": 9,
-            "pct": 52.9
+            "pct": 50.0
           },
           {
             "label": "30-60m",
             "minMinutes": 30,
             "maxMinutes": 60,
             "count": 4,
-            "pct": 23.5
+            "pct": 22.2
           },
           {
             "label": "1-2h",
             "minMinutes": 60,
             "maxMinutes": 120,
-            "count": 2,
-            "pct": 11.8
+            "count": 3,
+            "pct": 16.7
           },
           {
             "label": "2-3h",
@@ -25800,14 +25819,14 @@ window.ipoAnalysis = {
             "minMinutes": 180,
             "maxMinutes": 240,
             "count": 1,
-            "pct": 5.9
+            "pct": 5.6
           },
           {
             "label": "4h+",
             "minMinutes": 240,
             "maxMinutes": null,
             "count": 1,
-            "pct": 5.9
+            "pct": 5.6
           }
         ],
         "clockBuckets": [
@@ -25816,7 +25835,7 @@ window.ipoAnalysis = {
             "startMinute": 570,
             "endMinute": 660,
             "count": 1,
-            "pct": 5.9,
+            "pct": 5.6,
             "nycLabel": "09:30-11:00",
             "berlinLabel": "15:30-17:00",
             "berlinZoneLabel": "MESZ",
@@ -25828,7 +25847,7 @@ window.ipoAnalysis = {
             "startMinute": 660,
             "endMinute": 720,
             "count": 3,
-            "pct": 17.6,
+            "pct": 16.7,
             "nycLabel": "11:00-12:00",
             "berlinLabel": "17:00-18:00",
             "berlinZoneLabel": "MESZ",
@@ -25840,7 +25859,7 @@ window.ipoAnalysis = {
             "startMinute": 720,
             "endMinute": 780,
             "count": 6,
-            "pct": 35.3,
+            "pct": 33.3,
             "nycLabel": "12:00-13:00",
             "berlinLabel": "17:00-18:00 / 18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
@@ -25852,7 +25871,7 @@ window.ipoAnalysis = {
             "startMinute": 780,
             "endMinute": 840,
             "count": 2,
-            "pct": 11.8,
+            "pct": 11.1,
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00 / 19:00-20:00",
             "berlinZoneLabel": "MEZ/MESZ",
@@ -25863,20 +25882,20 @@ window.ipoAnalysis = {
             "label": "14:00-15:00",
             "startMinute": 840,
             "endMinute": 900,
-            "count": 2,
-            "pct": 11.8,
+            "count": 3,
+            "pct": 16.7,
             "nycLabel": "14:00-15:00",
             "berlinLabel": "20:00-21:00",
-            "berlinZoneLabel": "MEZ",
+            "berlinZoneLabel": "MEZ/MESZ",
             "germanChartLabel": "(DE 20:00-21:00)",
-            "germanFullLabel": "MEZ 20:00-21:00"
+            "germanFullLabel": "MEZ/MESZ 20:00-21:00"
           },
           {
             "label": "15:00-16:00",
             "startMinute": 900,
             "endMinute": 960,
             "count": 3,
-            "pct": 17.6,
+            "pct": 16.7,
             "nycLabel": "15:00-16:00",
             "berlinLabel": "21:00-22:00",
             "berlinZoneLabel": "MESZ",
@@ -26133,6 +26152,25 @@ window.ipoAnalysis = {
             "clockBucket": "13:00-14:00"
           },
           {
+            "ticker": "CBRS",
+            "name": "Cerebras Systems Inc.",
+            "date": "2026-05-14",
+            "marketCap": 47.0,
+            "source": "Yahoo 5m bars",
+            "firstTime": "12:55",
+            "lowTime": "14:00",
+            "firstBerlinTime": "18:55",
+            "lowBerlinTime": "20:00",
+            "lowBerlinZone": "MESZ",
+            "lowBerlinMinute": 1200,
+            "firstMinute": 775,
+            "lowMinute": 840,
+            "deltaMinutes": 65,
+            "lowPrice": 300.0,
+            "bucket": "1-2h",
+            "clockBucket": "14:00-15:00"
+          },
+          {
             "ticker": "NU",
             "name": "Nu Holdings Ltd.",
             "date": "2021-12-09",
@@ -26244,103 +26282,103 @@ window.ipoAnalysis = {
         "asOf": "2026-06-13",
         "windowYears": 15,
         "cutoffDate": "2011-06-13",
-        "sampleSize": 11,
+        "sampleSize": 12,
         "sourceCounts": {
-          "exact5m": 11,
+          "exact5m": 12,
           "missingExact5m": 1
         },
         "medianDeltaMinutes": 25.0,
         "medianLowMinute": 760.0,
         "medianLowTime": "12:40",
-        "medianLowGermanMinute": 1115.0,
-        "medianLowGermanTime": "18:35",
-        "medianLowGermanLabel": "(DE 18:35)",
-        "firstHourPct": 81.8,
-        "first30MinutesPct": 63.6,
-        "afterTwoHoursPct": 9.1,
-        "noonOrLaterPct": 90.9,
+        "medianLowGermanMinute": 1117.5,
+        "medianLowGermanTime": "18:38",
+        "medianLowGermanLabel": "(DE 18:38)",
+        "firstHourPct": 75.0,
+        "first30MinutesPct": 58.3,
+        "afterTwoHoursPct": 8.3,
+        "noonOrLaterPct": 91.7,
         "decisionCheckpoints": [
           {
             "label": "Wait 15m",
             "minutes": 15,
-            "stillAheadCount": 7,
-            "stillAheadPct": 63.6,
+            "stillAheadCount": 8,
+            "stillAheadPct": 66.7,
             "missedCount": 4,
-            "missedPct": 36.4
+            "missedPct": 33.3
           },
           {
             "label": "Wait 30m",
             "minutes": 30,
-            "stillAheadCount": 4,
-            "stillAheadPct": 36.4,
+            "stillAheadCount": 5,
+            "stillAheadPct": 41.7,
             "missedCount": 7,
-            "missedPct": 63.6
+            "missedPct": 58.3
           },
           {
             "label": "Wait 45m",
             "minutes": 45,
-            "stillAheadCount": 2,
-            "stillAheadPct": 18.2,
+            "stillAheadCount": 3,
+            "stillAheadPct": 25.0,
             "missedCount": 9,
-            "missedPct": 81.8
+            "missedPct": 75.0
           },
           {
             "label": "Wait 1h",
             "minutes": 60,
-            "stillAheadCount": 2,
-            "stillAheadPct": 18.2,
+            "stillAheadCount": 3,
+            "stillAheadPct": 25.0,
             "missedCount": 9,
-            "missedPct": 81.8
+            "missedPct": 75.0
           },
           {
             "label": "Wait 90m",
             "minutes": 90,
             "stillAheadCount": 2,
-            "stillAheadPct": 18.2,
-            "missedCount": 9,
-            "missedPct": 81.8
+            "stillAheadPct": 16.7,
+            "missedCount": 10,
+            "missedPct": 83.3
           },
           {
             "label": "Wait 2h",
             "minutes": 120,
             "stillAheadCount": 1,
-            "stillAheadPct": 9.1,
-            "missedCount": 10,
-            "missedPct": 90.9
+            "stillAheadPct": 8.3,
+            "missedCount": 11,
+            "missedPct": 91.7
           }
         ],
         "decisionInsights": {
           "openingPrintLow": {
             "count": 4,
-            "pct": 36.4
+            "pct": 33.3
           },
           "openingRushLow": {
             "count": 7,
-            "pct": 63.6
+            "pct": 58.3
           },
           "lowAfterNoon": {
-            "count": 10,
-            "pct": 90.9
+            "count": 11,
+            "pct": 91.7
           },
           "lowAfter13": {
-            "count": 4,
-            "pct": 36.4
+            "count": 5,
+            "pct": 41.7
           },
           "lowAfter14": {
-            "count": 3,
-            "pct": 27.3
+            "count": 4,
+            "pct": 33.3
           },
           "finalHourLow": {
             "count": 2,
-            "pct": 18.2
+            "pct": 16.7
           },
           "lastEvenOddsWait": {
             "label": "Wait 15m",
             "minutes": 15,
-            "stillAheadCount": 7,
-            "stillAheadPct": 63.6,
+            "stillAheadCount": 8,
+            "stillAheadPct": 66.7,
             "missedCount": 4,
-            "missedPct": 36.4
+            "missedPct": 33.3
           }
         },
         "topBucket": {
@@ -26348,14 +26386,14 @@ window.ipoAnalysis = {
           "minMinutes": 0,
           "maxMinutes": 30,
           "count": 7,
-          "pct": 63.6
+          "pct": 58.3
         },
         "topClockBucket": {
           "label": "12:00-13:00",
           "startMinute": 720,
           "endMinute": 780,
           "count": 6,
-          "pct": 54.5,
+          "pct": 50.0,
           "nycLabel": "12:00-13:00",
           "berlinLabel": "17:00-18:00 / 18:00-19:00",
           "berlinZoneLabel": "MEZ/MESZ",
@@ -26406,21 +26444,21 @@ window.ipoAnalysis = {
             "minMinutes": 0,
             "maxMinutes": 30,
             "count": 7,
-            "pct": 63.6
+            "pct": 58.3
           },
           {
             "label": "30-60m",
             "minMinutes": 30,
             "maxMinutes": 60,
             "count": 2,
-            "pct": 18.2
+            "pct": 16.7
           },
           {
             "label": "1-2h",
             "minMinutes": 60,
             "maxMinutes": 120,
-            "count": 1,
-            "pct": 9.1
+            "count": 2,
+            "pct": 16.7
           },
           {
             "label": "2-3h",
@@ -26434,7 +26472,7 @@ window.ipoAnalysis = {
             "minMinutes": 180,
             "maxMinutes": 240,
             "count": 1,
-            "pct": 9.1
+            "pct": 8.3
           },
           {
             "label": "4h+",
@@ -26462,7 +26500,7 @@ window.ipoAnalysis = {
             "startMinute": 660,
             "endMinute": 720,
             "count": 1,
-            "pct": 9.1,
+            "pct": 8.3,
             "nycLabel": "11:00-12:00",
             "berlinLabel": "17:00-18:00",
             "berlinZoneLabel": "MESZ",
@@ -26474,7 +26512,7 @@ window.ipoAnalysis = {
             "startMinute": 720,
             "endMinute": 780,
             "count": 6,
-            "pct": 54.5,
+            "pct": 50.0,
             "nycLabel": "12:00-13:00",
             "berlinLabel": "17:00-18:00 / 18:00-19:00",
             "berlinZoneLabel": "MEZ/MESZ",
@@ -26486,7 +26524,7 @@ window.ipoAnalysis = {
             "startMinute": 780,
             "endMinute": 840,
             "count": 1,
-            "pct": 9.1,
+            "pct": 8.3,
             "nycLabel": "13:00-14:00",
             "berlinLabel": "18:00-19:00",
             "berlinZoneLabel": "MEZ",
@@ -26497,20 +26535,20 @@ window.ipoAnalysis = {
             "label": "14:00-15:00",
             "startMinute": 840,
             "endMinute": 900,
-            "count": 1,
-            "pct": 9.1,
+            "count": 2,
+            "pct": 16.7,
             "nycLabel": "14:00-15:00",
             "berlinLabel": "20:00-21:00",
-            "berlinZoneLabel": "MEZ",
+            "berlinZoneLabel": "MEZ/MESZ",
             "germanChartLabel": "(DE 20:00-21:00)",
-            "germanFullLabel": "MEZ 20:00-21:00"
+            "germanFullLabel": "MEZ/MESZ 20:00-21:00"
           },
           {
             "label": "15:00-16:00",
             "startMinute": 900,
             "endMinute": 960,
             "count": 2,
-            "pct": 18.2,
+            "pct": 16.7,
             "nycLabel": "15:00-16:00",
             "berlinLabel": "21:00-22:00",
             "berlinZoneLabel": "MESZ",
@@ -26689,6 +26727,25 @@ window.ipoAnalysis = {
             "lowPrice": 56.0,
             "bucket": "30-60m",
             "clockBucket": "12:00-13:00"
+          },
+          {
+            "ticker": "CBRS",
+            "name": "Cerebras Systems Inc.",
+            "date": "2026-05-14",
+            "marketCap": 47.0,
+            "source": "Yahoo 5m bars",
+            "firstTime": "12:55",
+            "lowTime": "14:00",
+            "firstBerlinTime": "18:55",
+            "lowBerlinTime": "20:00",
+            "lowBerlinZone": "MESZ",
+            "lowBerlinMinute": 1200,
+            "firstMinute": 775,
+            "lowMinute": 840,
+            "deltaMinutes": 65,
+            "lowPrice": 300.0,
+            "bucket": "1-2h",
+            "clockBucket": "14:00-15:00"
           },
           {
             "ticker": "PLTR",

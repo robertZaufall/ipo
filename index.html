@@ -449,6 +449,9 @@
             { id: 'gt25', label: '>$25B', buttonId: 'cap-gt25' },
             { id: 'gt50', label: '>$50B', buttonId: 'cap-gt50' }
         ];
+        const CAP_FILTER_MEMBERSHIP_OVERRIDES = {
+            CBRS: new Set(['gt50'])
+        };
         const TRADING_PLACE_FILTERS = [
             { id: 'all', label: 'All', buttonId: 'place-all' },
             { id: 'nasdaq', label: 'NASDAQ', buttonId: 'place-nasdaq' },
@@ -5544,6 +5547,8 @@
         }
 
         function capFilterMatches(ipo) {
+            const overrides = CAP_FILTER_MEMBERSHIP_OVERRIDES[normalizedTicker(ipo?.ticker)];
+            if (overrides?.has(capFilterMode)) return true;
             const marketCap = Number(ipo.marketCap);
             if (!Number.isFinite(marketCap)) return capFilterMode === 'all';
             if (capFilterMode === 'under10') return marketCap < 10;
