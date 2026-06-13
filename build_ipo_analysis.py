@@ -73,7 +73,7 @@ CAP_FILTER_MEMBERSHIP_OVERRIDES = {
     "CBRS": {"gt50"},
 }
 
-DEFAULT_CAP_ANALYSIS_FILTER = "gt50"
+DEFAULT_CAP_ANALYSIS_FILTER = "gt25"
 
 TRADING_PLACE_FILTERS = [
     {"id": "all", "label": "All", "analysisLabel": ""},

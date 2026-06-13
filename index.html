@@ -89,8 +89,8 @@
                                 <button id="cap-under10" type="button" data-cap-filter="under10" aria-pressed="false" class="min-w-0 rounded-xl px-0.5 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&lt;$10B</button>
                                 <button id="cap-all" type="button" data-cap-filter="all" aria-pressed="false" aria-label="All market caps" class="min-w-0 rounded-xl px-0.5 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">*</button>
                                 <button id="cap-gt10" type="button" data-cap-filter="gt10" aria-pressed="false" class="min-w-0 rounded-xl px-0.5 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$10B</button>
-                                <button id="cap-gt25" type="button" data-cap-filter="gt25" aria-pressed="false" class="min-w-0 rounded-xl px-0.5 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$25B</button>
-                                <button id="cap-gt50" type="button" data-cap-filter="gt50" aria-pressed="true" class="min-w-0 rounded-xl px-0.5 flex items-center justify-center transition-colors bg-blue-600 text-white">&gt;$50B</button>
+                                <button id="cap-gt25" type="button" data-cap-filter="gt25" aria-pressed="true" class="min-w-0 rounded-xl px-0.5 flex items-center justify-center transition-colors bg-blue-600 text-white">&gt;$25B</button>
+                                <button id="cap-gt50" type="button" data-cap-filter="gt50" aria-pressed="false" class="min-w-0 rounded-xl px-0.5 flex items-center justify-center transition-colors text-zinc-400 hover:text-zinc-200">&gt;$50B</button>
                             </div>
                         </div>
                         <div aria-hidden="true" class="h-px w-full bg-zinc-800 md:h-7 md:w-px"></div>
@@ -110,8 +110,8 @@
                             <span>Span</span>
                         </span>
                         <button id="chart-mode-day1" type="button" data-analysis-range="day1" aria-pressed="false" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors text-zinc-400 hover:text-zinc-200">Day 1</button>
-                        <button id="chart-mode-extended" type="button" data-analysis-range="d1Ext" aria-pressed="false" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors text-zinc-400 hover:text-zinc-200">Ext</button>
-                        <button id="chart-mode-d1d2" type="button" data-analysis-range="d1D2" aria-pressed="true" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors bg-blue-600 text-white">D1 D2</button>
+                        <button id="chart-mode-extended" type="button" data-analysis-range="d1Ext" aria-pressed="true" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors bg-blue-600 text-white">Ext</button>
+                        <button id="chart-mode-d1d2" type="button" data-analysis-range="d1D2" aria-pressed="false" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors text-zinc-400 hover:text-zinc-200">D1 D2</button>
                         <button id="chart-mode-day2" type="button" data-analysis-range="d1ExtD2" aria-pressed="false" class="rounded-xl flex items-center justify-center whitespace-nowrap transition-colors text-zinc-400 hover:text-zinc-200">D1 Ext D2</button>
                     </div>
                 </div>
@@ -423,8 +423,8 @@
 
         let sortMode = 'date';
         let searchTerm = '';
-        const DEFAULT_CAP_FILTER = 'gt50';
-        const DEFAULT_ANALYSIS_RANGE_MODE = 'd1D2';
+        const DEFAULT_CAP_FILTER = 'gt25';
+        const DEFAULT_ANALYSIS_RANGE_MODE = 'd1Ext';
         const DEFAULT_CARD_CHART_MODE = 'd1D2';
         const CARD_PAGE_SIZE = 10;
 
