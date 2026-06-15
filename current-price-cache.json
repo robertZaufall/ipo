@@ -8,30 +8,30 @@
       "source": "Yahoo regularMarketPrice"
     },
     "AAOI": {
-      "asOf": "2026-06-12T23:59:57Z",
+      "asOf": "2026-06-15T21:32:52Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:03.429406Z",
-      "price": 170.4,
+      "fetchedAt": "2026-06-15T21:33:03.174497Z",
+      "price": 190.5,
       "source": "Yahoo chart after-hours"
     },
     "ABNB": {
-      "asOf": "2026-06-12T23:48:21Z",
+      "asOf": "2026-06-15T21:29:15Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:33.829010Z",
-      "price": 132.37,
+      "fetchedAt": "2026-06-15T21:32:30.999758Z",
+      "price": 138.0,
       "source": "Yahoo chart after-hours"
     },
     "ACLS": {
-      "asOf": "2026-06-12T23:56:04Z",
+      "asOf": "2026-06-15T21:27:11Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:35.459769Z",
-      "price": 180.12,
+      "fetchedAt": "2026-06-15T21:33:32.843289Z",
+      "price": 191.0694,
       "source": "Yahoo chart after-hours"
     },
     "ACLX": {
       "asOf": "2026-05-15T20:00:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:26.292113Z",
+      "fetchedAt": "2026-06-15T21:33:25.537362Z",
       "price": 115.07,
       "source": "Yahoo regularMarketPrice"
     },
@@ -43,52 +43,52 @@
       "source": "Yahoo regularMarketPrice"
     },
     "ACMR": {
-      "asOf": "2026-06-12T23:59:41Z",
+      "asOf": "2026-06-15T21:01:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:28.368702Z",
-      "price": 94.71,
+      "fetchedAt": "2026-06-15T21:33:27.380492Z",
+      "price": 96.5,
       "source": "Yahoo chart after-hours"
     },
     "ACT": {
-      "asOf": "2026-06-12T20:10:04Z",
+      "asOf": "2026-06-15T20:10:04Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:32.608293Z",
-      "price": 42.41,
+      "fetchedAt": "2026-06-15T21:33:30.853851Z",
+      "price": 42.34,
       "source": "Yahoo chart after-hours"
     },
     "ADC": {
-      "asOf": "2026-06-12T23:39:45Z",
+      "asOf": "2026-06-15T21:17:53Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:14.129195Z",
-      "price": 75.8521,
+      "fetchedAt": "2026-06-15T21:33:14.447576Z",
+      "price": 75.19,
       "source": "Yahoo chart after-hours"
     },
     "ADI": {
-      "asOf": "2026-06-12T23:28:18Z",
+      "asOf": "2026-06-15T21:31:48Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:28.364656Z",
-      "price": 419.1,
+      "fetchedAt": "2026-06-15T21:32:25.302765Z",
+      "price": 427.4918,
       "source": "Yahoo chart after-hours"
     },
     "ADT": {
-      "asOf": "2026-06-12T23:47:59Z",
+      "asOf": "2026-06-15T21:17:36Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:37.978905Z",
-      "price": 6.8197,
+      "fetchedAt": "2026-06-15T21:33:35.437778Z",
+      "price": 6.8,
       "source": "Yahoo chart after-hours"
     },
     "AEIS": {
-      "asOf": "2026-06-12T23:58:52Z",
+      "asOf": "2026-06-15T21:12:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:03.908402Z",
-      "price": 357.99,
+      "fetchedAt": "2026-06-15T21:33:03.717591Z",
+      "price": 371.29,
       "source": "Yahoo chart after-hours"
     },
     "AER": {
-      "asOf": "2026-06-12T21:57:56Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:52.008253Z",
-      "price": 140.1,
+      "fetchedAt": "2026-06-15T21:32:49.866510Z",
+      "price": 141.49,
       "source": "Yahoo chart after-hours"
     },
     "AFRM": {
@@ -99,66 +99,66 @@
       "source": "Yahoo regularMarketPrice"
     },
     "AGCO": {
-      "asOf": "2026-06-12T22:58:22Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:19.138650Z",
-      "price": 113.09,
+      "fetchedAt": "2026-06-15T21:33:19.648677Z",
+      "price": 112.54,
       "source": "Yahoo chart after-hours"
     },
     "AGI": {
-      "asOf": "2026-06-12T23:58:28Z",
+      "asOf": "2026-06-15T21:17:25Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:01.667037Z",
-      "price": 35.2,
+      "fetchedAt": "2026-06-15T21:33:01.405362Z",
+      "price": 37.64,
       "source": "Yahoo chart after-hours"
     },
     "AHR": {
-      "asOf": "2026-06-12T21:34:54Z",
+      "asOf": "2026-06-15T21:10:47Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:14.274127Z",
-      "price": 46.81,
+      "fetchedAt": "2026-06-15T21:33:14.595987Z",
+      "price": 46.47,
       "source": "Yahoo chart after-hours"
     },
     "AIR": {
-      "asOf": "2026-06-12T23:41:25Z",
+      "asOf": "2026-06-15T21:12:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:41.793503Z",
-      "price": 129.01,
+      "fetchedAt": "2026-06-15T21:33:38.360094Z",
+      "price": 133.6,
       "source": "Yahoo chart after-hours"
     },
     "ALAB": {
-      "asOf": "2026-06-12T23:59:38Z",
+      "asOf": "2026-06-15T21:32:26Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:35.890498Z",
-      "price": 370.99,
+      "fetchedAt": "2026-06-15T21:32:33.023480Z",
+      "price": 388.99,
       "source": "Yahoo chart after-hours"
     },
     "ALB": {
-      "asOf": "2026-06-12T23:59:58Z",
+      "asOf": "2026-06-15T21:30:53Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:55.206739Z",
-      "price": 170.4,
+      "fetchedAt": "2026-06-15T21:32:53.432571Z",
+      "price": 169.304,
       "source": "Yahoo chart after-hours"
     },
     "ALGM": {
-      "asOf": "2026-06-12T23:59:41Z",
+      "asOf": "2026-06-15T21:32:40Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:12.927110Z",
-      "price": 50.5,
+      "fetchedAt": "2026-06-15T21:33:13.326222Z",
+      "price": 55.9938,
       "source": "Yahoo chart after-hours"
     },
     "ALH": {
-      "asOf": "2026-06-12T23:22:32Z",
+      "asOf": "2026-06-15T20:15:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:42.008710Z",
-      "price": 25.79,
+      "fetchedAt": "2026-06-15T21:33:38.523171Z",
+      "price": 25.8,
       "source": "Yahoo chart after-hours"
     },
     "ALKS": {
-      "asOf": "2026-06-12T22:13:38Z",
+      "asOf": "2026-06-15T20:58:18Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:23.354920Z",
-      "price": 44.6,
+      "fetchedAt": "2026-06-15T21:33:22.782055Z",
+      "price": 44.4,
       "source": "Yahoo chart after-hours"
     },
     "ALL": {
@@ -169,24 +169,24 @@
       "source": "Yahoo regularMarketPrice"
     },
     "ALLY": {
-      "asOf": "2026-06-12T23:49:59Z",
+      "asOf": "2026-06-15T21:27:31Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:03.102829Z",
-      "price": 44.7,
+      "fetchedAt": "2026-06-15T21:33:02.833919Z",
+      "price": 45.79,
       "source": "Yahoo chart after-hours"
     },
     "ALNY": {
-      "asOf": "2026-06-12T23:24:54Z",
+      "asOf": "2026-06-15T20:59:01Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:43.035513Z",
-      "price": 283.88,
+      "fetchedAt": "2026-06-15T21:32:39.519663Z",
+      "price": 287.8,
       "source": "Yahoo chart after-hours"
     },
     "ALSN": {
-      "asOf": "2026-06-12T21:44:37Z",
+      "asOf": "2026-06-15T21:25:24Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:11.278854Z",
-      "price": 119.64,
+      "fetchedAt": "2026-06-15T21:33:11.641416Z",
+      "price": 121.01,
       "source": "Yahoo chart after-hours"
     },
     "ALV": {
@@ -197,66 +197,66 @@
       "source": "Yahoo regularMarketPrice"
     },
     "AM": {
-      "asOf": "2026-06-12T23:34:34Z",
+      "asOf": "2026-06-15T21:26:17Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:09.815728Z",
-      "price": 21.3,
+      "fetchedAt": "2026-06-15T21:33:10.082841Z",
+      "price": 21.06,
       "source": "Yahoo chart after-hours"
     },
     "AMD": {
-      "asOf": "2026-06-12T23:59:59Z",
+      "asOf": "2026-06-15T21:32:09Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:26.096562Z",
-      "price": 514.8665,
+      "fetchedAt": "2026-06-15T21:32:22.893115Z",
+      "price": 547.42,
       "source": "Yahoo chart after-hours"
     },
     "AMG": {
-      "asOf": "2026-06-12T22:40:00Z",
+      "asOf": "2026-06-15T21:09:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:13.259887Z",
-      "price": 361.71,
+      "fetchedAt": "2026-06-15T21:33:13.642626Z",
+      "price": 352.93,
       "source": "Yahoo chart after-hours"
     },
     "AMKR": {
-      "asOf": "2026-06-12T23:59:59Z",
+      "asOf": "2026-06-15T21:30:42Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:54.037227Z",
-      "price": 83.91,
+      "fetchedAt": "2026-06-15T21:32:52.015595Z",
+      "price": 85.14,
       "source": "Yahoo chart after-hours"
     },
     "AMP": {
-      "asOf": "2026-06-12T21:36:19Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:41.685774Z",
-      "price": 459.13,
+      "fetchedAt": "2026-06-15T21:32:38.053550Z",
+      "price": 459.88,
       "source": "Yahoo chart after-hours"
     },
     "AMT": {
-      "asOf": "2026-06-12T23:54:33Z",
+      "asOf": "2026-06-15T21:14:03Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:31.980237Z",
-      "price": 187.57,
+      "fetchedAt": "2026-06-15T21:32:29.095581Z",
+      "price": 185.76,
       "source": "Yahoo chart after-hours"
     },
     "ANET": {
-      "asOf": "2026-06-12T23:59:53Z",
+      "asOf": "2026-06-15T21:31:30Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:28.217970Z",
-      "price": 163.76,
+      "fetchedAt": "2026-06-15T21:32:25.138681Z",
+      "price": 169.29,
       "source": "Yahoo chart after-hours"
     },
     "APD": {
-      "asOf": "2026-06-12T23:36:38Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:36.042851Z",
-      "price": 283.86,
+      "fetchedAt": "2026-06-15T21:32:33.217182Z",
+      "price": 282.96,
       "source": "Yahoo chart after-hours"
     },
     "APGE": {
-      "asOf": "2026-06-12T23:06:05Z",
+      "asOf": "2026-06-15T20:10:04Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:27.080686Z",
-      "price": 87.0,
+      "fetchedAt": "2026-06-15T21:33:26.590945Z",
+      "price": 86.19,
       "source": "Yahoo chart after-hours"
     },
     "APO": {
@@ -267,10 +267,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "APP": {
-      "asOf": "2026-06-12T23:59:51Z",
+      "asOf": "2026-06-15T21:31:42Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:29.225491Z",
-      "price": 496.5,
+      "fetchedAt": "2026-06-15T21:32:26.323179Z",
+      "price": 520.82,
       "source": "Yahoo chart after-hours"
     },
     "APPF": {
@@ -288,17 +288,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "AR": {
-      "asOf": "2026-06-12T23:43:07Z",
+      "asOf": "2026-06-15T21:14:09Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:08.977308Z",
-      "price": 34.7598,
+      "fetchedAt": "2026-06-15T21:33:09.083871Z",
+      "price": 34.04,
       "source": "Yahoo chart after-hours"
     },
     "ARCC": {
-      "asOf": "2026-06-12T23:59:48Z",
+      "asOf": "2026-06-15T21:32:58Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:02.366230Z",
-      "price": 19.295,
+      "fetchedAt": "2026-06-15T21:33:02.162045Z",
+      "price": 18.6697,
       "source": "Yahoo chart after-hours"
     },
     "ARE": {
@@ -309,10 +309,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "ARES": {
-      "asOf": "2026-06-12T23:39:17Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:40.010217Z",
-      "price": 135.7,
+      "fetchedAt": "2026-06-15T21:32:36.998592Z",
+      "price": 135.36,
       "source": "Yahoo chart after-hours"
     },
     "ARGX": {
@@ -323,108 +323,108 @@
       "source": "Yahoo regularMarketPrice"
     },
     "ARM": {
-      "asOf": "2026-06-12T23:59:59Z",
+      "asOf": "2026-06-15T21:32:15Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:26.827724Z",
-      "price": 384.6026,
+      "fetchedAt": "2026-06-15T21:32:23.683045Z",
+      "price": 410.0,
       "source": "Yahoo chart after-hours"
     },
     "AROC": {
-      "asOf": "2026-06-12T23:03:58Z",
+      "asOf": "2026-06-15T21:26:52Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:29.006570Z",
-      "price": 37.16,
+      "fetchedAt": "2026-06-15T21:33:28.051841Z",
+      "price": 36.28,
       "source": "Yahoo chart after-hours"
     },
     "ARXS": {
-      "asOf": "2026-06-12T23:03:15Z",
+      "asOf": "2026-06-15T20:53:46Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:58.837826Z",
-      "price": 41.8,
+      "fetchedAt": "2026-06-15T21:32:57.889242Z",
+      "price": 41.7,
       "source": "Yahoo chart after-hours"
     },
     "AS": {
-      "asOf": "2026-06-12T22:40:00Z",
+      "asOf": "2026-06-15T21:12:35Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:53.690016Z",
-      "price": 35.95,
+      "fetchedAt": "2026-06-15T21:32:51.622772Z",
+      "price": 35.8061,
       "source": "Yahoo chart after-hours"
     },
     "ASML": {
-      "asOf": "2026-06-12T23:59:33Z",
+      "asOf": "2026-06-15T21:30:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:26.269275Z",
-      "price": 1863.0885,
+      "fetchedAt": "2026-06-15T21:32:23.052478Z",
+      "price": 1890.05,
       "source": "Yahoo chart after-hours"
     },
     "ASND": {
-      "asOf": "2026-06-12T23:42:41Z",
+      "asOf": "2026-06-15T20:59:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:03.579095Z",
-      "price": 218.1,
+      "fetchedAt": "2026-06-15T21:33:03.324514Z",
+      "price": 223.29,
       "source": "Yahoo chart after-hours"
     },
     "ASR": {
-      "asOf": "2026-06-12T23:25:39Z",
+      "asOf": "2026-06-15T20:49:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:17.959727Z",
-      "price": 287.89,
+      "fetchedAt": "2026-06-15T21:33:18.424024Z",
+      "price": 301.0,
       "source": "Yahoo chart after-hours"
     },
     "ASX": {
-      "asOf": "2026-06-12T23:59:16Z",
+      "asOf": "2026-06-15T21:29:16Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:32.560353Z",
-      "price": 38.39,
+      "fetchedAt": "2026-06-15T21:32:29.617843Z",
+      "price": 38.5917,
       "source": "Yahoo chart after-hours"
     },
     "ATO": {
-      "asOf": "2026-06-12T21:34:35Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:48.092047Z",
-      "price": 169.71,
+      "fetchedAt": "2026-06-15T21:32:45.596614Z",
+      "price": 169.6,
       "source": "Yahoo chart after-hours"
     },
     "AU": {
-      "asOf": "2026-06-12T23:59:26Z",
+      "asOf": "2026-06-15T21:25:29Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:40.979810Z",
-      "price": 86.75,
+      "fetchedAt": "2026-06-15T21:32:37.345728Z",
+      "price": 91.39,
       "source": "Yahoo chart after-hours"
     },
     "AVAV": {
-      "asOf": "2026-06-12T23:59:39Z",
+      "asOf": "2026-06-15T21:29:56Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:17.322969Z",
-      "price": 171.2,
+      "fetchedAt": "2026-06-15T21:33:17.795130Z",
+      "price": 173.3,
       "source": "Yahoo chart after-hours"
     },
     "AVB": {
-      "asOf": "2026-06-12T22:24:56Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:48.666485Z",
-      "price": 187.05,
+      "fetchedAt": "2026-06-15T21:32:46.246764Z",
+      "price": 184.48,
       "source": "Yahoo chart after-hours"
     },
     "AVTR": {
-      "asOf": "2026-06-12T23:48:20Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:29.176639Z",
-      "price": 9.39,
+      "fetchedAt": "2026-06-15T21:33:28.208894Z",
+      "price": 9.71,
       "source": "Yahoo chart after-hours"
     },
     "AWK": {
-      "asOf": "2026-06-12T23:35:20Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:49.449785Z",
-      "price": 126.2,
+      "fetchedAt": "2026-06-15T21:32:47.160771Z",
+      "price": 126.87,
       "source": "Yahoo chart after-hours"
     },
     "AX": {
-      "asOf": "2026-06-12T23:51:15Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:39.241380Z",
-      "price": 90.5,
+      "fetchedAt": "2026-06-15T21:33:36.858721Z",
+      "price": 89.58,
       "source": "Yahoo chart after-hours"
     },
     "AXSM": {
@@ -435,31 +435,31 @@
       "source": "Yahoo regularMarketPrice"
     },
     "AXTA": {
-      "asOf": "2026-06-12T21:05:00Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:25.065185Z",
-      "price": 33.11,
+      "fetchedAt": "2026-06-15T21:33:24.351638Z",
+      "price": 33.77,
       "source": "Yahoo chart after-hours"
     },
     "AXTI": {
-      "asOf": "2026-06-12T23:59:35Z",
+      "asOf": "2026-06-15T21:32:44Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:30.951432Z",
-      "price": 97.82,
+      "fetchedAt": "2026-06-15T21:33:29.767523Z",
+      "price": 111.2001,
       "source": "Yahoo chart after-hours"
     },
     "AZN": {
-      "asOf": "2026-06-12T23:58:46Z",
+      "asOf": "2026-06-15T21:15:01Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:27.348852Z",
-      "price": 180.8,
+      "fetchedAt": "2026-06-15T21:32:24.235744Z",
+      "price": 177.34,
       "source": "Yahoo chart after-hours"
     },
     "AZO": {
-      "asOf": "2026-06-12T23:45:45Z",
+      "asOf": "2026-06-15T21:03:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:38.002443Z",
-      "price": 3074.7185,
+      "fetchedAt": "2026-06-15T21:32:35.066044Z",
+      "price": 3105.48,
       "source": "Yahoo chart after-hours"
     },
     "BABA": {
@@ -484,52 +484,52 @@
       "source": "Yahoo regularMarketPrice"
     },
     "BB": {
-      "asOf": "2026-06-12T23:58:37Z",
+      "asOf": "2026-06-15T21:31:50Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:36.997333Z",
-      "price": 9.22,
+      "fetchedAt": "2026-06-15T21:33:34.414010Z",
+      "price": 9.27,
       "source": "Yahoo chart after-hours"
     },
     "BBIO": {
-      "asOf": "2026-06-12T21:00:07Z",
+      "asOf": "2026-06-15T20:59:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:05.576453Z",
-      "price": 66.8,
+      "fetchedAt": "2026-06-15T21:33:05.494633Z",
+      "price": 68.0,
       "source": "Yahoo chart after-hours"
     },
     "BCH": {
-      "asOf": "2026-06-12T21:05:00Z",
+      "asOf": "2026-06-15T20:46:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:54.193573Z",
-      "price": 40.12,
+      "fetchedAt": "2026-06-15T21:32:52.182477Z",
+      "price": 40.6272,
       "source": "Yahoo chart after-hours"
     },
     "BE": {
-      "asOf": "2026-06-12T23:59:50Z",
+      "asOf": "2026-06-15T21:31:17Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:34.329999Z",
-      "price": 262.5,
+      "fetchedAt": "2026-06-15T21:32:31.500675Z",
+      "price": 275.5,
       "source": "Yahoo chart after-hours"
     },
     "BEKE": {
-      "asOf": "2026-06-12T21:28:22Z",
+      "asOf": "2026-06-15T21:14:27Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:56.211377Z",
-      "price": 16.91,
+      "fetchedAt": "2026-06-15T21:32:54.858074Z",
+      "price": 16.66,
       "source": "Yahoo chart after-hours"
     },
     "BGC": {
-      "asOf": "2026-06-12T22:09:11Z",
+      "asOf": "2026-06-15T21:01:43Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:34.924754Z",
-      "price": 11.914,
+      "fetchedAt": "2026-06-15T21:33:32.285544Z",
+      "price": 11.75,
       "source": "Yahoo chart after-hours"
     },
     "BHP": {
-      "asOf": "2026-06-12T23:59:22Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:27.877952Z",
-      "price": 90.01,
+      "fetchedAt": "2026-06-15T21:32:24.778481Z",
+      "price": 91.66,
       "source": "Yahoo chart after-hours"
     },
     "BIDU": {
@@ -547,17 +547,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "BILI": {
-      "asOf": "2026-06-12T23:57:39Z",
+      "asOf": "2026-06-15T21:28:37Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:22.654643Z",
-      "price": 18.05,
+      "fetchedAt": "2026-06-15T21:33:21.965800Z",
+      "price": 17.92,
       "source": "Yahoo chart after-hours"
     },
     "BIRK": {
-      "asOf": "2026-06-12T23:43:27Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:14.789650Z",
-      "price": 47.78,
+      "fetchedAt": "2026-06-15T21:33:15.093140Z",
+      "price": 47.93,
       "source": "Yahoo chart after-hours"
     },
     "BJ": {
@@ -568,24 +568,24 @@
       "source": "Yahoo regularMarketPrice"
     },
     "BLCO": {
-      "asOf": "2026-06-12T23:15:05Z",
+      "asOf": "2026-06-15T20:40:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:37.324571Z",
-      "price": 14.79,
+      "fetchedAt": "2026-06-15T21:33:34.769761Z",
+      "price": 15.0,
       "source": "Yahoo chart after-hours"
     },
     "BLDR": {
-      "asOf": "2026-06-12T23:12:43Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:18.294151Z",
-      "price": 77.75,
+      "fetchedAt": "2026-06-15T21:33:18.806767Z",
+      "price": 77.81,
       "source": "Yahoo chart after-hours"
     },
     "BLK": {
-      "asOf": "2026-06-12T23:51:39Z",
+      "asOf": "2026-06-15T21:07:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:29.068515Z",
-      "price": 1033.7524,
+      "fetchedAt": "2026-06-15T21:32:26.014841Z",
+      "price": 1042.88,
       "source": "Yahoo chart after-hours"
     },
     "BLSH": {
@@ -596,10 +596,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "BLTE": {
-      "asOf": "2026-06-12T21:34:54Z",
+      "asOf": "2026-06-15T20:10:04Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:36.502519Z",
-      "price": 138.16,
+      "fetchedAt": "2026-06-15T21:33:33.772713Z",
+      "price": 144.24,
       "source": "Yahoo chart after-hours"
     },
     "BMA": {
@@ -610,38 +610,38 @@
       "source": "Yahoo regularMarketPrice"
     },
     "BNTX": {
-      "asOf": "2026-06-12T22:17:42Z",
+      "asOf": "2026-06-15T20:26:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:51.348950Z",
-      "price": 90.9888,
+      "fetchedAt": "2026-06-15T21:32:49.243050Z",
+      "price": 90.8,
       "source": "Yahoo chart after-hours"
     },
     "BOOT": {
-      "asOf": "2026-06-12T23:39:09Z",
+      "asOf": "2026-06-15T20:56:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:38.943035Z",
-      "price": 170.71,
+      "fetchedAt": "2026-06-15T21:33:36.438195Z",
+      "price": 167.0,
       "source": "Yahoo chart after-hours"
     },
     "BRKR": {
-      "asOf": "2026-06-12T23:34:34Z",
+      "asOf": "2026-06-15T21:09:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:18.645855Z",
-      "price": 54.13,
+      "fetchedAt": "2026-06-15T21:33:19.155285Z",
+      "price": 56.63,
       "source": "Yahoo chart after-hours"
     },
     "BROS": {
-      "asOf": "2026-06-12T23:56:23Z",
+      "asOf": "2026-06-15T21:30:39Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:06.519269Z",
-      "price": 65.76,
+      "fetchedAt": "2026-06-15T21:33:06.525493Z",
+      "price": 66.513,
       "source": "Yahoo chart after-hours"
     },
     "BRX": {
-      "asOf": "2026-06-12T23:45:22Z",
+      "asOf": "2026-06-15T21:09:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:10.270602Z",
-      "price": 32.95,
+      "fetchedAt": "2026-06-15T21:33:10.574301Z",
+      "price": 32.03,
       "source": "Yahoo chart after-hours"
     },
     "BSAC": {
@@ -666,24 +666,24 @@
       "source": "Yahoo regularMarketPrice"
     },
     "BTSG": {
-      "asOf": "2026-06-12T23:52:29Z",
+      "asOf": "2026-06-15T20:34:22Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:04.925163Z",
-      "price": 62.47,
+      "fetchedAt": "2026-06-15T21:33:04.718848Z",
+      "price": 64.18,
       "source": "Yahoo chart after-hours"
     },
     "BURL": {
-      "asOf": "2026-06-12T21:25:01Z",
+      "asOf": "2026-06-15T20:15:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:53.179157Z",
-      "price": 338.4,
+      "fetchedAt": "2026-06-15T21:32:51.098778Z",
+      "price": 336.5965,
       "source": "Yahoo chart after-hours"
     },
     "BVN": {
-      "asOf": "2026-06-12T23:23:57Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:17.807931Z",
-      "price": 33.3,
+      "fetchedAt": "2026-06-15T21:33:18.271197Z",
+      "price": 34.86,
       "source": "Yahoo chart after-hours"
     },
     "BWA": {
@@ -694,52 +694,52 @@
       "source": "Yahoo regularMarketPrice"
     },
     "BX": {
-      "asOf": "2026-06-12T23:59:12Z",
+      "asOf": "2026-06-15T21:20:34Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:29.574556Z",
-      "price": 122.89,
+      "fetchedAt": "2026-06-15T21:32:26.660015Z",
+      "price": 124.5317,
       "source": "Yahoo chart after-hours"
     },
     "BYD": {
-      "asOf": "2026-06-12T22:19:06Z",
+      "asOf": "2026-06-15T21:08:58Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:27.585306Z",
-      "price": 88.0,
+      "fetchedAt": "2026-06-15T21:33:27.213391Z",
+      "price": 87.67,
       "source": "Yahoo chart after-hours"
     },
     "CACI": {
-      "asOf": "2026-06-12T23:47:13Z",
+      "asOf": "2026-06-15T21:09:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:07.027665Z",
-      "price": 520.22,
+      "fetchedAt": "2026-06-15T21:33:07.082460Z",
+      "price": 507.56,
       "source": "Yahoo chart after-hours"
     },
     "CAI": {
-      "asOf": "2026-06-12T23:46:49Z",
+      "asOf": "2026-06-15T21:10:30Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:41.121238Z",
+      "fetchedAt": "2026-06-15T21:33:37.727608Z",
       "price": 18.0,
       "source": "Yahoo chart after-hours"
     },
     "CAMT": {
-      "asOf": "2026-06-12T23:53:26Z",
+      "asOf": "2026-06-15T20:54:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:15.431318Z",
-      "price": 194.1449,
+      "fetchedAt": "2026-06-15T21:33:15.772151Z",
+      "price": 201.7,
       "source": "Yahoo chart after-hours"
     },
     "CART": {
-      "asOf": "2026-06-12T23:37:05Z",
+      "asOf": "2026-06-15T21:16:02Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:11.594690Z",
-      "price": 40.55,
+      "fetchedAt": "2026-06-15T21:33:11.976245Z",
+      "price": 41.5,
       "source": "Yahoo chart after-hours"
     },
     "CAVA": {
-      "asOf": "2026-06-12T23:59:19Z",
+      "asOf": "2026-06-15T21:30:34Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:09.344986Z",
-      "price": 90.7144,
+      "fetchedAt": "2026-06-15T21:33:09.509934Z",
+      "price": 89.3,
       "source": "Yahoo chart after-hours"
     },
     "CBOE": {
@@ -750,31 +750,31 @@
       "source": "Yahoo regularMarketPrice"
     },
     "CBRE": {
-      "asOf": "2026-06-12T23:08:40Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:42.523818Z",
-      "price": 134.0,
+      "fetchedAt": "2026-06-15T21:32:38.997191Z",
+      "price": 134.16,
       "source": "Yahoo chart after-hours"
     },
     "CBRS": {
-      "asOf": "2026-06-12T23:59:52Z",
+      "asOf": "2026-06-15T21:32:34Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:38.963504Z",
-      "price": 216.25,
+      "fetchedAt": "2026-06-15T21:32:35.989485Z",
+      "price": 217.75,
       "source": "Yahoo chart after-hours"
     },
     "CCEP": {
-      "asOf": "2026-06-12T21:14:33Z",
+      "asOf": "2026-06-15T20:19:28Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:40.250462Z",
-      "price": 99.0,
+      "fetchedAt": "2026-06-15T21:32:37.159093Z",
+      "price": 99.41,
       "source": "Yahoo chart after-hours"
     },
     "CCL": {
-      "asOf": "2026-06-12T23:58:48Z",
+      "asOf": "2026-06-15T21:29:01Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:42.375319Z",
-      "price": 29.1039,
+      "fetchedAt": "2026-06-15T21:32:38.850058Z",
+      "price": 30.08,
       "source": "Yahoo chart after-hours"
     },
     "CDNS": {
@@ -785,17 +785,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "CDW": {
-      "asOf": "2026-06-12T23:41:19Z",
+      "asOf": "2026-06-15T20:52:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:58.512062Z",
-      "price": 131.74,
+      "fetchedAt": "2026-06-15T21:32:57.320605Z",
+      "price": 131.3,
       "source": "Yahoo chart after-hours"
     },
     "CE": {
-      "asOf": "2026-06-12T23:13:20Z",
+      "asOf": "2026-06-15T20:49:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:33.835764Z",
-      "price": 54.04,
+      "fetchedAt": "2026-06-15T21:33:31.087293Z",
+      "price": 53.77,
       "source": "Yahoo chart after-hours"
     },
     "CELC": {
@@ -813,31 +813,31 @@
       "source": "Yahoo regularMarketPrice"
     },
     "CF": {
-      "asOf": "2026-06-12T23:40:32Z",
+      "asOf": "2026-06-15T21:03:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:58.986722Z",
-      "price": 109.99,
+      "fetchedAt": "2026-06-15T21:32:58.075248Z",
+      "price": 106.83,
       "source": "Yahoo chart after-hours"
     },
     "CFG": {
-      "asOf": "2026-06-12T22:46:25Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:47.922755Z",
-      "price": 67.9,
+      "fetchedAt": "2026-06-15T21:32:45.429098Z",
+      "price": 66.65,
       "source": "Yahoo chart after-hours"
     },
     "CG": {
-      "asOf": "2026-06-12T21:52:05Z",
+      "asOf": "2026-06-15T21:08:58Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:59.298841Z",
-      "price": 45.2859,
+      "fetchedAt": "2026-06-15T21:32:58.383989Z",
+      "price": 46.24,
       "source": "Yahoo chart after-hours"
     },
     "CGON": {
-      "asOf": "2026-06-12T20:10:04Z",
+      "asOf": "2026-06-15T20:29:22Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:38.452067Z",
-      "price": 59.56,
+      "fetchedAt": "2026-06-15T21:33:35.961371Z",
+      "price": 60.14,
       "source": "Yahoo chart after-hours"
     },
     "CHH": {
@@ -855,38 +855,38 @@
       "source": "Yahoo regularMarketPrice"
     },
     "CHRD": {
-      "asOf": "2026-06-12T20:10:04Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:20.410286Z",
-      "price": 135.34,
+      "fetchedAt": "2026-06-15T21:33:20.825862Z",
+      "price": 127.6,
       "source": "Yahoo chart after-hours"
     },
     "CHRW": {
-      "asOf": "2026-06-12T21:43:34Z",
+      "asOf": "2026-06-15T20:52:38Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:51.679239Z",
-      "price": 194.36,
+      "fetchedAt": "2026-06-15T21:32:49.543988Z",
+      "price": 190.25,
       "source": "Yahoo chart after-hours"
     },
     "CHTR": {
-      "asOf": "2026-06-12T23:59:58Z",
+      "asOf": "2026-06-15T20:52:47Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:54.667363Z",
-      "price": 145.74,
+      "fetchedAt": "2026-06-15T21:32:52.724566Z",
+      "price": 143.71,
       "source": "Yahoo chart after-hours"
     },
     "CHWY": {
-      "asOf": "2026-06-12T23:59:24Z",
+      "asOf": "2026-06-15T21:30:55Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:19.480503Z",
-      "price": 19.3316,
+      "fetchedAt": "2026-06-15T21:33:19.978403Z",
+      "price": 19.45,
       "source": "Yahoo chart after-hours"
     },
     "CHYM": {
-      "asOf": "2026-06-12T23:40:12Z",
+      "asOf": "2026-06-15T21:26:55Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:30.139851Z",
-      "price": 16.8,
+      "fetchedAt": "2026-06-15T21:33:28.888356Z",
+      "price": 17.68,
       "source": "Yahoo chart after-hours"
     },
     "CLH": {
@@ -897,52 +897,52 @@
       "source": "Yahoo regularMarketPrice"
     },
     "CLS": {
-      "asOf": "2026-06-12T23:57:56Z",
+      "asOf": "2026-06-15T21:32:24Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:39.545976Z",
-      "price": 395.7,
+      "fetchedAt": "2026-06-15T21:32:36.513599Z",
+      "price": 402.89,
       "source": "Yahoo chart after-hours"
     },
     "CMCSA": {
-      "asOf": "2026-06-12T23:57:49Z",
+      "asOf": "2026-06-15T21:32:02Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:31.801863Z",
-      "price": 24.39,
+      "fetchedAt": "2026-06-15T21:32:28.866568Z",
+      "price": 24.03,
       "source": "Yahoo chart after-hours"
     },
     "CME": {
-      "asOf": "2026-06-12T23:47:43Z",
+      "asOf": "2026-06-15T21:22:35Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:31.623490Z",
-      "price": 269.09,
+      "fetchedAt": "2026-06-15T21:32:28.678574Z",
+      "price": 265.85,
       "source": "Yahoo chart after-hours"
     },
     "CNC": {
-      "asOf": "2026-06-12T23:35:47Z",
+      "asOf": "2026-06-15T21:24:37Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:45.950296Z",
-      "price": 65.1133,
+      "fetchedAt": "2026-06-15T21:32:42.751169Z",
+      "price": 62.96,
       "source": "Yahoo chart after-hours"
     },
     "CNM": {
-      "asOf": "2026-06-12T23:54:52Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:13.453868Z",
-      "price": 48.0572,
+      "fetchedAt": "2026-06-15T21:33:13.809748Z",
+      "price": 47.61,
       "source": "Yahoo chart after-hours"
     },
     "COF": {
-      "asOf": "2026-06-12T23:52:21Z",
+      "asOf": "2026-06-15T21:29:09Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:30.620965Z",
-      "price": 184.31,
+      "fetchedAt": "2026-06-15T21:32:27.835918Z",
+      "price": 195.2,
       "source": "Yahoo chart after-hours"
     },
     "COGT": {
-      "asOf": "2026-06-12T21:48:07Z",
+      "asOf": "2026-06-15T20:25:53Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:35.085950Z",
-      "price": 33.33,
+      "fetchedAt": "2026-06-15T21:33:32.451186Z",
+      "price": 33.17,
       "source": "Yahoo chart after-hours"
     },
     "COIN": {
@@ -953,10 +953,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "COMP": {
-      "asOf": "2026-06-12T23:15:09Z",
+      "asOf": "2026-06-15T21:25:36Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:28.837011Z",
-      "price": 8.63,
+      "fetchedAt": "2026-06-15T21:33:27.891758Z",
+      "price": 9.16,
       "source": "Yahoo chart after-hours"
     },
     "COST": {
@@ -967,24 +967,24 @@
       "source": "Yahoo regularMarketPrice"
     },
     "CPA": {
-      "asOf": "2026-06-12T22:41:28Z",
+      "asOf": "2026-06-15T20:45:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:34.134314Z",
-      "price": 142.75,
+      "fetchedAt": "2026-06-15T21:33:31.405439Z",
+      "price": 144.4,
       "source": "Yahoo chart after-hours"
     },
     "CPAY": {
-      "asOf": "2026-06-12T21:05:00Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:50.973697Z",
-      "price": 356.11,
+      "fetchedAt": "2026-06-15T21:32:48.849644Z",
+      "price": 353.47,
       "source": "Yahoo chart after-hours"
     },
     "CPNG": {
-      "asOf": "2026-06-12T23:58:39Z",
+      "asOf": "2026-06-15T21:30:37Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:46.910270Z",
-      "price": 16.85,
+      "fetchedAt": "2026-06-15T21:32:43.671543Z",
+      "price": 17.1098,
       "source": "Yahoo chart after-hours"
     },
     "CPT": {
@@ -995,31 +995,31 @@
       "source": "Yahoo regularMarketPrice"
     },
     "CQP": {
-      "asOf": "2026-06-12T23:45:50Z",
+      "asOf": "2026-06-15T20:27:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:46.454331Z",
-      "price": 63.4,
+      "fetchedAt": "2026-06-15T21:32:43.306302Z",
+      "price": 60.8,
       "source": "Yahoo chart after-hours"
     },
     "CRBG": {
-      "asOf": "2026-06-12T23:34:34Z",
+      "asOf": "2026-06-15T21:08:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:05.094816Z",
-      "price": 28.57,
+      "fetchedAt": "2026-06-15T21:33:04.889625Z",
+      "price": 29.46,
       "source": "Yahoo chart after-hours"
     },
     "CRCL": {
-      "asOf": "2026-06-12T23:59:58Z",
+      "asOf": "2026-06-15T21:32:10Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:56.377796Z",
-      "price": 78.38,
+      "fetchedAt": "2026-06-15T21:32:55.032519Z",
+      "price": 83.8553,
       "source": "Yahoo chart after-hours"
     },
     "CRDO": {
-      "asOf": "2026-06-12T23:59:55Z",
+      "asOf": "2026-06-15T21:32:29Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:39.158193Z",
-      "price": 251.8,
+      "fetchedAt": "2026-06-15T21:32:36.181449Z",
+      "price": 258.0,
       "source": "Yahoo chart after-hours"
     },
     "CRM": {
@@ -1044,31 +1044,31 @@
       "source": "Yahoo regularMarketPrice"
     },
     "CRWD": {
-      "asOf": "2026-06-12T23:59:52Z",
+      "asOf": "2026-06-15T21:29:01Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:28.912458Z",
-      "price": 682.0,
+      "fetchedAt": "2026-06-15T21:32:25.853276Z",
+      "price": 692.6,
       "source": "Yahoo chart after-hours"
     },
     "CRWV": {
-      "asOf": "2026-06-12T23:59:59Z",
+      "asOf": "2026-06-15T21:32:22Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:37.104638Z",
-      "price": 102.25,
+      "fetchedAt": "2026-06-15T21:32:34.353783Z",
+      "price": 107.1095,
       "source": "Yahoo chart after-hours"
     },
     "CVNA": {
-      "asOf": "2026-06-12T23:59:17Z",
+      "asOf": "2026-06-15T21:31:47Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:34.650329Z",
-      "price": 64.1999,
+      "fetchedAt": "2026-06-15T21:32:31.823671Z",
+      "price": 69.0,
       "source": "Yahoo chart after-hours"
     },
     "CWAN": {
-      "asOf": "2026-06-12T23:12:30Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:24.260678Z",
-      "price": 24.3493,
+      "fetchedAt": "2026-06-15T21:33:23.626799Z",
+      "price": 24.26,
       "source": "Yahoo chart after-hours"
     },
     "CWEN": {
@@ -1079,17 +1079,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "CX": {
-      "asOf": "2026-06-12T23:49:09Z",
+      "asOf": "2026-06-15T20:50:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:56.863134Z",
-      "price": 12.98,
+      "fetchedAt": "2026-06-15T21:32:55.652070Z",
+      "price": 12.99,
       "source": "Yahoo chart after-hours"
     },
     "CYTK": {
-      "asOf": "2026-06-12T21:16:14Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:12.411639Z",
-      "price": 70.14,
+      "fetchedAt": "2026-06-15T21:33:12.801421Z",
+      "price": 71.38,
       "source": "Yahoo chart after-hours"
     },
     "CZR": {
@@ -1107,17 +1107,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "DASH": {
-      "asOf": "2026-06-12T23:56:45Z",
+      "asOf": "2026-06-15T21:32:15Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:35.624812Z",
-      "price": 150.89,
+      "fetchedAt": "2026-06-15T21:32:32.777774Z",
+      "price": 168.4813,
       "source": "Yahoo chart after-hours"
     },
     "DDOG": {
-      "asOf": "2026-06-12T23:59:34Z",
+      "asOf": "2026-06-15T21:29:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:32.738481Z",
-      "price": 229.0618,
+      "fetchedAt": "2026-06-15T21:32:29.808618Z",
+      "price": 234.15,
       "source": "Yahoo chart after-hours"
     },
     "DECK": {
@@ -1128,10 +1128,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "DELL": {
-      "asOf": "2026-06-12T23:59:53Z",
+      "asOf": "2026-06-15T21:31:34Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:27.533319Z",
-      "price": 399.0,
+      "fetchedAt": "2026-06-15T21:32:24.402653Z",
+      "price": 409.856,
       "source": "Yahoo chart after-hours"
     },
     "DLB": {
@@ -1149,24 +1149,24 @@
       "source": "Yahoo regularMarketPrice"
     },
     "DOCN": {
-      "asOf": "2026-06-12T23:59:50Z",
+      "asOf": "2026-06-15T21:31:57Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:58.036690Z",
-      "price": 170.85,
+      "fetchedAt": "2026-06-15T21:32:56.851336Z",
+      "price": 182.5,
       "source": "Yahoo chart after-hours"
     },
     "DOCU": {
-      "asOf": "2026-06-12T23:59:32Z",
+      "asOf": "2026-06-15T21:28:07Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:16.800915Z",
-      "price": 45.05,
+      "fetchedAt": "2026-06-15T21:33:17.140107Z",
+      "price": 44.1693,
       "source": "Yahoo chart after-hours"
     },
     "DPZ": {
-      "asOf": "2026-06-12T23:54:06Z",
+      "asOf": "2026-06-15T20:52:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:09.144247Z",
-      "price": 323.68,
+      "fetchedAt": "2026-06-15T21:33:09.315701Z",
+      "price": 316.52,
       "source": "Yahoo chart after-hours"
     },
     "DRI": {
@@ -1184,38 +1184,38 @@
       "source": "Yahoo regularMarketPrice"
     },
     "DUOL": {
-      "asOf": "2026-06-12T23:58:03Z",
+      "asOf": "2026-06-15T21:33:16Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:34.605205Z",
-      "price": 122.99,
+      "fetchedAt": "2026-06-15T21:33:31.966446Z",
+      "price": 126.94,
       "source": "Yahoo chart after-hours"
     },
     "DVA": {
-      "asOf": "2026-06-12T23:57:18Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:04.207838Z",
-      "price": 208.66,
+      "fetchedAt": "2026-06-15T21:33:04.058309Z",
+      "price": 209.75,
       "source": "Yahoo chart after-hours"
     },
     "E": {
-      "asOf": "2026-06-12T23:53:33Z",
+      "asOf": "2026-06-15T20:54:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:33.468382Z",
-      "price": 53.45,
+      "fetchedAt": "2026-06-15T21:32:30.599103Z",
+      "price": 51.2,
       "source": "Yahoo chart after-hours"
     },
     "EC": {
-      "asOf": "2026-06-12T23:58:15Z",
+      "asOf": "2026-06-15T20:53:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:44.916390Z",
-      "price": 16.2684,
+      "fetchedAt": "2026-06-15T21:32:41.489364Z",
+      "price": 15.8,
       "source": "Yahoo chart after-hours"
     },
     "EDU": {
-      "asOf": "2026-06-12T23:32:09Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:23.200123Z",
-      "price": 46.82,
+      "fetchedAt": "2026-06-15T21:33:22.608066Z",
+      "price": 47.01,
       "source": "Yahoo chart after-hours"
     },
     "EG": {
@@ -1226,10 +1226,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "EL": {
-      "asOf": "2026-06-12T23:25:51Z",
+      "asOf": "2026-06-15T21:32:04Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:45.604908Z",
-      "price": 89.87,
+      "fetchedAt": "2026-06-15T21:32:42.206308Z",
+      "price": 89.46,
       "source": "Yahoo chart after-hours"
     },
     "ELAN": {
@@ -1240,24 +1240,24 @@
       "source": "Yahoo regularMarketPrice"
     },
     "ELS": {
-      "asOf": "2026-06-12T21:21:25Z",
+      "asOf": "2026-06-15T21:14:16Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:05.779323Z",
-      "price": 64.83,
+      "fetchedAt": "2026-06-15T21:33:05.754623Z",
+      "price": 64.22,
       "source": "Yahoo chart after-hours"
     },
     "EMN": {
-      "asOf": "2026-06-12T23:57:40Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:16.966621Z",
-      "price": 75.96,
+      "fetchedAt": "2026-06-15T21:33:17.303070Z",
+      "price": 75.28,
       "source": "Yahoo chart after-hours"
     },
     "ENLT": {
-      "asOf": "2026-06-12T22:12:10Z",
+      "asOf": "2026-06-15T20:56:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:04.549670Z",
-      "price": 95.9588,
+      "fetchedAt": "2026-06-15T21:33:04.418816Z",
+      "price": 94.08,
       "source": "Yahoo chart after-hours"
     },
     "ENPH": {
@@ -1268,52 +1268,52 @@
       "source": "Yahoo regularMarketPrice"
     },
     "ENSG": {
-      "asOf": "2026-06-12T22:48:12Z",
+      "asOf": "2026-06-15T21:09:02Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:16.648592Z",
-      "price": 149.57,
+      "fetchedAt": "2026-06-15T21:33:16.901808Z",
+      "price": 150.71,
       "source": "Yahoo chart after-hours"
     },
     "ENTG": {
-      "asOf": "2026-06-12T23:58:37Z",
+      "asOf": "2026-06-15T21:26:33Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:51.180330Z",
-      "price": 149.71,
+      "fetchedAt": "2026-06-15T21:32:49.022063Z",
+      "price": 163.43,
       "source": "Yahoo chart after-hours"
     },
     "EPRT": {
-      "asOf": "2026-06-12T23:35:06Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:26.617590Z",
-      "price": 31.196,
+      "fetchedAt": "2026-06-15T21:33:25.873833Z",
+      "price": 30.26,
       "source": "Yahoo chart after-hours"
     },
     "EQIX": {
-      "asOf": "2026-06-12T23:59:46Z",
+      "asOf": "2026-06-15T20:54:37Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:31.278109Z",
-      "price": 1055.8,
+      "fetchedAt": "2026-06-15T21:32:28.360648Z",
+      "price": 1063.7755,
       "source": "Yahoo chart after-hours"
     },
     "EQPT": {
-      "asOf": "2026-06-12T23:58:19Z",
+      "asOf": "2026-06-15T21:31:04Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:42.175813Z",
-      "price": 20.0245,
+      "fetchedAt": "2026-06-15T21:33:38.669498Z",
+      "price": 21.06,
       "source": "Yahoo chart after-hours"
     },
     "EQR": {
-      "asOf": "2026-06-12T21:32:39Z",
+      "asOf": "2026-06-15T21:14:15Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:49.140464Z",
-      "price": 67.37,
+      "fetchedAt": "2026-06-15T21:32:46.751332Z",
+      "price": 66.18,
       "source": "Yahoo chart after-hours"
     },
     "ESLT": {
-      "asOf": "2026-06-12T23:39:05Z",
+      "asOf": "2026-06-15T21:10:55Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:41.508838Z",
-      "price": 849.5,
+      "fetchedAt": "2026-06-15T21:32:37.864097Z",
+      "price": 813.9,
       "source": "Yahoo chart after-hours"
     },
     "ESNT": {
@@ -1324,10 +1324,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "ESS": {
-      "asOf": "2026-06-12T21:20:51Z",
+      "asOf": "2026-06-15T21:14:20Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:56.693681Z",
-      "price": 283.75,
+      "fetchedAt": "2026-06-15T21:32:55.331565Z",
+      "price": 281.39,
       "source": "Yahoo chart after-hours"
     },
     "ESTC": {
@@ -1338,10 +1338,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "ET": {
-      "asOf": "2026-06-12T23:59:49Z",
+      "asOf": "2026-06-15T21:31:56Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:35.387829Z",
-      "price": 19.0667,
+      "fetchedAt": "2026-06-15T21:32:32.580453Z",
+      "price": 18.93,
       "source": "Yahoo chart after-hours"
     },
     "ETSY": {
@@ -1359,17 +1359,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "EWBC": {
-      "asOf": "2026-06-12T20:46:01Z",
+      "asOf": "2026-06-15T21:08:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:57.710249Z",
-      "price": 132.79,
+      "fetchedAt": "2026-06-15T21:32:56.498394Z",
+      "price": 131.32,
       "source": "Yahoo chart after-hours"
     },
     "EXE": {
-      "asOf": "2026-06-12T23:54:53Z",
+      "asOf": "2026-06-15T21:14:14Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:52.671367Z",
-      "price": 88.39,
+      "fetchedAt": "2026-06-15T21:32:50.598000Z",
+      "price": 87.93,
       "source": "Yahoo chart after-hours"
     },
     "EXEL": {
@@ -1387,17 +1387,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "FCFS": {
-      "asOf": "2026-06-12T21:28:49Z",
+      "asOf": "2026-06-15T21:09:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:10.607301Z",
-      "price": 225.5,
+      "fetchedAt": "2026-06-15T21:33:10.896304Z",
+      "price": 223.78,
       "source": "Yahoo chart after-hours"
     },
     "FDS": {
-      "asOf": "2026-06-12T22:00:06Z",
+      "asOf": "2026-06-15T21:07:28Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:15.603173Z",
-      "price": 237.8228,
+      "fetchedAt": "2026-06-15T21:33:15.945219Z",
+      "price": 235.85,
       "source": "Yahoo chart after-hours"
     },
     "FFIV": {
@@ -1408,80 +1408,80 @@
       "source": "Yahoo regularMarketPrice"
     },
     "FIG": {
-      "asOf": "2026-06-12T23:59:49Z",
+      "asOf": "2026-06-15T21:31:44Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:10.774470Z",
-      "price": 18.56,
+      "fetchedAt": "2026-06-15T21:33:11.064440Z",
+      "price": 18.53,
       "source": "Yahoo chart after-hours"
     },
     "FIGR": {
-      "asOf": "2026-06-12T23:58:01Z",
+      "asOf": "2026-06-15T21:28:01Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:31.152025Z",
-      "price": 28.15,
+      "fetchedAt": "2026-06-15T21:33:29.951627Z",
+      "price": 29.05,
       "source": "Yahoo chart after-hours"
     },
     "FIVE": {
-      "asOf": "2026-06-12T22:41:20Z",
+      "asOf": "2026-06-15T21:09:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:08.474424Z",
-      "price": 198.49,
+      "fetchedAt": "2026-06-15T21:33:08.547107Z",
+      "price": 193.92,
       "source": "Yahoo chart after-hours"
     },
     "FIX": {
-      "asOf": "2026-06-12T23:55:45Z",
+      "asOf": "2026-06-15T21:31:14Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:35.213328Z",
-      "price": 1884.0,
+      "fetchedAt": "2026-06-15T21:32:32.414908Z",
+      "price": 1952.42,
       "source": "Yahoo chart after-hours"
     },
     "FLEX": {
-      "asOf": "2026-06-12T23:54:49Z",
+      "asOf": "2026-06-15T21:27:43Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:37.297243Z",
-      "price": 151.0,
+      "fetchedAt": "2026-06-15T21:32:34.552500Z",
+      "price": 148.85,
       "source": "Yahoo chart after-hours"
     },
     "FLG": {
-      "asOf": "2026-06-12T23:40:05Z",
+      "asOf": "2026-06-15T21:09:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:30.753849Z",
-      "price": 14.94,
+      "fetchedAt": "2026-06-15T21:33:29.591882Z",
+      "price": 15.07,
       "source": "Yahoo chart after-hours"
     },
     "FLY": {
-      "asOf": "2026-06-12T23:59:47Z",
+      "asOf": "2026-06-15T21:32:12Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:39.616058Z",
-      "price": 32.4,
+      "fetchedAt": "2026-06-15T21:33:37.212653Z",
+      "price": 33.59,
       "source": "Yahoo chart after-hours"
     },
     "FMS": {
-      "asOf": "2026-06-12T21:05:00Z",
+      "asOf": "2026-06-15T20:25:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:06.673531Z",
-      "price": 23.02,
+      "fetchedAt": "2026-06-15T21:33:06.706299Z",
+      "price": 23.45,
       "source": "Yahoo chart after-hours"
     },
     "FN": {
-      "asOf": "2026-06-12T23:58:11Z",
+      "asOf": "2026-06-15T21:25:56Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:52.157569Z",
-      "price": 612.85,
+      "fetchedAt": "2026-06-15T21:32:50.062730Z",
+      "price": 645.0,
       "source": "Yahoo chart after-hours"
     },
     "FPS": {
-      "asOf": "2026-06-12T23:59:51Z",
+      "asOf": "2026-06-15T21:29:47Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:57.873727Z",
-      "price": 59.52,
+      "fetchedAt": "2026-06-15T21:32:56.666163Z",
+      "price": 60.4891,
       "source": "Yahoo chart after-hours"
     },
     "FR": {
-      "asOf": "2026-06-12T21:20:44Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:16.481223Z",
-      "price": 63.57,
+      "fetchedAt": "2026-06-15T21:33:16.737218Z",
+      "price": 63.37,
       "source": "Yahoo chart after-hours"
     },
     "FROG": {
@@ -1492,17 +1492,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "FRVO": {
-      "asOf": "2026-06-12T23:46:39Z",
+      "asOf": "2026-06-15T21:28:21Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:10.449005Z",
-      "price": 34.7932,
+      "fetchedAt": "2026-06-15T21:33:10.745415Z",
+      "price": 35.85,
       "source": "Yahoo chart after-hours"
     },
     "FSLR": {
-      "asOf": "2026-06-12T23:59:54Z",
+      "asOf": "2026-06-15T21:29:57Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:47.770231Z",
-      "price": 268.0,
+      "fetchedAt": "2026-06-15T21:32:45.279209Z",
+      "price": 272.39,
       "source": "Yahoo chart after-hours"
     },
     "FTAI": {
@@ -1520,80 +1520,80 @@
       "source": "Yahoo regularMarketPrice"
     },
     "FUTU": {
-      "asOf": "2026-06-12T23:59:07Z",
+      "asOf": "2026-06-15T21:32:09Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:02.908101Z",
-      "price": 98.02,
+      "fetchedAt": "2026-06-15T21:33:02.663147Z",
+      "price": 100.12,
       "source": "Yahoo chart after-hours"
     },
     "GDDY": {
-      "asOf": "2026-06-12T22:00:53Z",
+      "asOf": "2026-06-15T21:17:48Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:10.119704Z",
-      "price": 76.24,
+      "fetchedAt": "2026-06-15T21:33:10.405322Z",
+      "price": 78.0,
       "source": "Yahoo chart after-hours"
     },
     "GDS": {
-      "asOf": "2026-06-12T22:44:34Z",
+      "asOf": "2026-06-15T21:07:13Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:27.421676Z",
-      "price": 32.64,
+      "fetchedAt": "2026-06-15T21:33:27.043138Z",
+      "price": 33.37,
       "source": "Yahoo chart after-hours"
     },
     "GFI": {
-      "asOf": "2026-06-12T23:56:58Z",
+      "asOf": "2026-06-15T21:30:37Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:45.778819Z",
-      "price": 36.71,
+      "fetchedAt": "2026-06-15T21:32:42.577213Z",
+      "price": 39.57,
       "source": "Yahoo chart after-hours"
     },
     "GFS": {
-      "asOf": "2026-06-12T23:57:30Z",
+      "asOf": "2026-06-15T21:30:51Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:39.857863Z",
-      "price": 81.9,
+      "fetchedAt": "2026-06-15T21:32:36.829672Z",
+      "price": 83.8,
       "source": "Yahoo chart after-hours"
     },
     "GIL": {
-      "asOf": "2026-06-12T21:29:29Z",
+      "asOf": "2026-06-15T20:43:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:08.303609Z",
-      "price": 61.18,
+      "fetchedAt": "2026-06-15T21:33:08.331964Z",
+      "price": 61.97,
       "source": "Yahoo chart after-hours"
     },
     "GKOS": {
-      "asOf": "2026-06-12T22:01:34Z",
+      "asOf": "2026-06-15T21:27:29Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:22.807917Z",
-      "price": 128.0,
+      "fetchedAt": "2026-06-15T21:33:22.126229Z",
+      "price": 130.23,
       "source": "Yahoo chart after-hours"
     },
     "GLBE": {
-      "asOf": "2026-06-12T22:22:39Z",
+      "asOf": "2026-06-15T21:09:56Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:35.805230Z",
-      "price": 33.09,
+      "fetchedAt": "2026-06-15T21:33:33.162724Z",
+      "price": 32.24,
       "source": "Yahoo chart after-hours"
     },
     "GME": {
-      "asOf": "2026-06-12T23:59:31Z",
+      "asOf": "2026-06-15T21:32:26Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:10.944161Z",
-      "price": 21.7632,
+      "fetchedAt": "2026-06-15T21:33:11.232427Z",
+      "price": 21.7,
       "source": "Yahoo chart after-hours"
     },
     "GNRC": {
-      "asOf": "2026-06-12T22:56:48Z",
+      "asOf": "2026-06-15T21:13:08Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:00.491153Z",
-      "price": 262.401,
+      "fetchedAt": "2026-06-15T21:33:00.112175Z",
+      "price": 270.1,
       "source": "Yahoo chart after-hours"
     },
     "GOLF": {
-      "asOf": "2026-06-12T23:05:43Z",
+      "asOf": "2026-06-15T21:14:14Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:34.290303Z",
-      "price": 97.8322,
+      "fetchedAt": "2026-06-15T21:33:31.566297Z",
+      "price": 97.25,
       "source": "Yahoo chart after-hours"
     },
     "GOOG": {
@@ -1611,52 +1611,52 @@
       "source": "Yahoo regularMarketPrice"
     },
     "GPN": {
-      "asOf": "2026-06-12T23:56:42Z",
+      "asOf": "2026-06-15T21:11:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:57.410494Z",
-      "price": 67.7287,
+      "fetchedAt": "2026-06-15T21:32:56.146453Z",
+      "price": 67.38,
       "source": "Yahoo chart after-hours"
     },
     "GRFS": {
-      "asOf": "2026-06-12T23:54:54Z",
+      "asOf": "2026-06-15T20:52:57Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:29.470508Z",
-      "price": 7.6899,
+      "fetchedAt": "2026-06-15T21:33:28.357015Z",
+      "price": 7.59,
       "source": "Yahoo chart after-hours"
     },
     "GS": {
-      "asOf": "2026-06-12T23:56:44Z",
+      "asOf": "2026-06-15T21:28:15Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:26.999216Z",
-      "price": 1064.4,
+      "fetchedAt": "2026-06-15T21:32:23.851618Z",
+      "price": 1078.84,
       "source": "Yahoo chart after-hours"
     },
     "GTES": {
-      "asOf": "2026-06-12T22:52:22Z",
+      "asOf": "2026-06-15T20:15:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:25.405182Z",
-      "price": 26.62,
+      "fetchedAt": "2026-06-15T21:33:24.681931Z",
+      "price": 27.35,
       "source": "Yahoo chart after-hours"
     },
     "GVA": {
-      "asOf": "2026-06-12T21:48:56Z",
+      "asOf": "2026-06-15T20:43:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:31.446782Z",
-      "price": 141.5,
+      "fetchedAt": "2026-06-15T21:33:30.338736Z",
+      "price": 141.51,
       "source": "Yahoo chart after-hours"
     },
     "GWRE": {
-      "asOf": "2026-06-12T23:57:01Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:09.964102Z",
-      "price": 122.01,
+      "fetchedAt": "2026-06-15T21:33:10.249246Z",
+      "price": 120.03,
       "source": "Yahoo chart after-hours"
     },
     "HCC": {
-      "asOf": "2026-06-12T22:15:02Z",
+      "asOf": "2026-06-15T20:59:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:38.776650Z",
-      "price": 98.15,
+      "fetchedAt": "2026-06-15T21:33:36.274062Z",
+      "price": 97.8,
       "source": "Yahoo chart after-hours"
     },
     "HIG": {
@@ -1667,10 +1667,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "HLI": {
-      "asOf": "2026-06-12T22:56:02Z",
+      "asOf": "2026-06-15T21:14:16Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:12.247073Z",
-      "price": 140.13,
+      "fetchedAt": "2026-06-15T21:33:12.631321Z",
+      "price": 139.83,
       "source": "Yahoo chart after-hours"
     },
     "HLNE": {
@@ -1681,38 +1681,38 @@
       "source": "Yahoo regularMarketPrice"
     },
     "HLT": {
-      "asOf": "2026-06-12T22:52:55Z",
+      "asOf": "2026-06-15T21:28:18Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:33.634822Z",
-      "price": 345.95,
+      "fetchedAt": "2026-06-15T21:32:30.769660Z",
+      "price": 346.43,
       "source": "Yahoo chart after-hours"
     },
     "HMC": {
-      "asOf": "2026-06-12T23:50:39Z",
+      "asOf": "2026-06-15T21:31:55Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:44.351501Z",
-      "price": 26.4935,
+      "fetchedAt": "2026-06-15T21:32:41.002246Z",
+      "price": 26.97,
       "source": "Yahoo chart after-hours"
     },
     "HNGE": {
-      "asOf": "2026-06-12T23:32:16Z",
+      "asOf": "2026-06-15T21:28:36Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:41.636840Z",
-      "price": 65.23,
+      "fetchedAt": "2026-06-15T21:33:38.210528Z",
+      "price": 69.2,
       "source": "Yahoo chart after-hours"
     },
     "HOMB": {
-      "asOf": "2026-06-12T21:05:00Z",
+      "asOf": "2026-06-15T21:09:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:34.782712Z",
-      "price": 28.15,
+      "fetchedAt": "2026-06-15T21:33:32.116610Z",
+      "price": 27.83,
       "source": "Yahoo chart after-hours"
     },
     "HOOD": {
-      "asOf": "2026-06-12T23:59:56Z",
+      "asOf": "2026-06-15T21:32:20Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:32.151000Z",
-      "price": 93.09,
+      "fetchedAt": "2026-06-15T21:32:29.262273Z",
+      "price": 98.01,
       "source": "Yahoo chart after-hours"
     },
     "HQY": {
@@ -1730,10 +1730,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "HSIC": {
-      "asOf": "2026-06-12T23:26:45Z",
+      "asOf": "2026-06-15T21:12:10Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:13.958913Z",
-      "price": 81.6369,
+      "fetchedAt": "2026-06-15T21:33:14.281779Z",
+      "price": 80.16,
       "source": "Yahoo chart after-hours"
     },
     "HTHT": {
@@ -1751,30 +1751,30 @@
       "source": "Yahoo regularMarketPrice"
     },
     "HUM": {
-      "asOf": "2026-06-12T23:47:20Z",
+      "asOf": "2026-06-15T21:28:26Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:39.349173Z",
-      "price": 379.0,
+      "fetchedAt": "2026-06-15T21:32:36.348020Z",
+      "price": 381.11,
       "source": "Yahoo chart after-hours"
     },
     "IAG": {
-      "asOf": "2026-06-12T23:57:59Z",
+      "asOf": "2026-06-15T21:31:18Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:13.632737Z",
-      "price": 16.6793,
+      "fetchedAt": "2026-06-15T21:33:13.960928Z",
+      "price": 17.76,
       "source": "Yahoo chart after-hours"
     },
     "IBKR": {
-      "asOf": "2026-06-12T23:57:40Z",
+      "asOf": "2026-06-15T21:21:03Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:42.181453Z",
-      "price": 91.15,
+      "fetchedAt": "2026-06-15T21:32:38.588830Z",
+      "price": 94.0,
       "source": "Yahoo chart after-hours"
     },
     "IBN": {
-      "asOf": "2026-06-12T23:20:59Z",
+      "asOf": "2026-06-15T21:14:40Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:31.460679Z",
+      "fetchedAt": "2026-06-15T21:32:28.528480Z",
       "price": 27.81,
       "source": "Yahoo chart after-hours"
     },
@@ -1786,24 +1786,24 @@
       "source": "Yahoo regularMarketPrice"
     },
     "ICE": {
-      "asOf": "2026-06-12T23:41:34Z",
+      "asOf": "2026-06-15T21:01:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:33.325138Z",
-      "price": 141.72,
+      "fetchedAt": "2026-06-15T21:32:30.429162Z",
+      "price": 141.48,
       "source": "Yahoo chart after-hours"
     },
     "ICLR": {
-      "asOf": "2026-06-12T20:39:50Z",
+      "asOf": "2026-06-15T20:10:04Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:07.719533Z",
-      "price": 146.18,
+      "fetchedAt": "2026-06-15T21:33:07.741376Z",
+      "price": 147.72,
       "source": "Yahoo chart after-hours"
     },
     "IESC": {
-      "asOf": "2026-06-12T23:59:31Z",
+      "asOf": "2026-06-15T20:45:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:00.812131Z",
-      "price": 765.29,
+      "fetchedAt": "2026-06-15T21:33:00.461580Z",
+      "price": 730.0,
       "source": "Yahoo chart after-hours"
     },
     "IEX": {
@@ -1814,38 +1814,38 @@
       "source": "Yahoo regularMarketPrice"
     },
     "IFS": {
-      "asOf": "2026-06-12T23:36:57Z",
+      "asOf": "2026-06-15T20:15:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:31.299434Z",
-      "price": 57.5,
+      "fetchedAt": "2026-06-15T21:33:30.117927Z",
+      "price": 54.64,
       "source": "Yahoo chart after-hours"
     },
     "ILMN": {
-      "asOf": "2026-06-12T23:40:05Z",
+      "asOf": "2026-06-15T21:09:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:49.646668Z",
-      "price": 157.0,
+      "fetchedAt": "2026-06-15T21:32:47.328817Z",
+      "price": 166.65,
       "source": "Yahoo chart after-hours"
     },
     "INGM": {
-      "asOf": "2026-06-12T22:40:00Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:25.616836Z",
-      "price": 30.16,
+      "fetchedAt": "2026-06-15T21:33:24.847462Z",
+      "price": 28.36,
       "source": "Yahoo chart after-hours"
     },
     "INIO": {
-      "asOf": "2026-06-12T23:58:31Z",
+      "asOf": "2026-06-15T21:23:56Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:49.809419Z",
-      "price": 32.47,
+      "fetchedAt": "2026-06-15T21:32:47.516897Z",
+      "price": 34.94,
       "source": "Yahoo chart after-hours"
     },
     "INSM": {
-      "asOf": "2026-06-12T23:51:36Z",
+      "asOf": "2026-06-15T20:57:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:53.014514Z",
-      "price": 99.67,
+      "fetchedAt": "2026-06-15T21:32:50.942387Z",
+      "price": 97.8097,
       "source": "Yahoo chart after-hours"
     },
     "INTU": {
@@ -1856,10 +1856,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "IOT": {
-      "asOf": "2026-06-12T23:56:29Z",
+      "asOf": "2026-06-15T21:25:19Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:55.531984Z",
-      "price": 33.4442,
+      "fetchedAt": "2026-06-15T21:32:53.758931Z",
+      "price": 33.69,
       "source": "Yahoo chart after-hours"
     },
     "IPGP": {
@@ -1870,17 +1870,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "IREN": {
-      "asOf": "2026-06-12T23:59:53Z",
+      "asOf": "2026-06-15T21:32:45Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:52.514473Z",
-      "price": 60.3909,
+      "fetchedAt": "2026-06-15T21:32:50.426106Z",
+      "price": 60.93,
       "source": "Yahoo chart after-hours"
     },
     "IRM": {
-      "asOf": "2026-06-12T23:54:30Z",
+      "asOf": "2026-06-15T21:10:48Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:42.870999Z",
-      "price": 127.24,
+      "fetchedAt": "2026-06-15T21:32:39.342616Z",
+      "price": 126.28,
       "source": "Yahoo chart after-hours"
     },
     "IT": {
@@ -1891,10 +1891,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "IVZ": {
-      "asOf": "2026-06-12T23:24:10Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:06.184542Z",
-      "price": 28.89,
+      "fetchedAt": "2026-06-15T21:33:06.121003Z",
+      "price": 29.1,
       "source": "Yahoo chart after-hours"
     },
     "IX": {
@@ -1905,59 +1905,59 @@
       "source": "Yahoo regularMarketPrice"
     },
     "JAN": {
-      "asOf": "2026-06-12T21:05:00Z",
+      "asOf": "2026-06-15T20:15:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:26.160670Z",
-      "price": 25.23,
+      "fetchedAt": "2026-06-15T21:33:25.400394Z",
+      "price": 25.19,
       "source": "Yahoo chart after-hours"
     },
     "JAZZ": {
-      "asOf": "2026-06-12T23:49:19Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:01.309187Z",
-      "price": 232.0,
+      "fetchedAt": "2026-06-15T21:33:01.011549Z",
+      "price": 230.59,
       "source": "Yahoo chart after-hours"
     },
     "JD": {
-      "asOf": "2026-06-12T23:59:46Z",
+      "asOf": "2026-06-15T21:06:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:42.697355Z",
-      "price": 28.615,
+      "fetchedAt": "2026-06-15T21:32:39.173157Z",
+      "price": 28.7,
       "source": "Yahoo chart after-hours"
     },
     "JNJ": {
-      "asOf": "2026-06-12T23:58:53Z",
+      "asOf": "2026-06-15T21:32:14Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:26.628458Z",
-      "price": 240.58,
+      "fetchedAt": "2026-06-15T21:32:23.480077Z",
+      "price": 236.33,
       "source": "Yahoo chart after-hours"
     },
     "KDP": {
-      "asOf": "2026-06-12T23:59:46Z",
+      "asOf": "2026-06-15T21:00:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:41.341230Z",
-      "price": 31.75,
+      "fetchedAt": "2026-06-15T21:32:37.703858Z",
+      "price": 31.77,
       "source": "Yahoo chart after-hours"
     },
     "KGS": {
-      "asOf": "2026-06-12T22:43:21Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:25.790326Z",
-      "price": 70.14,
+      "fetchedAt": "2026-06-15T21:33:24.995186Z",
+      "price": 69.25,
       "source": "Yahoo chart after-hours"
     },
     "KLAR": {
-      "asOf": "2026-06-12T23:55:32Z",
+      "asOf": "2026-06-15T21:30:55Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:31.623028Z",
-      "price": 16.41,
+      "fetchedAt": "2026-06-15T21:33:30.506836Z",
+      "price": 17.62,
       "source": "Yahoo chart after-hours"
     },
     "KMI": {
-      "asOf": "2026-06-12T23:44:32Z",
+      "asOf": "2026-06-15T21:10:55Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:34.486708Z",
-      "price": 31.94,
+      "fetchedAt": "2026-06-15T21:32:31.667409Z",
+      "price": 31.5683,
       "source": "Yahoo chart after-hours"
     },
     "KMX": {
@@ -1968,87 +1968,87 @@
       "source": "Yahoo regularMarketPrice"
     },
     "KNX": {
-      "asOf": "2026-06-12T23:44:56Z",
+      "asOf": "2026-06-15T21:12:18Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:04.702820Z",
-      "price": 81.06,
+      "fetchedAt": "2026-06-15T21:33:04.569511Z",
+      "price": 79.25,
       "source": "Yahoo chart after-hours"
     },
     "KOF": {
-      "asOf": "2026-06-12T23:52:20Z",
+      "asOf": "2026-06-15T21:10:06Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:51.514509Z",
-      "price": 109.4264,
+      "fetchedAt": "2026-06-15T21:32:49.389559Z",
+      "price": 108.86,
       "source": "Yahoo chart after-hours"
     },
     "KRMN": {
-      "asOf": "2026-06-12T23:53:11Z",
+      "asOf": "2026-06-15T21:28:03Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:30.296835Z",
-      "price": 48.25,
+      "fetchedAt": "2026-06-15T21:33:29.038481Z",
+      "price": 48.1,
       "source": "Yahoo chart after-hours"
     },
     "KRYS": {
-      "asOf": "2026-06-12T23:25:07Z",
+      "asOf": "2026-06-15T21:26:45Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:13.089384Z",
-      "price": 321.555,
+      "fetchedAt": "2026-06-15T21:33:13.480072Z",
+      "price": 328.0,
       "source": "Yahoo chart after-hours"
     },
     "KSPI": {
-      "asOf": "2026-06-12T21:49:29Z",
+      "asOf": "2026-06-15T20:10:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:00.639211Z",
-      "price": 80.52,
+      "fetchedAt": "2026-06-15T21:33:00.280061Z",
+      "price": 83.2,
       "source": "Yahoo chart after-hours"
     },
     "KT": {
-      "asOf": "2026-06-12T22:04:36Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:16.311057Z",
-      "price": 18.83,
+      "fetchedAt": "2026-06-15T21:33:16.595648Z",
+      "price": 18.84,
       "source": "Yahoo chart after-hours"
     },
     "KTOS": {
-      "asOf": "2026-06-12T23:59:42Z",
+      "asOf": "2026-06-15T21:32:49Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:08.821909Z",
-      "price": 58.23,
+      "fetchedAt": "2026-06-15T21:33:08.914602Z",
+      "price": 57.108,
       "source": "Yahoo chart after-hours"
     },
     "KVUE": {
-      "asOf": "2026-06-12T23:48:33Z",
+      "asOf": "2026-06-15T21:26:22Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:44.015352Z",
-      "price": 18.0,
+      "fetchedAt": "2026-06-15T21:32:40.663705Z",
+      "price": 18.25,
       "source": "Yahoo chart after-hours"
     },
     "KYMR": {
-      "asOf": "2026-06-12T22:46:52Z",
+      "asOf": "2026-06-15T20:10:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:24.918729Z",
-      "price": 84.0,
+      "fetchedAt": "2026-06-15T21:33:24.185663Z",
+      "price": 85.59,
       "source": "Yahoo chart after-hours"
     },
     "LAMR": {
-      "asOf": "2026-06-12T20:10:04Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:00.272543Z",
-      "price": 154.35,
+      "fetchedAt": "2026-06-15T21:32:59.957773Z",
+      "price": 154.48,
       "source": "Yahoo chart after-hours"
     },
     "LAUR": {
-      "asOf": "2026-06-12T22:26:52Z",
+      "asOf": "2026-06-15T20:10:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:39.397738Z",
-      "price": 36.4,
+      "fetchedAt": "2026-06-15T21:33:37.031962Z",
+      "price": 35.4,
       "source": "Yahoo chart after-hours"
     },
     "LB": {
-      "asOf": "2026-06-12T23:20:17Z",
+      "asOf": "2026-06-15T20:34:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:37.623452Z",
-      "price": 70.91,
+      "fetchedAt": "2026-06-15T21:33:35.102706Z",
+      "price": 68.37,
       "source": "Yahoo chart after-hours"
     },
     "LBRT": {
@@ -2066,10 +2066,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "LEGN": {
-      "asOf": "2026-06-12T23:44:38Z",
+      "asOf": "2026-06-15T20:36:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:26.772071Z",
-      "price": 35.85,
+      "fetchedAt": "2026-06-15T21:33:26.039922Z",
+      "price": 35.48,
       "source": "Yahoo chart after-hours"
     },
     "LEVI": {
@@ -2080,24 +2080,24 @@
       "source": "Yahoo regularMarketPrice"
     },
     "LGN": {
-      "asOf": "2026-06-12T23:35:19Z",
+      "asOf": "2026-06-15T21:09:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:13.808655Z",
-      "price": 86.63,
+      "fetchedAt": "2026-06-15T21:33:14.126018Z",
+      "price": 86.89,
       "source": "Yahoo chart after-hours"
     },
     "LI": {
-      "asOf": "2026-06-12T23:47:52Z",
+      "asOf": "2026-06-15T21:21:57Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:01.143493Z",
-      "price": 14.36,
+      "fetchedAt": "2026-06-15T21:33:00.868210Z",
+      "price": 14.35,
       "source": "Yahoo chart after-hours"
     },
     "LINE": {
-      "asOf": "2026-06-12T21:55:22Z",
+      "asOf": "2026-06-15T20:31:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:07.561276Z",
-      "price": 44.42,
+      "fetchedAt": "2026-06-15T21:33:07.588779Z",
+      "price": 43.44,
       "source": "Yahoo chart after-hours"
     },
     "LKQ": {
@@ -2115,10 +2115,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "LOAR": {
-      "asOf": "2026-06-12T21:05:00Z",
+      "asOf": "2026-06-15T21:09:56Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:29.988689Z",
-      "price": 68.09,
+      "fetchedAt": "2026-06-15T21:33:28.721115Z",
+      "price": 69.0,
       "source": "Yahoo chart after-hours"
     },
     "LOGI": {
@@ -2129,10 +2129,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "LPLA": {
-      "asOf": "2026-06-12T22:34:05Z",
+      "asOf": "2026-06-15T20:12:41Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:50.747834Z",
-      "price": 295.63,
+      "fetchedAt": "2026-06-15T21:32:48.590207Z",
+      "price": 295.317,
       "source": "Yahoo chart after-hours"
     },
     "LQDA": {
@@ -2150,136 +2150,136 @@
       "source": "Yahoo regularMarketPrice"
     },
     "LTH": {
-      "asOf": "2026-06-12T23:58:13Z",
+      "asOf": "2026-06-15T21:29:48Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:20.243897Z",
-      "price": 34.81,
+      "fetchedAt": "2026-06-15T21:33:20.668886Z",
+      "price": 34.92,
       "source": "Yahoo chart after-hours"
     },
     "LULU": {
-      "asOf": "2026-06-12T23:58:58Z",
+      "asOf": "2026-06-15T21:32:48Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:03.742111Z",
-      "price": 119.2112,
+      "fetchedAt": "2026-06-15T21:33:03.551504Z",
+      "price": 116.2562,
       "source": "Yahoo chart after-hours"
     },
     "LUMN": {
-      "asOf": "2026-06-12T23:59:19Z",
+      "asOf": "2026-06-15T21:28:46Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:15.946404Z",
-      "price": 8.5096,
+      "fetchedAt": "2026-06-15T21:33:16.267890Z",
+      "price": 8.54,
       "source": "Yahoo chart after-hours"
     },
     "LYFT": {
-      "asOf": "2026-06-12T23:59:19Z",
+      "asOf": "2026-06-15T21:29:34Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:39.099873Z",
-      "price": 13.5419,
+      "fetchedAt": "2026-06-15T21:33:36.633431Z",
+      "price": 14.19,
       "source": "Yahoo chart after-hours"
     },
     "MAC": {
-      "asOf": "2026-06-12T22:15:50Z",
+      "asOf": "2026-06-15T21:18:50Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:22.344011Z",
-      "price": 25.45,
+      "fetchedAt": "2026-06-15T21:33:21.595341Z",
+      "price": 24.0884,
       "source": "Yahoo chart after-hours"
     },
     "MAIR": {
-      "asOf": "2026-06-12T23:59:40Z",
+      "asOf": "2026-06-15T21:31:43Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:55.697256Z",
-      "price": 40.4529,
+      "fetchedAt": "2026-06-15T21:32:54.276026Z",
+      "price": 39.681,
       "source": "Yahoo chart after-hours"
     },
     "MANH": {
-      "asOf": "2026-06-12T20:10:10Z",
+      "asOf": "2026-06-15T21:19:26Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:18.122933Z",
-      "price": 141.5,
+      "fetchedAt": "2026-06-15T21:33:18.639276Z",
+      "price": 144.0,
       "source": "Yahoo chart after-hours"
     },
     "MAR": {
-      "asOf": "2026-06-12T23:32:21Z",
+      "asOf": "2026-06-15T20:52:38Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:30.939468Z",
-      "price": 403.0,
+      "fetchedAt": "2026-06-15T21:32:28.196389Z",
+      "price": 400.63,
       "source": "Yahoo chart after-hours"
     },
     "MBLY": {
-      "asOf": "2026-06-12T23:53:00Z",
+      "asOf": "2026-06-15T21:32:07Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:19.841534Z",
-      "price": 9.4,
+      "fetchedAt": "2026-06-15T21:33:20.281797Z",
+      "price": 9.5359,
       "source": "Yahoo chart after-hours"
     },
     "MC": {
-      "asOf": "2026-06-12T21:05:00Z",
+      "asOf": "2026-06-15T20:15:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:35.630732Z",
-      "price": 67.7,
+      "fetchedAt": "2026-06-15T21:33:33.010064Z",
+      "price": 69.0907,
       "source": "Yahoo chart after-hours"
     },
     "MCO": {
-      "asOf": "2026-06-12T23:37:07Z",
+      "asOf": "2026-06-15T21:25:26Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:33.991805Z",
-      "price": 452.79,
+      "fetchedAt": "2026-06-15T21:32:31.161581Z",
+      "price": 454.4699,
       "source": "Yahoo chart after-hours"
     },
     "MDB": {
-      "asOf": "2026-06-12T23:57:19Z",
+      "asOf": "2026-06-15T21:30:53Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:48.261008Z",
-      "price": 343.28,
+      "fetchedAt": "2026-06-15T21:32:45.848989Z",
+      "price": 354.6,
       "source": "Yahoo chart after-hours"
     },
     "MDLN": {
-      "asOf": "2026-06-12T23:48:30Z",
+      "asOf": "2026-06-15T21:27:18Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:38.766515Z",
-      "price": 36.4,
+      "fetchedAt": "2026-06-15T21:32:35.812449Z",
+      "price": 37.6585,
       "source": "Yahoo chart after-hours"
     },
     "MEDP": {
-      "asOf": "2026-06-12T23:28:02Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:04.385624Z",
-      "price": 471.22,
+      "fetchedAt": "2026-06-15T21:33:04.205217Z",
+      "price": 467.5,
       "source": "Yahoo chart after-hours"
     },
     "MELI": {
-      "asOf": "2026-06-12T23:59:46Z",
+      "asOf": "2026-06-15T21:28:34Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:33.149891Z",
-      "price": 1590.0,
+      "fetchedAt": "2026-06-15T21:32:30.266231Z",
+      "price": 1642.0,
       "source": "Yahoo chart after-hours"
     },
     "MFC": {
-      "asOf": "2026-06-12T23:28:27Z",
+      "asOf": "2026-06-15T20:50:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:35.034906Z",
-      "price": 40.0,
+      "fetchedAt": "2026-06-15T21:32:32.218611Z",
+      "price": 40.74,
       "source": "Yahoo chart after-hours"
     },
     "MFG": {
-      "asOf": "2026-06-12T23:47:52Z",
+      "asOf": "2026-06-15T21:27:16Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:30.449126Z",
-      "price": 9.68,
+      "fetchedAt": "2026-06-15T21:32:27.681015Z",
+      "price": 9.7,
       "source": "Yahoo chart after-hours"
     },
     "MGY": {
-      "asOf": "2026-06-12T23:09:44Z",
+      "asOf": "2026-06-15T21:12:17Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:39.776146Z",
-      "price": 28.16,
+      "fetchedAt": "2026-06-15T21:33:37.373160Z",
+      "price": 26.8029,
       "source": "Yahoo chart after-hours"
     },
     "MHK": {
-      "asOf": "2026-06-12T23:43:35Z",
+      "asOf": "2026-06-15T21:03:47Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:27.247005Z",
-      "price": 107.1554,
+      "fetchedAt": "2026-06-15T21:33:26.761398Z",
+      "price": 111.43,
       "source": "Yahoo chart after-hours"
     },
     "MIRM": {
@@ -2290,45 +2290,45 @@
       "source": "Yahoo regularMarketPrice"
     },
     "MKSI": {
-      "asOf": "2026-06-12T23:54:39Z",
+      "asOf": "2026-06-15T21:08:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:50.436977Z",
-      "price": 358.99,
+      "fetchedAt": "2026-06-15T21:32:48.187330Z",
+      "price": 375.32,
       "source": "Yahoo chart after-hours"
     },
     "MLM": {
-      "asOf": "2026-06-12T23:54:34Z",
+      "asOf": "2026-06-15T21:03:53Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:44.191666Z",
-      "price": 578.2,
+      "fetchedAt": "2026-06-15T21:32:40.850075Z",
+      "price": 588.89,
       "source": "Yahoo chart after-hours"
     },
     "MOH": {
-      "asOf": "2026-06-12T23:48:58Z",
+      "asOf": "2026-06-15T21:16:09Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:09.667146Z",
-      "price": 202.61,
+      "fetchedAt": "2026-06-15T21:33:09.910242Z",
+      "price": 201.87,
       "source": "Yahoo chart after-hours"
     },
     "MORN": {
-      "asOf": "2026-06-12T23:26:25Z",
+      "asOf": "2026-06-15T21:09:04Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:26.931513Z",
-      "price": 178.0,
+      "fetchedAt": "2026-06-15T21:33:26.425250Z",
+      "price": 173.13,
       "source": "Yahoo chart after-hours"
     },
     "MOS": {
-      "asOf": "2026-06-12T23:59:01Z",
+      "asOf": "2026-06-15T21:09:39Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:24.511358Z",
-      "price": 22.6,
+      "fetchedAt": "2026-06-15T21:33:23.806658Z",
+      "price": 22.62,
       "source": "Yahoo chart after-hours"
     },
     "MPC": {
-      "asOf": "2026-06-12T23:54:05Z",
+      "asOf": "2026-06-15T21:22:15Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:34.157117Z",
-      "price": 263.58,
+      "fetchedAt": "2026-06-15T21:32:31.324631Z",
+      "price": 251.01,
       "source": "Yahoo chart after-hours"
     },
     "MPLX": {
@@ -2367,17 +2367,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "MSTR": {
-      "asOf": "2026-06-12T23:59:57Z",
+      "asOf": "2026-06-15T21:32:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:41.179368Z",
-      "price": 124.385,
+      "fetchedAt": "2026-06-15T21:32:37.538492Z",
+      "price": 130.9096,
       "source": "Yahoo chart after-hours"
     },
     "MT": {
-      "asOf": "2026-06-12T23:43:51Z",
+      "asOf": "2026-06-15T21:25:16Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:37.484887Z",
-      "price": 70.7,
+      "fetchedAt": "2026-06-15T21:32:34.714423Z",
+      "price": 68.53,
       "source": "Yahoo chart after-hours"
     },
     "MTD": {
@@ -2388,66 +2388,66 @@
       "source": "Yahoo regularMarketPrice"
     },
     "MTG": {
-      "asOf": "2026-06-12T21:34:56Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:36.187678Z",
-      "price": 25.81,
+      "fetchedAt": "2026-06-15T21:33:33.468584Z",
+      "price": 25.84,
       "source": "Yahoo chart after-hours"
     },
     "MTSI": {
-      "asOf": "2026-06-12T23:55:48Z",
+      "asOf": "2026-06-15T21:14:08Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:47.570810Z",
-      "price": 380.0,
+      "fetchedAt": "2026-06-15T21:32:45.086603Z",
+      "price": 388.0,
       "source": "Yahoo chart after-hours"
     },
     "MWH": {
-      "asOf": "2026-06-12T21:22:02Z",
+      "asOf": "2026-06-15T20:10:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:28.683613Z",
-      "price": 31.7,
+      "fetchedAt": "2026-06-15T21:33:27.709972Z",
+      "price": 32.18,
       "source": "Yahoo chart after-hours"
     },
     "MXL": {
-      "asOf": "2026-06-12T23:59:50Z",
+      "asOf": "2026-06-15T21:30:23Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:20.802947Z",
-      "price": 85.2741,
+      "fetchedAt": "2026-06-15T21:33:21.219464Z",
+      "price": 88.5,
       "source": "Yahoo chart after-hours"
     },
     "NAVN": {
-      "asOf": "2026-06-12T23:58:13Z",
+      "asOf": "2026-06-15T21:03:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:41.471481Z",
-      "price": 20.0,
+      "fetchedAt": "2026-06-15T21:33:38.046775Z",
+      "price": 20.4,
       "source": "Yahoo chart after-hours"
     },
     "NBIS": {
-      "asOf": "2026-06-12T23:59:46Z",
+      "asOf": "2026-06-15T21:32:30Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:36.575028Z",
-      "price": 235.84,
+      "fetchedAt": "2026-06-15T21:32:33.721667Z",
+      "price": 258.974,
       "source": "Yahoo chart after-hours"
     },
     "NBIX": {
-      "asOf": "2026-06-12T23:45:18Z",
+      "asOf": "2026-06-15T21:22:03Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:59.630829Z",
-      "price": 158.11,
+      "fetchedAt": "2026-06-15T21:32:58.798150Z",
+      "price": 160.0844,
       "source": "Yahoo chart after-hours"
     },
     "NCLH": {
-      "asOf": "2026-06-12T23:59:39Z",
+      "asOf": "2026-06-15T21:29:01Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:15.267702Z",
-      "price": 19.4735,
+      "fetchedAt": "2026-06-15T21:33:15.606674Z",
+      "price": 20.15,
       "source": "Yahoo chart after-hours"
     },
     "NDAQ": {
-      "asOf": "2026-06-12T23:38:55Z",
+      "asOf": "2026-06-15T21:29:23Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:38.574257Z",
-      "price": 88.54,
+      "fetchedAt": "2026-06-15T21:32:35.647802Z",
+      "price": 90.1447,
       "source": "Yahoo chart after-hours"
     },
     "NET": {
@@ -2479,10 +2479,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "NRG": {
-      "asOf": "2026-06-12T23:55:18Z",
+      "asOf": "2026-06-15T21:18:46Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:48.830197Z",
-      "price": 126.98,
+      "fetchedAt": "2026-06-15T21:32:46.413921Z",
+      "price": 131.48,
       "source": "Yahoo chart after-hours"
     },
     "NTAP": {
@@ -2500,31 +2500,31 @@
       "source": "Yahoo regularMarketPrice"
     },
     "NTRA": {
-      "asOf": "2026-06-12T22:52:11Z",
+      "asOf": "2026-06-15T21:09:16Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:46.617933Z",
-      "price": 212.88,
+      "fetchedAt": "2026-06-15T21:32:43.499250Z",
+      "price": 216.39,
       "source": "Yahoo chart after-hours"
     },
     "NU": {
-      "asOf": "2026-06-12T23:58:54Z",
+      "asOf": "2026-06-15T21:31:02Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:36.768981Z",
-      "price": 12.2,
+      "fetchedAt": "2026-06-15T21:32:33.985262Z",
+      "price": 12.42,
       "source": "Yahoo chart after-hours"
     },
     "NUVL": {
-      "asOf": "2026-06-12T23:54:24Z",
+      "asOf": "2026-06-15T20:59:02Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:11.106334Z",
-      "price": 123.2209,
+      "fetchedAt": "2026-06-15T21:33:11.412285Z",
+      "price": 123.35,
       "source": "Yahoo chart after-hours"
     },
     "NVMI": {
-      "asOf": "2026-06-12T23:16:58Z",
+      "asOf": "2026-06-15T21:29:16Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:57.259357Z",
-      "price": 585.8,
+      "fetchedAt": "2026-06-15T21:32:55.982375Z",
+      "price": 610.0,
       "source": "Yahoo chart after-hours"
     },
     "NXPI": {
@@ -2535,10 +2535,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "NXT": {
-      "asOf": "2026-06-12T23:44:49Z",
+      "asOf": "2026-06-15T21:24:40Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:57.563518Z",
-      "price": 122.15,
+      "fetchedAt": "2026-06-15T21:32:56.329376Z",
+      "price": 127.9997,
       "source": "Yahoo chart after-hours"
     },
     "OBDC": {
@@ -2549,10 +2549,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "OKTA": {
-      "asOf": "2026-06-12T23:47:40Z",
+      "asOf": "2026-06-15T21:31:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:54.343432Z",
-      "price": 116.95,
+      "fetchedAt": "2026-06-15T21:32:52.339135Z",
+      "price": 118.48,
       "source": "Yahoo chart after-hours"
     },
     "ON": {
@@ -2563,17 +2563,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "ONON": {
-      "asOf": "2026-06-12T23:55:54Z",
+      "asOf": "2026-06-15T21:28:25Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:06.353268Z",
-      "price": 38.5062,
+      "fetchedAt": "2026-06-15T21:33:06.286994Z",
+      "price": 38.69,
       "source": "Yahoo chart after-hours"
     },
     "ORA": {
-      "asOf": "2026-06-12T23:46:32Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:17.657037Z",
-      "price": 139.355,
+      "fetchedAt": "2026-06-15T21:33:18.118408Z",
+      "price": 138.71,
       "source": "Yahoo chart after-hours"
     },
     "OS": {
@@ -2584,45 +2584,45 @@
       "source": "Yahoo regularMarketPrice"
     },
     "OSCR": {
-      "asOf": "2026-06-12T23:58:14Z",
+      "asOf": "2026-06-15T21:31:27Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:17.488243Z",
-      "price": 28.2,
+      "fetchedAt": "2026-06-15T21:33:17.971559Z",
+      "price": 29.2,
       "source": "Yahoo chart after-hours"
     },
     "OTEX": {
-      "asOf": "2026-06-12T23:51:03Z",
+      "asOf": "2026-06-15T20:45:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:37.168300Z",
-      "price": 22.21,
+      "fetchedAt": "2026-06-15T21:33:34.605368Z",
+      "price": 22.05,
       "source": "Yahoo chart after-hours"
     },
     "P": {
-      "asOf": "2026-06-12T23:46:40Z",
+      "asOf": "2026-06-15T21:24:47Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:49.974006Z",
-      "price": 72.3101,
+      "fetchedAt": "2026-06-15T21:32:47.680662Z",
+      "price": 74.29,
       "source": "Yahoo chart after-hours"
     },
     "PAAS": {
-      "asOf": "2026-06-12T23:58:35Z",
+      "asOf": "2026-06-15T21:32:51Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:56.043480Z",
-      "price": 48.3858,
+      "fetchedAt": "2026-06-15T21:32:54.686633Z",
+      "price": 51.31,
       "source": "Yahoo chart after-hours"
     },
     "PAC": {
-      "asOf": "2026-06-12T21:41:35Z",
+      "asOf": "2026-06-15T20:44:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:03.260243Z",
-      "price": 236.89,
+      "fetchedAt": "2026-06-15T21:33:02.999661Z",
+      "price": 247.45,
       "source": "Yahoo chart after-hours"
     },
     "PACS": {
-      "asOf": "2026-06-12T22:15:53Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:34.449509Z",
-      "price": 37.0,
+      "fetchedAt": "2026-06-15T21:33:31.733782Z",
+      "price": 36.25,
       "source": "Yahoo chart after-hours"
     },
     "PAG": {
@@ -2654,24 +2654,24 @@
       "source": "Yahoo regularMarketPrice"
     },
     "PAYC": {
-      "asOf": "2026-06-12T21:54:11Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:30.604551Z",
-      "price": 136.0,
+      "fetchedAt": "2026-06-15T21:33:29.360733Z",
+      "price": 134.69,
       "source": "Yahoo chart after-hours"
     },
     "PAYP": {
-      "asOf": "2026-06-12T23:42:26Z",
+      "asOf": "2026-06-15T21:18:21Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:11.921104Z",
-      "price": 14.16,
+      "fetchedAt": "2026-06-15T21:33:12.279969Z",
+      "price": 14.2,
       "source": "Yahoo chart after-hours"
     },
     "PB": {
-      "asOf": "2026-06-12T22:17:18Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:24.111726Z",
-      "price": 72.72,
+      "fetchedAt": "2026-06-15T21:33:23.477358Z",
+      "price": 71.16,
       "source": "Yahoo chart after-hours"
     },
     "PCOR": {
@@ -2696,10 +2696,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "PECO": {
-      "asOf": "2026-06-12T22:17:11Z",
+      "asOf": "2026-06-15T20:25:37Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:33.987983Z",
-      "price": 42.15,
+      "fetchedAt": "2026-06-15T21:33:31.256785Z",
+      "price": 41.4879,
       "source": "Yahoo chart after-hours"
     },
     "PFGC": {
@@ -2710,38 +2710,38 @@
       "source": "Yahoo regularMarketPrice"
     },
     "PINS": {
-      "asOf": "2026-06-12T23:59:50Z",
+      "asOf": "2026-06-15T21:20:40Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:07.367601Z",
-      "price": 20.2894,
+      "fetchedAt": "2026-06-15T21:33:07.422206Z",
+      "price": 21.33,
       "source": "Yahoo chart after-hours"
     },
     "PKG": {
-      "asOf": "2026-06-12T21:20:50Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:54.513946Z",
-      "price": 228.23,
+      "fetchedAt": "2026-06-15T21:32:52.560834Z",
+      "price": 229.96,
       "source": "Yahoo chart after-hours"
     },
     "PKX": {
-      "asOf": "2026-06-12T23:45:40Z",
+      "asOf": "2026-06-15T21:05:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:57.028716Z",
-      "price": 63.75,
+      "fetchedAt": "2026-06-15T21:32:55.815851Z",
+      "price": 65.21,
       "source": "Yahoo chart after-hours"
     },
     "PLD": {
-      "asOf": "2026-06-12T23:52:04Z",
+      "asOf": "2026-06-15T21:27:40Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:29.740792Z",
-      "price": 148.7039,
+      "fetchedAt": "2026-06-15T21:32:26.838492Z",
+      "price": 148.5,
       "source": "Yahoo chart after-hours"
     },
     "PLTR": {
-      "asOf": "2026-06-12T23:59:56Z",
+      "asOf": "2026-06-15T21:32:22Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:27.173593Z",
-      "price": 128.2172,
+      "fetchedAt": "2026-06-15T21:32:24.048207Z",
+      "price": 134.78,
       "source": "Yahoo chart after-hours"
     },
     "PLUG": {
@@ -2752,9 +2752,9 @@
       "source": "Yahoo regularMarketPrice"
     },
     "PLXS": {
-      "asOf": "2026-06-12T23:48:50Z",
+      "asOf": "2026-06-15T21:10:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:19.667922Z",
+      "fetchedAt": "2026-06-15T21:33:20.128968Z",
       "price": 295.02,
       "source": "Yahoo chart after-hours"
     },
@@ -2766,45 +2766,45 @@
       "source": "Yahoo regularMarketPrice"
     },
     "PPC": {
-      "asOf": "2026-06-12T22:49:20Z",
+      "asOf": "2026-06-15T21:09:04Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:24.682043Z",
-      "price": 30.06,
+      "fetchedAt": "2026-06-15T21:33:23.966752Z",
+      "price": 29.04,
       "source": "Yahoo chart after-hours"
     },
     "PR": {
-      "asOf": "2026-06-12T23:55:47Z",
+      "asOf": "2026-06-15T21:08:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:59.465002Z",
-      "price": 19.51,
+      "fetchedAt": "2026-06-15T21:32:58.608502Z",
+      "price": 18.9,
       "source": "Yahoo chart after-hours"
     },
     "PRAX": {
-      "asOf": "2026-06-12T22:50:24Z",
+      "asOf": "2026-06-15T20:27:36Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:23.032148Z",
-      "price": 271.0,
+      "fetchedAt": "2026-06-15T21:33:22.434620Z",
+      "price": 255.625,
       "source": "Yahoo chart after-hours"
     },
     "PS": {
-      "asOf": "2026-06-12T23:32:49Z",
+      "asOf": "2026-06-15T21:13:30Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:04.060694Z",
-      "price": 32.88,
+      "fetchedAt": "2026-06-15T21:33:03.884106Z",
+      "price": 35.75,
       "source": "Yahoo chart after-hours"
     },
     "PSMT": {
-      "asOf": "2026-06-12T20:10:05Z",
+      "asOf": "2026-06-15T20:10:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:35.966697Z",
-      "price": 182.3,
+      "fetchedAt": "2026-06-15T21:33:33.307991Z",
+      "price": 179.73,
       "source": "Yahoo chart after-hours"
     },
     "PSN": {
-      "asOf": "2026-06-12T23:51:47Z",
+      "asOf": "2026-06-15T21:19:23Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:31.792825Z",
-      "price": 57.1,
+      "fetchedAt": "2026-06-15T21:33:30.682368Z",
+      "price": 55.51,
       "source": "Yahoo chart after-hours"
     },
     "PSX": {
@@ -2815,10 +2815,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "PTC": {
-      "asOf": "2026-06-12T23:28:16Z",
+      "asOf": "2026-06-15T20:52:39Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:05.252380Z",
-      "price": 114.47,
+      "fetchedAt": "2026-06-15T21:33:05.076103Z",
+      "price": 114.85,
       "source": "Yahoo chart after-hours"
     },
     "PTCT": {
@@ -2836,31 +2836,31 @@
       "source": "Yahoo regularMarketPrice"
     },
     "PUK": {
-      "asOf": "2026-06-12T21:29:31Z",
+      "asOf": "2026-06-15T20:49:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:45.273740Z",
-      "price": 26.58,
+      "fetchedAt": "2026-06-15T21:32:41.849037Z",
+      "price": 27.14,
       "source": "Yahoo chart after-hours"
     },
     "PWR": {
-      "asOf": "2026-06-12T23:59:38Z",
+      "asOf": "2026-06-15T21:30:52Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:30.785198Z",
-      "price": 709.0,
+      "fetchedAt": "2026-06-15T21:32:28.032484Z",
+      "price": 729.4839,
       "source": "Yahoo chart after-hours"
     },
     "QMMM": {
       "asOf": "2026-06-08T20:00:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:25.993680Z",
+      "fetchedAt": "2026-06-15T21:33:25.254499Z",
       "price": 119.4,
       "source": "Yahoo regularMarketPrice"
     },
     "QNT": {
-      "asOf": "2026-06-12T23:55:54Z",
+      "asOf": "2026-06-15T21:30:53Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:01.829854Z",
-      "price": 55.6428,
+      "fetchedAt": "2026-06-15T21:33:01.600060Z",
+      "price": 57.95,
       "source": "Yahoo chart after-hours"
     },
     "QRVO": {
@@ -2871,24 +2871,24 @@
       "source": "Yahoo regularMarketPrice"
     },
     "QSR": {
-      "asOf": "2026-06-12T23:53:59Z",
+      "asOf": "2026-06-15T21:18:53Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:44.537723Z",
-      "price": 74.58,
+      "fetchedAt": "2026-06-15T21:32:41.170556Z",
+      "price": 75.65,
       "source": "Yahoo chart after-hours"
     },
     "RACE": {
-      "asOf": "2026-06-12T23:49:24Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:36.231457Z",
-      "price": 354.91,
+      "fetchedAt": "2026-06-15T21:32:33.390113Z",
+      "price": 371.7677,
       "source": "Yahoo chart after-hours"
     },
     "RBA": {
-      "asOf": "2026-06-12T21:28:54Z",
+      "asOf": "2026-06-15T21:09:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:55.379579Z",
-      "price": 107.606,
+      "fetchedAt": "2026-06-15T21:32:53.597293Z",
+      "price": 110.41,
       "source": "Yahoo chart after-hours"
     },
     "RBC": {
@@ -2906,66 +2906,66 @@
       "source": "Yahoo regularMarketPrice"
     },
     "RBRK": {
-      "asOf": "2026-06-12T23:50:34Z",
+      "asOf": "2026-06-15T21:31:08Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:02.196943Z",
-      "price": 68.35,
+      "fetchedAt": "2026-06-15T21:33:01.994570Z",
+      "price": 70.25,
       "source": "Yahoo chart after-hours"
     },
     "RDDT": {
-      "asOf": "2026-06-12T23:59:42Z",
+      "asOf": "2026-06-15T21:32:26Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:46.128200Z",
-      "price": 163.0403,
+      "fetchedAt": "2026-06-15T21:32:42.918039Z",
+      "price": 181.55,
       "source": "Yahoo chart after-hours"
     },
     "REXR": {
-      "asOf": "2026-06-12T22:18:34Z",
+      "asOf": "2026-06-15T21:09:04Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:18.973800Z",
-      "price": 35.09,
+      "fetchedAt": "2026-06-15T21:33:19.486053Z",
+      "price": 34.8,
       "source": "Yahoo chart after-hours"
     },
     "RGA": {
-      "asOf": "2026-06-12T21:34:56Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:02.531202Z",
-      "price": 210.45,
+      "fetchedAt": "2026-06-15T21:33:02.322389Z",
+      "price": 210.39,
       "source": "Yahoo chart after-hours"
     },
     "RHP": {
-      "asOf": "2026-06-12T23:58:30Z",
+      "asOf": "2026-06-15T20:15:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:20.020916Z",
-      "price": 122.42,
+      "fetchedAt": "2026-06-15T21:33:20.430776Z",
+      "price": 122.47,
       "source": "Yahoo chart after-hours"
     },
     "RIVN": {
-      "asOf": "2026-06-12T23:59:59Z",
+      "asOf": "2026-06-15T21:32:46Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:52.329636Z",
-      "price": 16.75,
+      "fetchedAt": "2026-06-15T21:32:50.253531Z",
+      "price": 16.65,
       "source": "Yahoo chart after-hours"
     },
     "RKT": {
-      "asOf": "2026-06-12T23:57:09Z",
+      "asOf": "2026-06-15T21:31:56Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:43.200013Z",
-      "price": 13.0652,
+      "fetchedAt": "2026-06-15T21:32:39.747018Z",
+      "price": 13.97,
       "source": "Yahoo chart after-hours"
     },
     "RL": {
-      "asOf": "2026-06-12T23:57:48Z",
+      "asOf": "2026-06-15T21:10:57Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:50.125096Z",
-      "price": 401.2,
+      "fetchedAt": "2026-06-15T21:32:47.831692Z",
+      "price": 413.9526,
       "source": "Yahoo chart after-hours"
     },
     "RMBS": {
-      "asOf": "2026-06-12T23:59:15Z",
+      "asOf": "2026-06-15T21:32:03Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:59.938647Z",
-      "price": 147.91,
+      "fetchedAt": "2026-06-15T21:32:59.143704Z",
+      "price": 143.0,
       "source": "Yahoo chart after-hours"
     },
     "RNR": {
@@ -2976,10 +2976,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "ROAD": {
-      "asOf": "2026-06-12T23:52:54Z",
+      "asOf": "2026-06-15T21:11:48Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:28.523589Z",
-      "price": 114.0,
+      "fetchedAt": "2026-06-15T21:33:27.548544Z",
+      "price": 119.0,
       "source": "Yahoo chart after-hours"
     },
     "ROK": {
@@ -2990,10 +2990,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "ROKU": {
-      "asOf": "2026-06-12T23:59:57Z",
+      "asOf": "2026-06-15T21:32:07Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:52.840349Z",
-      "price": 144.11,
+      "fetchedAt": "2026-06-15T21:32:50.774381Z",
+      "price": 141.34,
       "source": "Yahoo chart after-hours"
     },
     "RPRX": {
@@ -3004,10 +3004,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "RRR": {
-      "asOf": "2026-06-12T20:33:58Z",
+      "asOf": "2026-06-15T21:11:53Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:30.444743Z",
-      "price": 63.25,
+      "fetchedAt": "2026-06-15T21:33:29.207274Z",
+      "price": 61.25,
       "source": "Yahoo chart after-hours"
     },
     "RRX": {
@@ -3025,38 +3025,38 @@
       "source": "Yahoo regularMarketPrice"
     },
     "RUSHA": {
-      "asOf": "2026-06-12T20:10:05Z",
+      "asOf": "2026-06-15T20:10:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:36.826416Z",
-      "price": 69.98,
+      "fetchedAt": "2026-06-15T21:33:34.175984Z",
+      "price": 70.05,
       "source": "Yahoo chart after-hours"
     },
     "RUSHB": {
-      "asOf": "2026-06-12T20:10:05Z",
+      "asOf": "2026-06-15T20:10:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:36.349354Z",
-      "price": 70.92,
+      "fetchedAt": "2026-06-15T21:33:33.615734Z",
+      "price": 70.75,
       "source": "Yahoo chart after-hours"
     },
     "RVMD": {
-      "asOf": "2026-06-12T23:56:25Z",
+      "asOf": "2026-06-15T21:31:18Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:45.439391Z",
-      "price": 154.34,
+      "fetchedAt": "2026-06-15T21:32:42.039567Z",
+      "price": 159.52,
       "source": "Yahoo chart after-hours"
     },
     "RYAAY": {
-      "asOf": "2026-06-12T22:23:29Z",
+      "asOf": "2026-06-15T20:59:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:43.834641Z",
-      "price": 60.98,
+      "fetchedAt": "2026-06-15T21:32:40.472973Z",
+      "price": 61.87,
       "source": "Yahoo chart after-hours"
     },
     "RYAN": {
-      "asOf": "2026-06-12T22:45:07Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:12.749967Z",
-      "price": 35.38,
+      "fetchedAt": "2026-06-15T21:33:13.168501Z",
+      "price": 35.34,
       "source": "Yahoo chart after-hours"
     },
     "RYTM": {
@@ -3067,87 +3067,87 @@
       "source": "Yahoo regularMarketPrice"
     },
     "S": {
-      "asOf": "2026-06-12T23:51:29Z",
+      "asOf": "2026-06-15T21:31:32Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:40.956892Z",
-      "price": 14.8776,
+      "fetchedAt": "2026-06-15T21:33:37.553944Z",
+      "price": 15.18,
       "source": "Yahoo chart after-hours"
     },
     "SAIL": {
-      "asOf": "2026-06-12T23:37:32Z",
+      "asOf": "2026-06-15T21:21:28Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:18.487236Z",
-      "price": 14.8,
+      "fetchedAt": "2026-06-15T21:33:18.993739Z",
+      "price": 14.21,
       "source": "Yahoo chart after-hours"
     },
     "SAN": {
-      "asOf": "2026-06-12T23:59:50Z",
+      "asOf": "2026-06-15T21:29:56Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:28.734813Z",
-      "price": 12.8111,
+      "fetchedAt": "2026-06-15T21:32:25.667093Z",
+      "price": 13.2297,
       "source": "Yahoo chart after-hours"
     },
     "SANM": {
-      "asOf": "2026-06-12T23:59:24Z",
+      "asOf": "2026-06-15T21:06:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:02.701012Z",
-      "price": 256.0,
+      "fetchedAt": "2026-06-15T21:33:02.494636Z",
+      "price": 261.25,
       "source": "Yahoo chart after-hours"
     },
     "SARO": {
-      "asOf": "2026-06-12T23:54:37Z",
+      "asOf": "2026-06-15T21:18:42Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:14.938330Z",
+      "fetchedAt": "2026-06-15T21:33:15.255471Z",
       "price": 27.2,
       "source": "Yahoo chart after-hours"
     },
     "SATS": {
-      "asOf": "2026-06-12T23:59:37Z",
+      "asOf": "2026-06-15T21:32:19Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:45.114795Z",
-      "price": 114.6,
+      "fetchedAt": "2026-06-15T21:32:41.647713Z",
+      "price": 119.5445,
       "source": "Yahoo chart after-hours"
     },
     "SE": {
-      "asOf": "2026-06-12T23:59:10Z",
+      "asOf": "2026-06-15T21:29:49Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:38.413924Z",
-      "price": 83.2927,
+      "fetchedAt": "2026-06-15T21:32:35.482197Z",
+      "price": 86.66,
       "source": "Yahoo chart after-hours"
     },
     "SEI": {
-      "asOf": "2026-06-12T23:47:00Z",
+      "asOf": "2026-06-15T21:22:24Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:36.659772Z",
-      "price": 74.12,
+      "fetchedAt": "2026-06-15T21:33:34.011004Z",
+      "price": 79.8375,
       "source": "Yahoo chart after-hours"
     },
     "SFD": {
-      "asOf": "2026-06-12T21:35:00Z",
+      "asOf": "2026-06-15T20:30:39Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:09.509574Z",
-      "price": 26.77,
+      "fetchedAt": "2026-06-15T21:33:09.740051Z",
+      "price": 26.4,
       "source": "Yahoo chart after-hours"
     },
     "SFM": {
-      "asOf": "2026-06-12T23:32:59Z",
+      "asOf": "2026-06-15T21:19:17Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:19.312663Z",
-      "price": 86.33,
+      "fetchedAt": "2026-06-15T21:33:19.817836Z",
+      "price": 85.2,
       "source": "Yahoo chart after-hours"
     },
     "SHOP": {
-      "asOf": "2026-06-12T23:59:52Z",
+      "asOf": "2026-06-15T21:31:13Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:29.902751Z",
-      "price": 109.12,
+      "fetchedAt": "2026-06-15T21:32:27.101054Z",
+      "price": 112.01,
       "source": "Yahoo chart after-hours"
     },
     "SIMO": {
-      "asOf": "2026-06-12T23:55:51Z",
+      "asOf": "2026-06-15T21:32:21Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:12.602473Z",
-      "price": 284.0,
+      "fetchedAt": "2026-06-15T21:33:13.018949Z",
+      "price": 277.0,
       "source": "Yahoo chart after-hours"
     },
     "SITE": {
@@ -3158,17 +3158,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "SITM": {
-      "asOf": "2026-06-12T23:41:21Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:56.530347Z",
-      "price": 732.5,
+      "fetchedAt": "2026-06-15T21:32:55.177849Z",
+      "price": 742.46,
       "source": "Yahoo chart after-hours"
     },
     "SKM": {
-      "asOf": "2026-06-12T23:59:57Z",
+      "asOf": "2026-06-15T21:31:20Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:01.492334Z",
-      "price": 39.0,
+      "fetchedAt": "2026-06-15T21:33:01.202774Z",
+      "price": 38.66,
       "source": "Yahoo chart after-hours"
     },
     "SM": {
@@ -3179,24 +3179,24 @@
       "source": "Yahoo regularMarketPrice"
     },
     "SMFG": {
-      "asOf": "2026-06-12T22:45:51Z",
+      "asOf": "2026-06-15T21:12:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:29.376366Z",
-      "price": 24.4,
+      "fetchedAt": "2026-06-15T21:32:26.489973Z",
+      "price": 24.3087,
       "source": "Yahoo chart after-hours"
     },
     "SNAP": {
-      "asOf": "2026-06-12T23:59:28Z",
+      "asOf": "2026-06-15T21:32:15Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:16.142050Z",
-      "price": 5.24,
+      "fetchedAt": "2026-06-15T21:33:16.431697Z",
+      "price": 5.7195,
       "source": "Yahoo chart after-hours"
     },
     "SNOW": {
-      "asOf": "2026-06-12T23:59:07Z",
+      "asOf": "2026-06-15T21:32:18Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:32.915812Z",
-      "price": 233.3,
+      "fetchedAt": "2026-06-15T21:32:30.008332Z",
+      "price": 240.51,
       "source": "Yahoo chart after-hours"
     },
     "SNPS": {
@@ -3207,31 +3207,31 @@
       "source": "Yahoo regularMarketPrice"
     },
     "SNX": {
-      "asOf": "2026-06-12T22:09:16Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:51.847427Z",
-      "price": 281.2,
+      "fetchedAt": "2026-06-15T21:32:49.707966Z",
+      "price": 284.65,
       "source": "Yahoo chart after-hours"
     },
     "SONY": {
-      "asOf": "2026-06-12T23:59:10Z",
+      "asOf": "2026-06-15T21:28:11Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:30.256228Z",
-      "price": 20.5462,
+      "fetchedAt": "2026-06-15T21:32:27.487565Z",
+      "price": 20.45,
       "source": "Yahoo chart after-hours"
     },
     "SPCX": {
-      "asOf": "2026-06-12T23:59:59Z",
+      "asOf": "2026-06-15T21:32:21Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:25.809319Z",
-      "price": 166.8341,
+      "fetchedAt": "2026-06-15T21:32:22.531907Z",
+      "price": 196.3,
       "source": "Yahoo chart after-hours"
     },
     "SPG": {
-      "asOf": "2026-06-12T23:18:51Z",
+      "asOf": "2026-06-15T21:14:08Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:32.320785Z",
-      "price": 218.565,
+      "fetchedAt": "2026-06-15T21:32:29.430079Z",
+      "price": 214.71,
       "source": "Yahoo chart after-hours"
     },
     "SPOT": {
@@ -3242,45 +3242,45 @@
       "source": "Yahoo regularMarketPrice"
     },
     "SQM": {
-      "asOf": "2026-06-12T23:52:30Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:50.282686Z",
-      "price": 84.0,
+      "fetchedAt": "2026-06-15T21:32:48.020792Z",
+      "price": 83.27,
       "source": "Yahoo chart after-hours"
     },
     "SRRK": {
-      "asOf": "2026-06-12T23:13:21Z",
+      "asOf": "2026-06-15T20:58:48Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:38.288536Z",
-      "price": 44.0,
+      "fetchedAt": "2026-06-15T21:33:35.795442Z",
+      "price": 45.0,
       "source": "Yahoo chart after-hours"
     },
     "SSB": {
-      "asOf": "2026-06-12T21:05:00Z",
+      "asOf": "2026-06-15T21:09:04Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:11.753033Z",
-      "price": 98.96,
+      "fetchedAt": "2026-06-15T21:33:12.133259Z",
+      "price": 97.6,
       "source": "Yahoo chart after-hours"
     },
     "SSRM": {
-      "asOf": "2026-06-12T23:45:58Z",
+      "asOf": "2026-06-15T21:24:34Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:35.237425Z",
-      "price": 27.3,
+      "fetchedAt": "2026-06-15T21:33:32.657883Z",
+      "price": 28.95,
       "source": "Yahoo chart after-hours"
     },
     "ST": {
-      "asOf": "2026-06-12T23:30:23Z",
+      "asOf": "2026-06-15T21:09:04Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:23.932515Z",
-      "price": 50.21,
+      "fetchedAt": "2026-06-15T21:33:23.313696Z",
+      "price": 51.37,
       "source": "Yahoo chart after-hours"
     },
     "STAG": {
-      "asOf": "2026-06-12T23:04:53Z",
+      "asOf": "2026-06-15T21:09:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:22.506095Z",
-      "price": 38.78,
+      "fetchedAt": "2026-06-15T21:33:21.770243Z",
+      "price": 38.52,
       "source": "Yahoo chart after-hours"
     },
     "STE": {
@@ -3291,38 +3291,38 @@
       "source": "Yahoo regularMarketPrice"
     },
     "STEP": {
-      "asOf": "2026-06-12T22:17:46Z",
+      "asOf": "2026-06-15T20:52:47Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:37.807087Z",
-      "price": 44.64,
+      "fetchedAt": "2026-06-15T21:33:35.255172Z",
+      "price": 47.05,
       "source": "Yahoo chart after-hours"
     },
     "STLD": {
-      "asOf": "2026-06-12T23:07:36Z",
+      "asOf": "2026-06-15T21:31:23Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:42.008308Z",
-      "price": 280.1994,
+      "fetchedAt": "2026-06-15T21:32:38.396362Z",
+      "price": 272.0,
       "source": "Yahoo chart after-hours"
     },
     "STM": {
-      "asOf": "2026-06-12T23:59:36Z",
+      "asOf": "2026-06-15T21:32:21Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:34.886256Z",
-      "price": 78.011,
+      "fetchedAt": "2026-06-15T21:32:32.052593Z",
+      "price": 79.99,
       "source": "Yahoo chart after-hours"
     },
     "STX": {
-      "asOf": "2026-06-12T23:59:49Z",
+      "asOf": "2026-06-15T21:31:39Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:28.044038Z",
-      "price": 936.15,
+      "fetchedAt": "2026-06-15T21:32:24.970261Z",
+      "price": 1018.0,
       "source": "Yahoo chart after-hours"
     },
     "STZ": {
-      "asOf": "2026-06-12T23:53:28Z",
+      "asOf": "2026-06-15T21:18:01Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:49.286004Z",
-      "price": 147.5,
+      "fetchedAt": "2026-06-15T21:32:46.980029Z",
+      "price": 147.97,
       "source": "Yahoo chart after-hours"
     },
     "SUI": {
@@ -3333,17 +3333,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "SWKS": {
-      "asOf": "2026-06-12T23:56:25Z",
+      "asOf": "2026-06-15T21:24:17Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:07.970319Z",
-      "price": 73.99,
+      "fetchedAt": "2026-06-15T21:33:07.995412Z",
+      "price": 76.15,
       "source": "Yahoo chart after-hours"
     },
     "SYNA": {
-      "asOf": "2026-06-12T23:30:57Z",
+      "asOf": "2026-06-15T21:08:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:37.479537Z",
-      "price": 139.04,
+      "fetchedAt": "2026-06-15T21:33:34.927838Z",
+      "price": 140.23,
       "source": "Yahoo chart after-hours"
     },
     "TAL": {
@@ -3354,17 +3354,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "TBBB": {
-      "asOf": "2026-06-12T23:03:47Z",
+      "asOf": "2026-06-15T21:32:30Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:41.271488Z",
-      "price": 42.15,
+      "fetchedAt": "2026-06-15T21:33:37.879869Z",
+      "price": 41.5001,
       "source": "Yahoo chart after-hours"
     },
     "TCOM": {
-      "asOf": "2026-06-12T23:54:43Z",
+      "asOf": "2026-06-15T20:17:03Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:47.398509Z",
-      "price": 46.7431,
+      "fetchedAt": "2026-06-15T21:32:44.260619Z",
+      "price": 47.46,
       "source": "Yahoo chart after-hours"
     },
     "TDY": {
@@ -3382,31 +3382,31 @@
       "source": "Yahoo regularMarketPrice"
     },
     "TEL": {
-      "asOf": "2026-06-12T23:12:35Z",
+      "asOf": "2026-06-15T21:07:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:36.405502Z",
-      "price": 210.38,
+      "fetchedAt": "2026-06-15T21:32:33.550340Z",
+      "price": 216.14,
       "source": "Yahoo chart after-hours"
     },
     "TEM": {
-      "asOf": "2026-06-12T23:58:56Z",
+      "asOf": "2026-06-15T21:32:30Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:17.126484Z",
-      "price": 47.84,
+      "fetchedAt": "2026-06-15T21:33:17.469761Z",
+      "price": 52.25,
       "source": "Yahoo chart after-hours"
     },
     "TGTX": {
-      "asOf": "2026-06-12T23:57:37Z",
+      "asOf": "2026-06-15T21:23:53Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:25.232550Z",
-      "price": 49.5551,
+      "fetchedAt": "2026-06-15T21:33:24.523265Z",
+      "price": 50.45,
       "source": "Yahoo chart after-hours"
     },
     "TIGO": {
-      "asOf": "2026-06-12T23:37:07Z",
+      "asOf": "2026-06-15T20:59:03Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:00.104471Z",
-      "price": 94.11,
+      "fetchedAt": "2026-06-15T21:32:59.306171Z",
+      "price": 89.45,
       "source": "Yahoo chart after-hours"
     },
     "TIMB": {
@@ -3417,10 +3417,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "TKC": {
-      "asOf": "2026-06-12T23:32:23Z",
+      "asOf": "2026-06-15T20:15:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:38.615933Z",
-      "price": 5.9644,
+      "fetchedAt": "2026-06-15T21:33:36.112812Z",
+      "price": 6.16,
       "source": "Yahoo chart after-hours"
     },
     "TLK": {
@@ -3431,10 +3431,10 @@
       "source": "Yahoo regularMarketPrice"
     },
     "TM": {
-      "asOf": "2026-06-12T23:57:07Z",
+      "asOf": "2026-06-15T21:25:37Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:27.690536Z",
-      "price": 176.62,
+      "fetchedAt": "2026-06-15T21:32:24.574500Z",
+      "price": 180.97,
       "source": "Yahoo chart after-hours"
     },
     "TME": {
@@ -3445,31 +3445,31 @@
       "source": "Yahoo regularMarketPrice"
     },
     "TOST": {
-      "asOf": "2026-06-12T23:58:19Z",
+      "asOf": "2026-06-15T21:31:32Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:02.026529Z",
-      "price": 24.88,
+      "fetchedAt": "2026-06-15T21:33:01.767632Z",
+      "price": 25.1193,
       "source": "Yahoo chart after-hours"
     },
     "TPG": {
-      "asOf": "2026-06-12T23:02:58Z",
+      "asOf": "2026-06-15T21:18:49Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:59.130954Z",
-      "price": 43.87,
+      "fetchedAt": "2026-06-15T21:32:58.230232Z",
+      "price": 43.5,
       "source": "Yahoo chart after-hours"
     },
     "TPR": {
-      "asOf": "2026-06-12T23:52:07Z",
+      "asOf": "2026-06-15T20:52:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:47.073642Z",
-      "price": 148.62,
+      "fetchedAt": "2026-06-15T21:32:43.861154Z",
+      "price": 150.99,
       "source": "Yahoo chart after-hours"
     },
     "TRGP": {
-      "asOf": "2026-06-12T22:59:28Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:36.924633Z",
-      "price": 275.0,
+      "fetchedAt": "2026-06-15T21:32:34.159238Z",
+      "price": 262.33,
       "source": "Yahoo chart after-hours"
     },
     "TRU": {
@@ -3480,38 +3480,38 @@
       "source": "Yahoo regularMarketPrice"
     },
     "TSEM": {
-      "asOf": "2026-06-12T23:59:18Z",
+      "asOf": "2026-06-15T21:32:40Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:47.227661Z",
-      "price": 263.0,
+      "fetchedAt": "2026-06-15T21:32:44.050911Z",
+      "price": 288.48,
       "source": "Yahoo chart after-hours"
     },
     "TSLA": {
-      "asOf": "2026-06-12T23:59:57Z",
+      "asOf": "2026-06-15T21:32:19Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:25.980841Z",
-      "price": 406.1,
+      "fetchedAt": "2026-06-15T21:32:22.776457Z",
+      "price": 409.9552,
       "source": "Yahoo chart after-hours"
     },
     "TTAN": {
-      "asOf": "2026-06-12T23:42:10Z",
+      "asOf": "2026-06-15T21:26:47Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:29.824799Z",
-      "price": 66.89,
+      "fetchedAt": "2026-06-15T21:33:28.500140Z",
+      "price": 67.92,
       "source": "Yahoo chart after-hours"
     },
     "TTD": {
-      "asOf": "2026-06-12T23:59:35Z",
+      "asOf": "2026-06-15T21:32:56Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:14.458015Z",
-      "price": 19.2696,
+      "fetchedAt": "2026-06-15T21:33:14.765153Z",
+      "price": 19.25,
       "source": "Yahoo chart after-hours"
     },
     "TTMI": {
-      "asOf": "2026-06-12T23:59:35Z",
+      "asOf": "2026-06-15T21:29:55Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:54.837221Z",
-      "price": 197.0,
+      "fetchedAt": "2026-06-15T21:32:52.982169Z",
+      "price": 209.0,
       "source": "Yahoo chart after-hours"
     },
     "TTWO": {
@@ -3522,38 +3522,38 @@
       "source": "Yahoo regularMarketPrice"
     },
     "TW": {
-      "asOf": "2026-06-12T20:18:38Z",
+      "asOf": "2026-06-15T20:12:41Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:50.589941Z",
-      "price": 101.19,
+      "fetchedAt": "2026-06-15T21:32:48.400066Z",
+      "price": 101.729,
       "source": "Yahoo chart after-hours"
     },
     "TWLO": {
-      "asOf": "2026-06-12T23:54:27Z",
+      "asOf": "2026-06-15T21:22:20Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:46.281115Z",
-      "price": 204.05,
+      "fetchedAt": "2026-06-15T21:32:43.088325Z",
+      "price": 202.0,
       "source": "Yahoo chart after-hours"
     },
     "TX": {
-      "asOf": "2026-06-12T21:05:00Z",
+      "asOf": "2026-06-15T20:25:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:11.430110Z",
-      "price": 49.8,
+      "fetchedAt": "2026-06-15T21:33:11.811410Z",
+      "price": 49.92,
       "source": "Yahoo chart after-hours"
     },
     "U": {
-      "asOf": "2026-06-12T23:59:27Z",
+      "asOf": "2026-06-15T21:28:45Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:06.870222Z",
-      "price": 27.225,
+      "fetchedAt": "2026-06-15T21:33:06.882851Z",
+      "price": 28.3,
       "source": "Yahoo chart after-hours"
     },
     "UBER": {
-      "asOf": "2026-06-12T23:59:19Z",
+      "asOf": "2026-06-15T21:32:25Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:30.067895Z",
-      "price": 68.8582,
+      "fetchedAt": "2026-06-15T21:32:27.298680Z",
+      "price": 73.0696,
       "source": "Yahoo chart after-hours"
     },
     "UGP": {
@@ -3564,38 +3564,38 @@
       "source": "Yahoo regularMarketPrice"
     },
     "UI": {
-      "asOf": "2026-06-12T23:36:31Z",
+      "asOf": "2026-06-15T21:27:54Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:43.523600Z",
-      "price": 585.25,
+      "fetchedAt": "2026-06-15T21:32:40.156438Z",
+      "price": 574.0,
       "source": "Yahoo chart after-hours"
     },
     "ULS": {
-      "asOf": "2026-06-12T23:30:36Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:55.869602Z",
-      "price": 96.88,
+      "fetchedAt": "2026-06-15T21:32:54.455756Z",
+      "price": 96.99,
       "source": "Yahoo chart after-hours"
     },
     "ULTA": {
-      "asOf": "2026-06-12T23:53:54Z",
+      "asOf": "2026-06-15T21:30:49Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:55.009897Z",
-      "price": 468.0,
+      "fetchedAt": "2026-06-15T21:32:53.205337Z",
+      "price": 471.49,
       "source": "Yahoo chart after-hours"
     },
     "UMC": {
-      "asOf": "2026-06-12T23:58:10Z",
+      "asOf": "2026-06-15T21:31:35Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:37.732194Z",
-      "price": 21.75,
+      "fetchedAt": "2026-06-15T21:32:34.893334Z",
+      "price": 23.12,
       "source": "Yahoo chart after-hours"
     },
     "UNM": {
-      "asOf": "2026-06-12T22:58:24Z",
+      "asOf": "2026-06-15T21:21:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:00.973157Z",
-      "price": 92.65,
+      "fetchedAt": "2026-06-15T21:33:00.674735Z",
+      "price": 90.92,
       "source": "Yahoo chart after-hours"
     },
     "UPS": {
@@ -3613,80 +3613,80 @@
       "source": "Yahoo regularMarketPrice"
     },
     "USFD": {
-      "asOf": "2026-06-12T23:32:02Z",
+      "asOf": "2026-06-15T21:09:11Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:53.863709Z",
-      "price": 92.5,
+      "fetchedAt": "2026-06-15T21:32:51.825544Z",
+      "price": 91.64,
       "source": "Yahoo chart after-hours"
     },
     "V": {
-      "asOf": "2026-06-12T23:59:51Z",
+      "asOf": "2026-06-15T21:32:17Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:26.462174Z",
-      "price": 323.0,
+      "fetchedAt": "2026-06-15T21:32:23.290114Z",
+      "price": 324.0282,
       "source": "Yahoo chart after-hours"
     },
     "VCTR": {
-      "asOf": "2026-06-12T21:26:33Z",
+      "asOf": "2026-06-15T20:35:21Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:38.137327Z",
-      "price": 85.52,
+      "fetchedAt": "2026-06-15T21:33:35.609166Z",
+      "price": 86.5,
       "source": "Yahoo chart after-hours"
     },
     "VEEV": {
-      "asOf": "2026-06-12T23:58:30Z",
+      "asOf": "2026-06-15T21:30:17Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:48.986756Z",
-      "price": 161.392,
+      "fetchedAt": "2026-06-15T21:32:46.587290Z",
+      "price": 163.15,
       "source": "Yahoo chart after-hours"
     },
     "VIAV": {
-      "asOf": "2026-06-12T23:56:00Z",
+      "asOf": "2026-06-15T21:28:23Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:05.418420Z",
-      "price": 54.8,
+      "fetchedAt": "2026-06-15T21:33:05.271954Z",
+      "price": 54.12,
       "source": "Yahoo chart after-hours"
     },
     "VIK": {
-      "asOf": "2026-06-12T23:37:53Z",
+      "asOf": "2026-06-15T21:06:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:41.842533Z",
-      "price": 93.6667,
+      "fetchedAt": "2026-06-15T21:32:38.230850Z",
+      "price": 96.0189,
       "source": "Yahoo chart after-hours"
     },
     "VIRT": {
-      "asOf": "2026-06-12T23:30:26Z",
+      "asOf": "2026-06-15T21:07:44Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:15.091277Z",
-      "price": 57.54,
+      "fetchedAt": "2026-06-15T21:33:15.432041Z",
+      "price": 57.7,
       "source": "Yahoo chart after-hours"
     },
     "VIST": {
-      "asOf": "2026-06-12T23:35:27Z",
+      "asOf": "2026-06-15T21:28:09Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:20.581715Z",
-      "price": 72.7,
+      "fetchedAt": "2026-06-15T21:33:21.028661Z",
+      "price": 69.62,
       "source": "Yahoo chart after-hours"
     },
     "VIV": {
-      "asOf": "2026-06-12T21:43:21Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:53.346151Z",
-      "price": 13.35,
+      "fetchedAt": "2026-06-15T21:32:51.261819Z",
+      "price": 13.18,
       "source": "Yahoo chart after-hours"
     },
     "VNOM": {
-      "asOf": "2026-06-12T23:27:24Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:59.792791Z",
-      "price": 44.37,
+      "fetchedAt": "2026-06-15T21:32:58.955629Z",
+      "price": 43.69,
       "source": "Yahoo chart after-hours"
     },
     "VOD": {
-      "asOf": "2026-06-12T23:44:07Z",
+      "asOf": "2026-06-15T21:13:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:43.369217Z",
-      "price": 15.25,
+      "fetchedAt": "2026-06-15T21:32:39.976158Z",
+      "price": 15.11,
       "source": "Yahoo chart after-hours"
     },
     "VRSN": {
@@ -3697,17 +3697,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "VSAT": {
-      "asOf": "2026-06-12T23:50:08Z",
+      "asOf": "2026-06-15T21:26:33Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:12.099067Z",
-      "price": 70.1869,
+      "fetchedAt": "2026-06-15T21:33:12.459449Z",
+      "price": 66.04,
       "source": "Yahoo chart after-hours"
     },
     "VZ": {
-      "asOf": "2026-06-12T23:59:31Z",
+      "asOf": "2026-06-15T21:31:26Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:28.565527Z",
-      "price": 48.0,
+      "fetchedAt": "2026-06-15T21:32:25.473454Z",
+      "price": 47.105,
       "source": "Yahoo chart after-hours"
     },
     "W": {
@@ -3718,24 +3718,24 @@
       "source": "Yahoo regularMarketPrice"
     },
     "WAB": {
-      "asOf": "2026-06-12T22:15:19Z",
+      "asOf": "2026-06-15T21:15:57Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:39.704614Z",
-      "price": 263.05,
+      "fetchedAt": "2026-06-15T21:32:36.679702Z",
+      "price": 268.75,
       "source": "Yahoo chart after-hours"
     },
     "WAL": {
-      "asOf": "2026-06-12T22:10:15Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:14.621846Z",
-      "price": 83.0,
+      "fetchedAt": "2026-06-15T21:33:14.929201Z",
+      "price": 81.81,
       "source": "Yahoo chart after-hours"
     },
     "WAT": {
-      "asOf": "2026-06-12T22:14:49Z",
+      "asOf": "2026-06-15T21:05:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:43.678521Z",
-      "price": 356.1748,
+      "fetchedAt": "2026-06-15T21:32:40.327649Z",
+      "price": 357.76,
       "source": "Yahoo chart after-hours"
     },
     "WCC": {
@@ -3753,17 +3753,17 @@
       "source": "Yahoo regularMarketPrice"
     },
     "WES": {
-      "asOf": "2026-06-12T23:11:08Z",
+      "asOf": "2026-06-15T21:17:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:58.207808Z",
-      "price": 44.396,
+      "fetchedAt": "2026-06-15T21:32:56.999831Z",
+      "price": 43.97,
       "source": "Yahoo chart after-hours"
     },
     "WLK": {
-      "asOf": "2026-06-12T21:05:00Z",
+      "asOf": "2026-06-15T21:09:05Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:07.196681Z",
-      "price": 88.5,
+      "fetchedAt": "2026-06-15T21:33:07.257459Z",
+      "price": 87.45,
       "source": "Yahoo chart after-hours"
     },
     "WMS": {
@@ -3774,31 +3774,31 @@
       "source": "Yahoo regularMarketPrice"
     },
     "WPC": {
-      "asOf": "2026-06-12T23:50:44Z",
+      "asOf": "2026-06-15T21:08:59Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:58.357096Z",
-      "price": 76.9967,
+      "fetchedAt": "2026-06-15T21:32:57.147213Z",
+      "price": 75.47,
       "source": "Yahoo chart after-hours"
     },
     "WPM": {
-      "asOf": "2026-06-12T23:53:36Z",
+      "asOf": "2026-06-15T21:27:02Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:38.259788Z",
-      "price": 116.11,
+      "fetchedAt": "2026-06-15T21:32:35.259461Z",
+      "price": 123.94,
       "source": "Yahoo chart after-hours"
     },
     "WTS": {
-      "asOf": "2026-06-12T23:51:46Z",
+      "asOf": "2026-06-15T20:52:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:08.139936Z",
-      "price": 332.84,
+      "fetchedAt": "2026-06-15T21:33:08.163577Z",
+      "price": 332.28,
       "source": "Yahoo chart after-hours"
     },
     "WULF": {
-      "asOf": "2026-06-12T23:59:54Z",
+      "asOf": "2026-06-15T21:32:36Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:06.027853Z",
-      "price": 26.03,
+      "fetchedAt": "2026-06-15T21:33:05.924637Z",
+      "price": 28.14,
       "source": "Yahoo chart after-hours"
     },
     "WYNN": {
@@ -3809,80 +3809,80 @@
       "source": "Yahoo regularMarketPrice"
     },
     "XE": {
-      "asOf": "2026-06-12T23:59:41Z",
+      "asOf": "2026-06-15T21:31:18Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:21.034148Z",
-      "price": 18.98,
+      "fetchedAt": "2026-06-15T21:33:21.398016Z",
+      "price": 21.22,
       "source": "Yahoo chart after-hours"
     },
     "XP": {
-      "asOf": "2026-06-12T23:42:53Z",
+      "asOf": "2026-06-15T20:35:27Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:18.801661Z",
-      "price": 16.12,
+      "fetchedAt": "2026-06-15T21:33:19.321427Z",
+      "price": 15.72,
       "source": "Yahoo chart after-hours"
     },
     "YMM": {
-      "asOf": "2026-06-12T21:35:01Z",
+      "asOf": "2026-06-15T20:33:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:15.784298Z",
-      "price": 8.44,
+      "fetchedAt": "2026-06-15T21:33:16.117107Z",
+      "price": 8.41,
       "source": "Yahoo chart after-hours"
     },
     "YOU": {
-      "asOf": "2026-06-12T23:51:44Z",
+      "asOf": "2026-06-15T20:47:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:26.448335Z",
-      "price": 50.2,
+      "fetchedAt": "2026-06-15T21:33:25.707285Z",
+      "price": 52.2968,
       "source": "Yahoo chart after-hours"
     },
     "Z": {
-      "asOf": "2026-06-12T23:58:45Z",
+      "asOf": "2026-06-15T21:25:39Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:23.756879Z",
-      "price": 32.36,
+      "fetchedAt": "2026-06-15T21:33:23.129983Z",
+      "price": 32.48,
       "source": "Yahoo chart after-hours"
     },
     "ZBRA": {
-      "asOf": "2026-06-12T20:20:00Z",
+      "asOf": "2026-06-15T21:12:40Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:08.630157Z",
-      "price": 228.42,
+      "fetchedAt": "2026-06-15T21:33:08.717238Z",
+      "price": 241.79,
       "source": "Yahoo chart after-hours"
     },
     "ZG": {
-      "asOf": "2026-06-12T23:17:00Z",
+      "asOf": "2026-06-15T21:10:30Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:11:23.537099Z",
-      "price": 32.59,
+      "fetchedAt": "2026-06-15T21:33:22.960114Z",
+      "price": 32.68,
       "source": "Yahoo chart after-hours"
     },
     "ZM": {
-      "asOf": "2026-06-12T23:55:16Z",
+      "asOf": "2026-06-15T21:12:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:48.430499Z",
-      "price": 94.0598,
+      "fetchedAt": "2026-06-15T21:32:46.078999Z",
+      "price": 93.78,
       "source": "Yahoo chart after-hours"
     },
     "ZS": {
-      "asOf": "2026-06-12T23:59:51Z",
+      "asOf": "2026-06-15T21:32:44Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:53.535186Z",
-      "price": 129.14,
+      "fetchedAt": "2026-06-15T21:32:51.452730Z",
+      "price": 130.0234,
       "source": "Yahoo chart after-hours"
     },
     "ZTO": {
-      "asOf": "2026-06-12T23:09:43Z",
+      "asOf": "2026-06-15T20:15:00Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:58.670481Z",
-      "price": 22.83,
+      "fetchedAt": "2026-06-15T21:32:57.486930Z",
+      "price": 22.88,
       "source": "Yahoo chart after-hours"
     },
     "ZTS": {
-      "asOf": "2026-06-12T23:54:18Z",
+      "asOf": "2026-06-15T21:11:47Z",
       "currency": "USD",
-      "fetchedAt": "2026-06-13T00:10:44.686751Z",
-      "price": 79.3,
+      "fetchedAt": "2026-06-15T21:32:41.335466Z",
+      "price": 79.9,
       "source": "Yahoo chart after-hours"
     }
   },

@@ -642,7 +642,7 @@
         function yahooProxyBaseUrl() {
             if (window.IPO_YAHOO_PROXY_BASE) return String(window.IPO_YAHOO_PROXY_BASE).replace(/\/$/, '');
             const localHost = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
-            if (localHost) return 'http://localhost:8787/ipo/api/yahoo';
+            if (localHost) return 'https://glaubi.net/ipo/api/yahoo';
             return `${window.location.origin}${ipoBasePath()}api/yahoo`.replace(/\/$/, '');
         }
 
