@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>IPO 1m Entry-Timing Analysis</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="vendor/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="results-data.js"></script>
 <style>
   :root {
@@ -416,7 +416,7 @@ function renderScenario(scen) {
   ['ppD1','ppAH','ppPre','ppD2'].forEach(id =>
     document.getElementById(id).style.display = showPanels.includes(id) ? '' : 'none');
   if (typeof showIpo === 'function' && sel.options.length)
-    showIpo(+sel.value || 0);
+    showIpo(sel.value === '' ? newestIpoIndexForCap() : +sel.value);
 }
 
 function prettyLeg(l) {
@@ -608,16 +608,35 @@ drawPaths();
 
 /* explorer */
 const sel = document.getElementById('ipoSel');
-function rebuildIpoSelect() {
-  const keep = sel.value;
+function newestIpoIndexForCap(capKey=currentCap) {
+  let best = -1, bestDate = '';
+  R.series.forEach((s,i) => {
+    if ((s.marketCap || 0) <= capMin[capKey]) return;
+    const d = s.ipoDate || '';
+    if (d > bestDate || (d === bestDate && i > best)) {
+      best = i;
+      bestDate = d;
+    }
+  });
+  return best >= 0 ? best : 0;
+}
+function selectHasValue(v) {
+  return [...sel.options].some(o => o.value === String(v));
+}
+function rebuildIpoSelect(preferredValue=sel.value) {
+  const keep = preferredValue;
   sel.innerHTML = '';
   R.series.forEach((s,i) => {
     if ((s.marketCap || 0) > capMin[currentCap])
       sel.add(new Option(`${s.ticker.toUpperCase()} — ${s.name}`, i));
   });
-  if ([...sel.options].some(o => o.value === keep)) sel.value = keep;
+  if (selectHasValue(keep)) sel.value = keep;
+  else {
+    const fallback = newestIpoIndexForCap();
+    if (selectHasValue(fallback)) sel.value = fallback;
+  }
 }
-rebuildIpoSelect();
+rebuildIpoSelect(newestIpoIndexForCap());
 function ladderLevels(scen) {
   const legs = SGC().scenarios[scen]?.recommended?.[4]?.legs || [];
   const lv = legs.filter(l => l.type==='LIMIT').map(l => -l.params.level*100)
@@ -735,8 +754,6 @@ function buildIpoTable(lowRowsScen) {
   render();
 }
 
-const defaultIpo = Math.max(0, R.series.findIndex(s => s.ticker === 'cbrs'));
-sel.value = defaultIpo;
 document.getElementById('cap-50b').classList.add('active');
 renderScenario('S1');  // also draws the explorer for the selected IPO
 </script>

@@ -51,6 +51,15 @@ Path placeholders in this file are intentional. Substitute them with the matchin
 - Use `build_ipo_analysis.py` only when rebuilding the analysis from existing generated data without re-fetching market data.
 - Use the ignored private `1m/build_buy_signals.py` only when regenerating public buy-signal states/pins from local 1-minute candles.
 
+## Browser Cache Safety
+
+- Keep browser persistence app-scoped and best-effort. A failed cache read/write must not blank the static page; catch quota and browser-storage errors, warn, and continue with in-memory or bundled fallback data.
+- Keep `localStorage` limited to tiny synchronous startup state and one-time legacy migration reads. Do not add bulky payloads, chart data, calendar rows, quote snapshots, long per-symbol histories, or generated analysis to origin-wide `localStorage`.
+- Store regenerable runtime payloads in the `ipo-site-cache-v1` IndexedDB database using path-namespaced record keys. The current runtime records are `current-quotes-v1` and `upcoming-calendar-v1`.
+- Remove legacy `localStorage` cache keys after attempting migration. Do not mark a browser cache as fresh if the corresponding IndexedDB write failed.
+- Prune runtime caches before persistence: current quotes stay capped to the most recent 300 symbols, and upcoming IPO rows stay limited to dated rows in the next 12 months with a 240-row cap.
+- Keep the recovery UI scoped to this IPO app. Its clear-cache action should remove only this app's IndexedDB namespace and legacy IPO `localStorage` keys, not all origin storage, because other `glaubi.net` apps can share the same origin quota.
+
 ## Data Model
 
 The page has four generated JavaScript data files plus one runtime quote cache:
