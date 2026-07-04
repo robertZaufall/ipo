@@ -177,7 +177,7 @@
         </div>
 
         <footer class="mt-10 border-t border-zinc-900 pt-5 text-center text-xs text-zinc-500 leading-6">
-            <p><span class="font-semibold text-zinc-400">Data:</span> IPO/candle snapshot through 2026-06-15; Current refreshes from Yahoo at runtime. Data may be delayed or wrong.</p>
+            <p><span class="font-semibold text-zinc-400">Data:</span> IPO/candle snapshot through 2026-07-04; Current refreshes from Yahoo at runtime. Data may be delayed or wrong.</p>
             <p class="mt-2 text-center">&copy; <span id="copyright-year"></span> Robert Zaufall &middot; <a class="text-zinc-500 hover:text-zinc-300 transition-colors" href="https://glaubi.net/">glaubi.net</a> &middot; <a class="text-zinc-500 hover:text-zinc-300 transition-colors" href="https://github.com/robertZaufall/ipo">GitHub</a></p>
         </footer>
     </main>
@@ -354,7 +354,7 @@
     </div>
 
     <script>
-        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-06-04-isolated-3d-telephoto';
+        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-07-04-bsp-signals';
         ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js', 'ipo-buy-signals.js'].forEach(src => {
             document.write(`<script src="${src}?v=${encodeURIComponent(IPO_ASSET_VERSION)}"><\/script>`);
         });

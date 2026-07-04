@@ -658,6 +658,13 @@
       "price": 5.44,
       "source": "Yahoo regularMarketPrice"
     },
+    "BSP": {
+      "asOf": "2026-07-02T23:57:42Z",
+      "currency": "USD",
+      "fetchedAt": "2026-07-04T13:05:50.327013Z",
+      "price": 35.5,
+      "source": "Yahoo chart after-hours"
+    },
     "BSX": {
       "asOf": "2026-05-29T20:00:03Z",
       "currency": "USD",

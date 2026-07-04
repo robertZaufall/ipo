@@ -106,6 +106,7 @@ ALPHA_VANTAGE_INTERVALS = {
 
 PRICING_RELEASES = {
     "CBRS": "https://www.cerebras.ai/press-release/cerebras-systems-announces-pricing-of-initial-public-offering",
+    "BSP": "https://r.jina.ai/http://https://www.businesswire.com/news/home/20260630780689/en/Bending-Spoons-S.p.A.-announces-pricing-of-initial-public-offering",
 }
 
 
@@ -468,9 +469,14 @@ def fetch_deal_size_m(ticker: str, ipo_price: float | None) -> float | None:
         return None
     try:
         page = fetch_text(release_url)
-    except urllib.error.URLError:
+    except (OSError, TimeoutError, urllib.error.URLError):
         return None
-    shares_match = re.search(r"aggregate of ([\d,]+) shares", page, re.I)
+    shares_match = (
+        re.search(r"aggregate of ([\d,]+)(?: of its)? ordinary shares", page, re.I)
+        or re.search(r"aggregate of ([\d,]+) shares", page, re.I)
+        or re.search(r"A total of ([\d,]+) ordinary shares", page, re.I)
+        or re.search(r"([\d,]+) ordinary shares are being offered", page, re.I)
+    )
     price_match = re.search(r"public offering price of \$([\d,.]+)", page, re.I)
     if not shares_match:
         return None
