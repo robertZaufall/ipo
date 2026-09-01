@@ -37,6 +37,8 @@ The default chart view is now `D1 D2`: it stitches Day 1 regular trading and Day
 - `current-price-cache.json` - bundled Yahoo current-price cache used as a fast runtime seed before browser-side quote refreshes.
 - `ipo-analysis.js` - generated 15-year low-timing analysis and timing insights, precomputed per cap and trading-place filter.
 - `ipo-buy-signals.js` - generated public buy-timing state strips and pins from the private one-minute XGBoost experiment.
+- `results.html` - separate alternative one-minute IPO entry-timing report linked from the main page.
+- `results-data.js` - generated report bundle from the sibling IPO-analysis workspace; its optional TimesFM benchmark now uses the zero-shot `google/timesfm-3.0-pytorch` checkpoint and is not part of the live signal.
 - `refresh_ipo_data.py` - refreshes IPO metadata, chart data, and analysis.
 - `build_ipo_analysis.py` - rebuilds only `ipo-analysis.js` from existing generated data.
 - `vendor/three.module.min.js` - local Three.js module used by the 3D map; no charting CDN is required for the map.

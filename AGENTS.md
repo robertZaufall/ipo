@@ -12,6 +12,7 @@ Path placeholders in this file are intentional. Substitute them with the matchin
 ## Current Shape
 
 - The app is a static page: `index.html` plus generated `ipo-data.js`, `chart-data.js`, `ipo-analysis.js`, and `ipo-buy-signals.js`.
+- `results.html` is a separate alternative one-minute entry-timing report linked from the main page. Its generated `results-data.js` bundle comes from the sibling IPO-analysis workspace. The optional TimesFM experiment uses `google/timesfm-3.0-pytorch` zero-shot on CPU; it is research-only and does not drive the live signal or the main chart buy states.
 - There is no build step.
 - Styling uses Tailwind from CDN plus local CSS in `index.html`.
 - Candlestick charts are inline SVG generated in browser JavaScript.
