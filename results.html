@@ -225,11 +225,15 @@ const pct = (x, d=1) => x==null ? '—' : (x*100).toFixed(d) + '%';
 const timesfmFoot = document.getElementById('timesfmFoot');
 if (R.timesfm) {
   timesfmFoot.textContent =
-    `TimesFM experiment: ${R.timesfm.model}. Strategy: use normalized Day 1 minute closes ` +
-    `to forecast the 390-minute Day 2 close path, then buy at the next-bar open at the ` +
-    `forecast minimum. That entry paid ${pct(R.timesfm.strategyPremiums?.timesfmArgmin)} ` +
-    `above the actual Day 2 low on average; comparison entries are Day 2 open, noon, and ` +
-    `15:30 ET. Research only — it does not drive the recommended ladder, live signal, or ` +
+    `TimesFM experiment: ${R.timesfm.model}. Before Day 2, use Day 1 regular-session closes ` +
+    `to forecast 390 regular-session minutes and schedule a buy for the forecast minimum. ` +
+    `Execution uses the first observed bar open at or after that time. Across ` +
+    `${R.timesfm.strategySampleSize ?? '—'} IPOs with all comparison fills available (all caps; independent of page filters), ` +
+    `that entry paid ${pct(R.timesfm.strategyPremiums?.timesfmArgmin, 2)} above the lowest observed Day 2 price, ` +
+    `versus ${pct(R.timesfm.strategyPremiums?.buyD2Noon, 2)} for noon ET. Other comparisons use Day 2 open and 15:30 ET. ` +
+    `Missing Day 1 context minutes carry the last close; evaluation and fills use observed bars. ` +
+    `Missing candles can hide the true low; fees and slippage are excluded. ` +
+    `Research only — it does not drive the recommended ladder, live signal, or ` +
     `main-site buy states.`;
 }
 const C = { grid:'#26303d', text:'#8595a8', accent:'#4cc2ff', green:'#3ddc84',
