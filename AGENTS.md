@@ -386,3 +386,7 @@ Before calling an IPO change done:
 - `https://glaubi.net/ipo?v=<commit>` visually shows candles and serves the current GitHub raw `main` content through the Worker.
 
 Chart hover guidance uses `Timing` with `Wait · Larger price drop`, `Watch · Moderate price drop`, or `Buy · Small price drop`. These describe the estimated further fall relative to the selected tolerance; do not show the model acronym or its raw predicted percentage in that row.
+
+## Price and volume entry research
+
+The private `1m/chart_entry_model.py`, `1m/finalize_chart_entry.py`, and `1m/test_chart_entry_model.py` implement and evaluate a separate one-hour entry classifier. Chart features exclude clock/date/session/ticker inputs; timing-only and price-only models are controls. The 2026-09-05 experiment did not pass promotion: keep `ipo-buy-signals.js` on the existing v2 median-downside model. Do not relabel its outputs as v3 probabilities or lower thresholds to manufacture Buy states. Public aggregate research results live in `docs/chart-entry-evaluation.md` and `.json`; raw features, model/calibration artifacts, code and candles remain ignored. Reuse the fixed test as a regression snapshot, not a fresh holdout for future tuning.

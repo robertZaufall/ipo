@@ -1,0 +1,1092 @@
+{
+  "protocol": {
+    "horizonMinutes": 60,
+    "roundTripCost": 0.002,
+    "minimumNetGain": 0.005,
+    "maximumDrawdown": 0.02,
+    "buyThreshold": 0.55,
+    "watchThreshold": 0.45,
+    "finalHoldoutSymbols": 29,
+    "warmupSymbols": 40
+  },
+  "features": [
+    "return_from_open",
+    "drawdown_from_high",
+    "rebound_from_low",
+    "last_return",
+    "body_return",
+    "range",
+    "body_fraction",
+    "upper_wick",
+    "lower_wick",
+    "relative_volume",
+    "bar_vwap_distance",
+    "momentum_3",
+    "volatility_3",
+    "relative_volume_3",
+    "volume_z_3",
+    "distance_high_3",
+    "distance_low_3",
+    "close_position_3",
+    "momentum_5",
+    "volatility_5",
+    "relative_volume_5",
+    "volume_z_5",
+    "distance_high_5",
+    "distance_low_5",
+    "close_position_5",
+    "momentum_10",
+    "volatility_10",
+    "relative_volume_10",
+    "volume_z_10",
+    "distance_high_10",
+    "distance_low_10",
+    "close_position_10",
+    "momentum_15",
+    "volatility_15",
+    "relative_volume_15",
+    "volume_z_15",
+    "distance_high_15",
+    "distance_low_15",
+    "close_position_15",
+    "momentum_30",
+    "volatility_30",
+    "relative_volume_30",
+    "volume_z_30",
+    "distance_high_30",
+    "distance_low_30",
+    "close_position_30",
+    "session_vwap_distance",
+    "up_volume_share",
+    "recent_volume_growth",
+    "down_volume_fade",
+    "higher_low",
+    "higher_high",
+    "range_contraction",
+    "volume_price_pressure"
+  ],
+  "development": {
+    "constant": {
+      "samples": 5447,
+      "symbols": 81,
+      "baseRate": 0.2904,
+      "brier": 0.206583,
+      "auc": 0.4656,
+      "reliability": [
+        {
+          "from": 0.2,
+          "count": 5447,
+          "predicted": 0.2797,
+          "observed": 0.2904
+        }
+      ],
+      "entries": {
+        "sessions": 149,
+        "buySessions": 0,
+        "successRate": null,
+        "meanNetReturn": null,
+        "meanDrawdown": null,
+        "meanPredicted": null
+      }
+    },
+    "timing": {
+      "samples": 5447,
+      "symbols": 81,
+      "baseRate": 0.2904,
+      "brier": 0.20717,
+      "auc": 0.5124,
+      "reliability": [
+        {
+          "from": 0.1,
+          "count": 508,
+          "predicted": 0.1719,
+          "observed": 0.1945
+        },
+        {
+          "from": 0.2,
+          "count": 3211,
+          "predicted": 0.2638,
+          "observed": 0.2972
+        },
+        {
+          "from": 0.3,
+          "count": 1688,
+          "predicted": 0.3271,
+          "observed": 0.297
+        },
+        {
+          "from": 0.4,
+          "count": 40,
+          "predicted": 0.4574,
+          "observed": 0.3927
+        }
+      ],
+      "entries": {
+        "sessions": 149,
+        "buySessions": 0,
+        "successRate": null,
+        "meanNetReturn": null,
+        "meanDrawdown": null,
+        "meanPredicted": null
+      }
+    },
+    "price": {
+      "samples": 5447,
+      "symbols": 81,
+      "baseRate": 0.2904,
+      "brier": 0.204207,
+      "auc": 0.5696,
+      "reliability": [
+        {
+          "from": 0.0,
+          "count": 185,
+          "predicted": 0.084,
+          "observed": 0.1279
+        },
+        {
+          "from": 0.1,
+          "count": 769,
+          "predicted": 0.1502,
+          "observed": 0.1608
+        },
+        {
+          "from": 0.2,
+          "count": 1363,
+          "predicted": 0.2596,
+          "observed": 0.2886
+        },
+        {
+          "from": 0.3,
+          "count": 2550,
+          "predicted": 0.3468,
+          "observed": 0.3482
+        },
+        {
+          "from": 0.4,
+          "count": 552,
+          "predicted": 0.4316,
+          "observed": 0.2823
+        },
+        {
+          "from": 0.5,
+          "count": 28,
+          "predicted": 0.5213,
+          "observed": 0.1173
+        }
+      ],
+      "entries": {
+        "sessions": 149,
+        "buySessions": 3,
+        "successRate": 0.0,
+        "meanNetReturn": -0.03452,
+        "meanDrawdown": 0.05368,
+        "meanPredicted": 0.557
+      }
+    },
+    "chart": {
+      "samples": 5447,
+      "symbols": 81,
+      "baseRate": 0.2904,
+      "brier": 0.204121,
+      "auc": 0.5665,
+      "reliability": [
+        {
+          "from": 0.0,
+          "count": 170,
+          "predicted": 0.0858,
+          "observed": 0.1188
+        },
+        {
+          "from": 0.1,
+          "count": 767,
+          "predicted": 0.1523,
+          "observed": 0.1472
+        },
+        {
+          "from": 0.2,
+          "count": 1359,
+          "predicted": 0.2597,
+          "observed": 0.3206
+        },
+        {
+          "from": 0.3,
+          "count": 2582,
+          "predicted": 0.346,
+          "observed": 0.3345
+        },
+        {
+          "from": 0.4,
+          "count": 548,
+          "predicted": 0.4249,
+          "observed": 0.2813
+        },
+        {
+          "from": 0.5,
+          "count": 21,
+          "predicted": 0.5184,
+          "observed": 0.093
+        }
+      ],
+      "entries": {
+        "sessions": 149,
+        "buySessions": 1,
+        "successRate": 0.0,
+        "meanNetReturn": -0.04835,
+        "meanDrawdown": 0.05073,
+        "meanPredicted": 0.5514
+      }
+    },
+    "chart_deep": {
+      "samples": 5447,
+      "symbols": 81,
+      "baseRate": 0.2904,
+      "brier": 0.206907,
+      "auc": 0.5695,
+      "reliability": [
+        {
+          "from": 0.0,
+          "count": 321,
+          "predicted": 0.0724,
+          "observed": 0.0958
+        },
+        {
+          "from": 0.1,
+          "count": 767,
+          "predicted": 0.153,
+          "observed": 0.1948
+        },
+        {
+          "from": 0.2,
+          "count": 1409,
+          "predicted": 0.2528,
+          "observed": 0.3288
+        },
+        {
+          "from": 0.3,
+          "count": 1922,
+          "predicted": 0.3475,
+          "observed": 0.3312
+        },
+        {
+          "from": 0.4,
+          "count": 876,
+          "predicted": 0.4381,
+          "observed": 0.3119
+        },
+        {
+          "from": 0.5,
+          "count": 142,
+          "predicted": 0.5332,
+          "observed": 0.3052
+        },
+        {
+          "from": 0.6,
+          "count": 10,
+          "predicted": 0.6228,
+          "observed": 0.1586
+        }
+      ],
+      "entries": {
+        "sessions": 149,
+        "buySessions": 17,
+        "successRate": 0.41176,
+        "meanNetReturn": 0.00954,
+        "meanDrawdown": 0.01322,
+        "meanPredicted": 0.5867
+      }
+    },
+    "extra_trees": {
+      "samples": 5447,
+      "symbols": 81,
+      "baseRate": 0.2904,
+      "brier": 0.202237,
+      "auc": 0.5781,
+      "reliability": [
+        {
+          "from": 0.0,
+          "count": 60,
+          "predicted": 0.0873,
+          "observed": 0.1488
+        },
+        {
+          "from": 0.1,
+          "count": 624,
+          "predicted": 0.1616,
+          "observed": 0.0942
+        },
+        {
+          "from": 0.2,
+          "count": 1710,
+          "predicted": 0.2609,
+          "observed": 0.2905
+        },
+        {
+          "from": 0.3,
+          "count": 2800,
+          "predicted": 0.3346,
+          "observed": 0.3468
+        },
+        {
+          "from": 0.4,
+          "count": 240,
+          "predicted": 0.4318,
+          "observed": 0.2469
+        },
+        {
+          "from": 0.5,
+          "count": 13,
+          "predicted": 0.5246,
+          "observed": 0.2346
+        }
+      ],
+      "entries": {
+        "sessions": 149,
+        "buySessions": 1,
+        "successRate": 1.0,
+        "meanNetReturn": 0.02372,
+        "meanDrawdown": 0.00097,
+        "meanPredicted": 0.5501
+      }
+    },
+    "logistic": {
+      "samples": 5447,
+      "symbols": 81,
+      "baseRate": 0.2904,
+      "brier": 0.212324,
+      "auc": 0.5076,
+      "reliability": [
+        {
+          "from": 0.0,
+          "count": 13,
+          "predicted": 0.0849,
+          "observed": 0.1894
+        },
+        {
+          "from": 0.1,
+          "count": 550,
+          "predicted": 0.1728,
+          "observed": 0.2533
+        },
+        {
+          "from": 0.2,
+          "count": 2806,
+          "predicted": 0.2537,
+          "observed": 0.2976
+        },
+        {
+          "from": 0.3,
+          "count": 1701,
+          "predicted": 0.339,
+          "observed": 0.3046
+        },
+        {
+          "from": 0.4,
+          "count": 288,
+          "predicted": 0.4373,
+          "observed": 0.2501
+        },
+        {
+          "from": 0.5,
+          "count": 62,
+          "predicted": 0.5341,
+          "observed": 0.1671
+        },
+        {
+          "from": 0.6,
+          "count": 17,
+          "predicted": 0.6374,
+          "observed": 0.3262
+        },
+        {
+          "from": 0.7,
+          "count": 8,
+          "predicted": 0.7472,
+          "observed": 0.0
+        },
+        {
+          "from": 0.8,
+          "count": 2,
+          "predicted": 0.8511,
+          "observed": 0.4891
+        }
+      ],
+      "entries": {
+        "sessions": 149,
+        "buySessions": 15,
+        "successRate": 0.13333,
+        "meanNetReturn": -0.01425,
+        "meanDrawdown": 0.0521,
+        "meanPredicted": 0.658
+      }
+    },
+    "extra_trees_price": {
+      "samples": 5447,
+      "symbols": 81,
+      "baseRate": 0.2904,
+      "brier": 0.202222,
+      "auc": 0.5779,
+      "reliability": [
+        {
+          "from": 0.0,
+          "count": 58,
+          "predicted": 0.0868,
+          "observed": 0.1708
+        },
+        {
+          "from": 0.1,
+          "count": 629,
+          "predicted": 0.1622,
+          "observed": 0.0976
+        },
+        {
+          "from": 0.2,
+          "count": 1717,
+          "predicted": 0.2598,
+          "observed": 0.2825
+        },
+        {
+          "from": 0.3,
+          "count": 2775,
+          "predicted": 0.336,
+          "observed": 0.3498
+        },
+        {
+          "from": 0.4,
+          "count": 260,
+          "predicted": 0.429,
+          "observed": 0.248
+        },
+        {
+          "from": 0.5,
+          "count": 8,
+          "predicted": 0.5203,
+          "observed": 0.5209
+        }
+      ],
+      "entries": {
+        "sessions": 149,
+        "buySessions": 0,
+        "successRate": null,
+        "meanNetReturn": null,
+        "meanDrawdown": null,
+        "meanPredicted": null
+      }
+    },
+    "extra_trees_timing": {
+      "samples": 5447,
+      "symbols": 81,
+      "baseRate": 0.2904,
+      "brier": 0.208308,
+      "auc": 0.4909,
+      "reliability": [
+        {
+          "from": 0.1,
+          "count": 691,
+          "predicted": 0.1709,
+          "observed": 0.241
+        },
+        {
+          "from": 0.2,
+          "count": 3149,
+          "predicted": 0.2723,
+          "observed": 0.3119
+        },
+        {
+          "from": 0.3,
+          "count": 1578,
+          "predicted": 0.3224,
+          "observed": 0.2688
+        },
+        {
+          "from": 0.4,
+          "count": 29,
+          "predicted": 0.4238,
+          "observed": 0.2089
+        }
+      ],
+      "entries": {
+        "sessions": 149,
+        "buySessions": 0,
+        "successRate": null,
+        "meanNetReturn": null,
+        "meanDrawdown": null,
+        "meanPredicted": null
+      }
+    }
+  },
+  "folds": [
+    {
+      "testStartDate": "2019-08-01",
+      "trainingLastDate": "2019-07-18",
+      "testSymbols": [
+        "DT",
+        "NET",
+        "DDOG",
+        "BNTX",
+        "XP",
+        "RVMD",
+        "LEGN",
+        "RPRX",
+        "LI",
+        "BEKE",
+        "KYMR",
+        "FROG",
+        "SNOW",
+        "STEP",
+        "PRAX",
+        "ALGM",
+        "ABNB",
+        "AFRM",
+        "OSCR",
+        "RBLX",
+        "CPNG",
+        "COIN",
+        "PATH",
+        "PCOR",
+        "YMM",
+        "CFLT",
+        "S",
+        "YOU",
+        "PECO",
+        "RYAN"
+      ]
+    },
+    {
+      "testStartDate": "2021-07-23",
+      "trainingLastDate": "2021-07-22",
+      "testSymbols": [
+        "CNM",
+        "HOOD",
+        "NUVL",
+        "BROS",
+        "ONON",
+        "ACT",
+        "TOST",
+        "CWAN",
+        "LTH",
+        "INFA",
+        "GFS",
+        "RIVN",
+        "IREN",
+        "HCP",
+        "NU",
+        "IOT",
+        "TPG",
+        "CRDO",
+        "ACLX",
+        "BLTE",
+        "BLCO",
+        "CRBG",
+        "MBLY",
+        "NXT",
+        "ENLT",
+        "KVUE",
+        "CAVA",
+        "KGS",
+        "APGE",
+        "ARM"
+      ]
+    },
+    {
+      "testStartDate": "2023-09-19",
+      "trainingLastDate": "2023-09-15",
+      "testSymbols": [
+        "CART",
+        "BIRK",
+        "KSPI",
+        "CGON",
+        "BTSG",
+        "AS",
+        "AHR",
+        "ALAB",
+        "RDDT",
+        "PACS",
+        "ULS",
+        "LOAR",
+        "RBRK",
+        "VIK",
+        "ZK",
+        "TEM",
+        "LB",
+        "OS",
+        "LINE",
+        "SARO",
+        "INGM"
+      ]
+    }
+  ],
+  "generatedAt": "2026-09-05T11:33:23.400014+00:00",
+  "selectedModel": {
+    "selected": "extra_trees",
+    "selectionRule": "lowest development IPO-weighted Brier score among price+volume models",
+    "calibrators": {
+      "extra_trees_timing": {
+        "slope": 0.10423386202643493,
+        "intercept": -0.7934007356097477
+      },
+      "extra_trees_price": {
+        "slope": 0.8322716044405831,
+        "intercept": -0.14735346346732006
+      },
+      "extra_trees": {
+        "slope": 0.8333579838550069,
+        "intercept": -0.1451471394291559
+      }
+    },
+    "buyThreshold": 0.55,
+    "watchThreshold": 0.45,
+    "promotionGate": "Held-out chart Brier below constant and same-family timing, positive paired timing-minus-chart Brier 95% IPO-bootstrap lower bound, at least 10 first-buy sessions with success rate >= 0.50 and positive mean net return; Day 1 chart Brier must also beat timing. Otherwise do not deploy new Buy states."
+  },
+  "eligibleSymbols": 150,
+  "eligibleSamples": 10555,
+  "heldoutFold": {
+    "testStartDate": "2024-12-12",
+    "trainingLastDate": "2024-10-24",
+    "testSymbols": [
+      "TTAN",
+      "SFD",
+      "MTSR",
+      "KRMN",
+      "SAIL",
+      "CRWV",
+      "CRCL",
+      "CHYM",
+      "FIG",
+      "FLY",
+      "BLSH",
+      "KLAR",
+      "FIGR",
+      "LGN",
+      "NAVN",
+      "MDLN",
+      "EQPT",
+      "FPS",
+      "MWH",
+      "PAYP",
+      "JAN",
+      "ARXS",
+      "MAIR",
+      "XE",
+      "PS",
+      "FRVO",
+      "CBRS",
+      "SPCX",
+      "BSP"
+    ]
+  },
+  "heldout": {
+    "constant": {
+      "overall": {
+        "samples": 2124,
+        "symbols": 29,
+        "baseRate": 0.3248,
+        "brier": 0.220708,
+        "auc": 0.5,
+        "reliability": [
+          {
+            "from": 0.2,
+            "count": 2124,
+            "predicted": 0.2872,
+            "observed": 0.3248
+          }
+        ]
+      },
+      "day1": {
+        "samples": 648,
+        "symbols": 29,
+        "baseRate": 0.2743,
+        "brier": 0.199214,
+        "auc": 0.5,
+        "reliability": [
+          {
+            "from": 0.2,
+            "count": 648,
+            "predicted": 0.2872,
+            "observed": 0.2743
+          }
+        ]
+      },
+      "day2": {
+        "samples": 1476,
+        "symbols": 28,
+        "baseRate": 0.3694,
+        "brier": 0.239687,
+        "auc": 0.5,
+        "reliability": [
+          {
+            "from": 0.2,
+            "count": 1476,
+            "predicted": 0.2872,
+            "observed": 0.3694
+          }
+        ]
+      },
+      "entries": {
+        "sessions": 57,
+        "buySessions": 0,
+        "successRate": null,
+        "meanNetReturn": null,
+        "meanDrawdown": null,
+        "meanPredicted": null
+      },
+      "rawEntries": {
+        "sessions": 57,
+        "buySessions": 0,
+        "successRate": null,
+        "meanNetReturn": null,
+        "meanDrawdown": null,
+        "meanPredicted": null
+      },
+      "range": [
+        0.2872207163109936,
+        0.2872207163109936
+      ]
+    },
+    "extra_trees_timing": {
+      "overall": {
+        "samples": 2124,
+        "symbols": 29,
+        "baseRate": 0.3248,
+        "brier": 0.220629,
+        "auc": 0.5002,
+        "reliability": [
+          {
+            "from": 0.2,
+            "count": 2102,
+            "predicted": 0.2896,
+            "observed": 0.3229
+          },
+          {
+            "from": 0.3,
+            "count": 22,
+            "predicted": 0.301,
+            "observed": 0.4428
+          }
+        ]
+      },
+      "day1": {
+        "samples": 648,
+        "symbols": 29,
+        "baseRate": 0.2743,
+        "brier": 0.199549,
+        "auc": 0.4635,
+        "reliability": [
+          {
+            "from": 0.2,
+            "count": 626,
+            "predicted": 0.2919,
+            "observed": 0.2727
+          },
+          {
+            "from": 0.3,
+            "count": 22,
+            "predicted": 0.3009,
+            "observed": 0.3233
+          }
+        ]
+      },
+      "day2": {
+        "samples": 1476,
+        "symbols": 28,
+        "baseRate": 0.3694,
+        "brier": 0.239364,
+        "auc": 0.5333,
+        "reliability": [
+          {
+            "from": 0.2,
+            "count": 1476,
+            "predicted": 0.2881,
+            "observed": 0.3694
+          }
+        ]
+      },
+      "entries": {
+        "sessions": 57,
+        "buySessions": 0,
+        "successRate": null,
+        "meanNetReturn": null,
+        "meanDrawdown": null,
+        "meanPredicted": null
+      },
+      "rawEntries": {
+        "sessions": 57,
+        "buySessions": 0,
+        "successRate": null,
+        "meanNetReturn": null,
+        "meanDrawdown": null,
+        "meanPredicted": null
+      },
+      "range": [
+        0.27486642344829615,
+        0.30275002034107423
+      ]
+    },
+    "extra_trees_price": {
+      "overall": {
+        "samples": 2124,
+        "symbols": 29,
+        "baseRate": 0.3248,
+        "brier": 0.222303,
+        "auc": 0.5035,
+        "reliability": [
+          {
+            "from": 0.1,
+            "count": 154,
+            "predicted": 0.1684,
+            "observed": 0.348
+          },
+          {
+            "from": 0.2,
+            "count": 559,
+            "predicted": 0.2612,
+            "observed": 0.3016
+          },
+          {
+            "from": 0.3,
+            "count": 1411,
+            "predicted": 0.3318,
+            "observed": 0.3314
+          }
+        ]
+      },
+      "day1": {
+        "samples": 648,
+        "symbols": 29,
+        "baseRate": 0.2743,
+        "brier": 0.193121,
+        "auc": 0.6319,
+        "reliability": [
+          {
+            "from": 0.1,
+            "count": 41,
+            "predicted": 0.159,
+            "observed": 0.1187
+          },
+          {
+            "from": 0.2,
+            "count": 153,
+            "predicted": 0.2658,
+            "observed": 0.1558
+          },
+          {
+            "from": 0.3,
+            "count": 454,
+            "predicted": 0.3319,
+            "observed": 0.3373
+          }
+        ]
+      },
+      "day2": {
+        "samples": 1476,
+        "symbols": 28,
+        "baseRate": 0.3694,
+        "brier": 0.243345,
+        "auc": 0.4764,
+        "reliability": [
+          {
+            "from": 0.1,
+            "count": 113,
+            "predicted": 0.1692,
+            "observed": 0.3874
+          },
+          {
+            "from": 0.2,
+            "count": 406,
+            "predicted": 0.259,
+            "observed": 0.3807
+          },
+          {
+            "from": 0.3,
+            "count": 957,
+            "predicted": 0.3313,
+            "observed": 0.3614
+          }
+        ]
+      },
+      "entries": {
+        "sessions": 57,
+        "buySessions": 0,
+        "successRate": null,
+        "meanNetReturn": null,
+        "meanDrawdown": null,
+        "meanPredicted": null
+      },
+      "rawEntries": {
+        "sessions": 57,
+        "buySessions": 0,
+        "successRate": null,
+        "meanNetReturn": null,
+        "meanDrawdown": null,
+        "meanPredicted": null
+      },
+      "range": [
+        0.10069595525900879,
+        0.3862710114569289
+      ]
+    },
+    "extra_trees": {
+      "overall": {
+        "samples": 2124,
+        "symbols": 29,
+        "baseRate": 0.3248,
+        "brier": 0.222096,
+        "auc": 0.5071,
+        "reliability": [
+          {
+            "from": 0.1,
+            "count": 140,
+            "predicted": 0.1684,
+            "observed": 0.3664
+          },
+          {
+            "from": 0.2,
+            "count": 559,
+            "predicted": 0.2595,
+            "observed": 0.2867
+          },
+          {
+            "from": 0.3,
+            "count": 1425,
+            "predicted": 0.3319,
+            "observed": 0.3355
+          }
+        ]
+      },
+      "day1": {
+        "samples": 648,
+        "symbols": 29,
+        "baseRate": 0.2743,
+        "brier": 0.193032,
+        "auc": 0.634,
+        "reliability": [
+          {
+            "from": 0.1,
+            "count": 35,
+            "predicted": 0.1555,
+            "observed": 0.1388
+          },
+          {
+            "from": 0.2,
+            "count": 155,
+            "predicted": 0.2623,
+            "observed": 0.132
+          },
+          {
+            "from": 0.3,
+            "count": 458,
+            "predicted": 0.332,
+            "observed": 0.3417
+          }
+        ]
+      },
+      "day2": {
+        "samples": 1476,
+        "symbols": 28,
+        "baseRate": 0.3694,
+        "brier": 0.243095,
+        "auc": 0.4805,
+        "reliability": [
+          {
+            "from": 0.1,
+            "count": 105,
+            "predicted": 0.1707,
+            "observed": 0.4119
+          },
+          {
+            "from": 0.2,
+            "count": 404,
+            "predicted": 0.2594,
+            "observed": 0.367
+          },
+          {
+            "from": 0.3,
+            "count": 967,
+            "predicted": 0.3315,
+            "observed": 0.3639
+          }
+        ]
+      },
+      "entries": {
+        "sessions": 57,
+        "buySessions": 0,
+        "successRate": null,
+        "meanNetReturn": null,
+        "meanDrawdown": null,
+        "meanPredicted": null
+      },
+      "rawEntries": {
+        "sessions": 57,
+        "buySessions": 0,
+        "successRate": null,
+        "meanNetReturn": null,
+        "meanDrawdown": null,
+        "meanPredicted": null
+      },
+      "range": [
+        0.1064080301407941,
+        0.3897762782117625
+      ]
+    }
+  },
+  "timingEntryBaselines": {
+    "30min": {
+      "sessions": 57,
+      "successRate": 0.3684210526315789,
+      "meanNetReturn": 0.004447128302143674,
+      "meanDrawdown": 0.026858868302609768
+    },
+    "60min": {
+      "sessions": 56,
+      "successRate": 0.3392857142857143,
+      "meanNetReturn": -0.0029822873122868155,
+      "meanDrawdown": 0.029271327125036058
+    },
+    "training_median": {
+      "sessions": 57,
+      "successRate": 0.38596491228070173,
+      "meanNetReturn": 0.005675240942728737,
+      "meanDrawdown": 0.029226357452830698
+    }
+  },
+  "trainingMedianElapsedMinutes": {
+    "day1": 14.0,
+    "day2": 57.0
+  },
+  "pairedTimingMinusChartBrier": {
+    "mean": -0.001467328193917435,
+    "ci95": [
+      -0.0058709558591023845,
+      0.0029287207709209374
+    ],
+    "bootstrapUnit": "IPO",
+    "replicates": 5000
+  },
+  "promotionChecks": {
+    "beatsConstant": false,
+    "beatsTiming": false,
+    "day1BeatsTiming": true,
+    "positiveBootstrapLowerBound": false,
+    "enoughBuySessions": false,
+    "buySuccessAtLeastHalf": false,
+    "positiveNetReturn": false
+  },
+  "promoted": false,
+  "limitations": [
+    "Research classification of a fixed 60-minute outcome, not guaranteed profit or a live trading service.",
+    "Labels require net gain >=0.5% after assumed 0.2% round-trip costs and maximum adverse excursion <=2%. The drawdown condition is an evaluation label, not an executed stop-loss.",
+    "One-minute OHLCV bars cannot measure true order-flow absorption, spread, queue priority or market impact. Volume measures are proxies.",
+    "Current-cap-selected historical survivors; missed or incomplete minute windows excluded; overlapping samples scored with equal IPO weight.",
+    "Final 29 IPOs withheld from feature/model/threshold selection for this experiment; their data have appeared in prior, different experiments.",
+    "The selected classifier is calibrated on earlier out-of-time predictions only; final reliability reported independently.",
+    "Fixed-time baselines may trade different sessions; their aggregate returns are descriptive, not paired proof."
+  ],
+  "pairedDay1TimingMinusChartBrier": {
+    "mean": 0.006516799402664439,
+    "ci95": [
+      -0.0004939123984839556,
+      0.013786014232357998
+    ],
+    "bootstrapUnit": "IPO",
+    "replicates": 5000
+  }
+}

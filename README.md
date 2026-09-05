@@ -82,6 +82,8 @@ The header's `Buy tolerance` offers 0.45%, 1.00% (default), and 1.50%. The chart
 
 At the fixed old 0.45% tolerance, the median model triggered in 26/238 sessions versus 16/238 for squared-error XGBoost, with prediction MAE of 2.147% versus 2.217%. At the new 1.00% default, it triggered in 111/238 sessions; subsequent downside had median 1.222% and 90th percentile 3.565%. More signals do not establish better profits or a loss ceiling. See [evaluation and limitations](docs/buy-signal-evaluation.md) and [aggregate fold results](docs/buy-signal-evaluation.json).
 
+The separate price-and-volume entry classifier experiment is implemented in ignored `1m/chart_entry_model.py` and evaluated by `1m/finalize_chart_entry.py`. It uses no time/date/session/ticker inputs and tests a fixed one-hour gain/drawdown outcome against timing-only and price-only controls. It did **not** pass the final promotion checks, so it does not replace the current chart signals. See [price and volume entry evaluation](docs/chart-entry-evaluation.md) and its [aggregate results](docs/chart-entry-evaluation.json). Do not describe existing green dots as probabilities from this unpromoted classifier.
+
 Regenerate with the Python version matching the ignored native dependencies (currently Python 3.12):
 
 ```sh
