@@ -1,0 +1,260 @@
+{
+  "protocol": "Expanding chronological IPO groups; prior completed sessions only; first 40 symbols warmup; fixed 0.45% Buy and 1.50% Watch thresholds; first threshold entry per session; no forced buys; next executable 5-minute open; no costs. Candidates and settings fixed before the initial run; canonical training row order used for exported artifacts.",
+  "folds": [
+    {
+      "cutoff": "2019-06-12",
+      "testSymbols": 30,
+      "trainSamples": 4532,
+      "models": {
+        "square": {
+          "sessions": 60,
+          "buySessions": 4,
+          "coveragePct": 6.67,
+          "maePct": 2.404,
+          "entryMedianDownsidePct": 0.676,
+          "entryMeanDownsidePct": 0.841,
+          "entryP90DownsidePct": 1.239,
+          "within045Pct": 0.0,
+          "sameSessionsEarlyMeanDownsidePct": 1.017,
+          "sameSessions180mMeanDownsidePct": 0.964
+        },
+        "median": {
+          "sessions": 60,
+          "buySessions": 5,
+          "coveragePct": 8.33,
+          "maePct": 2.456,
+          "entryMedianDownsidePct": 1.098,
+          "entryMeanDownsidePct": 1.013,
+          "entryP90DownsidePct": 1.367,
+          "within045Pct": 0.0,
+          "sameSessionsEarlyMeanDownsidePct": 1.923,
+          "sameSessions180mMeanDownsidePct": 1.089
+        },
+        "log": {
+          "sessions": 60,
+          "buySessions": 20,
+          "coveragePct": 33.33,
+          "maePct": 2.575,
+          "entryMedianDownsidePct": 0.955,
+          "entryMeanDownsidePct": 1.816,
+          "entryP90DownsidePct": 3.374,
+          "within045Pct": 20.0,
+          "sameSessionsEarlyMeanDownsidePct": 5.904,
+          "sameSessions180mMeanDownsidePct": 2.595
+        }
+      }
+    },
+    {
+      "cutoff": "2021-05-20",
+      "testSymbols": 30,
+      "trainSamples": 7648,
+      "models": {
+        "square": {
+          "sessions": 60,
+          "buySessions": 4,
+          "coveragePct": 6.67,
+          "maePct": 2.13,
+          "entryMedianDownsidePct": 0.568,
+          "entryMeanDownsidePct": 0.847,
+          "entryP90DownsidePct": 1.686,
+          "within045Pct": 50.0,
+          "sameSessionsEarlyMeanDownsidePct": 1.138,
+          "sameSessions180mMeanDownsidePct": 1.053
+        },
+        "median": {
+          "sessions": 60,
+          "buySessions": 6,
+          "coveragePct": 10.0,
+          "maePct": 1.977,
+          "entryMedianDownsidePct": 0.937,
+          "entryMeanDownsidePct": 0.943,
+          "entryP90DownsidePct": 1.735,
+          "within045Pct": 33.33,
+          "sameSessionsEarlyMeanDownsidePct": 2.895,
+          "sameSessions180mMeanDownsidePct": 1.03
+        },
+        "log": {
+          "sessions": 60,
+          "buySessions": 11,
+          "coveragePct": 18.33,
+          "maePct": 2.021,
+          "entryMedianDownsidePct": 1.13,
+          "entryMeanDownsidePct": 3.141,
+          "entryP90DownsidePct": 7.909,
+          "within045Pct": 27.27,
+          "sameSessionsEarlyMeanDownsidePct": 6.048,
+          "sameSessions180mMeanDownsidePct": 4.673
+        }
+      }
+    },
+    {
+      "cutoff": "2022-10-26",
+      "testSymbols": 30,
+      "trainSamples": 10855,
+      "models": {
+        "square": {
+          "sessions": 60,
+          "buySessions": 8,
+          "coveragePct": 13.33,
+          "maePct": 2.105,
+          "entryMedianDownsidePct": 0.529,
+          "entryMeanDownsidePct": 0.841,
+          "entryP90DownsidePct": 2.044,
+          "within045Pct": 37.5,
+          "sameSessionsEarlyMeanDownsidePct": 1.278,
+          "sameSessions180mMeanDownsidePct": 1.232
+        },
+        "median": {
+          "sessions": 60,
+          "buySessions": 13,
+          "coveragePct": 21.67,
+          "maePct": 2.016,
+          "entryMedianDownsidePct": 0.551,
+          "entryMeanDownsidePct": 1.26,
+          "entryP90DownsidePct": 3.248,
+          "within045Pct": 38.46,
+          "sameSessionsEarlyMeanDownsidePct": 1.465,
+          "sameSessions180mMeanDownsidePct": 1.291
+        },
+        "log": {
+          "sessions": 60,
+          "buySessions": 19,
+          "coveragePct": 31.67,
+          "maePct": 2.01,
+          "entryMedianDownsidePct": 0.704,
+          "entryMeanDownsidePct": 1.101,
+          "entryP90DownsidePct": 2.765,
+          "within045Pct": 42.11,
+          "sameSessionsEarlyMeanDownsidePct": 1.986,
+          "sameSessions180mMeanDownsidePct": 1.31
+        }
+      }
+    },
+    {
+      "cutoff": "2024-12-12",
+      "testSymbols": 29,
+      "trainSamples": 13947,
+      "models": {
+        "square": {
+          "sessions": 58,
+          "buySessions": 0,
+          "coveragePct": 0.0,
+          "maePct": 2.233,
+          "entryMedianDownsidePct": null,
+          "entryMeanDownsidePct": null,
+          "entryP90DownsidePct": null,
+          "within045Pct": null,
+          "sameSessionsEarlyMeanDownsidePct": null,
+          "sameSessions180mMeanDownsidePct": null
+        },
+        "median": {
+          "sessions": 58,
+          "buySessions": 2,
+          "coveragePct": 3.45,
+          "maePct": 2.145,
+          "entryMedianDownsidePct": 0.121,
+          "entryMeanDownsidePct": 0.121,
+          "entryP90DownsidePct": 0.157,
+          "within045Pct": 100.0,
+          "sameSessionsEarlyMeanDownsidePct": 0.796,
+          "sameSessions180mMeanDownsidePct": 0.013
+        },
+        "log": {
+          "sessions": 58,
+          "buySessions": 5,
+          "coveragePct": 8.62,
+          "maePct": 2.164,
+          "entryMedianDownsidePct": 0.263,
+          "entryMeanDownsidePct": 2.092,
+          "entryP90DownsidePct": 5.98,
+          "within045Pct": 80.0,
+          "sameSessionsEarlyMeanDownsidePct": 2.84,
+          "sameSessions180mMeanDownsidePct": 0.247
+        }
+      }
+    }
+  ],
+  "aggregate": {
+    "square": {
+      "sessions": 238,
+      "buySessions": 16,
+      "coveragePct": 6.72,
+      "maePct": 2.217,
+      "entryMedianDownsidePct": 0.596,
+      "entryMeanDownsidePct": 0.843,
+      "entryP90DownsidePct": 1.85,
+      "within045Pct": 31.25,
+      "sameSessionsEarlyMeanDownsidePct": 1.178,
+      "sameSessions180mMeanDownsidePct": 1.12
+    },
+    "median": {
+      "sessions": 238,
+      "buySessions": 26,
+      "coveragePct": 10.92,
+      "maePct": 2.147,
+      "entryMedianDownsidePct": 0.626,
+      "entryMeanDownsidePct": 1.052,
+      "entryP90DownsidePct": 2.113,
+      "within045Pct": 34.62,
+      "sameSessionsEarlyMeanDownsidePct": 1.832,
+      "sameSessions180mMeanDownsidePct": 1.094
+    },
+    "log": {
+      "sessions": 238,
+      "buySessions": 55,
+      "coveragePct": 23.11,
+      "maePct": 2.192,
+      "entryMedianDownsidePct": 0.724,
+      "entryMeanDownsidePct": 1.859,
+      "entryP90DownsidePct": 4.162,
+      "within045Pct": 34.55,
+      "sameSessionsEarlyMeanDownsidePct": 4.301,
+      "sameSessions180mMeanDownsidePct": 2.353
+    }
+  },
+  "toleranceExploration": {
+    "45": {
+      "sessions": 238,
+      "buySessions": 26,
+      "coveragePct": 10.92,
+      "maePct": 2.147,
+      "entryMedianDownsidePct": 0.626,
+      "entryMeanDownsidePct": 1.052,
+      "entryP90DownsidePct": 2.113,
+      "within045Pct": 34.62,
+      "sameSessionsEarlyMeanDownsidePct": 1.832,
+      "sameSessions180mMeanDownsidePct": 1.094
+    },
+    "100": {
+      "sessions": 238,
+      "buySessions": 111,
+      "coveragePct": 46.64,
+      "maePct": 2.147,
+      "entryMedianDownsidePct": 1.222,
+      "entryMeanDownsidePct": 1.743,
+      "entryP90DownsidePct": 3.565,
+      "within045Pct": 14.41,
+      "sameSessionsEarlyMeanDownsidePct": 4.189,
+      "sameSessions180mMeanDownsidePct": 2.018
+    },
+    "150": {
+      "sessions": 238,
+      "buySessions": 154,
+      "coveragePct": 64.71,
+      "maePct": 2.147,
+      "entryMedianDownsidePct": 1.453,
+      "entryMeanDownsidePct": 2.091,
+      "entryP90DownsidePct": 4.93,
+      "within045Pct": 18.83,
+      "sameSessionsEarlyMeanDownsidePct": 4.858,
+      "sameSessions180mMeanDownsidePct": 2.178
+    }
+  },
+  "limitations": [
+    "Exploratory model comparison and tolerance selection on these folds, not an untouched final holdout or profitability test.",
+    "Current-cap-selected survivors; historical bars only; slippage, spread, fees and market impact excluded.",
+    "Remaining downside uses 10000*log(entry/remaining low), shown divided by 100 as approximate percent.",
+    "First 40 IPOs are warmup and intentionally have no evaluated signals.",
+    "Median estimates are not a loss ceiling; no calibrated confidence is claimed."
+  ]
+}

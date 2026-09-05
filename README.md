@@ -76,14 +76,16 @@ Main candle charts show only real 5-minute bars. First-day charts include a top 
 
 The chart can overlay a public `Wait` / `Watch` / `Buy` strip generated from private one-minute IPO candles. The raw minute candles live in ignored `1m/<symbol>-first-day-1min-candles.json` and `1m/<symbol>-second-day-1min-candles.json` files, and the generator stays in ignored `1m/`; only `ipo-buy-signals.js` is committed. That public file contains chart-ready state ticks, selected pins, and metadata such as the model id, thresholds, symbol count, session counts, and sample count.
 
-The current implementation is `ipo-minute-xgboost-downside-v1`, trained with `xgboost.XGBRegressor` on 86,488 minute-level samples across 157 IPOs: 33,639 Day 1 regular-session samples plus 52,849 Day 2 regular-session samples. At each minute, the model estimates the remaining downside to that session's remaining low from the next executable open. The target is stored in basis points in the artifact for precision, where 45 basis points means 0.45%; the UI renders this as plain percentages. A state becomes `Buy` when the predicted remaining downside is at or below 0.45%, `Watch` when it is at or below 1.50%, and `Wait` above that. A time-based forced pin is kept after 180 elapsed minutes so each covered chart can still show a late-session entry reference when the threshold buy never appears.
+The current model is `ipo-minute-xgboost-median-downside-v2`, using XGBoost median quantile regression. It predicts remaining regular-session downside from the next executable 5-minute opening price using only completed minute bars. Whole-IPO chronological batches use only earlier completed sessions; the first 40 of 159 IPOs are warmup and display an explicit unavailable message. Historical predictions cover 119 IPOs / 238 sessions. This is a precomputed historical chart overlay, not a streaming signal service.
 
-XGBoost fits this scenario because IPO minute candles are noisy, nonlinear, and sparse. A boosted-tree regressor can combine timing, price action, range, wick, volume, session, and momentum patterns without assuming a straight-line relationship between those inputs and the eventual low. It also works well on tabular data with mixed scales and missing-ish market behavior, which is exactly what early IPO trading produces. For now the model is a decision aid for chart timing, not a trading guarantee: it answers "how much lower might the next executable entry still be from the remaining Day 1 or Day 2 regular-session low?" and the chart turns that estimate into readable `Wait`, `Watch`, and `Buy` states.
+The header's `Buy tolerance` offers 0.45%, 1.00% (default), and 1.50%. The chart recomputes Wait/Watch/Buy from the estimate and chosen tolerance. Watch extends to the larger of 1.50% and 1.5 times the Buy tolerance. Each card summarizes its first visible Buy time per session. The in-grid state markers and hover details use the same selected tolerance, including enlarged charts. Prediction alignment never uses a future signal. Forced entries and fabricated confidence scores have been removed.
 
-Regenerate the public artifact from the private folder with:
+At the fixed old 0.45% tolerance, the median model triggered in 26/238 sessions versus 16/238 for squared-error XGBoost, with prediction MAE of 2.147% versus 2.217%. At the new 1.00% default, it triggered in 111/238 sessions; subsequent downside had median 1.222% and 90th percentile 3.565%. More signals do not establish better profits or a loss ceiling. See [evaluation and limitations](docs/buy-signal-evaluation.md) and [aggregate fold results](docs/buy-signal-evaluation.json).
+
+Regenerate with the Python version matching the ignored native dependencies (currently Python 3.12):
 
 ```sh
-python3 1m/build_buy_signals.py --input-dir 1m --output ipo-buy-signals.js
+python3.12 1m/build_buy_signals.py --input-dir 1m --output ipo-buy-signals.js
 ```
 
 To rebuild only the derived analysis:
@@ -99,6 +101,7 @@ python3 -m py_compile refresh_ipo_data.py build_ipo_analysis.py
 perl -0ne 'while(/<script>(.*?)<\/script>/sg){print $1}' index.html > /tmp/ipo-inline.js && node --check /tmp/ipo-inline.js
 node --input-type=module --check < three-ipo-view.js
 node --check ipo-buy-signals.js
+node tests/buy-signals.cjs
 ```
 
 If `1m/build_buy_signals.py` changed locally, also run:

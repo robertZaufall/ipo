@@ -1,2 +1,5 @@
 __pycache__/*
 1m/
+
+.playwright-cli/
+output/playwright/

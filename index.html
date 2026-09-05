@@ -117,6 +117,15 @@
                 </div>
             </div>
         </div>
+        <div class="mt-4 flex flex-wrap items-center gap-3 text-xs text-zinc-400">
+            <label for="buy-tolerance" class="font-semibold text-zinc-200">Buy tolerance</label>
+            <select id="buy-tolerance" aria-describedby="buy-tolerance-help" class="rounded-xl border border-zinc-700 bg-zinc-900 px-3 py-2 text-zinc-100">
+                <option value="45">0.45% · Strict</option>
+                <option value="100" selected>1.00% · Standard</option>
+                <option value="150">1.50% · Wider</option>
+            </select>
+            <span id="buy-tolerance-help">Buy when estimated remaining downside is within tolerance. Historical median estimate; actual falls can be larger.</span>
+        </div>
     </header>
 
     <main class="max-w-screen-xl mx-auto px-5 sm:px-8 pb-16">
@@ -354,7 +363,7 @@
     </div>
 
     <script>
-        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-07-04-bsp-signals';
+        const IPO_ASSET_VERSION = new URLSearchParams(window.location.search).get('v') || '2026-09-05-median-signals-v2';
         ['ipo-data.js', 'chart-data.js', 'ipo-analysis.js', 'ipo-buy-signals.js'].forEach(src => {
             document.write(`<script src="${src}?v=${encodeURIComponent(IPO_ASSET_VERSION)}"><\/script>`);
         });
@@ -1845,9 +1854,24 @@
             return `${datePrefix}${dualTimeLabel(ipo.date, point.minute, point.time || chartClockTime(point.minute))}`;
         }
 
+        let buyToleranceBps = Number(ipoBuySignalMeta?.buyThresholdBps) || 100;
+        function signalWatchThresholdBps() {
+            return Math.max(150, buyToleranceBps * 1.5);
+        }
+        function buySignalStateForEstimate(value) {
+            if (value <= buyToleranceBps) return 'buy';
+            if (value <= signalWatchThresholdBps()) return 'watch';
+            return 'wait';
+        }
+
         function rawBuySignalSeries(ipo) {
             const rows = ipoBuySignalSeries?.[ipo.ticker];
-            return Array.isArray(rows) ? rows : [];
+            return Array.isArray(rows) ? rows.filter(row => Number.isFinite(Number(row.predictedDownsideBps))).map(row => ({
+                ...row,
+                state: buySignalStateForEstimate(Number(row.predictedDownsideBps)),
+                thresholdBps: buyToleranceBps,
+                watchThresholdBps: signalWatchThresholdBps(),
+            })) : [];
         }
 
         function chartBuySignalStateColor(state) {
@@ -1887,13 +1911,14 @@
                 && Number.isFinite(point.minute)
                 && Number.isFinite(point.plot)
             );
-            const maxDistance = CHART_INTERVAL_MINUTES / 2 + 0.05;
+            // Use only a prediction already available at this candle's open.
+            const maxDistance = CHART_INTERVAL_MINUTES;
             return visibleChartPoints.map(point => {
                 let best = null;
                 parsedSignals.forEach(signal => {
                     if (signal.date !== point.date) return;
-                    const distance = Math.abs(signal.minute - point.minute);
-                    if (distance <= maxDistance && (!best || distance < best.distance)) {
+                    const distance = point.minute - signal.minute;
+                    if (distance >= 0 && distance < maxDistance && (!best || distance < best.distance)) {
                         best = { signal, distance };
                     }
                 });
@@ -2026,6 +2051,27 @@
             </button>`;
         }
 
+        function chartBuySummaryHtml(ipo, data) {
+            if (!rawBuySignalSeries(ipo).length) {
+                return ipoBuySignalMeta?.warmupSymbols?.includes(ipo.ticker)
+                    ? 'Historical model warmup · no out-of-time signal available'
+                    : 'No historical model data available';
+            }
+            const points = data.map((point, plot) => ({ ...point, plot }));
+            const series = chartBuySignalSeries(ipo, points);
+            if (!series.length) return 'No model states in this chart range';
+            const entries = ['day1', 'day2'].map(session => {
+                const rows = series.filter(row => row.session === session);
+                if (!rows.length) return null;
+                const first = rows.find(row => row.state === 'buy');
+                const label = session === 'day1' ? 'D1' : 'D2';
+                return first
+                    ? `<span class="text-emerald-400">${label} Buy ${escapeHtml(first.time)} NYC</span>`
+                    : `${label} no Buy within tolerance`;
+            }).filter(Boolean);
+            return `Historical first entry · ${entries.join(' · ')} · ${formatTinyPercentFromBps(buyToleranceBps)} tolerance`;
+        }
+
         function chartFrameHtml(ipo) {
             const displayData = chartDataForCard(ipo);
             const activeMode = chartModeForCard(ipo);
@@ -2034,6 +2080,7 @@
                     ${chartEnlargeButtonHtml(ipo)}
                     ${chartToggleHtml(ipo)}
                 </div>
+                <div class="px-3 py-2 text-xs text-zinc-400" data-buy-summary="${escapeHtml(ipo.ticker)}">${chartBuySummaryHtml(ipo, displayData)}</div>
                 <div class="h-[586px] sm:h-[691px]">
                     ${renderChart(ipo, displayData, { mode: activeMode })}
                 </div>
@@ -2987,8 +3034,8 @@
                 return `<g><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, point)} low ${fmtUsd(point.low)}</title><circle cx="${xx.toFixed(1)}" cy="${yy.toFixed(1)}" r="${isExactLow ? (compact ? 3.5 : 4.5) : (compact ? 2.8 : 3.5)}" fill="#f59e0b" stroke="#09090b" stroke-width="1.5" opacity="${isExactLow ? 1 : 0.78}"/><line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${mt}" y2="${axisBottomY}" stroke="#f59e0b" stroke-width="${isExactLow ? 0.95 : 0.7}" stroke-dasharray="4 5" opacity="${isExactLow ? 0.85 : 0.45}"/><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#09090b" stroke="#09090b" stroke-width="3" opacity="0.85">${deltaLabel}</text><text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}" font-size="${axisSize}" font-weight="700" fill="#fbbf24">${deltaLabel}</text></g>`;
             }).join('');
             const signalStrip = signalSeries.length ? (() => {
-                const watchThreshold = ipoBuySignalMeta?.watchThresholdBps || 150;
-                const buyThreshold = ipoBuySignalMeta?.buyThresholdBps || 45;
+                const watchThreshold = signalWatchThresholdBps();
+                const buyThreshold = buyToleranceBps;
                 const bpsValues = signalSeries
                     .map(signal => Number(signal.predictedDownsideBps))
                     .filter(value => Number.isFinite(value));
@@ -2999,8 +3046,8 @@
                     1
                 );
                 const bpsScaleMax = Math.max(100, Math.ceil(bpsDomainMax / 100) * 100);
-                const bpsPlotTop = signalLaneTopY + (compact ? 7 : 8);
-                const bpsPlotH = compact ? 42 : 44;
+                const bpsPlotTop = signalLaneTopY + 18;
+                const bpsPlotH = compact ? 31 : 34;
                 const bpsScaleLogMax = Math.log1p(bpsScaleMax);
                 const bpsY = value => {
                     const clamped = Math.min(bpsScaleMax, Math.max(0, value));
@@ -3020,19 +3067,19 @@
                 const bpsMin = bpsValues.length ? Math.min(...bpsValues) : null;
                 const bpsMax = bpsValues.length ? Math.max(...bpsValues) : null;
                 const bpsLineTitle = [
-                    `${ipo.ticker} XGBoost predicted remaining downside`,
+                    `${ipo.ticker} XGBoost median remaining downside`,
                     'log scale',
                     'lower model values draw higher',
-                    Number.isFinite(bpsMin) ? `min ${bpsMin.toFixed(1)} bps` : '',
-                    Number.isFinite(bpsMax) ? `max ${bpsMax.toFixed(1)} bps` : '',
-                    `scale 0-${Math.round(bpsScaleMax)} bps`,
+                    Number.isFinite(bpsMin) ? `min ${formatTinyPercentFromBps(bpsMin)}` : '',
+                    Number.isFinite(bpsMax) ? `max ${formatTinyPercentFromBps(bpsMax)}` : '',
+                    `scale 0–${formatTinyPercentFromBps(bpsScaleMax)}`,
                 ].filter(Boolean).join(' · ');
                 const thresholdGuides = [
                     { value: watchThreshold, label: 'Watch', color: '#fbbf24', dash: '3 4' },
                     { value: buyThreshold, label: 'Buy', color: '#34d399', dash: '2 3' },
-                ].filter(guide => Number.isFinite(guide.value) && guide.value <= bpsScaleMax).map(guide => {
+                ].filter(guide => Number.isFinite(guide.value) && guide.value <= bpsScaleMax).map((guide, index) => {
                     const yy = bpsY(guide.value);
-                    return `<g><title>${ipo.ticker} ${guide.label} threshold ${formatTinyPercentFromBps(guide.value)}</title><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="${guide.color}" stroke-width="0.7" stroke-dasharray="${guide.dash}" opacity="0.42"/><text x="${ml + 4}" y="${(yy - 2).toFixed(1)}" font-size="${Math.max(7, axisSize - 3)}" font-weight="700" fill="${guide.color}" opacity="0.78">${guide.label}</text></g>`;
+                    return `<g><title>${ipo.ticker} ${guide.label} threshold ${formatTinyPercentFromBps(guide.value)}</title><line x1="${ml}" x2="${W - mr}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" stroke="${guide.color}" stroke-width="0.7" stroke-dasharray="${guide.dash}" opacity="0.42"/><text x="${ml + 4 + index * (compact ? 85 : 105)}" y="${(signalLaneTopY + 11).toFixed(1)}" font-size="${Math.max(8, axisSize - 2)}" font-weight="700" fill="${guide.color}">${guide.label} ≤ ${formatTinyPercentFromBps(guide.value)}</text></g>`;
                 }).join('');
                 const bpsPointMarkers = bpsPoints.map(point => `<circle data-buy-signal-point-minute="${Math.round(point.signal.chartMinute)}" data-buy-signal-point-x="${point.x.toFixed(1)}" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="0" opacity="0"/>`).join('');
                 const bpsLine = bpsPolyline ? `<g data-buy-signal-bps-line="${escapeHtml(ipo.ticker)}"><title>${escapeHtml(bpsLineTitle)}</title><line x1="${ml}" x2="${W - mr}" y1="${bpsPlotTop.toFixed(1)}" y2="${bpsPlotTop.toFixed(1)}" stroke="#27272a" stroke-width="0.8"/><line x1="${ml}" x2="${W - mr}" y1="${(bpsPlotTop + bpsPlotH).toFixed(1)}" y2="${(bpsPlotTop + bpsPlotH).toFixed(1)}" stroke="#27272a" stroke-width="0.8" opacity="0.72"/>${thresholdGuides}<polyline points="${bpsPolyline}" fill="none" stroke="#020617" stroke-width="${compact ? 3.2 : 3.8}" stroke-linejoin="round" stroke-linecap="round" opacity="0.72"/><polyline points="${bpsPolyline}" fill="none" stroke="#38bdf8" stroke-width="${compact ? 1.25 : 1.55}" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${bpsPoints[bpsPoints.length - 1].x.toFixed(1)}" cy="${bpsPoints[bpsPoints.length - 1].y.toFixed(1)}" r="${compact ? 2.2 : 2.6}" fill="#38bdf8" stroke="#09090b" stroke-width="1"/>${bpsPointMarkers}</g>` : '';
@@ -3050,7 +3097,7 @@
                     const title = [
                         `${ipo.ticker} entry timing: ${stateLabel}`,
                         chartTooltipTimeLabel(ipo, signal),
-                        Number.isFinite(bps) ? `waiting may still save about ${formatTinyPercentFromBps(bps)}` : '',
+                        Number.isFinite(bps) ? `estimated median remaining downside ${formatTinyPercentFromBps(bps)}` : '',
                     ].filter(Boolean).join(' · ');
                     return `<circle data-buy-signal-state="${escapeHtml(signal.state || '')}" data-buy-signal-state-minute="${Math.round(signal.chartMinute)}" data-buy-signal-state-x="${cx.toFixed(1)}" cx="${cx.toFixed(1)}" cy="${(ribbonY + ribbonH / 2).toFixed(1)}" r="${radius}" fill="${color}" opacity="${opacity}"><title>${escapeHtml(title)}</title></circle>`;
                 }).join('');
@@ -5962,6 +6009,14 @@
             setTradingPlaceFilterState();
             renderAnalysis();
             renderCards();
+        });
+
+        document.getElementById('buy-tolerance')?.addEventListener('change', event => {
+            const value = Number(event.target.value);
+            if (![45, 100, 150].includes(value)) return;
+            buyToleranceBps = value;
+            renderCards();
+            if (chartModalTicker) setChartModal(true, chartModalTicker);
         });
 
         document.getElementById('chart-mode-toggle')?.addEventListener('click', event => {

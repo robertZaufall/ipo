@@ -30,6 +30,7 @@ Path placeholders in this file are intentional. Substitute them with the matchin
 - Analysis distribution charts include dynamic median reference lines from the currently active cap and trading-place filter.
 - Main candle charts include a top elapsed-minutes axis from first public trade, bottom NYC/German clock labels, and a blue vertical median timing reference line from the currently active analysis filter. They also show a thin gray horizontal first-public-open reference line with a plain `Open` label, plus conditional horizontal IPO-price and current-price reference lines only when those prices are inside the visible chart OHLC range.
 - Main candle charts can overlay generated buy-signal states from `ipo-buy-signals.js`. Render these as an in-grid state strip with `Wait`, `Watch`, and `Buy` labels, never as a floating pill over the candles. `Wait` means predicted remaining downside is still above the watch threshold, `Watch` means it is within the watch band but not the buy threshold, and `Buy` means it is within the buy threshold. Use plain percentages in user-facing copy; the artifact stores basis-point values only for compact precision.
+- The header Buy tolerance offers 0.45%, 1.00% (default), and 1.50%. Watch extends to max(1.50%, 1.5 times Buy tolerance). Cards show first visible Buy times and explicit warmup/no-signal states. Align predictions only to candle opens at or after the prediction time and less than five minutes later. Keep the aggregate model evaluation in `docs/buy-signal-evaluation.md` and `.json` synchronized with generated results.
 - The private 1-minute candle inputs, private dependencies, and XGBoost signal generator live in ignored `1m/`; only the exported `ipo-buy-signals.js` states/pins and public metadata should be committed unless explicitly requested.
 - Each card chart has an enlarge button that opens the current per-card chart mode in a full-screen modal.
 - The header includes a top-level analysis-range switch near the market and trading-place filters: `Day 1`, `Ext`, `D1 D2`, and `D1 Ext D2`. The default global analysis range is `D1 Ext`. It changes the global analysis only, not per-card chart drawings. Each main candle chart has its own top switch: `D1`, `D1 Ext`, `D1 Ext D2`, `D1 D2`, and `D2`. The default card chart mode is `D1 D2`.
@@ -75,10 +76,10 @@ The page has four generated JavaScript data files plus one runtime quote cache:
 - `roughPriceSeries` in `chart-data.js`: optional sampled Yahoo weekly close rows keyed by ticker for rough long-range micro-chart paths.
 - `current-price-cache.json`: bundled Yahoo current-price cache used as a browser runtime seed before fresh Yahoo proxy quotes arrive.
 - `ipoAnalysis` in `ipo-analysis.js`: derived 15-year first-day low timing analysis, probability checkpoints, and timing insights precomputed for each cap and trading-place filter.
-- `ipoBuySignals` in `ipo-buy-signals.js`: public chart-ready buy-signal pins keyed by ticker. Pins are reserved for threshold buys and time-based forced entries.
+- `ipoBuySignals` in `ipo-buy-signals.js`: public chart-ready buy-signal pins keyed by ticker. Pins contain only the first default-tolerance Buy per session; no forced entries or confidence scores.
 - `ipoBuySignalSeries` in `ipo-buy-signals.js`: public chart-ready Day 1 and Day 2 signal-state ticks keyed by ticker. Each state includes time, session, elapsed minutes, predicted remaining downside bps, threshold bps, watch threshold bps, state (`wait`, `watch`, or `buy`), and model id.
 - `ipoBuySignalMeta` in `ipo-buy-signals.js`: public metadata for the generated buy-signal artifact. Keep raw 1-minute candles, local dependencies, and the private generator in ignored `1m/`.
-  Current public model metadata: `modelId` is `ipo-minute-xgboost-downside-v1`, engine is `xgboost.XGBRegressor`, target is remaining regular-session downside from the next executable open to that session's remaining low for Day 1 or Day 2, `buyThresholdBps` is `45` (0.45%), `watchThresholdBps` is `150` (1.50%), `forceBuyMinute` is `180`, and `seriesStepMinutes` is `5`.
+  Current public model metadata: `modelId` is `ipo-minute-xgboost-median-downside-v2`, engine is `xgboost.XGBRegressor`, target is remaining regular-session downside from the next executable open to that session's remaining low for Day 1 or Day 2, `buyThresholdBps` is `100` (1.00%), `watchThresholdBps` is `150` (1.50%), `forcedEntries` is `false`, and `seriesStepMinutes` is `5`.
 
 IPO object fields:
 
@@ -194,8 +195,8 @@ Analysis source:
 
 Buy-signal source:
 
-- `1m/build_buy_signals.py` reads ignored one-minute Day 1 and Day 2 regular-session candles from `1m/*-first-day-1min-candles.json` and `1m/*-second-day-1min-candles.json`, trains `ipo-minute-xgboost-downside-v1`, and writes only public chart-ready data to `ipo-buy-signals.js`. It can still fall back to the old combined JSON shape when no symbol-specific Day 1 files are present.
-- The model frames entry timing as remaining downside estimation, not as a binary "stock is good" classifier. At each minute it predicts how far the next executable open may still be above the remaining low for the active Day 1 or Day 2 regular session.
+- `1m/build_buy_signals.py` reads ignored one-minute Day 1 and Day 2 regular-session candles from `1m/*-first-day-1min-candles.json` and `1m/*-second-day-1min-candles.json`, trains `ipo-minute-xgboost-median-downside-v2`, and writes only public chart-ready data to `ipo-buy-signals.js`. It can still fall back to the old combined JSON shape when no symbol-specific Day 1 files are present.
+- The model uses XGBoost median quantile regression (`reg:quantileerror`, alpha 0.5) with chronological whole-IPO batches and earlier completed sessions only; the first 40 IPOs are warmup. The model frames entry timing as remaining downside estimation, not as a binary "stock is good" classifier. At each eligible clock-aligned 5-minute open it predicts, from completed minute bars, how far that executable open may still be above the remaining low for the active Day 1 or Day 2 regular session.
 - The public output is safe to commit because it contains only aggregate metadata, 5-minute signal states, selected pins, prices, thresholds, and model id. It must not include raw one-minute candles, feature tables, local dependency folders, credentials, or private generator code.
 - XGBoost is used because the minute-level IPO signal is tabular, nonlinear, and small enough that boosted trees can combine timing, price-action, range, wick, volume, and momentum patterns without assuming a linear relationship.
 
@@ -251,7 +252,7 @@ Regenerate only the public buy-signal states/pins from ignored local 1-minute ca
 
 ```sh
 cd <local-ipo-site-repo>
-python3 1m/build_buy_signals.py --input-dir 1m --output ipo-buy-signals.js
+python3.12 1m/build_buy_signals.py --input-dir 1m --output ipo-buy-signals.js
 ```
 
 ## Deploy Site
