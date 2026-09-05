@@ -1886,10 +1886,10 @@
             return 'Wait';
         }
 
-        function chartBuySignalDipLabel(state) {
-            if (state === 'buy') return 'Small dip';
-            if (state === 'watch') return 'Moderate dip';
-            return 'Larger dip';
+        function chartBuySignalPriceDropLabel(state) {
+            if (state === 'buy') return 'Small price drop';
+            if (state === 'watch') return 'Moderate price drop';
+            return 'Larger price drop';
         }
 
         function formatTinyPercentFromBps(bps) {
@@ -2944,7 +2944,7 @@
                 return `<rect x="${(xx - candleW / 2).toFixed(1)}" y="${yy.toFixed(1)}" width="${candleW.toFixed(1)}" height="${barH.toFixed(1)}" fill="${color}" opacity="0.28" rx="1"><title>${ipo.ticker} ${chartTooltipTimeLabel(ipo, d)} volume ${volume.toLocaleString('en-US')}</title></rect>`;
             }).join('');
             const volumePanel = `<g><line x1="${ml}" x2="${W - mr}" y1="${volumeTopY.toFixed(1)}" y2="${volumeTopY.toFixed(1)}" stroke="#27272a"/><text x="${ml + 4}" y="${(volumeTopY + 14).toFixed(1)}" font-size="${axisSize}" fill="#71717a">Volume</text>${volumeBars}</g>`;
-            const hoverBoxW = compact ? 184 : 220;
+            const hoverBoxW = compact ? 200 : 220;
             const signalSeries = chartBuySignalSeries(ipo, chartPoints);
             const signalByChartMinute = new Map(signalSeries.map(signal => [Math.round(signal.chartMinute), signal]));
             const signalForHoverPoint = point => {
@@ -2994,7 +2994,7 @@
                 const hoverSignal = signalForHoverPoint(d);
                 const hoverSignalBps = Number(hoverSignal?.predictedDownsideBps);
                 const hoverSignalValue = hoverSignal && Number.isFinite(hoverSignalBps)
-                    ? `${chartBuySignalStateLabel(hoverSignal.state)} · ${chartBuySignalDipLabel(hoverSignal.state)}`
+                    ? `${chartBuySignalStateLabel(hoverSignal.state)} · ${chartBuySignalPriceDropLabel(hoverSignal.state)}`
                     : '-';
                 const hoverSignalColor = hoverSignal ? chartBuySignalStateColor(hoverSignal.state) : '#71717a';
                 return `<g class="chart-hover-item" data-chart-hover-candle="${escapeHtml(ipo.ticker)}-${i}">
@@ -3073,7 +3073,7 @@
                 const bpsMin = bpsValues.length ? Math.min(...bpsValues) : null;
                 const bpsMax = bpsValues.length ? Math.max(...bpsValues) : null;
                 const bpsLineTitle = [
-                    `${ipo.ticker} estimated further price dip`,
+                    `${ipo.ticker} estimated further price drop`,
                     'log scale',
                     'lower model values draw higher',
                     Number.isFinite(bpsMin) ? `min ${formatTinyPercentFromBps(bpsMin)}` : '',
@@ -3103,7 +3103,7 @@
                     const title = [
                         `${ipo.ticker} entry timing: ${stateLabel}`,
                         chartTooltipTimeLabel(ipo, signal),
-                        Number.isFinite(bps) ? `possible further fall: ${chartBuySignalDipLabel(signal.state).toLowerCase()}` : '',
+                        Number.isFinite(bps) ? `possible further fall: ${chartBuySignalPriceDropLabel(signal.state).toLowerCase()}` : '',
                     ].filter(Boolean).join(' · ');
                     return `<circle data-buy-signal-state="${escapeHtml(signal.state || '')}" data-buy-signal-state-minute="${Math.round(signal.chartMinute)}" data-buy-signal-state-x="${cx.toFixed(1)}" cx="${cx.toFixed(1)}" cy="${(ribbonY + ribbonH / 2).toFixed(1)}" r="${radius}" fill="${color}" opacity="${opacity}"><title>${escapeHtml(title)}</title></circle>`;
                 }).join('');
