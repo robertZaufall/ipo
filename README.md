@@ -133,3 +133,5 @@ curl -fsSL 'https://glaubi.net/ipo?v=<commit>' | rg 'LOW_MARKER_MIN_GAP_MINUTES'
 ## License
 
 MIT. See `LICENSE`.
+
+Chart hover guidance uses `Timing` with `Wait · Larger dip`, `Watch · Moderate dip`, or `Buy · Small dip`. These describe the estimated further fall relative to the selected tolerance; do not show the model acronym or its raw predicted percentage in that row.

@@ -384,3 +384,5 @@ Before calling an IPO change done:
   `python3 -m py_compile 1m/build_buy_signals.py`
 - `https://glaubi.net/ipo` returns the page, not a 404.
 - `https://glaubi.net/ipo?v=<commit>` visually shows candles and serves the current GitHub raw `main` content through the Worker.
+
+Chart hover guidance uses `Timing` with `Wait · Larger dip`, `Watch · Moderate dip`, or `Buy · Small dip`. These describe the estimated further fall relative to the selected tolerance; do not show the model acronym or its raw predicted percentage in that row.
