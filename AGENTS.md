@@ -9,6 +9,15 @@ This repo builds the static `ipo` page published at:
 
 Path placeholders in this file are intentional. Substitute them with the matching local checkout paths in the active workspace.
 
+## Shared infrastructure documentation
+
+Read the [shared infrastructure rules](../../../git/infrastructure/AGENTS.md)
+and [IPO infrastructure and architecture note](../../../git/infrastructure/ipo.md)
+for service ownership, access, persistence, deployment boundaries and recovery
+constraints. The canonical infrastructure folder is `/Users/master/git/infrastructure`;
+it is not a sibling of this checkout. Keep application procedures in this file
+and `README.md`, and update the shared note when infrastructure changes.
+
 ## Current Shape
 
 - The app is a static page: `index.html` plus generated `ipo-data.js`, `chart-data.js`, `ipo-analysis.js`, and `ipo-buy-signals.js`.
