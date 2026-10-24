@@ -264,6 +264,13 @@ cd <local-ipo-site-repo>
 python3.12 1m/build_buy_signals.py --input-dir 1m --output ipo-buy-signals.js
 ```
 
+## Public footer
+
+Keep the linked Robert Zaufall copyright (`https://zaufall.de/`) and
+“Datenschutz / Privacy Notice” (`https://zaufall.de/datenschutz/`) in the existing
+footers of both `index.html` and `results.html`. Preserve them when importing a
+new results renderer from `ipo-analysis`; data bundle refreshes must not remove them.
+
 ## Deploy Site
 
 The site repo is Git-backed and pushes to GitHub. The live `https://glaubi.net/ipo` route uses the Cloudflare Worker proxy to fetch the latest static files from GitHub raw `main`; GitHub Pages is intentionally disabled and should not be treated as a production target.
